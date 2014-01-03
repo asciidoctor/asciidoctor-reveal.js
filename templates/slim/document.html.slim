@@ -1,0 +1,88 @@
+doctype 5
+html lang=(attr :lang, 'en' unless attr? :nolang)
+  head
+    meta charset="utf-8"
+    - [:description, :keywords, :author, :copyright].each do |key|
+      - if attr? key
+        meta name=key content=(attr key)
+
+    title=((doctitle :sanitize => true) || (attr 'untitled-label'))
+    meta content="yes" name="apple-mobile-web-app-capable"
+    meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"
+    meta content="width=(device-width, initial-scale=1.0, maximum-scale=1.0,)user-scalable=no" name="viewport"
+
+    link href="revealjs/css/reveal.min.css" rel="stylesheet"
+
+    - if attr? :revealjs_theme
+      link rel='stylesheet' href='revealjs/css/theme/#{attr :revealjs_theme}.css' id='custom_theme'
+    - else
+      link rel='stylesheet' href='revealjs/css/theme/default.css' id='default_theme'
+
+    // For syntax highlighting
+    link href="revealjs/lib/css/zenburn.css" rel="stylesheet"
+    // If the query includes 'print-pdf', use the PDF print sheet
+    javascript:
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+  body
+    .reveal
+      // Any section element inside of this container is displayed as a slide
+      .slides
+        section
+        =content
+    script src="revealjs/lib/js/head.min.js"
+    script src="revealjs/js/reveal.min.js"
+    javascript:
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+       Reveal.initialize({
+
+         // Display controls in the bottom right corner
+         controls: true,
+         // Display a presentation progress bar
+         progress: true,
+         // Push each slide change to the browser history
+         history: false,
+         // Enable keyboard shortcuts for navigation
+         keyboard: true,
+         // Enable the slide overview mode
+         overview: true,
+         // Vertical centering of slides
+         center: true,
+         // Loop the presentation
+         loop: false,
+         // Change the presentation direction to be RTL
+         rtl: false,
+         // Number of milliseconds between automatically proceeding to the
+         // next slide, disabled when set to 0, this value can be overwritten
+         // by using a data-autoslide attribute on your slides
+         autoSlide: 0,
+         // Enable slide navigation via mouse wheel
+         mouseWheel: false,
+         // Apply a 3D roll to links on hover
+         rollingLinks: true,
+
+         // Transition speed
+         transitionSpeed: 'default', // default/fast/slow
+         // Transition style for full page backgrounds
+         backgroundTransition: 'default', // default/linear
+
+         theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+
+         // Transition style
+         transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+         dependencies: [
+             { src: 'revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+             { src: 'revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+             { src: 'revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+             { src: 'revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+             { src: 'revealjs/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+             { src: 'revealjs/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+         ]
+       });
+
