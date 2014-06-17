@@ -1,4 +1,4 @@
-- open, close = ::Asciidoctor::BLOCK_MATH_DELIMITERS[@style.to_sym]
+- open, close = Asciidoctor::BLOCK_MATH_DELIMITERS[@style.to_sym]
 - equation = content.strip
 - if (@subs.nil? || @subs.empty?) && !(attr? 'subs')
   - equation = sub_specialcharacters equation

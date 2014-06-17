@@ -16,7 +16,7 @@
 - when :single
   =role? ? %(<span class="#{role}">&#8216;#{@text}&#8217;</span>) : %(&#8216;#{@text}&#8217;)
 - when :asciimath, :latexmath
-  - open, close = ::Asciidoctor::INLINE_MATH_DELIMITERS[@type]
+  - open, close = Asciidoctor::INLINE_MATH_DELIMITERS[@type]
   |#{open}#{@text}#{close}
 - else
   =role? ? %(<span class="#{role}">#{@text}</span>) : @text
