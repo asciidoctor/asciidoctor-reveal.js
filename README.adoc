@@ -1,0 +1,34 @@
+== reveal.js Backend
+
+The https://github.com/asciidoctor/asciidoctor-backends/tree/master/slim/revealjs[reveal.js
+backend] is a collection of slim templates which transform an AsciiDoc
+document to HTML5 slides animated by http://lab.hakim.se/reveal-js/[reveal.js].
+
+=== Installation
+
+First, you should download (or git clone) the
+https://github.com/asciidoctor/asciidoctor-backends[asciidoctor-backends]
+repository to a convenient location.
+
+  git clone git://github.com/asciidoctor/asciidoctor-backends.git
+
+Then from your working directory (that is where your AsciiDoc document
+resides) you must create a +reveal.js+ directory and copy there the +reveal.js+
+file with its directories (plugin, css, ...). You could also just clone
+the [reveal.js] repository.
+
+  git clone git://github.com/hakimel/reveal.js.git
+
+=== Rendering
+
+First, make sure Asciidoctor is installed:
+
+  gem install asciidoctor
+
+Then, to render your presentation as HTML5, simply execute the command:
+
+  asciidoctor -T <backend directory> <asciidoc file>
+
+So for the above revealjs backend you'd use
+
+  asciidoctor -T <base>/asciidoctor-backends/slim/revealjs <asciidoc file>
