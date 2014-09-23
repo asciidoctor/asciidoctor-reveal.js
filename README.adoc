@@ -19,6 +19,45 @@ the [reveal.js] repository.
 
   git clone git://github.com/hakimel/reveal.js.git
 
+=== Settings
+
+There are some attributes that can be set at the top of the document which
+they are specific of +revealjs+ backend.
+
+[options="header",cols="1m,1"]
+|===
+|Attribute                            |Description
+|:revealjs_controls: <true\|false>    | Display controls in the bottom right corner. Default: true
+|:revealjs_progress: <true\|false>    | Display a presentation progress bar. Default: true
+|:revealjs_slideNumber: <true\|false> | Display the page number of the current slide. Default: false
+|:revealjs_history: <true\|false>     | Push each slide change to the browser history. Default: false
+|:revealjs_keyboard: <true\|false>    | Enable keyboard shortcuts for navigation. Default: true
+|:revealjs_overview: <true\|false>    | Enable the slide overview mode. Default: true
+|:revealjs_touch: <true\|false>       | Enables touch navigation on devices with touch input. Default: true
+|:revealjs_center: <true\|false>      | Vertical centering of slides. Default: true
+|:revealjs_loop: <true\|false>        | Loop the presentation. Default: false
+|:revealjs_rtl: <true\|false>         | Change the presentation direction to be RTL. Default: false
+|:revealjs_fragments: <true\|false>   | Turns fragments on and off globally. Default: true
+|:revealjs_embedded: <true\|false>    | Flags if the presentation is running in an embedded mode,
+                                        i.e. contained within a limited portion of the screen. Default: false
+|:revealjs_autoSlide: <integer>       | Number of milliseconds between automatically proceeding to the
+                                        next slide, disabled when set to 0, this value can be overwritten
+                                        by using a data-autoslide attribute on your slides. Default 0
+|:revealjs_autoSlideStoppable: <true\|false> | Stop auto-sliding after user input. Default: true
+|:revealjs_mouseWheel: <true\|false>         | Enable slide navigation via mouse wheel. Default: false
+|:revealjs_hideAddressBar: <true\|false>     | Hides the address bar on mobile devices. Default: true
+|:revealjs_previewLinks: <true\|false>       | Opens links in an iframe preview overlay. Default: false
+|:revealjs_transition: <transition>          | Transition style.
+                                               Valid values: default/cube/page/concave/zoom/linear/fade/none
+|:revealjs_transitionSpeed: <speed>          | Transition speed. Valid values: default/fast/slow
+|:revealjs_backgroundTransition: <transition>| Transition style for full page slide backgrounds.
+                                               Valid values: default/none/slide/concave/convex/zoom
+|:revealjs_viewDistance: <integer>           | Number of slides away from the current that are visible. Default: 3
+|:revealjs_parallaxBackgroundImage: <file\|URL>     | Parallax background image. Defaults to none
+|:revealjs_parallaxBackgroundSize: <CSS size syntax>| Parallax background size (accepts any CSS syntax). Defaults to none
+
+|===
+
 === Examples
 
 // FIXME: incomplete
