@@ -27,6 +27,10 @@ they are specific of +revealjs+ backend.
 [options="header",cols="1m,1"]
 |===
 |Attribute                            |Description
+|:revealjs_theme: <theme>             | Chooses one of reveal.js'
+                                        https://github.com/hakimel/reveal.js#theming[built-in themes].
+                                        Default: default
+|:revealjs_customtheme: <file\|URL>   | Overrides CSS with given file or URL. Default is disabled.
 |:revealjs_controls: <true\|false>    | Display controls in the bottom right corner. Default: true
 |:revealjs_progress: <true\|false>    | Display a presentation progress bar. Default: true
 |:revealjs_slideNumber: <true\|false> | Display the page number of the current slide. Default: false
@@ -57,6 +61,10 @@ they are specific of +revealjs+ backend.
 |:revealjs_parallaxBackgroundSize: <CSS size syntax>| Parallax background size (accepts any CSS syntax). Defaults to none
 
 |===
+
+If you want to build a custom theme or customize an existing one you should
+look at `reveal.js's` documentation and use `revealjs_theme` attribute:
+https://github.com/hakimel/reveal.js/blob/master/css/theme/README.md
 
 === Examples
 
