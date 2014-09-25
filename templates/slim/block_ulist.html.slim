@@ -1,5 +1,5 @@
-- if (checklist = (option? 'checklist') ? 'checklist' : nil)
-  - if option? 'interactive'
+- if (checklist = (option? :checklist) ? 'checklist' : nil)
+  - if option? :interactive
     - marker_checked = '<input type="checkbox" data-item-complete="1" checked>'
     - marker_unchecked = '<input type="checkbox" data-item-complete="0">'
   - else
@@ -15,7 +15,7 @@
     .title=title
   ul class=(checklist || @style)
     - items.each do |item|
-      li class=('fragment' if (option? 'step') or (has_role? 'step'))
+      li class=('fragment' if (option? :step) || (has_role? 'step'))
         p
           - if checklist && (item.attr? :checkbox)
             =%(#{(item.attr? :checked) ? marker_checked : marker_unchecked}#{item.text})
