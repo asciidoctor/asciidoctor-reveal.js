@@ -111,7 +111,7 @@ documentation].
 ----
 == Slide Four
 
-[.step]
+[%step]
 * this
 * is
 * revealed
@@ -121,7 +121,7 @@ documentation].
 
 Slide Four has bullets that are revealed one after the other. This is what
 `reveal.js` calls http://lab.hakim.se/reveal-js/#/fragments[fragments].
-Applying the step option or role on a list (`[.step]` or `[%step]`) will do
+Applying the step option or role on a list (`[%step]` or `[.step]`) will do
 the trick. Here is https://github.com/hakimel/reveal.js#fragments[upstream
 documentation] on the topic. Note that only `fade-in` is supported for lists
 at the moment.
