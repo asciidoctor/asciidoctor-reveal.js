@@ -24,6 +24,11 @@ the [reveal.js] repository.
 There are some attributes that can be set at the top of the document which
 they are specific of +revealjs+ backend.
 
+[NOTE]
+--
+Default settings are based on `reveal.js` default settings.
+--
+
 [options="header",cols="1m,1"]
 |===
 |Attribute                            |Description
