@@ -131,6 +131,33 @@ the trick. Here is https://github.com/hakimel/reveal.js#fragments[upstream
 documentation] on the topic. Note that only `fade-in` is supported for lists
 at the moment.
 
+[listing]
+....
+== Slide Five
+
+Uses highlighted code
+
+----
+print "Hello World"
+----
+....
+
+`revealjs` uses https://highlightjs.org/[highlight.js] to do its syntax highlighting.
+By default `[source]` blocks and blocks delimited by `----` will be highlighted.
+An explicit `[listing]` block will not be highlighted.
+`highlight.js` does language auto-detection but using the `language="..."` attribute will hint the highlighter.
+For example this will highlight this source code as Perl:
+
+[listing]
+....
+== Slide Five
+
+[source, language="perl"]
+----
+print "$0: hello world\n"
+----
+....
+
 === Rendering
 
 First, make sure Asciidoctor is installed:
