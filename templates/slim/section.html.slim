@@ -1,3 +1,4 @@
 section id=@id data-transition=(attr 'data-transition') data-transition-speed=(attr 'data-transition-speed') data-background=(attr 'data-background') data-background-size=(attr 'data-background-size') data-background-repeat=(attr 'data-background-repeat') data-background-transition=(attr 'data-background-transition')
-  h2=title
+  - unless (t = title) == '!'
+    h2=t
   =content.chomp
