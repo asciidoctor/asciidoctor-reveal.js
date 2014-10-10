@@ -25,6 +25,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     // If the query includes 'print-pdf', use the PDF print sheet
     javascript:
       document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    - unless (docinfo_content = docinfo :header, '.html').empty?
+      =docinfo_content
   body
     .reveal
       // Any section element inside of this container is displayed as a slide
@@ -119,4 +121,5 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
              { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
          ]
        });
-
+    - unless (docinfo_content = (docinfo :footer, '.html')).empty?
+      =docinfo_content
