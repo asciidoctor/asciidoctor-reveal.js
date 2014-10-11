@@ -127,7 +127,7 @@ print "Hello World"
 ----
 ....
 
-`revealjs` uses https://highlightjs.org/[highlight.js] to do its syntax highlighting.
+`revealjs` uses https://highlightjs.org/[highlight.js] to do its syntax highlighting by default.
 By default `[source]` blocks and blocks delimited by `----` will be highlighted.
 An explicit `[listing]` block will not be highlighted.
 `highlight.js` does language auto-detection but using the `language="..."` attribute will hint the highlighter.
@@ -142,6 +142,28 @@ For example this will highlight this source code as Perl:
 print "$0: hello world\n"
 ----
 ....
+
+[NOTE]
+Currently `revealjs` uses a rather old version of https://highlightjs.org/[highlight.js] that does not handle callouts correctly.
+To fix this download a current version of https://highlightjs.org/[highlight.js] and copy it to `reveal.js/plugin/highlight/highlight.js`.
+
+Alternatively you can use http://coderay.rubychan.de[Coderay] or http://pygments.org[Pygments] as the highlighter.
+These handle callouts correctly.
+
+To use http://coderay.rubychan.de[Coderay]:
+
+----
+= Title slide
+:source-highlighter: coderay
+----
+
+To use http://pygments.org[Pygments]:
+
+----
+= Title slide
+:source-highlighter: pygments
+----
+
 
 === Rendering
 
