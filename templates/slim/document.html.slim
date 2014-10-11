@@ -20,6 +20,20 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     - else
       link rel='stylesheet' href='reveal.js/css/theme/default.css' id='default_theme'
 
+    - case attr 'source-highlighter'
+    - when 'coderay'
+      - if (attr 'coderay-css', 'class') == 'class'
+        - if @safe >= Asciidoctor::SafeMode::SECURE || (attr? :linkcss)
+          link rel='stylesheet' href=normalize_web_path('asciidoctor-coderay.css', (attr :stylesdir, ''))
+        - else
+          style=Asciidoctor::Stylesheets.instance.coderay_stylesheet_data
+    - when 'pygments'
+      - if (attr 'pygments-css', 'class') == 'class'
+        - if @safe >= Asciidoctor::SafeMode::SECURE || (attr? :linkcss)
+          link rel='stylesheet' href=normalize_web_path('asciidoctor-pygments.css', (attr :stylesdir, ''))
+        - else
+          style=Asciidoctor::Stylesheets.instance.pygments_stylesheet_data(attr 'pygments-style')
+
     // For syntax highlighting
     link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"
     // If the query includes 'print-pdf', use the PDF print sheet
