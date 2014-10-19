@@ -165,6 +165,21 @@ To use http://pygments.org[Pygments]:
 ----
 
 
+[listing]
+....
+== Slide Six
+
+Top slide
+
+=== Slide Six.One
+
+This is a vertical subslide
+....
+
+Slide Six uses the vertical slide feature of `reveal.js`.
+Slide Six.One will be rendered vertically below Slide Six.
+Here is https://github.com/hakimel/reveal.js#markup[upstream documentation] on that topic.
+
 === Rendering
 
 First, make sure Asciidoctor is installed:

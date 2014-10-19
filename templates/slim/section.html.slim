@@ -1,4 +1,14 @@
-section id=@id data-transition=(attr 'data-transition') data-transition-speed=(attr 'data-transition-speed') data-background=(attr 'data-background') data-background-size=(attr 'data-background-size') data-background-repeat=(attr 'data-background-repeat') data-background-transition=(attr 'data-background-transition')
-  - unless (t = title) == '!'
-    h2=t
-  =content.chomp
+- if @level == 1 && self.blocks.select {|b| b.is_a? Asciidoctor::Section}.length > 0
+  section
+    section id=@id data-transition=(attr 'data-transition') data-transition-speed=(attr 'data-transition-speed') data-background=(attr 'data-background') data-background-size=(attr 'data-background-size') data-background-repeat=(attr 'data-background-repeat') data-background-transition=(attr 'data-background-transition')
+      - unless (t = title) == '!'
+        h2=t
+      - for block in self.blocks.select {|b| !b.is_a? Asciidoctor::Section}
+        = block.convert
+    - for subsection in self.blocks.select {|b| b.is_a? Asciidoctor::Section}
+      = subsection.convert
+- else
+  section id=@id data-transition=(attr 'data-transition') data-transition-speed=(attr 'data-transition-speed') data-background=(attr 'data-background') data-background-size=(attr 'data-background-size') data-background-repeat=(attr 'data-background-repeat') data-background-transition=(attr 'data-background-transition')
+    - unless (t = title) == '!'
+      h2=t
+    #=content.chomp
