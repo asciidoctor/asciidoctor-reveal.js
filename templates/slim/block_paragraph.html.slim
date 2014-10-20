@@ -1,4 +1,7 @@
 .paragraph id=@id class=role
   - if title?
     .title=title
-  p=content
+  - if has_role? 'small'
+    small=content
+  - else
+    p=content
