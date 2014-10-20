@@ -180,6 +180,8 @@ Slide Six uses the vertical slide feature of `reveal.js`.
 Slide Six.One will be rendered vertically below Slide Six.
 Here is https://github.com/hakimel/reveal.js#markup[upstream documentation] on that topic.
 
+NOTE: The `reveal.js` backend only supports level 1 (`==`) and level 2 (`===`) sections. Level 3 sections are not supported and will not render correctly.
+
 === Rendering
 
 First, make sure Asciidoctor is installed:
