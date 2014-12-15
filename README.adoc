@@ -1,42 +1,46 @@
-== reveal.js Backend
+== reveal.js Backend for Asciidoctor
 
-//image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status, link="https://travis-ci.org/asciidoctor/asciidoctor-reveal.js"]
-The https://github.com/asciidoctor/asciidoctor-reveal.js/[reveal.js backend] is a slim template which transforms an AsciiDoc document to HTML5 slides animated by http://lab.hakim.se/reveal-js/[reveal.js].
+The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a slim template which transforms an AsciiDoc document to HTML5 slides animated by http://lab.hakim.se/reveal-js/[reveal.js].
+
+//image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
 
 == Usage Instructions
 
-. Ensure Asciidoctor is installed
+. Ensure Asciidoctor is installed:
 
   $ gem install asciidoctor
 
-. Clone `asciidoctor/asciidoctor-reveal.js` to get templates for rendering presentation HTML.
+. Clone `asciidoctor/asciidoctor-reveal.js` to get templates for rendering presentation HTML:
 
   $ git clone git://github.com/asciidoctor/asciidoctor-reveal.js.git
 
-. Edit `CONTENT_FILE` ( *.adoc or *.ad or ...)
-** Slides & content per slide
-** [Optional] Set presentation "options" at top of `CONTENT_FILE`.  The options available & their values will depend on presentation library (some examples below).
+. Edit `CONTENT_FILE` ( *.adoc or *.ad or ...):
 
-  ATTRIBUTE: ${value}
+  ** Slides & content per slide
+  ** (Optional) Set presentation options at top of `CONTENT_FILE`.
+     The options available & their values will depend on presentation library (some examples below).
 
-. Generate HTML from Asciidoctor Template
+  :${Attribute}: ${Value}
 
-** Command Line:
+. Generate HTML from the Asciidoctor templates
 
-  $ asciidoctor -T templates/slim ${options} CONTENT_FILE
+  .. Command Line:
 
-** Build Script: use Ruby, JavaScript, Gradle, or your favorite build tool/script with presentation options
+  $ asciidoctor -T templates/slim CONTENT_FILE
+
+  .. Build Script: use Ruby, JavaScript, Gradle, or your favorite build tool/script with presentation options
+
 . Copy or clone presentation library (to output destination/branch)
 
   $ git clone git://github.com/hakimel/reveal.js.git
 
-TIP: if leveraging https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on `gh-pages` branch.
+TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
 
 == Source Examples
 
 // FIXME: incomplete
 
-Let's see some examples of +revealjs+ backend features:
+Let's see some examples of `revealjs` backend features:
 
 ----
 = Title Slide
@@ -272,4 +276,4 @@ This value can be overwritten by using a `data-autoslide` attribute on your slid
 
 |===
 
-If you want to build a custom theme or customize an existing one you should look at `reveal.js's` documentation and use `revealjs_theme` attribute: https://github.com/hakimel/reveal.js/blob/master/css/theme/README.md
+If you want to build a custom theme or customize an existing one you should look at the https://github.com/asciidoctor/asciidoctor-maven-examples/blob/master/asciidoc-to-pdf-example/pom.xml[reveal.js documentation] and use `revealjs_theme` AsciiDoc attribute to activate it.
