@@ -7,7 +7,6 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       - if attr? key
         meta name=key content=(attr key)
     title=(doctitle sanitize: true, use_fallback: true)
-    meta perso="#{revealjsdir}" test="#{attr :revealjsdir}" test2="#{attr 'revealjsdir'}"
     meta content="yes" name="apple-mobile-web-app-capable"
     meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"
     meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"
