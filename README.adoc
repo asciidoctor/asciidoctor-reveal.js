@@ -181,6 +181,10 @@ Default settings are based on `reveal.js` default settings.
 |<file\|URL>
 | Overrides CSS with given file or URL. Default is disabled.
 
+|:revealjsdir:
+|<file\|URL>
+| Overrides reveal.js directory. Example : ../reveal.js
+
 |:revealjs_controls:
 |*true*, false
 |Display controls in the bottom right corner.

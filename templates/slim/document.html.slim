@@ -2,6 +2,7 @@ doctype 5
 html lang=(attr :lang, 'en' unless attr? :nolang)
   head
     meta charset="utf-8"
+    - revealjsdir = (attr :revealjsdir, 'reveal.js')
     - [:description, :keywords, :author, :copyright].each do |key|
       - if attr? key
         meta name=key content=(attr key)
@@ -9,12 +10,12 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     meta content="yes" name="apple-mobile-web-app-capable"
     meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"
     meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"
-    link href="reveal.js/css/reveal.min.css" rel="stylesheet"
+    link href="#{revealjsdir}/css/reveal.min.css" rel="stylesheet"
     / Default theme required even when using custom theme
     - if attr? :revealjs_customtheme
       link rel='stylesheet' href=(attr :revealjs_customtheme) id='theme'
     - else
-      link rel='stylesheet' href='reveal.js/css/theme/default.css' id='theme'
+      link rel='stylesheet' href='#{revealjsdir}/css/theme/default.css' id='theme'
     - if attr? :stem
       - asset_uri_scheme = (attr 'asset-uri-scheme', 'https')
       - asset_uri_scheme = %(#{asset_uri_scheme}:) unless asset_uri_scheme.empty?
@@ -50,10 +51,10 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         - else
           style=Asciidoctor::Stylesheets.instance.pygments_stylesheet_data(attr 'pygments-style')
     / For syntax highlighting
-    link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"
+    link href="#{revealjsdir}/lib/css/zenburn.css" rel="stylesheet"
     / If the query includes 'print-pdf', use the PDF print sheet
     javascript:
-      document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+      document.write( '<link rel="stylesheet" href="#{revealjsdir}/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
     - unless (docinfo_content = docinfo :header, '.html').empty?
       =docinfo_content
   body
@@ -65,8 +66,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
             h2=@header.title
             p: small=author
         =content
-    script src="reveal.js/lib/js/head.min.js"
-    script src="reveal.js/js/reveal.min.js"
+    script src="#{revealjsdir}/lib/js/head.min.js"
+    script src="#{revealjsdir}/js/reveal.min.js"
     javascript:
       // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
       Reveal.initialize({
@@ -123,12 +124,12 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         parallaxBackgroundSize: '#{attr 'revealjs_parallaxbackgroundsize', ''}',
         // Optional libraries used to extend on reveal.js
         dependencies: [
-            { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-            { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-            { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-            #{(attr? 'source-highlighter', 'highlight.js') ? "{ src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }," : nil}
-            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-            { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            { src: '#{revealjsdir}/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: '#{revealjsdir}/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: '#{revealjsdir}/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            #{(attr? 'source-highlighter', 'highlight.js') ? "{ src: '#{revealjsdir}/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }," : nil}
+            { src: '#{revealjsdir}/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: '#{revealjsdir}/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
         ]
       });
     - unless (docinfo_content = (docinfo :footer, '.html')).empty?
