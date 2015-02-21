@@ -10,12 +10,12 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     meta content="yes" name="apple-mobile-web-app-capable"
     meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"
     meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"
-    link href="#{revealjsdir}/css/reveal.min.css" rel="stylesheet"
+    link href="#{revealjsdir}/css/reveal.css" rel="stylesheet"
     / Default theme required even when using custom theme
     - if attr? :revealjs_customtheme
       link rel='stylesheet' href=(attr :revealjs_customtheme) id='theme'
     - else
-      link rel='stylesheet' href='#{revealjsdir}/css/theme/default.css' id='theme'
+      link rel='stylesheet' href='#{revealjsdir}/css/theme/#{attr 'revealjs_theme', 'league'}.css' id='theme'
     - if attr? :stem
       - asset_uri_scheme = (attr 'asset-uri-scheme', 'https')
       - asset_uri_scheme = %(#{asset_uri_scheme}:) unless asset_uri_scheme.empty?
@@ -70,7 +70,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
             p: small=author
         =content
     script src="#{revealjsdir}/lib/js/head.min.js"
-    script src="#{revealjsdir}/js/reveal.min.js"
+    script src="#{revealjsdir}/js/reveal.js"
     javascript:
       // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
       Reveal.initialize({
@@ -111,14 +111,15 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         hideAddressBar: #{attr 'revealjs_hideaddressbar', 'true'},
         // Opens links in an iframe preview overlay
         previewLinks: #{attr 'revealjs_previewlinks', 'false'},
-        // Theme (e.g., beige, blond, default, moon, night, serif, simple, sky, solarized)
-        theme: Reveal.getQueryHash().theme || '#{attr 'revealjs_theme', 'default'}',
-        // Transition style (e.g., default, cube, page, concave, zoom, linear, fade, none)
-        transition: Reveal.getQueryHash().transition || '#{attr 'revealjs_transition', 'default'}',
+        // Theme (e.g., beige, black, blood, league, moon, night, serif, simple, sky, solarized, white)
+        // NOTE setting the theme in the config no longer works in reveal.js 3.x
+        //theme: Reveal.getQueryHash().theme || '#{attr 'revealjs_theme', 'league'}',
+        // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+        transition: Reveal.getQueryHash().transition || '#{attr 'revealjs_transition', 'slide'}',
         // Transition speed (e.g., default, fast, slow)
         transitionSpeed: '#{attr 'revealjs_transitionspeed', 'default'}',
-        // Transition style for full page slide backgrounds (e.g., default, none, slide, concave, convex, zoom)
-        backgroundTransition: '#{attr 'revealjs_backgroundtransition', 'default'}',
+        // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+        backgroundTransition: '#{attr 'revealjs_backgroundtransition', 'fade'}',
         // Number of slides away from the current that are visible
         viewDistance: #{attr 'revealjs_viewdistance', 3},
         // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")

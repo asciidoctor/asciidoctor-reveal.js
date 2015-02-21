@@ -1,6 +1,6 @@
 == reveal.js Backend for Asciidoctor
 
-The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a slim template which transforms an AsciiDoc document to HTML5 slides animated by http://lab.hakim.se/reveal-js/[reveal.js].
+The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a collection of Slim templates for https://github.com/asciidoctor/asciidoctor[Asciidoctor] that transform an AsciiDoc document into HTML5 slides animated by http://lab.hakim.se/reveal-js/[reveal.js].
 
 //image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
 
@@ -31,13 +31,13 @@ WARNING: We recommend using Slim 2.1.0 until https://github.com/asciidoctor/asci
 
   $ asciidoctor -T templates/slim CONTENT_FILE
 
-  .. Build Script: use Ruby, JavaScript, Gradle, or your favorite build tool/script with presentation options
+  .. Build Script: use Ruby, JavaScript, Gradle or your favorite build tool/script with presentation options
 
 . Copy or clone presentation library (to output destination/branch)
 
-  $ git clone -b 2.6.2 git://github.com/hakimel/reveal.js.git
+  $ git clone -b 3.0.0 git://github.com/hakimel/reveal.js.git
 
-WARNING: Currently asciidoctor-reveal.js is not compatible with reveal.js 3.0.0, which is why we clone version 2.6.2.
+NOTE: If you want to use reveal.js 2, please switch to the reveal.js-2.x branch.
 
 TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
 
@@ -87,7 +87,6 @@ Here is the https://github.com/hakimel/reveal.js#slide-backgrounds[upstream docu
 * is
 * revealed
 * gradually
-
 ----
 
 Slide Four has bullets that are revealed one after the other.
@@ -117,7 +116,7 @@ For example this will highlight this source code as Perl:
 ....
 == Slide Five
 
-[source, language="perl"]
+[source,perl]
 ----
 print "$0: hello world\n"
 ----
@@ -127,7 +126,7 @@ print "$0: hello world\n"
 Currently `revealjs` uses a rather old version of https://highlightjs.org/[highlight.js] that does not handle callouts correctly.
 To fix this download a current version of https://highlightjs.org/[highlight.js] and copy it to `reveal.js/plugin/highlight/highlight.js`.
 
-Alternatively you can use http://coderay.rubychan.de[Coderay] or http://pygments.org[Pygments] as the highlighter.
+Alternatively, you can use http://coderay.rubychan.de[Coderay] or http://pygments.org[Pygments] as the highlighter.
 These handle callouts correctly.
 
 To use http://coderay.rubychan.de[Coderay]:
@@ -143,7 +142,6 @@ To use http://pygments.org[Pygments]:
 = Title slide
 :source-highlighter: pygments
 ----
-
 
 [listing]
 ....
@@ -166,17 +164,14 @@ NOTE: The `reveal.js` backend only supports level 1 (`==`) and level 2 (`===`) s
 
 There are some attributes that can be set at the top of the document which they are specific of +revealjs+ backend.
 
-[NOTE]
---
-Default settings are based on `reveal.js` default settings.
---
+NOTE: Default settings are based on `reveal.js` default settings.
 
-[options="header",cols="1m,1,2"]
+[cols="1m,1,2"]
 |===
-|Attribute    |Value(s)     |Description
+|Attribute |Value(s) |Description
 
 |:revealjs_theme:
-|*default*, beige, sky, night, serif, simple, solarized
+|beige, black, blood, *league*, moon, night, serif, simple, sky, solarized, white
 |Chooses one of reveal.js' https://github.com/hakimel/reveal.js#theming[built-in themes].
 
 |:revealjs_customtheme:
@@ -191,7 +186,8 @@ Default is built-in [path]_lib/css/zenburn.css_.
 
 |:revealjsdir:
 |<file\|URL>
-| Overrides reveal.js directory. Example : ../reveal.js
+|Overrides reveal.js directory.
+Example: ../reveal.js
 
 |:revealjs_controls:
 |*true*, false
@@ -239,14 +235,12 @@ Default is built-in [path]_lib/css/zenburn.css_.
 
 |:revealjs_embedded:
 |true, *false*
-|Flags if the presentation is running in an embedded mode,
-i.e. contained within a limited portion of the screen.
+|Flags if the presentation is running in an embedded mode (i.e., contained within a limited portion of the screen).
 
 |:revealjs_autoSlide:
 |<integer>
-| Delay in milliseconds between automatically proceeding to the
-next slide. +
-Disabled when set to *0* (the default). +
+|Delay in milliseconds between automatically proceeding to the next slide.
+Disabled when set to *0* (the default).
 This value can be overwritten by using a `data-autoslide` attribute on your slides.
 
 |:revealjs_autoSlideStoppable:
@@ -266,7 +260,7 @@ This value can be overwritten by using a `data-autoslide` attribute on your slid
 |Opens links in an iframe preview overlay.
 
 |:revealjs_transition:
-|*default*, cube, page, concave, zoom, linear, fade, none
+|none, fade, *slide*, convex, concave, zoom
 |Transition style.
 
 |:revealjs_transitionSpeed:
@@ -274,8 +268,8 @@ This value can be overwritten by using a `data-autoslide` attribute on your slid
 |Transition speed.
 
 |:revealjs_backgroundTransition:
-|*default*, none, slide, concave, convex, zoom
-| Transition style for full page slide backgrounds.
+|none, *fade*, slide, convex, concave, zoom
+|Transition style for full page slide backgrounds.
 
 |:revealjs_viewDistance:
 |<integer>
@@ -283,12 +277,13 @@ This value can be overwritten by using a `data-autoslide` attribute on your slid
 
 |:revealjs_parallaxBackgroundImage:
 |<file\|URL>
-|Parallax background image. Defaults to none
+|Parallax background image.
+Defaults to none
 
 |:revealjs_parallaxBackgroundSize:
 |<CSS size syntax>
-|Parallax background size (accepts any CSS syntax). Defaults to none
-
+|Parallax background size (accepts any CSS syntax).
+Defaults to none
 |===
 
-If you want to build a custom theme or customize an existing one you should look at the https://github.com/hakimel/reveal.js/blob/master/css/theme/README.md[reveal.js documentation] and use `revealjs_customtheme` AsciiDoc attribute to activate it.
+If you want to build a custom theme or customize an existing one you should look at the https://github.com/hakimel/reveal.js/blob/master/css/theme/README.md[reveal.js documentation] and use the `revealjs_customtheme` AsciiDoc attribute to activate it.
