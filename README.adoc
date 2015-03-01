@@ -181,6 +181,10 @@ Default settings are based on `reveal.js` default settings.
 |<file\|URL>
 | Overrides CSS with given file or URL. Default is disabled.
 
+|:highlightjs_style:
+|<file\|URL>
+| Overrides https://highlightjs.org[highlight.js] CSS style with given file or URL. Default is disabled.
+
 |:revealjsdir:
 |<file\|URL>
 | Overrides reveal.js directory. Example : ../reveal.js
@@ -283,4 +287,4 @@ This value can be overwritten by using a `data-autoslide` attribute on your slid
 
 |===
 
-If you want to build a custom theme or customize an existing one you should look at the https://github.com/asciidoctor/asciidoctor-maven-examples/blob/master/asciidoc-to-pdf-example/pom.xml[reveal.js documentation] and use `revealjs_theme` AsciiDoc attribute to activate it.
+If you want to build a custom theme or customize an existing one you should look at the https://github.com/hakimel/reveal.js/blob/master/css/theme/README.md[reveal.js documentation] and use `revealjs_customtheme` AsciiDoc attribute to activate it.
