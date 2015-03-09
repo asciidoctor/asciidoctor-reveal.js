@@ -36,7 +36,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
           },
           TeX: {#{eqnums_opt}}
           });
-      script src='#{cdn_base}/mathjax/2.4.0/MathJax.js?config=TeX-MML-AM_HTMLorMML'  
+      script src='#{cdn_base}/mathjax/2.4.0/MathJax.js?config=TeX-MML-AM_HTMLorMML'
     - case attr 'source-highlighter'
     - when 'coderay'
       - if (attr 'coderay-css', 'class') == 'class'
@@ -127,7 +127,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
             { src: '#{revealjsdir}/lib/js/classList.js', condition: function() { return !document.body.classList; } },
             { src: '#{revealjsdir}/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
             { src: '#{revealjsdir}/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-            #{(attr? 'source-highlighter', 'highlight.js') ? "{ src: '#{revealjsdir}/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }," : nil}
+            #{(attr? 'source-highlighter', 'highlightjs') ? "{ src: '#{revealjsdir}/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }," : nil}
             { src: '#{revealjsdir}/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
             { src: '#{revealjsdir}/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
         ]
