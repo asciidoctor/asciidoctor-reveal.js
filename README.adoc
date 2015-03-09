@@ -179,11 +179,13 @@ Default settings are based on `reveal.js` default settings.
 
 |:revealjs_customtheme:
 |<file\|URL>
-| Overrides CSS with given file or URL. Default is disabled.
+|Overrides CSS with given file or URL.
+Default is disabled.
 
-|:highlightjs_style:
+|:highlightjs-theme:
 |<file\|URL>
-| Overrides https://highlightjs.org[highlight.js] CSS style with given file or URL. Default is disabled.
+|Overrides https://highlightjs.org[highlight.js] CSS style with given file or URL.
+Default is built-in [path]_lib/css/zenburn.css_.
 
 |:revealjsdir:
 |<file\|URL>
