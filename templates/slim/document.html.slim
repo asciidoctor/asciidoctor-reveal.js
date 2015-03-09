@@ -51,7 +51,10 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         - else
           style=Asciidoctor::Stylesheets.instance.pygments_stylesheet_data(attr 'pygments-style')
     / For syntax highlighting
-    link href="#{revealjsdir}/lib/css/zenburn.css" rel="stylesheet"
+    - if attr? :highlightjs_style
+      link href=(attr :highlightjs_style) rel="stylesheet"
+    - else
+      link href="#{revealjsdir}/lib/css/zenburn.css" rel="stylesheet"
     / If the query includes 'print-pdf', use the PDF print sheet
     javascript:
       document.write( '<link rel="stylesheet" href="#{revealjsdir}/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
