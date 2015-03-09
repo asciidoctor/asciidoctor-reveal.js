@@ -37,6 +37,8 @@ WARNING: We recommend using Slim 2.1.0 until https://github.com/asciidoctor/asci
 
   $ git clone git://github.com/hakimel/reveal.js.git
 
+WARNING: Currently asciidoctor-reveal.js is not compatible with reveal.js 3.0.0, be careful to clone or copy version 2.6.2 or older
+
 TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
 
 == Source Examples
