@@ -3,6 +3,9 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
   head
     meta charset="utf-8"
     - revealjsdir = (attr :revealjsdir, 'reveal.js')
+    - unless (asset_uri_scheme = (attr 'asset-uri-scheme', 'https')).empty?
+      - asset_uri_scheme = %(#{asset_uri_scheme}:)
+    - cdn_base = %(#{asset_uri_scheme}//cdnjs.cloudflare.com/ajax/libs)
     - [:description, :keywords, :author, :copyright].each do |key|
       - if attr? key
         meta name=key content=(attr key)
@@ -16,10 +19,12 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       link rel='stylesheet' href=(attr :revealjs_customtheme) id='theme'
     - else
       link rel='stylesheet' href='#{revealjsdir}/css/theme/#{attr 'revealjs_theme', 'league'}.css' id='theme'
+    - if attr? :icons, 'font'
+      - if attr? 'iconfont-remote'
+        link rel='stylesheet' href=(attr 'iconfont-cdn', %(#{cdn_base}/font-awesome/4.3.0/css/font-awesome.min.css))
+      - else
+        link rel='stylesheet' href=(normalize_web_path %(#{attr 'iconfont-name', 'font-awesome'}.css), (attr 'stylesdir', ''), false)
     - if attr? :stem
-      - asset_uri_scheme = (attr 'asset-uri-scheme', 'https')
-      - asset_uri_scheme = %(#{asset_uri_scheme}:) unless asset_uri_scheme.empty?
-      - cdn_base = %(#{asset_uri_scheme}//cdnjs.cloudflare.com/ajax/libs)
       - eqnums_val = (attr 'eqnums', 'none')
       - eqnums_val = 'AMS' if eqnums_val == ''
       - eqnums_opt = %( equationNumbers: { autoNumber: "#{eqnums_val}" } )
