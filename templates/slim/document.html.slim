@@ -70,8 +70,21 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       / Any section element inside of this container is displayed as a slide
       .slides
         - unless notitle || !has_header?
-          section
-            h2=@header.title
+          - bg_image = (attr? 'title-slide-background-image') ? (image_uri(attr 'title-slide-background-image')) : nil
+          - bg_video = (attr? 'title-slide-background-video') ? (media_uri(attr 'title-slide-background-video')) : nil
+          section(class = role
+            data-transition=(attr 'title-slide-transition')
+            data-transition-speed=(attr 'title-slide-transition-speed')
+            data-background=(attr 'title-slide-background')
+            data-background-size=(attr 'title-slide-background-size')
+            data-background-image=bg_image
+            data-background-video=bg_video
+            data-background-iframe=(attr 'title-slide-background-iframe')
+            data-background-color=(attr 'title-slide-background-color')
+            data-background-repeat=(attr 'title-slide-background-repeat')
+            data-background-position=(attr 'title-slide-background-position')
+            data-background-transition=(attr 'title-slide-background-transition'))
+            h1=@header.title
             p: small=author
         =content
     script src="#{revealjsdir}/lib/js/head.min.js"
