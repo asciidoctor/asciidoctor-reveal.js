@@ -160,6 +160,10 @@ Here is https://github.com/hakimel/reveal.js#markup[upstream documentation] on t
 
 NOTE: The `reveal.js` backend only supports level 1 (`==`) and level 2 (`===`) sections. Level 3 sections are not supported and will not render correctly.
 
+== About Jade Templates
+
+`/templates/jade` directory contains jade template files they are ported from `/templates/slim` templates. These templates were written to support reveal.js backend for Asciidoctor.js environment that is currently using in https://github.com/asciidocfx/AsciidocFX[AsciidocFX] editor. You can look at the https://github.com/asciidocfx/asciidoctor.js-reveal-demo[demo].
+
 == reveal.js Options
 
 There are some attributes that can be set at the top of the document which they are specific of +revealjs+ backend.
