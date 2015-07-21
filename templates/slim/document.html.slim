@@ -18,7 +18,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     - if attr? :revealjs_customtheme
       link rel='stylesheet' href=(attr :revealjs_customtheme) id='theme'
     - else
-      link rel='stylesheet' href='#{revealjsdir}/css/theme/#{attr 'revealjs_theme', 'league'}.css' id='theme'
+      link rel='stylesheet' href='#{revealjsdir}/css/theme/#{attr 'revealjs_theme', 'black'}.css' id='theme'
     - if attr? :icons, 'font'
       - if attr? 'iconfont-remote'
         link rel='stylesheet' href=(attr 'iconfont-cdn', %(#{cdn_base}/font-awesome/4.3.0/css/font-awesome.min.css))
@@ -116,9 +116,9 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         hideAddressBar: #{attr 'revealjs_hideaddressbar', 'true'},
         // Opens links in an iframe preview overlay
         previewLinks: #{attr 'revealjs_previewlinks', 'false'},
-        // Theme (e.g., beige, black, blood, league, moon, night, serif, simple, sky, solarized, white)
+        // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
         // NOTE setting the theme in the config no longer works in reveal.js 3.x
-        //theme: Reveal.getQueryHash().theme || '#{attr 'revealjs_theme', 'league'}',
+        //theme: Reveal.getQueryHash().theme || '#{attr 'revealjs_theme', 'black'}',
         // Transition style (e.g., none, fade, slide, convex, concave, zoom)
         transition: Reveal.getQueryHash().transition || '#{attr 'revealjs_transition', 'slide'}',
         // Transition speed (e.g., default, fast, slow)

@@ -171,7 +171,7 @@ NOTE: Default settings are based on `reveal.js` default settings.
 |Attribute |Value(s) |Description
 
 |:revealjs_theme:
-|beige, black, blood, *league*, moon, night, serif, simple, sky, solarized, white
+|beige, *black*, league, night, serif, simple, sky, solarized, white
 |Chooses one of reveal.js' https://github.com/hakimel/reveal.js#theming[built-in themes].
 
 |:revealjs_customtheme:
