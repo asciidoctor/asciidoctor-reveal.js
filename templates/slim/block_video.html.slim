@@ -4,8 +4,8 @@
   .content
     - case attr :poster
     - when 'vimeo'
-      - unless (asset_uri_scheme = (attr 'asset_uri_scheme'), 'https').empty?
-        -  asset_uri_scheme = %(#{attr 'asset_uri_scheme'}:)
+      - unless (asset_uri_scheme = (attr :asset_uri_scheme, 'https')).empty?
+        -  asset_uri_scheme = %(#{asset_uri_scheme}:)
       - start_anchor = (attr? :start) ? "#at=#{attr :start}" : nil
       - delimiter = '?'
       - autoplay_param = (option? 'autoplay') ? "#{delimiter}autoplay=1" : nil
@@ -14,8 +14,8 @@
       - src = %(#{asset_uri_scheme}//player.vimeo.com/video/#{attr :target}#{start_anchor}#{autoplay_param}#{loop_param})
       iframe width=(attr :width) height=(attr :height) src=src frameborder=0 webkitAllowFullScreen=true mozallowfullscreen=true allowFullScreen=true
     - when 'youtube'
-      - unless (asset_uri_scheme = (attr 'asset_uri_scheme'), 'https').empty?
-        -  asset_uri_scheme = %(#{attr 'asset_uri_scheme'}:)
+      - unless (asset_uri_scheme = (attr :asset_uri_scheme, 'https')).empty?
+        -  asset_uri_scheme = %(#{asset_uri_scheme}:)
       - params = ['rel=0']
       - params << "start=#{attr :start}" if attr? :start
       - params << "end=#{attr :end}" if attr? :end
