@@ -71,7 +71,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       .slides
         - unless notitle || !has_header?
           section
-            h2=@header.title
+            h1=@header.title
             p: small=author
         =content
     script src="#{revealjsdir}/lib/js/head.min.js"
@@ -131,7 +131,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         parallaxBackgroundImage: '#{attr 'revealjs_parallaxbackgroundimage', ''}',
         // Parallax background size in CSS syntax (e.g., "2100px 900px")
         parallaxBackgroundSize: '#{attr 'revealjs_parallaxbackgroundsize', ''}',
-        
+
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
@@ -144,7 +144,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         // Bounds for smallest/largest possible scale to apply to content
         minScale: #{attr 'revealjs_minscale', 0.2},
         maxScale: #{attr 'revealjs_maxscale', 1.5},
-        
+
         // Optional libraries used to extend on reveal.js
         dependencies: [
             { src: '#{revealjsdir}/lib/js/classList.js', condition: function() { return !document.body.classList; } },
