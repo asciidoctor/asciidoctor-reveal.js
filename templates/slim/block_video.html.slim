@@ -4,21 +4,25 @@
   .content
     - case attr :poster
     - when 'vimeo'
+      - unless (asset_uri_scheme = (attr :asset_uri_scheme, 'https')).empty?
+        -  asset_uri_scheme = %(#{asset_uri_scheme}:)
       - start_anchor = (attr? :start) ? "#at=#{attr :start}" : nil
       - delimiter = '?'
       - autoplay_param = (option? 'autoplay') ? "#{delimiter}autoplay=1" : nil
       - delimiter = '&amp;' if autoplay_param
       - loop_param = (option? 'loop') ? "#{delimiter}loop=1" : nil
-      - src = %(//player.vimeo.com/video/#{attr :target}#{start_anchor}#{autoplay_param}#{loop_param})
+      - src = %(#{asset_uri_scheme}//player.vimeo.com/video/#{attr :target}#{start_anchor}#{autoplay_param}#{loop_param})
       iframe width=(attr :width) height=(attr :height) src=src frameborder=0 webkitAllowFullScreen=true mozallowfullscreen=true allowFullScreen=true
     - when 'youtube'
+      - unless (asset_uri_scheme = (attr :asset_uri_scheme, 'https')).empty?
+        -  asset_uri_scheme = %(#{asset_uri_scheme}:)
       - params = ['rel=0']
       - params << "start=#{attr :start}" if attr? :start
       - params << "end=#{attr :end}" if attr? :end
       - params << "autoplay=1" if option? 'autoplay'
       - params << "loop=1" if option? 'loop'
       - params << "controls=0" if option? 'nocontrols'
-      - src = %(//www.youtube.com/embed/#{attr :target}?#{params * '&amp;'})
+      - src = %(#{asset_uri_scheme}//www.youtube.com/embed/#{attr :target}?#{params * '&amp;'})
       iframe width=(attr :width) height=(attr :height) src=src frameborder=0 allowfullscreen=!(option? 'nofullscreen')
     - else
       video(src=media_uri(attr :target) width=(attr :width) height=(attr :height)
