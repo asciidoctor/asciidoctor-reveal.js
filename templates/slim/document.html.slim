@@ -73,7 +73,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
           section
             h2=@header.title
             - preamble = @document.find_by context: :preamble
-            - if preamble.length > 0
+            - unless preamble.nil? or preamble.length == 0
               =preamble.pop.content
             p: small=author
         =content
