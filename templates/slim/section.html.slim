@@ -11,12 +11,12 @@
   section
     / TODO: test if possible to get rid of duplication
     section(id=(titleless ? nil : @id)
-      data-transition=(attr 'data-transition')
-      data-transition-speed=(attr 'data-transition-speed')
+      data-transition=(attr 'transition')
+      data-transition-speed=(attr 'transition-speed')
       data-background=data_background
-      data-background-size=(attr 'data-background-size')
-      data-background-repeat=(attr 'data-background-repeat')
-      data-background-transition=(attr 'data-background-transition'))
+      data-background-size=(attr 'background-size')
+      data-background-repeat=(attr 'background-repeat')
+      data-background-transition=(attr 'background-transition'))
       - unless hide_title
         h2=title
       - (blocks - vertical_slides).each do |block|
@@ -32,12 +32,12 @@
     =content.chomp
   - else
     section(id=(titleless ? nil : @id)
-      data-transition=(attr 'data-transition')
-      data-transition-speed=(attr 'data-transition-speed')
+      data-transition=(attr 'transition')
+      data-transition-speed=(attr 'transition-speed')
       data-background=data_background
-      data-background-size=(attr 'data-background-size')
-      data-background-repeat=(attr 'data-background-repeat')
-      data-background-transition=(attr 'data-background-transition'))
+      data-background-size=(attr 'background-size')
+      data-background-repeat=(attr 'background-repeat')
+      data-background-transition=(attr 'background-transition'))
       - unless hide_title
         h2=title
       =content.chomp
