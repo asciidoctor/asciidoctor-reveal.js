@@ -1,6 +1,9 @@
 / hide slides on %conceal, %notitle and named "!"
 - titleless = (title = self.title) == '!'
 - hide_title = (titleless || (option? :notitle) || (option? :conceal))
+
+/ slide options processing
+- data_background = (attr? 'background') ? (image_uri(attr 'background')) : nil
 - vertical_slides = find_by(context: :section) {|section| section.level == 2 }
 
 / render parent section of vertical slides set
@@ -10,7 +13,7 @@
     section(id=(titleless ? nil : @id)
       data-transition=(attr 'data-transition')
       data-transition-speed=(attr 'data-transition-speed')
-      data-background=(attr 'data-background')
+      data-background=data_background
       data-background-size=(attr 'data-background-size')
       data-background-repeat=(attr 'data-background-repeat')
       data-background-transition=(attr 'data-background-transition'))
@@ -31,7 +34,7 @@
     section(id=(titleless ? nil : @id)
       data-transition=(attr 'data-transition')
       data-transition-speed=(attr 'data-transition-speed')
-      data-background=(attr 'data-background')
+      data-background=data_background
       data-background-size=(attr 'data-background-size')
       data-background-repeat=(attr 'data-background-repeat')
       data-background-transition=(attr 'data-background-transition'))
