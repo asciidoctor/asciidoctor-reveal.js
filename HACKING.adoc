@@ -1,0 +1,27 @@
+= HACKING asciidoctor-reveal.js
+
+To understand what you have access to in templates, just inject some ruby.
+For example to see which attributes are available, you can print them using:
+
+----
+- puts @document.attributes.inspect
+- puts @attributes.inspect
+----
+
+Other generally useful introspection:
+
+----
+- puts instance_variables
+- puts local_variables
+- puts @document.methods
+----
+
+One might find `pp` to produce better output (and in some cases not).
+
+----
+- require 'pp'
+- pp @document.attributes
+----
+
+Reference:
+https://github.com/asciidoctor/asciidoctor.org/issues/80#issuecomment-145698579
