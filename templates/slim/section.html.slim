@@ -1,3 +1,4 @@
+/ OPTIONS PROCESSING
 / hide slides on %conceal, %notitle and named "!"
 - titleless = (title = self.title) == '!'
 - hide_title = (titleless || (option? :notitle) || (option? :conceal))
@@ -6,17 +7,38 @@
 - data_background = (attr? 'background') ? (image_uri(attr 'background')) : nil
 - vertical_slides = find_by(context: :section) {|section| section.level == 2 }
 
+/ extracting block image attributes to find an image to use as a background attribute
+- data_background, data_background_size, data_background_repeat,
+  data_background_transition = nil
+/ FIXME would have expected the following to work... which would probably be faster
+/- slide_images = find_by(:context => :image) {|image| image.attr(1) == 'background' }
+- slide_images = find_by(:context => :image)
+- unless slide_images.nil? or slide_images.length == 0
+  - slide_images.each do |image|
+    - if image.attr(1) == "background"
+      - data_background = image_uri(image.attr 'target')
+      / make sure no crash on nil and default values make sense
+      - data_background_size = image.attr 'size'
+      - data_background_repeat = image.attr 'repeat'
+      - data_background_transition = image.attr 'transition'
+      - break
+
+/ background section attribute overrides the image one
+- if attr? 'background'
+  - data_background = image_uri(attr 'background')
+
+/ RENDERING
 / render parent section of vertical slides set
 - if @level == 1 && !vertical_slides.empty?
   section
-    / TODO: test if possible to get rid of duplication
+    / TODO: try to get rid of duplication w/ regular slide section
     section(id=(titleless ? nil : @id)
       data-transition=(attr 'transition')
       data-transition-speed=(attr 'transition-speed')
       data-background=data_background
-      data-background-size=(attr 'background-size')
-      data-background-repeat=(attr 'background-repeat')
-      data-background-transition=(attr 'background-transition'))
+      data-background-size=(data_background_size || attr('background-size'))
+      data-background-repeat=(data_background_repeat || attr('background-repeat'))
+      data-background-transition=(data_background_transition || attr('background-transition')))
       - unless hide_title
         h2=title
       - (blocks - vertical_slides).each do |block|
@@ -35,9 +57,9 @@
       data-transition=(attr 'transition')
       data-transition-speed=(attr 'transition-speed')
       data-background=data_background
-      data-background-size=(attr 'background-size')
-      data-background-repeat=(attr 'background-repeat')
-      data-background-transition=(attr 'background-transition'))
+      data-background-size=(data_background_size || attr('background-size'))
+      data-background-repeat=(data_background_repeat || attr('background-repeat'))
+      data-background-transition=(data_background_transition || attr('background-transition')))
       - unless hide_title
         h2=title
       =content.chomp
