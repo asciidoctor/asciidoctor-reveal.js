@@ -71,7 +71,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       .slides
         - unless notitle || !has_header?
           section
-            h2=@header.title
+            h1=@header.title
             - preamble = @document.find_by context: :preamble
             - unless preamble.nil? or preamble.length == 0
               =preamble.pop.content
