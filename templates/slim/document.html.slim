@@ -69,6 +69,9 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       link rel='stylesheet' href=((customcss = attr :customcss).empty? ? 'asciidoctor-revealjs.css' : customcss)
   body
     .reveal
+      - unless (docinfo_content = (docinfo :footer, '.html')).empty?
+        .footer style='position: absolute; bottom: 1em; left: 1em'
+          =docinfo_content
       / Any section element inside of this container is displayed as a slide
       .slides
         - unless notitle || !has_header?
@@ -157,7 +160,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         parallaxBackgroundImage: '#{attr 'revealjs_parallaxbackgroundimage', ''}',
         // Parallax background size in CSS syntax (e.g., "2100px 900px")
         parallaxBackgroundSize: '#{attr 'revealjs_parallaxbackgroundsize', ''}',
-        
+
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
@@ -170,7 +173,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         // Bounds for smallest/largest possible scale to apply to content
         minScale: #{attr 'revealjs_minscale', 0.2},
         maxScale: #{attr 'revealjs_maxscale', 1.5},
-        
+
         // Optional libraries used to extend on reveal.js
         dependencies: [
             { src: '#{revealjsdir}/lib/js/classList.js', condition: function() { return !document.body.classList; } },
@@ -181,5 +184,3 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
             { src: '#{revealjsdir}/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
         ]
       });
-    - unless (docinfo_content = (docinfo :footer, '.html')).empty?
-      =docinfo_content
