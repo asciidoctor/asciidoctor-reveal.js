@@ -8,10 +8,7 @@ The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a
 
 . Ensure Asciidoctor, Slim and their dependencies are installed:
 
-  $ gem install asciidoctor tilt thread_safe
-    gem install slim --version 2.1.0
-+
-WARNING: We recommend using Slim 2.1.0 until https://github.com/asciidoctor/asciidoctor-reveal.js/issues/8[issue #8] is resolved.
+  $ gem install asciidoctor tilt thread_safe slim
 
 . Clone `asciidoctor/asciidoctor-reveal.js` to get templates for rendering presentation HTML:
 
