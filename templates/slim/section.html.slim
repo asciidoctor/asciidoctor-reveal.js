@@ -11,7 +11,11 @@
       =subsection.convert
 / standalone slides
 - else
-  section id=(hide_title ? nil : @id) data-transition=(attr 'data-transition') data-transition-speed=(attr 'data-transition-speed') data-background=(attr 'data-background') data-background-size=(attr 'data-background-size') data-background-repeat=(attr 'data-background-repeat') data-background-transition=(attr 'data-background-transition')
-    - unless hide_title
-      h2=title
+  - if @level >= 3
+    *{tag: %(h#{@level})=title}
     =content.chomp
+  - else
+    section id=(hide_title ? nil : @id) data-transition=(attr 'data-transition') data-transition-speed=(attr 'data-transition-speed') data-background=(attr 'data-background') data-background-size=(attr 'data-background-size') data-background-repeat=(attr 'data-background-repeat') data-background-transition=(attr 'data-background-transition')
+      - unless hide_title
+        *{tag: %(h#{@level > 1 ? 2 : 1})=title}
+      =content.chomp
