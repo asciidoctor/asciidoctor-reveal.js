@@ -1,5 +1,7 @@
 = HACKING asciidoctor-reveal.js
 
+== Template system
+
 To understand what you have access to in templates, just inject some ruby.
 For example to see which attributes are available, you can print them using:
 
@@ -23,5 +25,35 @@ One might find `pp` to produce better output (and in some cases not).
 - pp @document.attributes
 ----
 
-Reference:
+=== Reference
+
 https://github.com/asciidoctor/asciidoctor.org/issues/80#issuecomment-145698579
+
+== Tests
+
+In order to help troubleshoot issues and test syntax improvements, some minimalist asciidoc test files are provided.
+You can render the tests files and then load them in a browser and check if `asciidoctor-reveal.js` behaves as expected.
+
+=== Initial Setup
+
+    cd test/
+    git clone https://github.com/hakimel/reveal.js.git
+
+=== Render tests into .html
+
+From the project's root directory:
+
+    make
+
+=== Open rendered files
+
+You can open the generated `.html` in a Web browser.
+For convenience the following command will open the last modified file:
+
+    make open
+
+Additionally, if you want to test with a minimalist web server:
+
+    make serve
+
+The server is running in the foreground and needs `Ctrl-C` to be killed.
