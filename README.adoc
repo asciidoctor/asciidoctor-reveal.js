@@ -163,13 +163,21 @@ Slide Six uses the vertical slide feature of `reveal.js`.
 Slide Six.One will be rendered vertically below Slide Six.
 Here is https://github.com/hakimel/reveal.js#markup[upstream documentation] on that topic.
 
+=== Slides without titles
 
-....
-== !
-This is a slide with hidden title
-....
+There are a few ways to have no titles on slides.
 
-If you don't want to have a title on each of your slides, setting your title to `!` allows you to hide the title of the given slide.
+* Setting your title to `!`
+* Adding the `notitle` option to your slide
+* Adding the `conceal` option to your slide
+
+Here is an example of the three techniques in action:
+
+----
+include::test/concealed-slide-titles.adoc[]
+----
+
+NOTE: `conceal` and `notitle` have the advantage that the slide still has an id so it can be linked to.
 
 == reveal.js Options
 

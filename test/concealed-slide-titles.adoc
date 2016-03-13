@@ -1,0 +1,15 @@
+= Concealed Slide Titles
+
+== !
+
+This
+
+[%notitle]
+== Presentation
+
+presentation's titles
+
+[%conceal]
+== Concealed
+
+should be concealed
