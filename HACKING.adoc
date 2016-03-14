@@ -1,33 +1,91 @@
 = HACKING asciidoctor-reveal.js
 
-== Template system
+== Inspect the template system
 
-To understand what you have access to in templates, just inject some ruby.
-For example to see which attributes are available, you can print them using:
+
+To understand what you have access to in templates you can inject some ruby.
+With the slim templating system, this is done by prepending the lines with a dash (`-`) and inserting a ruby statement.
+Two complementary approaches can be used to explore the context offered by asciidoctor through the template system:
+
+* logging on the command line via print-like statements
+* jump into the context through an interactive debugger
+
+=== Print debugging information
+
+For example to see which attributes are available, you can print them by adding these lines in the `.slim` file of interest:
 
 ----
 - puts @document.attributes.inspect
 - puts @attributes.inspect
+- puts @document.methods
 ----
 
-Other generally useful introspection:
+Other generally useful ruby specific introspection:
 
 ----
 - puts instance_variables
 - puts local_variables
-- puts @document.methods
 ----
 
-One might find `pp` to produce better output (and in some cases not).
+One might find `pp` to produce better output (and in some cases not):
 
 ----
 - require 'pp'
 - pp @document.attributes
 ----
 
-=== Reference
+=== Interactively debug a template
 
-https://github.com/asciidoctor/asciidoctor.org/issues/80#issuecomment-145698579
+Pry is a powerful debugger for ruby that features tab-completion.
+It is very useful to discover a complex object hierarchy like what asciidoctor offers.
+
+==== Initial Setup
+
+    gem install pry
+
+==== Usage
+
+In order to be dropped into the debugger at a specific point in a template simply add the following two lines in the relevant `.slim` template file:
+
+----
+- require 'pry'
+- binding.pry
+----
+
+Then run asciidoctor from the command-line to generate your document and you'll be dropped in the debugger:
+
+----
+$ make
+asciidoctor -T templates/slim -b revealjs test/level-sections.adoc
+asciidoctor: WARNING: level-sections.adoc: line 29: section title out of sequence: expected level 2, got level 3
+
+From: /home/olivier/src/asciidoc/asciidoctor-reveal.js/templates/slim/section.html.slim @ line 3 :
+
+    1: - hide_title = (title = self.title) == '!'
+    2: - require 'pry'
+ => 3: - binding.pry
+    4: / parent section of vertical slides set
+    5: - if @level == 1 && !(subsections = sections).empty?
+    6:   section
+    7:     section id=(hide_title ? nil : @id) data-transition=(attr 'data-transition') data-transition-speed=(attr 'data-transition-speed') data-background=(attr 'data-background') data-background-size=(attr 'data-background-size') data-background-repeat=(attr 'data-background-repeat') data-background-transition=(attr 'data-background-transition')
+    8:       - unless hide_title
+
+[1] pry(#<Asciidoctor::Section>)>
+----
+
+Then using commands like the following allows you to explore interactively asciidoctor's API and object model with syntax highlighting:
+
+    [1] pry(#<Asciidoctor::Section>)> @document
+
+You can also query asciidoctor's documentation:
+
+    [4] pry(#<Asciidoctor::Section>)> ? find_by
+
+=== References
+
+* https://github.com/asciidoctor/asciidoctor.org/issues/80#issuecomment-145698579
+* http://pryrepl.org/
+* http://discuss.asciidoctor.org/Interactively-debugging-a-template-with-a-REPL-td4498.html
 
 == Tests
 
