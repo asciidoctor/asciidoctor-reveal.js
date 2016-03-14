@@ -1,4 +1,6 @@
-== reveal.js Backend for Asciidoctor
+= reveal.js backend for Asciidoctor
+:toc: preamble
+:toclevels: 2
 
 The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a collection of Slim templates for https://github.com/asciidoctor/asciidoctor[Asciidoctor] that transform an AsciiDoc document into HTML5 slides animated by http://lab.hakim.se/reveal-js/[reveal.js].
 
@@ -42,7 +44,9 @@ TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by kee
 
 // FIXME: incomplete
 
-Let's see some examples of `revealjs` backend features:
+Let's see some examples of `revealjs` backend features.
+
+=== Basic presentation with speaker notes
 
 ----
 = Title Slide
@@ -63,6 +67,8 @@ Actually things aren't that bad
 --
 ----
 
+=== Background colors
+
 In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js' default behavior) with https://github.com/hakimel/reveal.js#speaker-notes[speaker notes].
 
 ----
@@ -75,6 +81,8 @@ Is very yellow
 Slide Three applies the attribute http://lab.hakim.se/reveal-js/#/14[data-background] to the `reveal.js` <section> tag.
 Anything accepted by CSS color formats works.
 Here is the https://github.com/hakimel/reveal.js#slide-backgrounds[upstream documentation].
+
+=== Fragments
 
 ----
 == Slide Four
@@ -91,6 +99,8 @@ This is what `reveal.js` calls http://lab.hakim.se/reveal-js/#/fragments[fragmen
 Applying the step option or role on a list (`[%step]` or `[.step]`) will do the trick.
 Here is https://github.com/hakimel/reveal.js#fragments[upstream documentation] on the topic.
 Note that only `fade-in` is supported for lists at the moment.
+
+=== Syntax highlighting
 
 [listing]
 ....
@@ -139,6 +149,8 @@ To use http://pygments.org[Pygments]:
 = Title slide
 :source-highlighter: pygments
 ----
+
+=== Vertical slides
 
 [listing]
 ....
