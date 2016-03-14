@@ -1,10 +1,12 @@
-- hide_title = (title = self.title) == '!'
+/ hide slides on %conceal, %notitle and named "!"
+- titleless = (title = self.title) == '!'
+- hide_title = (titleless || (option? :notitle) || (option? :conceal))
 - vertical_slides = find_by(context: :section) {|section| section.level == 2 }
 
 / render parent section of vertical slides set
 - if @level == 1 && !vertical_slides.empty?
   section
-    section id=(hide_title ? nil : @id) data-transition=(attr 'data-transition') data-transition-speed=(attr 'data-transition-speed') data-background=(attr 'data-background') data-background-size=(attr 'data-background-size') data-background-repeat=(attr 'data-background-repeat') data-background-transition=(attr 'data-background-transition')
+    section id=(titleless ? nil : @id) data-transition=(attr 'data-transition') data-transition-speed=(attr 'data-transition-speed') data-background=(attr 'data-background') data-background-size=(attr 'data-background-size') data-background-repeat=(attr 'data-background-repeat') data-background-transition=(attr 'data-background-transition')
       - unless hide_title
         h2=title
       - (blocks - vertical_slides).each do |block|
@@ -19,7 +21,7 @@
     *{tag: %(h#{@level})} =title
     =content.chomp
   - else
-    section id=(hide_title ? nil : @id) data-transition=(attr 'data-transition') data-transition-speed=(attr 'data-transition-speed') data-background=(attr 'data-background') data-background-size=(attr 'data-background-size') data-background-repeat=(attr 'data-background-repeat') data-background-transition=(attr 'data-background-transition')
+    section id=(titleless ? nil : @id) data-transition=(attr 'data-transition') data-transition-speed=(attr 'data-transition-speed') data-background=(attr 'data-background') data-background-size=(attr 'data-background-size') data-background-repeat=(attr 'data-background-repeat') data-background-transition=(attr 'data-background-transition')
       - unless hide_title
         h2=title
       =content.chomp
