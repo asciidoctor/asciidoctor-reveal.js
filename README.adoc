@@ -6,7 +6,8 @@ The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a
 
 //image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
 
-== Usage Instructions
+
+== Prerequisites
 
 . Ensure Asciidoctor, Slim and their dependencies are installed:
 
@@ -16,31 +17,26 @@ The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a
 
   $ git clone git://github.com/asciidoctor/asciidoctor-reveal.js.git
 
-. Edit `CONTENT_FILE` ( *.adoc or *.ad or ...):
-
-  ** Slides & content per slide
-  ** (Optional) Set presentation options at top of `CONTENT_FILE`.
-     The options available & their values will depend on presentation library (some examples below).
-
-  :${Attribute}: ${Value}
-
-. Generate HTML from the Asciidoctor templates
-
-  .. Command Line:
-
-  $ asciidoctor -T templates/slim CONTENT_FILE
-
-  .. Build Script: use Ruby, JavaScript, Gradle or your favorite build tool/script with presentation options
-
 . Copy or clone presentation library (to output destination/branch)
 
   $ git clone -b 3.0.0 git://github.com/hakimel/reveal.js.git
 
-NOTE: If you want to use reveal.js 2, please switch to the reveal.js-2.x branch.
+
+== Rendering the AsciiDoc into slides
+
+. Create content in a file (*.adoc, *.ad, etc.).
+  See examples in <<Some Examples>> section to get started or files in `test/`.
+
+. Generate HTML presentation from the Asciidoctor templates
+
+  $ asciidoctor -T templates/slim CONTENT_FILE
+
+NOTE: If you want to use reveal.js 2, please switch your asciidoctor-reveal.js repo to the reveal.js-2.x branch.
 
 TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
 
-== Source Examples
+
+== Some Examples
 
 // FIXME: incomplete
 
