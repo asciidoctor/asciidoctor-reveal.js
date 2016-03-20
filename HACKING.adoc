@@ -115,3 +115,12 @@ Additionally, if you want to test with a minimalist web server:
     make serve
 
 The server is running in the foreground and needs `Ctrl-C` to be killed.
+
+== Jade templates
+
+Jade templates are used by AsciidocFX. Since they are separate they might be
+out of sync with our asciidoctor's slim templates.
+
+To test the jade templates, install AsciidocFX and copy the jade templates
+over to AsciidocFX's `conf/slide/templates/revealjs/` directory. Then use
+AsciidocFX to render the slides.
