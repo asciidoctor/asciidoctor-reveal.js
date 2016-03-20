@@ -1,4 +1,8 @@
 = HACKING asciidoctor-reveal.js
+:toc: preamble
+:toclevels: 2
+
+Short instructions that aim to help potential contributors.
 
 == Inspect the template system
 
