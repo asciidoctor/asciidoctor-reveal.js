@@ -1,4 +1,5 @@
 = Vertical Slides
+:backend: revealjs
 
 == First slide
 
