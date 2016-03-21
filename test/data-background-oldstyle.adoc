@@ -1,0 +1,36 @@
+= Test slide deck
+:imagesdir: images
+:backend: revealjs
+
+[background=cover.jpg,background-size=cover]
+== !
+
+[background=70s.jpg,background-size=cover]
+== !
+
+image::meme-2.jpg[width=500px]
+
+== I have no background
+
+== !
+
+image::meme-7.png[]
+
+[background=70s.jpg,background-size=contain]
+== !
+
+[background=bio.jpg,background-size=100px]
+== hey
+
+[background=bio.jpg,background-size=200px]
+=== here
+
+[background=bio.jpg,background-size=400px]
+=== I
+
+[background=bio.jpg,background-size=800px]
+=== come
+
+[background="https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",background-size=contain]
+== URL Goat
+
