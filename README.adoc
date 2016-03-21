@@ -313,7 +313,7 @@ If you want to build a custom theme or customize an existing one you should look
 
 == Minimum Requirements
 
-* asciidoctor 1.5.0
+* asciidoctor 1.5.4
 
 == Copyright and Licensing
 

@@ -3,16 +3,14 @@
 - titleless = (title = self.title) == '!'
 - hide_title = (titleless || (option? :notitle) || (option? :conceal))
 
-/ slide options processing
 - data_background = (attr? 'background') ? (image_uri(attr 'background')) : nil
 - vertical_slides = find_by(context: :section) {|section| section.level == 2 }
 
 / extracting block image attributes to find an image to use as a background attribute
 - data_background, data_background_size, data_background_repeat,
   data_background_transition = nil
-/ FIXME would have expected the following to work... which would probably be faster
-/- slide_images = find_by(:context => :image) {|image| image.attr(1) == 'background' }
-- slide_images = find_by(:context => :image)
+
+- slide_images = find_by(:context => :image) {|image| image.attr(1) == 'background' }
 - unless slide_images.nil? or slide_images.length == 0
   - slide_images.each do |image|
     - if image.attr(1) == "background"
@@ -31,7 +29,7 @@
 / render parent section of vertical slides set
 - if @level == 1 && !vertical_slides.empty?
   section
-    / TODO: try to get rid of duplication w/ regular slide section
+    / TODO: try to get rid of duplication w/ standalone slide section
     section(id=(titleless ? nil : @id)
       data-transition=(attr 'transition')
       data-transition-speed=(attr 'transition-speed')
