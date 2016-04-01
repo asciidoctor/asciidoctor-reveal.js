@@ -9,7 +9,7 @@ The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a
 
 == Prerequisites
 
-. Ensure Asciidoctor, Slim and their dependencies are installed:
+. Ensure Asciidoctor, Slim and their dependencies are installed (in their latest version):
 
   $ gem install asciidoctor tilt thread_safe slim
 
@@ -313,4 +313,4 @@ If you want to build a custom theme or customize an existing one you should look
 
 == Minimum Requirements
 
-* asciidoctor 1.5.0
+* asciidoctor 1.5.4
