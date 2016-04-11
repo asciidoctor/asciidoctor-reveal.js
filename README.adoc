@@ -314,3 +314,10 @@ If you want to build a custom theme or customize an existing one you should look
 == Minimum Requirements
 
 * asciidoctor 1.5.0
+
+== Copyright and Licensing
+
+Copyright (C) 2012-2016 Olivier Bilodeau, Charles Moulliard, Dan Allen and the Asciidoctor Project.
+Free use of this software is granted under the terms of the MIT License.
+
+See the <<LICENSE#,LICENSE>> file for details.
