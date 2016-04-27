@@ -179,6 +179,35 @@ include::test/concealed-slide-titles.adoc[]
 
 NOTE: `conceal` and `notitle` have the advantage that the slide still has an id so it can be linked to.
 
+=== Splitting long slides without impacting other backends
+To mark slides split points you can use preprocessor conditionals combinded with backend declaration.+
+Breaking points are set with slideless titles `=== !` wrapped in a conditionnal : `ifdef::backend-revealjs[=== !]`. 
+In the end, the whole document has to be compiled with the backend option : `-b revealjs`
+
+For example :
+[example]
+----
+== Main section
+
+=== Sub Section    
+Small +
+Multiline +
+intro
+
+. very
+. long
+. list
+. of
+. items
+
+ifndef::escapingSillyPreprocessor[ifdef::backend-revealjs[=== !]]
+Some overview diagram
+
+ifndef::escapingSillyPreprocessor[ifdef::backend-revealjs[=== !]]
+Detailed view diagram
+----
+Compiled with `asciidoctor -T asciidoctor-reveal.js/templates/slim/ -b revealjs mydoc.adoc`
+
 == About Jade Templates
 
 `/templates/jade` directory contains jade template files they are ported from `/templates/slim` templates. These templates were written to support reveal.js backend for Asciidoctor.js environment that is currently using in https://github.com/asciidocfx/AsciidocFX[AsciidocFX] editor. You can look at the https://github.com/asciidocfx/asciidoctor.js-reveal-demo[demo].
