@@ -2,6 +2,7 @@
 - titleless = (title = self.title) == '!'
 - hide_title = (titleless || (option? :notitle) || (option? :conceal))
 - vertical_slides = find_by(context: :section) {|section| section.level == 2 }
+- @id = @id.gsub(/[^a-zA-Z0-9\-\_\:\.]/, '')
 
 / render parent section of vertical slides set
 - if @level == 1 && !vertical_slides.empty?
