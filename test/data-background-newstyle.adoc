@@ -2,7 +2,8 @@
 :imagesdir: images
 :backend: revealjs
 
-== !
+[%notitle]
+== Opening
 
 image::cover.jpg[background, size=cover]
 
