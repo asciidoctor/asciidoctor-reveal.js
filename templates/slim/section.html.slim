@@ -3,11 +3,11 @@
 - titleless = (title = self.title) == '!'
 - hide_title = (titleless || (option? :notitle) || (option? :conceal))
 
-- data_background = (attr? 'background') ? (image_uri(attr 'background')) : nil
 - vertical_slides = find_by(context: :section) {|section| section.level == 2 }
 
-/ extracting block image attributes to find an image to use as a background attribute
-- data_background, data_background_size, data_background_repeat,
+/ extracting block image attributes to find an image to use as a 
+/ background_image attribute
+- data_background_image, data_background_size, data_background_repeat,
   data_background_transition = nil
 
 - slide_images = find_by(:context => :image) { |image|
@@ -15,16 +15,19 @@
 - }
 - unless slide_images.nil? or slide_images.length == 0
   - slide_images.each do |image|
-    - data_background = image_uri(image.attr 'target')
+    - data_background_image = image_uri(image.attr 'target')
     / make sure no crash on nil and default values make sense
     - data_background_size = image.attr 'size'
     - data_background_repeat = image.attr 'repeat'
     - data_background_transition = image.attr 'transition'
     - break
 
-/ background section attribute overrides the image one
-- if attr? 'background'
-  - data_background = image_uri(attr 'background')
+/ background-image section attribute overrides the image one
+- if attr? 'background-image'
+  - data_background_image = image_uri(attr 'background-image')
+
+- if attr? 'background-color'
+  - data_background_color = attr 'background-color'
 
 / RENDERING
 / render parent section of vertical slides set
@@ -34,7 +37,8 @@
     section(id=(titleless ? nil : @id)
       data-transition=(attr 'transition')
       data-transition-speed=(attr 'transition-speed')
-      data-background=data_background
+      data-background-color=data_background_color
+      data-background-image=data_background_image
       data-background-size=(data_background_size || attr('background-size'))
       data-background-repeat=(data_background_repeat || attr('background-repeat'))
       data-background-transition=(data_background_transition || attr('background-transition')))
@@ -55,7 +59,8 @@
     section(id=(titleless ? nil : @id)
       data-transition=(attr 'transition')
       data-transition-speed=(attr 'transition-speed')
-      data-background=data_background
+      data-background-color=data_background_color
+      data-background-image=data_background_image
       data-background-size=(data_background_size || attr('background-size'))
       data-background-repeat=(data_background_repeat || attr('background-repeat'))
       data-background-transition=(data_background_transition || attr('background-transition')))
