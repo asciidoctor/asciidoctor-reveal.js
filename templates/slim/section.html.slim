@@ -10,16 +10,17 @@
 - data_background, data_background_size, data_background_repeat,
   data_background_transition = nil
 
-- slide_images = find_by(:context => :image) {|image| image.attr(1) == 'background' }
+- slide_images = find_by(:context => :image) { |image|
+-   image.attr(1) == 'background' || image.attr(1) == 'canvas'
+- }
 - unless slide_images.nil? or slide_images.length == 0
   - slide_images.each do |image|
-    - if image.attr(1) == "background"
-      - data_background = image_uri(image.attr 'target')
-      / make sure no crash on nil and default values make sense
-      - data_background_size = image.attr 'size'
-      - data_background_repeat = image.attr 'repeat'
-      - data_background_transition = image.attr 'transition'
-      - break
+    - data_background = image_uri(image.attr 'target')
+    / make sure no crash on nil and default values make sense
+    - data_background_size = image.attr 'size'
+    - data_background_repeat = image.attr 'repeat'
+    - data_background_transition = image.attr 'transition'
+    - break
 
 / background section attribute overrides the image one
 - if attr? 'background'
