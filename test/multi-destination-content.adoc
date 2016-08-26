@@ -20,7 +20,7 @@ intro
 . of
 . items
 
-ifndef::escapingSillyPreprocessor[ifdef::backend-revealjs[=== !]]
+ifdef::backend-revealjs[=== !]
 
 Some overview
 
@@ -44,7 +44,7 @@ Some overview
 +-------------------------------------------------+
 ----
 
-ifndef::escapingSillyPreprocessor[ifdef::backend-revealjs[=== !]]
+ifdef::backend-revealjs[=== !]
 
 Detailed view
 
