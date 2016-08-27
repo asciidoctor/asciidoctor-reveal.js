@@ -200,6 +200,43 @@ Here is an example:
 include::test/title-slide-image.adoc[]
 ----
 
+=== Content meant for multiple back-ends
+
+Some content can be created with both slides and book in mind.
+
+To mark slides split points you can use preprocessor conditionals combined
+with back-end declaration.
+Breaking points are set using slides with no title `=== !` wrapped in a
+conditional: `ifdef::backend-revealjs[=== !]`.
+In the end, the whole document has to be compiled with the back-end option:
+`-b revealjs`
+
+For example:
+
+----
+== Main section
+
+=== Sub Section
+
+Small +
+Multiline +
+intro
+
+. very
+. long
+. list
+. of
+. items
+
+\ifdef::backend-revealjs[=== !]
+
+Some overview diagram
+
+\ifdef::backend-revealjs[=== !]
+
+Detailed view diagram
+----
+
 
 == About Jade Templates
 
