@@ -207,11 +207,11 @@ intro
 . of
 . items
 
-ifndef::escapingSillyPreprocessor[ifdef::backend-revealjs[=== !]]
+\ifdef::backend-revealjs[=== !]
 
 Some overview diagram
 
-ifndef::escapingSillyPreprocessor[ifdef::backend-revealjs[=== !]]
+\ifdef::backend-revealjs[=== !]
 
 Detailed view diagram
 ----
