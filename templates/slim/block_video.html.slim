@@ -1,31 +1,36 @@
-.videoblock id=@id class=[@style,role]
+/ in a slide-deck context we assume video should take as much place as possible
+/ unless already specified
+- no_stretch = ((attr? :width) || (attr? :height))
+- width = (attr? :width) ? :width : "100%"
+- height = (attr? :height) ? :height : "100%"
+/ we apply revealjs stretch class to the videoblock take all the place we can
+.videoblock id=@id class=[@style,role,(no_stretch ? nil : "stretch")]
   - if title?
     .title=captioned_title
-  .content
-    - case attr :poster
-    - when 'vimeo'
-      - unless (asset_uri_scheme = (attr :asset_uri_scheme, 'https')).empty?
-        -  asset_uri_scheme = %(#{asset_uri_scheme}:)
-      - start_anchor = (attr? :start) ? "#at=#{attr :start}" : nil
-      - delimiter = '?'
-      - autoplay_param = (option? 'autoplay') ? "#{delimiter}autoplay=1" : nil
-      - delimiter = '&amp;' if autoplay_param
-      - loop_param = (option? 'loop') ? "#{delimiter}loop=1" : nil
-      - src = %(#{asset_uri_scheme}//player.vimeo.com/video/#{attr :target}#{start_anchor}#{autoplay_param}#{loop_param})
-      iframe width=(attr :width) height=(attr :height) src=src frameborder=0 webkitAllowFullScreen=true mozallowfullscreen=true allowFullScreen=true
-    - when 'youtube'
-      - unless (asset_uri_scheme = (attr :asset_uri_scheme, 'https')).empty?
-        -  asset_uri_scheme = %(#{asset_uri_scheme}:)
-      - params = ['rel=0']
-      - params << "start=#{attr :start}" if attr? :start
-      - params << "end=#{attr :end}" if attr? :end
-      - params << "autoplay=1" if option? 'autoplay'
-      - params << "loop=1" if option? 'loop'
-      - params << "controls=0" if option? 'nocontrols'
-      - src = %(#{asset_uri_scheme}//www.youtube.com/embed/#{attr :target}?#{params * '&amp;'})
-      iframe width=(attr :width) height=(attr :height) src=src frameborder=0 allowfullscreen=!(option? 'nofullscreen')
-    - else
-      video(src=media_uri(attr :target) width=(attr :width) height=(attr :height)
-          poster=((attr :poster) ? media_uri(attr :poster) : nil) autoplay=(option? 'autoplay')
-          controls=!(option? 'nocontrols') loop=(option? 'loop'))
-        |Your browser does not support the video tag.
+  - case attr :poster
+  - when 'vimeo'
+    - unless (asset_uri_scheme = (attr :asset_uri_scheme, 'https')).empty?
+      -  asset_uri_scheme = %(#{asset_uri_scheme}:)
+    - start_anchor = (attr? :start) ? "#at=#{attr :start}" : nil
+    - delimiter = '?'
+    - autoplay_param = (option? 'autoplay') ? "#{delimiter}autoplay=1" : nil
+    - delimiter = '&amp;' if autoplay_param
+    - loop_param = (option? 'loop') ? "#{delimiter}loop=1" : nil
+    - src = %(#{asset_uri_scheme}//player.vimeo.com/video/#{attr :target}#{start_anchor}#{autoplay_param}#{loop_param})
+    iframe width=(width) height=(height) src=src frameborder=0 webkitAllowFullScreen=true mozallowfullscreen=true allowFullScreen=true
+  - when 'youtube'
+    - unless (asset_uri_scheme = (attr :asset_uri_scheme, 'https')).empty?
+      -  asset_uri_scheme = %(#{asset_uri_scheme}:)
+    - params = ['rel=0']
+    - params << "start=#{attr :start}" if attr? :start
+    - params << "end=#{attr :end}" if attr? :end
+    - params << "autoplay=1" if option? 'autoplay'
+    - params << "loop=1" if option? 'loop'
+    - params << "controls=0" if option? 'nocontrols'
+    - src = %(#{asset_uri_scheme}//www.youtube.com/embed/#{attr :target}?#{params * '&amp;'})
+    iframe width=(width) height=(height) src=src frameborder=0 allowfullscreen=!(option? 'nofullscreen')
+  - else
+    video(src=media_uri(attr :target) width=(width) height=(height)
+        poster=((attr :poster) ? media_uri(attr :poster) : nil) autoplay=(option? 'autoplay')
+        controls=!(option? 'nocontrols') loop=(option? 'loop'))
+      |Your browser does not support the video tag.
