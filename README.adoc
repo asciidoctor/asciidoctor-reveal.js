@@ -96,6 +96,26 @@ Applying the step option or role on a list (`[%step]` or `[.step]`) will do the 
 Here is https://github.com/hakimel/reveal.js#fragments[upstream documentation] on the topic.
 Note that only `fade-in` is supported for lists at the moment.
 
+
+== Stretch class attribute
+
+Reveal.js supports a special class that will give all available screen space
+to an HTML node.
+This class element is named `stretch`.
+
+__
+Sometimes it's desirable to have an element, like an image or video, stretch
+to consume as much space as possible within a given slide.
+__
+
+To apply that class to block simply use asciidoctor's class assignment:
+
+    [.stretch]
+
+See https://github.com/hakimel/reveal.js#stretching-elements[reveal.js
+documentation on stretching elements].
+
+
 === Syntax highlighting
 
 [listing]
