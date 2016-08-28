@@ -109,7 +109,7 @@ image::cover.jpg[background, size=cover]
 This will put `cover.jpg` as the slide's background image.
 It sets `reveal.js'` `data-background-image` attribute.
 The `size` attribute is also supported.
-See the https://github.com/hakimel/reveal.js/#image-backgrounds[reveal.js' documentation] for details.
+See the https://github.com/hakimel/reveal.js/#image-backgrounds[relevant reveal.js documentation] for details.
 
 NOTE: Background images file names are now relative to the `:imagedir:` attribute if set.
 
@@ -123,6 +123,47 @@ image::https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg[canv
 ----
 
 As you can see, you can use a URL to specify your image resource too.
+
+
+[#background_videos]
+=== Background videos
+
+A background video for a slide can be specified using the `background-video`
+element attribute.
+
+----
+[background-video="https://my.video/file.mp4",background-video-loop=true,background-video-muted=true]
+== Nice background!
+----
+
+For convenience `background-video-loop` and `background-video-muted`
+attributes are mapped to `loop` and `muted` options which can be specified
+with `options="loop,muted"`.
+
+For example:
+
+----
+[background-video="https://my.video/file.mp4",options="loop,muted"]
+== Nice background!
+----
+
+See https://github.com/hakimel/reveal.js#video-backgrounds[the relevant
+reveal.js documentation] for details.
+Note that the `data-` prefix is not required in asciidoc files.
+
+
+=== Background iframes
+
+The background can be replaced with anything a browser can render in an iframe
+using the `background-iframe` reveal.js feature.
+
+----
+[%notitle,background-iframe="https://www.youtube.com/embed/LaApqL4QjH8?rel=0&start=3&enablejsapi=1&autoplay=1&loop=1&controls=0&modestbranding=1"]
+== a youtube video
+----
+
+See https://github.com/hakimel/reveal.js#iframe-backgrounds[the relevant
+reveal.js documentation] for details.
 
 
 === Slide Transitions
@@ -139,7 +180,7 @@ This slide will override the presentation transition and zoom!
 Choose from three transition speeds: default, fast or slow!
 ----
 
-See https://github.com/hakimel/reveal.js/#slide-transitions[reveal.js' documentation] for details.
+See https://github.com/hakimel/reveal.js/#slide-transitions[the relevant reveal.js documentation] for details.
 
 
 === Fragments
@@ -157,7 +198,8 @@ See https://github.com/hakimel/reveal.js/#slide-transitions[reveal.js' documenta
 Slide Four has bullets that are revealed one after the other.
 This is what `reveal.js` calls http://lab.hakim.se/reveal-js/#/fragments[fragments].
 Applying the step option or role on a list (`[%step]` or `[.step]`) will do the trick.
-Here is https://github.com/hakimel/reveal.js#fragments[upstream documentation] on the topic.
+Here is https://github.com/hakimel/reveal.js#fragments[the relevant reveal.js
+documentation] on the topic.
 Note that only `fade-in` is supported for lists at the moment.
 
 
@@ -178,6 +220,24 @@ To apply that class to block simply use asciidoctor's class assignment:
 
 See https://github.com/hakimel/reveal.js#stretching-elements[reveal.js
 documentation on stretching elements].
+
+
+=== Videos
+
+In addition to <<background_videos,background videos>>, videos can be inserted
+directly into slides.
+The syntax is the standard
+http://asciidoctor.org/docs/user-manual/#video[asciidoc video block macro]
+syntax.
+
+----
+== Trains, we love trains!
+
+video::kZH9JtPBq7k[youtube, start=34, options=autoplay]
+----
+
+By default videos are given as much space as possible.
+To override that behavior use the `witdth` and `height` named attributes.
 
 
 === Syntax highlighting
@@ -245,7 +305,8 @@ This is a vertical subslide
 
 Slide Six uses the vertical slide feature of `reveal.js`.
 Slide Six.One will be rendered vertically below Slide Six.
-Here is https://github.com/hakimel/reveal.js#markup[upstream documentation] on that topic.
+Here is https://github.com/hakimel/reveal.js#markup[the relevant reveal.js
+documentation] on that topic.
 
 
 
@@ -258,8 +319,8 @@ title that look like this: `:name: value`.
 This back-end supports changing the color, image, video, iframe and
 transitions of the title slide.
 
-Read https://github.com/hakimel/reveal.js/#slide-backgrounds[`reveal.js`
-documentation] to understand what attributes need to be set.
+Read https://github.com/hakimel/reveal.js/#slide-backgrounds[the relevant
+reveal.js documentation] to understand what attributes need to be set.
 Keep in mind that for title slides you must replace `data-` with
 `title-slide-`.
 
@@ -440,7 +501,11 @@ Defaults to none
 Defaults to none
 |===
 
-If you want to build a custom theme or customize an existing one you should look at the https://github.com/hakimel/reveal.js/blob/master/css/theme/README.md[reveal.js documentation] and use the `revealjs_customtheme` AsciiDoc attribute to activate it.
+If you want to build a custom theme or customize an existing one you should
+look at the
+https://github.com/hakimel/reveal.js/blob/master/css/theme/README.md[reveal.js
+theme documentation] and use the `revealjs_customtheme` AsciiDoc attribute to
+activate it.
 
 == Minimum Requirements
 
