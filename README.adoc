@@ -258,6 +258,28 @@ Detailed view diagram
 ----
 
 
+=== CSS override
+
+If you use the `:linkcss:` document attribute, the `asciidoctor-revealjs.css`
+file will be added to the list of CSS files loaded by the rendered HTML.
+You can then easily override specific elements of your theme per presentation.
+
+For example, to do proper position-independent text placement of a title slide
+with a specific background you can use:
+
+----
+.reveal section.title h1 {
+    margin-top: 2.3em;
+}
+
+.reveal section.title small {
+    margin-top: 15.3em;
+    font-weight: bold;
+    color: white;
+}
+----
+
+
 == About Jade Templates
 
 `/templates/jade` directory contains jade template files they are ported from `/templates/slim` templates. These templates were written to support reveal.js backend for Asciidoctor.js environment that is currently using in https://github.com/asciidocfx/AsciidocFX[AsciidocFX] editor. You can look at the https://github.com/asciidocfx/asciidoctor.js-reveal-demo[demo].
