@@ -18,3 +18,11 @@ video::kZH9JtPBq7k[youtube, start=34, options=autoplay]
 
 [background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm",options="loop,muted,notitle"]
 == video file, options
+
+
+== vimeo autostart
+
+video::44878206[vimeo, options=autoplay]
+
+// data-autoplay is not supported on vimeo videos
+// upstream: https://github.com/hakimel/reveal.js/issues/388
