@@ -65,6 +65,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       document.write( '<link rel="stylesheet" href="#{revealjsdir}/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
     - unless (docinfo_content = docinfo :header, '.html').empty?
       =docinfo_content
+    - if attr? :linkcss
+      link rel='stylesheet' href='asciidoctor-revealjs.css'
   body
     .reveal
       / Any section element inside of this container is displayed as a slide
