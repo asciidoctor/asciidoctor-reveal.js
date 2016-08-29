@@ -237,7 +237,7 @@ video::kZH9JtPBq7k[youtube, start=34, options=autoplay]
 ----
 
 By default videos are given as much space as possible.
-To override that behavior use the `witdth` and `height` named attributes.
+To override that behavior use the `width` and `height` named attributes.
 
 
 === Syntax highlighting
