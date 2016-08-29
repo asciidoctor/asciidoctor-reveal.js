@@ -1,8 +1,8 @@
 / in a slide-deck context we assume video should take as much place as possible
 / unless already specified
 - no_stretch = ((attr? :width) || (attr? :height))
-- width = (attr? :width) ? :width : "100%"
-- height = (attr? :height) ? :height : "100%"
+- width = (attr? :width) ? (attr :width) : "100%"
+- height = (attr? :height) ? (attr :height) : "100%"
 / we apply revealjs stretch class to the videoblock take all the place we can
 .videoblock id=@id class=[@style,role,(no_stretch ? nil : "stretch")]
   - if title?
