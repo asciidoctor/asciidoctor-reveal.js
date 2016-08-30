@@ -220,6 +220,9 @@ Here is an example:
 include::test/title-slide-image.adoc[]
 ----
 
+The title slide is also added a `title` CSS class to help with template
+customization.
+
 === Content meant for multiple back-ends
 
 Some content can be created with both slides and book in mind.

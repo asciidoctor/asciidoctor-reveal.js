@@ -72,7 +72,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         - unless notitle || !has_header?
           - bg_image = (attr? 'title-slide-background-image') ? (image_uri(attr 'title-slide-background-image')) : nil
           - bg_video = (attr? 'title-slide-background-video') ? (media_uri(attr 'title-slide-background-video')) : nil
-          section(class = role
+          section.title(class = role
             data-transition=(attr 'title-slide-transition')
             data-transition-speed=(attr 'title-slide-transition-speed')
             data-background=(attr 'title-slide-background')
