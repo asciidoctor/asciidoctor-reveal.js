@@ -1,5 +1,5 @@
 - unless attr(1) == 'background' || attr(1) == "canvas"
-  .imageblock(id=@id class=[@style,role]
+  .imageblock(id=@id class=roles
       style=[("text-align: #{attr :align}" if attr? :align),("float: #{attr :float}" if attr? :float)].compact.join('; '))
     .content
       - if attr? :link
