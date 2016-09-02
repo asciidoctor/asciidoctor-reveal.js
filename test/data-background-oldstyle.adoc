@@ -31,8 +31,8 @@ image::meme-7.png[]
 [background-image=bio.jpg,background-size=800px]
 === come
 
-[background-image="https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg",background-size=contain]
+[background-image=https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg,background-size=contain]
 == URL Goat
 
-[background-color="yellow"]
+[background-color=yellow]
 == No [yellow] regression

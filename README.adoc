@@ -109,21 +109,17 @@ image::cover.jpg[background, size=cover]
 This will put `cover.jpg` as the slide's background image.
 It sets `reveal.js'` `data-background-image` attribute.
 The `size` attribute is also supported.
-See the https://github.com/hakimel/reveal.js/#image-backgrounds[
-reveal.js' documentation] for details.
+See the https://github.com/hakimel/reveal.js/#image-backgrounds[reveal.js' documentation] for details.
 
-NOTE: Background images file names are now relative to the `:imagedir:`
-attribute if set.
+NOTE: Background images file names are now relative to the `:imagedir:` attribute if set.
 
-NOTE: The `canvas` keyword can be used instead of `background` for the same
-effect.
+NOTE: The `canvas` keyword can be used instead of `background` for the same effect.
 
 ----
 [%notitle]
 == The Great Goat
 
-image::https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg[canvas,
-size=contain]
+image::https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg[canvas,size=contain]
 ----
 
 As you can see, you can use a URL to specify your image resource too.
@@ -132,19 +128,18 @@ As you can see, you can use a URL to specify your image resource too.
 === Slide Transitions
 
 ----
-[transition="zoom", %notitle]
+[transition=zoom, %notitle]
 == Zoom zoom
 
 This slide will override the presentation transition and zoom!
 
-[transition-speed="fast", %notitle]
+[transition-speed=fast, %notitle]
 == Speed
 
 Choose from three transition speeds: default, fast or slow!
 ----
 
-See https://github.com/hakimel/reveal.js/#slide-transitions[reveal.js'
-documentation] for details.
+See https://github.com/hakimel/reveal.js/#slide-transitions[reveal.js' documentation] for details.
 
 
 === Fragments

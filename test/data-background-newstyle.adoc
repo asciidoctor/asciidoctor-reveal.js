@@ -29,23 +29,23 @@ image::70s.jpg[background,size=contain]
 
 == hey
 
-image::bio.jpg[background,size="100px"]
+image::bio.jpg[background,size=100px]
 
 === here
 
-image::bio.jpg[background,size="200px"]
+image::bio.jpg[background,size=200px]
 
 === I
 
-image::bio.jpg[background,size="400px"]
+image::bio.jpg[background,size=400px]
 
 === come
 
-image::bio.jpg[background,size="800px"]
+image::bio.jpg[background,size=800px]
 
 == URL goat
 
 image::https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg[background,size=contain]
 
-[background-color="yellow"]
+[background-color=yellow]
 == No [yellow] regression
