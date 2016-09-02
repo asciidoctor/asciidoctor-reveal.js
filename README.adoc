@@ -63,20 +63,84 @@ Actually things aren't that bad
 --
 ----
 
-=== Background colors
-
 In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js' default behavior) with https://github.com/hakimel/reveal.js#speaker-notes[speaker notes].
 
+
+=== Slides without titles
+
+There are a few ways to have no titles on slides.
+
+* Setting your title to `!`
+* Adding the `notitle` option to your slide
+* Adding the `conceal` option to your slide
+
+Here is an example of the three techniques in action:
+
 ----
-[data-background="yellow"]
+include::test/concealed-slide-titles.adoc[]
+----
+
+NOTE: `conceal` and `notitle` have the advantage that the slide still has an id so it can be linked to.
+
+
+=== Background colors
+
+----
+[background-color="yellow"]
 == Slide Three
 
 Is very yellow
 ----
 
-Slide Three applies the attribute http://lab.hakim.se/reveal-js/#/14[data-background] to the `reveal.js` <section> tag.
+Slide Three applies the attribute
+https://github.com/hakimel/reveal.js/#slide-backgrounds[data-background-color] to the `reveal.js` <section> tag.
 Anything accepted by CSS color formats works.
-Here is the https://github.com/hakimel/reveal.js#slide-backgrounds[upstream documentation].
+
+
+=== Background images
+
+----
+[%notitle]
+== Grand Announcement
+
+image::cover.jpg[background, size=cover]
+----
+
+This will put `cover.jpg` as the slide's background image.
+It sets `reveal.js'` `data-background-image` attribute.
+The `size` attribute is also supported.
+See the https://github.com/hakimel/reveal.js/#image-backgrounds[reveal.js' documentation] for details.
+
+NOTE: Background images file names are now relative to the `:imagedir:` attribute if set.
+
+NOTE: The `canvas` keyword can be used instead of `background` for the same effect.
+
+----
+[%notitle]
+== The Great Goat
+
+image::https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg[canvas,size=contain]
+----
+
+As you can see, you can use a URL to specify your image resource too.
+
+
+=== Slide Transitions
+
+----
+[transition=zoom, %notitle]
+== Zoom zoom
+
+This slide will override the presentation transition and zoom!
+
+[transition-speed=fast, %notitle]
+== Speed
+
+Choose from three transition speeds: default, fast or slow!
+----
+
+See https://github.com/hakimel/reveal.js/#slide-transitions[reveal.js' documentation] for details.
+
 
 === Fragments
 
@@ -183,21 +247,6 @@ Slide Six uses the vertical slide feature of `reveal.js`.
 Slide Six.One will be rendered vertically below Slide Six.
 Here is https://github.com/hakimel/reveal.js#markup[upstream documentation] on that topic.
 
-=== Slides without titles
-
-There are a few ways to have no titles on slides.
-
-* Setting your title to `!`
-* Adding the `notitle` option to your slide
-* Adding the `conceal` option to your slide
-
-Here is an example of the three techniques in action:
-
-----
-include::test/concealed-slide-titles.adoc[]
-----
-
-NOTE: `conceal` and `notitle` have the advantage that the slide still has an id so it can be linked to.
 
 
 === Title slide customization
@@ -395,7 +444,7 @@ If you want to build a custom theme or customize an existing one you should look
 
 == Minimum Requirements
 
-* asciidoctor 1.5.0
+* asciidoctor 1.5.4
 
 == Copyright and Licensing
 
