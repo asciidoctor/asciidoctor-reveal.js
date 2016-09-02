@@ -156,10 +156,10 @@ Relevant documentation: http://www.rubydoc.info/github/asciidoctor/asciidoctor/A
 
 == Merge / Review policy
 
-=== Wait time
-
 Any non-trivial change should be integrated in master via a pull-request.
 This gives the community a chance to participate and helps write better code because it encourages people to review their own patches.
+
+=== Wait time
 
 Once a pull request is submitted, let it sit for a minimum of 24 hours for small changes.
 Larger changes should sit longer at around a week.
