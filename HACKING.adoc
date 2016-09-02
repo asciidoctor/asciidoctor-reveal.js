@@ -156,6 +156,8 @@ Relevant documentation: http://www.rubydoc.info/github/asciidoctor/asciidoctor/A
 
 == Merge / Review policy
 
+=== Wait time
+
 Any non-trivial change should be integrated in master via a pull-request.
 This gives the community a chance to participate and helps write better code because it encourages people to review their own patches.
 
@@ -168,3 +170,18 @@ If you don't get feedback, just merge after the sitting time frame.
 
 Remember that this is a slower moving project since people are not designing slides everyday.
 Well, for most people.
+
+=== Work-in-progress pull-requests
+
+If you prepend "WIP" in front of your pull request we will understand that it is not complete and we will not merge it before you remove the WIP string.
+
+This is useful to let people know that you are working on stuff.
+Branches are not that visible otherwise but pull requests are.
+
+You might even be able to get some feedback early which could save you some time.
+
+=== 'needs review' label
+
+You can apply that label to a pull request that is complete and ready for review.
+
+Makes triaging easier.
