@@ -152,3 +152,19 @@ If that's the case, you generally use the form:
 The second parameter value is the default attribute value, which is nil by default.
 
 Relevant documentation: http://www.rubydoc.info/github/asciidoctor/asciidoctor/Asciidoctor%2FAbstractNode%3Aattr
+
+
+== Merge / Review policy
+
+Any non-trivial change should be integrated in master via a pull-request.
+This gives the community a chance to participate and helps write better code because it encourages people to review their own patches.
+
+Once a pull request is submitted, let it sit for a minimum of 24 hours for small changes.
+Larger changes should sit longer at around a week.
+Breaking changes should sit until a prominent contributor comments on the changes.
+Ping `@mojavelinux` and `@obilodeau` if necessary.
+
+If you don't get feedback, just merge after the sitting time frame.
+
+Remember that this is a slower moving project since people are not designing slides everyday.
+Well, for most people.
