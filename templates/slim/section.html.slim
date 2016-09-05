@@ -4,7 +4,7 @@
 - hide_title = (titleless || (option? :notitle) || (option? :conceal))
 
 - vertical_slides = find_by(context: :section) {|section| section.level == 2 }
-- @id = @id.gsub(/[^a-zA-Z0-9\-\_\:\.]/, '')
+- @id = @id.gsub(/^[a-zA-Z0-9\-\_\:\.]/, '')
 
 / extracting block image attributes to find an image to use as a 
 / background_image attribute
