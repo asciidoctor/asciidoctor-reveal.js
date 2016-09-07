@@ -260,8 +260,8 @@ Detailed view diagram
 
 === CSS override
 
-If you use the `:linkcss:` document attribute, the `asciidoctor-revealjs.css` file will be added to the list of CSS files loaded by the rendered HTML.
-You can then easily override specific elements of your theme per presentation.
+If you use the `:customcss:` document attribute, a CSS file of the name given in the attribute is added to the list of CSS resources loaded by the rendered HTML.
+Doing so, you can then easily override specific elements of your theme per presentation.
 
 For example, to do proper position-independent text placement of a title slide with a specific background you can use:
 
@@ -276,6 +276,8 @@ For example, to do proper position-independent text placement of a title slide w
     color: white;
 }
 ----
+
+If the `:customcss:` attribute value is empty then `asciidoctor-revealjs.css` is the CSS resource that the presentation is linked to.
 
 
 == About Jade Templates
