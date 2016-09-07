@@ -65,10 +65,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       document.write( '<link rel="stylesheet" href="#{revealjsdir}/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
     - unless (docinfo_content = docinfo :header, '.html').empty?
       =docinfo_content
-    - if attr? :customcss and (attr :customcss).empty?
-      link rel='stylesheet' href='asciidoctor-revealjs.css'
-    - elsif attr? :customcss
-      link rel='stylesheet' href='#{attr :customcss}'
+    - if attr? :customcss
+      link rel='stylesheet' href=((customcss = attr :customcss).empty? ? 'asciidoctor-revealjs.css' : customcss)
   body
     .reveal
       / Any section element inside of this container is displayed as a slide
