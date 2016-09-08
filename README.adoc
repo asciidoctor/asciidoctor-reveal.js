@@ -161,7 +161,7 @@ Here is https://github.com/hakimel/reveal.js#fragments[upstream documentation] o
 Note that only `fade-in` is supported for lists at the moment.
 
 
-== Stretch class attribute
+=== Stretch class attribute
 
 Reveal.js supports a special class that will give all available screen space
 to an HTML node.
