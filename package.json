@@ -1,0 +1,40 @@
+{
+  "name": "asciidoctor-reveal.js",
+  "version": "1.5.5-2",
+  "description": "Reveal.js backend templates for Asciidoctor.js, implemented in Jade",
+  "engines": {
+    "node": ">=0.12"
+  },
+  "files": [
+    "templates/jade",
+    "LICENSE.adoc",
+    "README.adoc"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asciidoctor/asciidoctor-reveal.js.git"
+  },
+  "keywords": [
+    "asciidoc",
+    "asciidoctor",
+    "opal",
+    "javascript",
+    "library",
+    "backend",
+    "template",
+    "reveal.js",
+    "jade"
+  ],
+  "authors": [
+    "Guillaume Grossetie (https://github.com/mogztter)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/asciidoctor/asciidoctor-reveal.js/issues"
+  },
+  "homepage": "https://github.com/asciidoctor/asciidoctor-reveal.js",
+  "dependencies": {
+    "reveal.js": "3.3.0",
+    "asciidoctor-template.js": "1.5.5-2"
+  }
+}

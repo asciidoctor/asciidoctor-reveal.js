@@ -1,2 +1,3 @@
 test/*.html
 test/reveal.js/
+node_modules/
