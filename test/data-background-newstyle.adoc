@@ -49,3 +49,10 @@ image::https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg[back
 
 [background-color=yellow]
 == No [yellow] regression
+
+
+== Empty Vertical top
+
+=== Vertical with background
+
+image::70s.jpg[canvas, size=cover]

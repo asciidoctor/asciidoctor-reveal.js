@@ -13,8 +13,10 @@
 - data_background_image, data_background_size, data_background_repeat,
   data_background_transition = nil
 
+/ find all images under current node with attribute background or canvas
+/ as long as they are of the same level as we are currently processing
 - slide_images = find_by(:context => :image) { |image|
--   image.attr(1) == 'background' || image.attr(1) == 'canvas'
+-   (image.attr(1) == 'background' || image.attr(1) == 'canvas') && image.level == level
 - }
 - unless slide_images.nil? or slide_images.length == 0
   - slide_images.each do |image|
