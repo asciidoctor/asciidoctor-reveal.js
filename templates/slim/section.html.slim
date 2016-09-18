@@ -47,7 +47,12 @@
       data-background-image=data_background_image
       data-background-size=(data_background_size || attr('background-size'))
       data-background-repeat=(data_background_repeat || attr('background-repeat'))
-      data-background-transition=(data_background_transition || attr('background-transition')))
+      data-background-transition=(data_background_transition || attr('background-transition'))
+      data-background-iframe=(attr "background-iframe")
+      data-background-video=(attr "background-video")
+      data-background-video-loop=((attr? 'background-video-loop') || (option? 'loop'))
+      data-background-video-muted=((attr? 'background-video-muted') || (option? 'muted')))
+
       - unless hide_title
         h2=title
       - (blocks - vertical_slides).each do |block|
@@ -70,7 +75,12 @@
       data-background-image=data_background_image
       data-background-size=(data_background_size || attr('background-size'))
       data-background-repeat=(data_background_repeat || attr('background-repeat'))
-      data-background-transition=(data_background_transition || attr('background-transition')))
+      data-background-transition=(data_background_transition || attr('background-transition'))
+      data-background-iframe=(attr "background-iframe")
+      data-background-video=(attr "background-video")
+      data-background-video-loop=((attr? 'background-video-loop') || (option? 'loop'))
+      data-background-video-muted=((attr? 'background-video-muted') || (option? 'muted')))
+
       - unless hide_title
         h2=title
       =content.chomp
