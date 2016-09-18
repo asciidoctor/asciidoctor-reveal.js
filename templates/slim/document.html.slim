@@ -88,7 +88,11 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
             data-background-repeat=(attr 'title-slide-background-repeat')
             data-background-position=(attr 'title-slide-background-position')
             data-background-transition=(attr 'title-slide-background-transition'))
-            h1=@header.title
+            - if (_title_obj = doctitle partition: true, use_fallback: true).subtitle?
+              h1=slice_text _title_obj.title, (_slice = header.option? :slice)
+              h2=slice_text _title_obj.subtitle, _slice
+            - else
+              h1=@header.title
             - preamble = @document.find_by context: :preamble
             - unless preamble.nil? or preamble.length == 0
               =preamble.pop.content
