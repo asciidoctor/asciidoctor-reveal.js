@@ -161,12 +161,15 @@ This gives the community a chance to participate and helps write better code bec
 
 === Wait time
 
-Once a pull request is submitted, let it sit for a minimum of 24 hours for small changes.
+Once a pull request is submitted, let it sit for 24-48 hours for small changes.
+If you get positive feedback you can merge before the sitting time frame.
+If you don't get feedback, just merge after the sitting time frame.
+
 Larger changes should sit longer at around a week.
+Positive feedback or no feedback should be handled like for small changes.
+
 Breaking changes should sit until a prominent contributor comments on the changes.
 Ping `@mojavelinux` and `@obilodeau` if necessary.
-
-If you don't get feedback, just merge after the sitting time frame.
 
 Remember that this is a slower moving project since people are not designing slides everyday.
 Well, for most people.
