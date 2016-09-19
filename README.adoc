@@ -1,6 +1,7 @@
 = reveal.js backend for Asciidoctor
 :toc: preamble
 :toclevels: 2
+:uri-nodejs-download: https://nodejs.org/en/download/
 
 The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a collection of Slim templates for https://github.com/asciidoctor/asciidoctor[Asciidoctor] that transform an AsciiDoc document into HTML5 slides animated by http://lab.hakim.se/reveal-js/[reveal.js].
 
@@ -8,6 +9,8 @@ The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a
 
 
 == Prerequisites
+
+NOTE: Since Asciidoctor can run in JavaScript, we also provide a <<node-package>>.
 
 . Ensure Asciidoctor, Slim and their dependencies are installed:
 
@@ -20,7 +23,6 @@ The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a
 . Copy or clone presentation library (to output destination/branch)
 
   $ git clone -b 3.0.0 git://github.com/hakimel/reveal.js.git
-
 
 == Rendering the AsciiDoc into slides
 
@@ -35,6 +37,39 @@ NOTE: If you want to use reveal.js 2, please switch your asciidoctor-reveal.js r
 
 TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
 
+[[node-package]]
+== Node package
+
+First you must install and configure {uri-nodejs-download}[Node.js] on your machine.
+
+Using npm:
+
+ $ npm i --save asciidoctor.js@1.5.5-2
+ $ npm i --save asciidoctor-template.js@1.5.5-2
+ $ npm i --save asciidoctor-reveal.js@1.5.5-2
+
+Once the package is installed, you can convert AsciiDoc files using Reveal.js backend.
+Here we are converting a file named `presentation.adoc` into a Reveal.js presentation using Node.js:
+
+.asciidoctor-revealjs.js
+[source, javascript]
+----
+// Load asciidoctor.js + asciidoctor-template.js
+var asciidoctor = require('asciidoctor.js')();
+var Asciidoctor = asciidoctor.Asciidoctor();
+var Opal = asciidoctor.Opal;
+Opal.load('nodejs');
+Opal.load('pathname');
+require('asciidoctor-template.js');
+
+// Convert the document 'presentation.adoc' using Reveal.js backend
+var attributes = 'revealjsdir=node_modules/asciidoctor-reveal.js/node_modules/reveal.js';
+var options = Opal.hash({safe: 'safe',
+                         backend: 'revealjs',
+                         attributes: attributes});
+Asciidoctor.$convert_file('presentation.adoc', options); // <1>
+----
+<1> Create a file named `presentation.html` (in the directory where command is run)
 
 == Some Examples
 
