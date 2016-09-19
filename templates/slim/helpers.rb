@@ -22,27 +22,6 @@ module Slim::Helpers
 
   # Following functions are taken from Bespoke back-end
   #--
-  def pluck selector = {}, &block
-    quantity = (selector.delete :quantity).to_i
-    if blocks?
-      unless (result = find_by selector, &block).empty?
-        result = result[0..(quantity - 1)] if quantity > 0
-        result.each {|b| b.set_attr 'skip-option', '' }
-      end
-    else
-      result = []
-    end
-    quantity == 1 ? result[0] : result
-  end
-
-  def pluck_first selector = {}, &block
-    pluck selector.merge(quantity: 1), &block
-  end
-
-  def partition_title str
-    ::Asciidoctor::Document::Title.new str, separator: (@document.attr 'title-separator')
-  end
-
   # QUESTION should we wrap in span.line if active but delimiter is not present?
   # TODO alternate terms for "slice" - part(ition), chunk, segment, split, break
   def slice_text str, active = nil
