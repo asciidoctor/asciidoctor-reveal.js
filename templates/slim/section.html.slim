@@ -1,6 +1,6 @@
 / OPTIONS PROCESSING
 / strip IDs the same way revealjs does (remove when hakimel/reveal.js#1230 is fixed)
-- @id = @id.gsub(/[^a-zA-Z0-9\-\_\:\.]/, '')
+- _id = id.gsub(/[^a-zA-Z0-9\-\_\:\.]/, '')
 
 / hide slides on %conceal, %notitle and named "!"
 - titleless = (title = self.title) == '!'
@@ -40,7 +40,7 @@
 - if @level == 1 && !vertical_slides.empty?
   section
     / TODO: try to get rid of duplication w/ standalone slide section
-    section(id=(titleless ? nil : @id)
+    section(id=(titleless ? nil : _id)
       class=roles
       data-transition=(attr 'transition')
       data-transition-speed=(attr 'transition-speed')
@@ -68,7 +68,7 @@
     *{tag: %(h#{@level})} =title
     =content.chomp
   - else
-    section(id=(titleless ? nil : @id)
+    section(id=(titleless ? nil : _id)
       class=roles
       data-transition=(attr 'transition')
       data-transition-speed=(attr 'transition-speed')
