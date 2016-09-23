@@ -1,6 +1,6 @@
 / OPTIONS PROCESSING
 / strip IDs the same way revealjs does (remove when hakimel/reveal.js#1230 is fixed)
-- @id = @id.gsub(/^[a-zA-Z0-9\-\_\:\.]/, '')
+- @id = @id.gsub(/[^a-zA-Z0-9\-\_\:\.]/, '')
 
 / hide slides on %conceal, %notitle and named "!"
 - titleless = (title = self.title) == '!'
@@ -8,7 +8,7 @@
 
 - vertical_slides = find_by(context: :section) {|section| section.level == 2 }
 
-/ extracting block image attributes to find an image to use as a 
+/ extracting block image attributes to find an image to use as a
 / background_image attribute
 - data_background_image, data_background_size, data_background_repeat,
   data_background_transition = nil
