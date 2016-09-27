@@ -6,37 +6,76 @@ The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a
 
 //image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
 
+== Ruby Setup
 
-== Prerequisites
+NOTE: asciidoctor-reveal.js is now a Ruby Gem.
+To ensure repeatability, we recommend that you manage your presentation projects using bundler.
 
-. Ensure Asciidoctor, Slim and their dependencies are installed:
+For a quick start clone our https://github.com/obilodeau/presentation-revealjs-starter[starter repository] and follow instructions there.
 
-  $ gem install asciidoctor tilt thread_safe slim
+For more complete instructions, read on.
 
-. Clone `asciidoctor/asciidoctor-reveal.js` to get templates for rendering presentation HTML:
-
-  $ git clone git://github.com/asciidoctor/asciidoctor-reveal.js.git
-
-. Copy or clone presentation library (to output destination/branch)
-
-  $ git clone -b 3.0.0 git://github.com/hakimel/reveal.js.git
+NOTE: If you want to use reveal.js 2, please clone the asciidoctor-reveal.js repo and switch to the reveal.js-2.x branch.
 
 
-== Rendering the AsciiDoc into slides
+=== Prerequisites
+
+. Install http://bundler.io/[bundler] (if not already installed)  using your system's package manager or with:
+
+  $ gem install bundler
+
+. If you're using RVM, make sure you switch away from any gemset:
+
+  $ rvm use default
++
+or
++
+  $ rvm use system
+
+
+=== Install
+
+NOTE: These instructions should be repeated for every presentation project.
+
+. Create project directory
+
+  $ mkdir my-awesome-presentation
+  $ cd my-awesome-presentation
+
+. Create a file named `Gemfile` with the following content:
++
+----
+source 'https://rubygems.org'
+
+gem 'asciidoctor-revealjs', github: 'asciidoctor/asciidoctor-reveal.js', branch: 'revealjs-backend'
+----
++
+NOTE: For some reason, when you use the system Ruby on Fedora, you also have to add the json gem to the Gemfile.
++
+. Install the gems into the project
+
+  $ bundle config --local github.https true
+  $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
+
+. Optional: Copy or clone reveal.js presentation framework.
+  Allows you to modify themes or view slides offline.
+
+  $ git clone -b 3.3.0 --depth 1 https://github.com/hakimel/reveal.js.git
+
+
+=== Rendering the AsciiDoc into slides
 
 . Create content in a file (*.adoc, *.ad, etc.).
-  See examples in <<Some Examples>> section to get started or files in `test/`.
+  See examples in <<Syntax Examples>> section to get started or look at files in `test/`.
 
-. Generate HTML presentation from the Asciidoctor templates
+. Generate HTML presentation from the AsciiDoc source
 
-  $ asciidoctor -T templates/slim CONTENT_FILE
-
-NOTE: If you want to use reveal.js 2, please switch your asciidoctor-reveal.js repo to the reveal.js-2.x branch.
+  $ bundle exec asciidoctor-revealjs CONTENT_FILE.adoc
 
 TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
 
 
-== Some Examples
+== Syntax Examples
 
 // FIXME: incomplete
 
@@ -411,7 +450,8 @@ Default is built-in [path]_lib/css/zenburn.css_.
 |:revealjsdir:
 |<file\|URL>
 |Overrides reveal.js directory.
-Example: ../reveal.js
+Example: ../reveal.js or
+https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0
 
 |:revealjs_controls:
 |*true*, false
