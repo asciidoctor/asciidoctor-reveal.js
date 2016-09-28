@@ -195,11 +195,7 @@ Makes triaging easier.
 
 == Node package
 
-=== Initial setup
-
-First you must install and configure {uri-nodejs-download}[Node.js] on your machine.
-
-=== Setup a test project
+=== Test a local asciidoctor-reveal.js version
 
 In order to test the Node package, you need to create a test project adjacent to the clone of the `asciidoctor-reveal.js` repository:
 
@@ -213,62 +209,10 @@ Now, install the dependencies:
  $ npm i --save asciidoctor-template.js@1.5.5-2
  $ npm i --save ../asciidoctor-reveal.js
 
-IMPORTANT: As mentioned above, the `asciidoctor-reveal.js` repository must be cloned next to the `test-projet` directory.
+NOTE: The relative portion of the last command is where you are installing the local `asciidoctor-reveal.js` version.
 
-Create an AsciiDoc file:
+The proceed as documented in the `README.adoc`.
 
-[source]
-----
-$ cat <<- EOF > presentation.adoc
-= Title Slide
-// depending on your npm version, you might have to try the other 'revealjsdir' value.
-//:revealjsdir: node_modules/reveal.js
-
-== Slide One
-
-* Foo
-* Bar
-* World
-
-== Slide Two
-
-Hello World - Good Bye Cruel World
-
-[NOTE.speaker]
---
-Actually things aren't that bad
---
-EOF
-----
-
-Use the Asciidoctor API to convert an AsciiDoc file into a Reveal.js presentation:
-
-[source]
-----
-$ cat <<- 'EOF' > asciidoctor-revealjs.js
-// Load asciidoctor.js + asciidoctor-template.js
-var asciidoctor = require('asciidoctor.js')();
-var Asciidoctor = asciidoctor.Asciidoctor();
-var Opal = asciidoctor.Opal;
-Opal.load('nodejs');
-Opal.load('pathname');
-require('asciidoctor-template.js');
-
-// Convert the document 'presentation.adoc' using Reveal.js backend
-var attributes = 'revealjsdir=node_modules/asciidoctor-reveal.js/node_modules/reveal.js';
-var options = Opal.hash({safe: 'safe',
-                         backend: 'revealjs',
-                         attributes: attributes});
-Asciidoctor.$convert_file('presentation.adoc', options);
-EOF
-----
-
-Run the following command:
-
- $ node asciidoctor-revealjs.js
-
-A file named `presentation.html` has been created in the `test-project` directory.
-You can open this file in your browser and enjoy!
 
 === Publish a new version
 
