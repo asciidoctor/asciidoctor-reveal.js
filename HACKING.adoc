@@ -1,6 +1,7 @@
 = HACKING asciidoctor-reveal.js
 :toc: preamble
 :toclevels: 2
+:uri-nodejs-download: https://nodejs.org/en/download/
 
 Short instructions that aim to help potential contributors.
 
@@ -190,3 +191,94 @@ You might even be able to get some feedback early which could save you some time
 You can apply that label to a pull request that is complete and ready for review.
 
 Makes triaging easier.
+
+
+== Node package
+
+=== Initial setup
+
+First you must install and configure {uri-nodejs-download}[Node.js] on your machine.
+
+=== Setup a test project
+
+In order to test the Node package, you need to create a test project adjacent to the clone of the `asciidoctor-reveal.js` repository:
+
+ $ mkdir test-project
+ $ cd test-project
+ $ npm init -y
+
+Now, install the dependencies:
+
+ $ npm i --save asciidoctor.js@1.5.5-2
+ $ npm i --save asciidoctor-template.js@1.5.5-2
+ $ npm i --save ../asciidoctor-reveal.js
+
+IMPORTANT: As mentioned above, the `asciidoctor-reveal.js` repository must be cloned next to the `test-projet` directory.
+
+Create an AsciiDoc file:
+
+[source]
+----
+$ cat <<- EOF > presentation.adoc
+= Title Slide
+// depending on your npm version, you might have to try the other 'revealjsdir' value.
+//:revealjsdir: node_modules/reveal.js
+
+== Slide One
+
+* Foo
+* Bar
+* World
+
+== Slide Two
+
+Hello World - Good Bye Cruel World
+
+[NOTE.speaker]
+--
+Actually things aren't that bad
+--
+EOF
+----
+
+Use the Asciidoctor API to convert an AsciiDoc file into a Reveal.js presentation:
+
+[source]
+----
+$ cat <<- 'EOF' > asciidoctor-revealjs.js
+// Load asciidoctor.js + asciidoctor-template.js
+var asciidoctor = require('asciidoctor.js')();
+var Asciidoctor = asciidoctor.Asciidoctor();
+var Opal = asciidoctor.Opal;
+Opal.load('nodejs');
+Opal.load('pathname');
+require('asciidoctor-template.js');
+
+// Convert the document 'presentation.adoc' using Reveal.js backend
+var attributes = 'revealjsdir=node_modules/asciidoctor-reveal.js/node_modules/reveal.js';
+var options = Opal.hash({safe: 'safe',
+                         backend: 'revealjs',
+                         attributes: attributes});
+Asciidoctor.$convert_file('presentation.adoc', options);
+EOF
+----
+
+Run the following command:
+
+ $ node asciidoctor-revealjs.js
+
+A file named `presentation.html` has been created in the `test-project` directory.
+You can open this file in your browser and enjoy!
+
+=== Publish a new version
+
+. Update the "version" field in `package.json`
+. Commit and push your changes
+. Create a tag
+. Using npm:
++
+ $ npm login
+ $ npm publish
+
+. Check that the new version is available on https://www.npmjs.com/package/asciidoctor-reveal.js[npmjs.com]
+
