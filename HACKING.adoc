@@ -209,7 +209,7 @@ Now, install the dependencies:
  $ npm i --save asciidoctor-template.js@1.5.5-2
  $ npm i --save ../asciidoctor-reveal.js
 
-NOTE: The relative portion of the last command is where you are installing the local `asciidoctor-reveal.js` version.
+NOTE: The relative portion of the last command is where you are installing the local `asciidoctor-reveal.js` version from.
 
 The proceed as documented in the `README.adoc`.
 
