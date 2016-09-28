@@ -211,7 +211,7 @@ Now, install the dependencies:
 
 NOTE: The relative portion of the last command is where you are installing the local `asciidoctor-reveal.js` version from.
 
-The proceed as documented in the `README.adoc`.
+Then proceed as documented in the `README.adoc`.
 
 
 === Publish a new version
