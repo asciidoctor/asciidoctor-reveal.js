@@ -1,12 +1,25 @@
 = reveal.js backend for Asciidoctor
 :toc: preamble
 :toclevels: 2
+:uri-us: https://github.com/asciidoctor/asciidoctor-reveal.js
+:uri-asciidoctor: https://github.com/asciidoctor/asciidoctor
+:uri-asciidoctorjs: https://github.com/asciidoctor/asciidoctor.js
+:uri-revealjs-home: http://lab.hakim.se/reveal-js/
 :uri-nodejs-download: https://nodejs.org/en/download/
 
-The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a collection of Slim templates for https://github.com/asciidoctor/asciidoctor[Asciidoctor] that transform an AsciiDoc document into HTML5 slides animated by http://lab.hakim.se/reveal-js/[reveal.js].
+The {uri-us}[reveal.js backend] is a collection of templates for {uri-asciidoctor}[Asciidoctor] (or {uri-asciidoctorjs}[Asciidoctor.js]) that transform an AsciiDoc document into HTML5 slides animated by {uri-revealjs-home}[reveal.js].
 
 //image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
 
+There are two main technology stacks that can transform AsciiDoc into HTML5 / Reveal.js:
+
+* Asciidoctor / Ruby / Slim / Bundler (<<ruby, instructions here>>)
+* Asciidoctor.js / JavaScript / Jade / Node.js (<<javascript, instructions here>>)
+
+Right now the Ruby / Slim templates are more featureful but that is changing quickly.
+
+
+[[ruby]]
 == Ruby Setup
 
 NOTE: asciidoctor-reveal.js is now a Ruby Gem.
@@ -75,16 +88,23 @@ NOTE: For some reason, when you use the system Ruby on Fedora, you also have to 
 
 TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
 
-[[node-package]]
-== Node package
+
+[[javascript]]
+== Node / JavaScript Setup
+
+=== Prerequisites
 
 First you must install and configure {uri-nodejs-download}[Node.js] on your machine.
+
+=== Install
 
 Using npm:
 
  $ npm i --save asciidoctor.js@1.5.5-2
  $ npm i --save asciidoctor-template.js@1.5.5-2
  $ npm i --save asciidoctor-reveal.js@1.5.5-2
+
+=== Rendering the AsciiDoc into slides
 
 Once the package is installed, you can convert AsciiDoc files using Reveal.js backend.
 Here we are converting a file named `presentation.adoc` into a Reveal.js presentation using Node.js:
@@ -474,6 +494,7 @@ For example, to do proper position-independent text placement of a title slide w
 If the `:customcss:` attribute value is empty then `asciidoctor-revealjs.css` is the CSS resource that the presentation is linked to.
 
 
+// FIXME this is no longer accurate
 == About Jade Templates
 
 `/templates/jade` directory contains jade template files they are ported from `/templates/slim` templates. These templates were written to support reveal.js backend for Asciidoctor.js environment that is currently using in https://github.com/asciidocfx/AsciidocFX[AsciidocFX] editor. You can look at the https://github.com/asciidocfx/asciidoctor.js-reveal-demo[demo].
