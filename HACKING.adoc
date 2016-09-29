@@ -1,6 +1,7 @@
 = HACKING asciidoctor-reveal.js
 :toc: preamble
 :toclevels: 2
+:uri-nodejs-download: https://nodejs.org/en/download/
 
 Short instructions that aim to help potential contributors.
 
@@ -190,3 +191,38 @@ You might even be able to get some feedback early which could save you some time
 You can apply that label to a pull request that is complete and ready for review.
 
 Makes triaging easier.
+
+
+== Node package
+
+=== Test a local asciidoctor-reveal.js version
+
+In order to test the Node package, you need to create a test project adjacent to the clone of the `asciidoctor-reveal.js` repository:
+
+ $ mkdir test-project
+ $ cd test-project
+ $ npm init -y
+
+Now, install the dependencies:
+
+ $ npm i --save asciidoctor.js@1.5.5-2
+ $ npm i --save asciidoctor-template.js@1.5.5-2
+ $ npm i --save ../asciidoctor-reveal.js
+
+NOTE: The relative portion of the last command is where you are installing the local `asciidoctor-reveal.js` version from.
+
+Then proceed as documented in the `README.adoc`.
+
+
+=== Publish a new version
+
+. Update the "version" field in `package.json`
+. Commit and push your changes
+. Create a tag
+. Using npm:
++
+ $ npm login
+ $ npm publish
+
+. Check that the new version is available on https://www.npmjs.com/package/asciidoctor-reveal.js[npmjs.com]
+
