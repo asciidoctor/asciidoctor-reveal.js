@@ -3,6 +3,7 @@
 :toclevels: 2
 :uri-nodejs-download: https://nodejs.org/en/download/
 
+// Changes made here should be sync'ed in packages.json's readme field
 The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a collection of Slim templates for https://github.com/asciidoctor/asciidoctor[Asciidoctor] that transform an AsciiDoc document into HTML5 slides animated by http://lab.hakim.se/reveal-js/[reveal.js].
 
 //image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
