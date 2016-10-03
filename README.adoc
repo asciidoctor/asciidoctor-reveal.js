@@ -63,8 +63,10 @@ Opal.load('pathname');
 require('asciidoctor-template.js');
 
 // Convert the document 'presentation.adoc' using Reveal.js backend
+var attributes = 'revealjsdir@=node_modules/reveal.js';
 var options = Opal.hash({safe: 'safe',
-                         backend: 'revealjs'});
+                         backend: 'revealjs',
+                         attributes: attributes});
 Asciidoctor.$convert_file('presentation.adoc', options); // <1>
 ----
 <1> Creates a file named `presentation.html` (in the directory where command is run)
@@ -73,9 +75,9 @@ Asciidoctor.$convert_file('presentation.adoc', options); // <1>
 [source, asciidoc]
 ----
 = Title Slide
-// depending on your npm version, you might have to try the other 'revealjsdir' value.
-//:revealjsdir: node_modules/reveal.js
-:revealjsdir: node_modules/asciidoctor-reveal.js/node_modules/reveal.js
+// depending on your npm version, you might need to override the default
+// 'revealjsdir' value by removing the comments from the line below:
+//:revealjsdir: node_modules/asciidoctor-reveal.js/node_modules/reveal.js
 
 == Slide One
 
