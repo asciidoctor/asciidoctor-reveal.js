@@ -438,6 +438,29 @@ For example, to do proper position-independent text placement of a title slide w
 If the `:customcss:` attribute value is empty then `asciidoctor-revealjs.css` is the CSS resource that the presentation is linked to.
 
 
+=== Slide state
+
+Reveal.js supports a https://github.com/hakimel/reveal.js/#slide-states[data-state] tag that can be added on slides which gets rendered into `<section>` tags.
+In AsciiDoc the `data-state` can be applied to a slide by adding a state attribute to a section like this:
+
+----
+[state=topic]
+== Epic Topic
+----
+
+That state can be queried from Javascript or used in CSS to apply further customization to your slide deck.
+For example, by combining this feature with the <<_css_override, CSS override>> one, you can alter fonts for specific pages with this CSS:
+
+----
+@import 'https://fonts.googleapis.com/css?family=Baloo+Bhai';
+
+section[data-state="topic"] h2 {
+    font-family: 'Baloo Bhai', cursive;
+    font-size: 4em;
+}
+----
+
+
 == About Jade Templates
 
 `/templates/jade` directory contains jade template files they are ported from `/templates/slim` templates. These templates were written to support reveal.js backend for Asciidoctor.js environment that is currently using in https://github.com/asciidocfx/AsciidocFX[AsciidocFX] editor. You can look at the https://github.com/asciidocfx/asciidoctor.js-reveal-demo[demo].
