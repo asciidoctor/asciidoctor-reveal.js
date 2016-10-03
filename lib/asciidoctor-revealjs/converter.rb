@@ -15,7 +15,7 @@ module Asciidoctor; module Revealjs
           template_dirs += user_template_dirs.map {|d| ::File.expand_path d }
         end
         # Engine Opal means we need to use the Javascript based templates
-	if RUBY_ENGINE == 'opal'
+        if RUBY_ENGINE == 'opal'
           template_engine = 'jade'
         else
           template_engine = 'slim'
