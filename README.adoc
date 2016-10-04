@@ -64,7 +64,7 @@ Opal.load('pathname');
 require('asciidoctor-template.js');
 
 // Convert the document 'presentation.adoc' using Reveal.js backend
-var attributes = 'revealjsdir@=node_modules/reveal.js';
+var attributes = 'revealjsdir=node_modules/reveal.js@';
 var options = Opal.hash({safe: 'safe',
                          backend: 'revealjs',
                          attributes: attributes});
