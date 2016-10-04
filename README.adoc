@@ -500,7 +500,7 @@ If the `:customcss:` attribute value is empty then `asciidoctor-revealjs.css` is
 
 === Slide state
 
-Reveal.js supports a https://github.com/hakimel/reveal.js/#slide-states[data-state] tag that can be added on slides which gets rendered into `<section>` tags.
+Reveal.js supports a {uri-revealjs-gh}#slide-states[data-state] tag that can be added on slides which gets rendered into `<section>` tags.
 In AsciiDoc the `data-state` can be applied to a slide by adding a state attribute to a section like this:
 
 ----
