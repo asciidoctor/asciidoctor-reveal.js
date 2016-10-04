@@ -22,8 +22,7 @@ html(lang=node.document.$attr("lang", "en") )
       document.write('<link rel="stylesheet" href="#{revealjsdir}/css/print/' + ( window.location.search.match(/print-pdf/gi) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">');
   body
     .reveal
-      .slides
-        !{node.$content()}
+      .slides !{node.$content()}
     script(src = "#{revealjsdir}/lib/js/head.min.js")
     script(src = "#{revealjsdir}/js/reveal.js")
     script(type='text/javascript').

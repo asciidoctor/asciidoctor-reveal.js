@@ -1,3 +1,5 @@
+# This helper file borrows from the Bespoke converter
+# https://github.com/asciidoctor/asciidoctor-bespoke
 require 'asciidoctor'
 require 'json'
 
@@ -14,16 +16,9 @@ end
 # effectively become direct members of the template.
 module Slim::Helpers
 
-  # Following constants from Bespoke back-end
-  #--
   EOL = %(\n)
   SliceHintRx = /  +/
-  #--
 
-  # Following functions are taken from Bespoke back-end
-  #--
-  # QUESTION should we wrap in span.line if active but delimiter is not present?
-  # TODO alternate terms for "slice" - part(ition), chunk, segment, split, break
   def slice_text str, active = nil
     if (active || (active.nil? && (option? :slice))) && (str.include? '  ')
       (str.split SliceHintRx).map {|line| %(<span class="line">#{line}</span>) }.join EOL
@@ -31,7 +26,7 @@ module Slim::Helpers
       str
     end
   end
-  #--
+
 end
 
 # More custom functions can be added in another namespace if required

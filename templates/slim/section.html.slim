@@ -52,7 +52,8 @@
       data-background-iframe=(attr "background-iframe")
       data-background-video=(attr "background-video")
       data-background-video-loop=((attr? 'background-video-loop') || (option? 'loop'))
-      data-background-video-muted=((attr? 'background-video-muted') || (option? 'muted')))
+      data-background-video-muted=((attr? 'background-video-muted') || (option? 'muted'))
+      data-state=(attr 'state'))
 
       - unless hide_title
         h2=title
@@ -80,7 +81,8 @@
       data-background-iframe=(attr "background-iframe")
       data-background-video=(attr "background-video")
       data-background-video-loop=((attr? 'background-video-loop') || (option? 'loop'))
-      data-background-video-muted=((attr? 'background-video-muted') || (option? 'muted')))
+      data-background-video-muted=((attr? 'background-video-muted') || (option? 'muted'))
+      data-state=(attr 'state'))
 
       - unless hide_title
         h2=title

@@ -8,6 +8,7 @@
 :uri-revealjs-gh: https://github.com/hakimel/reveal.js
 :uri-nodejs-download: https://nodejs.org/en/download/
 
+// Changes made here should be sync'ed in packages.json's readme field
 The {uri-us}[reveal.js backend] is a collection of templates for {uri-asciidoctor}[Asciidoctor] (or {uri-asciidoctorjs}[Asciidoctor.js]) that transform an AsciiDoc document into HTML5 slides animated by {uri-revealjs-home}[reveal.js].
 
 //image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
@@ -122,8 +123,10 @@ Opal.load('pathname');
 require('asciidoctor-template.js');
 
 // Convert the document 'presentation.adoc' using Reveal.js backend
+var attributes = 'revealjsdir=node_modules/reveal.js@';
 var options = Opal.hash({safe: 'safe',
-                         backend: 'revealjs'});
+                         backend: 'revealjs',
+                         attributes: attributes});
 Asciidoctor.$convert_file('presentation.adoc', options); // <1>
 ----
 <1> Creates a file named `presentation.html` (in the directory where command is run)
@@ -132,9 +135,9 @@ Asciidoctor.$convert_file('presentation.adoc', options); // <1>
 [source, asciidoc]
 ----
 = Title Slide
-// depending on your npm version, you might have to try the other 'revealjsdir' value.
-//:revealjsdir: node_modules/reveal.js
-:revealjsdir: node_modules/asciidoctor-reveal.js/node_modules/reveal.js
+// depending on your npm version, you might need to override the default
+// 'revealjsdir' value by removing the comments from the line below:
+//:revealjsdir: node_modules/asciidoctor-reveal.js/node_modules/reveal.js
 
 == Slide One
 
@@ -493,6 +496,29 @@ For example, to do proper position-independent text placement of a title slide w
 ----
 
 If the `:customcss:` attribute value is empty then `asciidoctor-revealjs.css` is the CSS resource that the presentation is linked to.
+
+
+=== Slide state
+
+Reveal.js supports a https://github.com/hakimel/reveal.js/#slide-states[data-state] tag that can be added on slides which gets rendered into `<section>` tags.
+In AsciiDoc the `data-state` can be applied to a slide by adding a state attribute to a section like this:
+
+----
+[state=topic]
+== Epic Topic
+----
+
+That state can be queried from Javascript or used in CSS to apply further customization to your slide deck.
+For example, by combining this feature with the <<_css_override, CSS override>> one, you can alter fonts for specific pages with this CSS:
+
+----
+@import 'https://fonts.googleapis.com/css?family=Baloo+Bhai';
+
+section[data-state="topic"] h2 {
+    font-family: 'Baloo Bhai', cursive;
+    font-size: 4em;
+}
+----
 
 
 // FIXME this is no longer accurate
