@@ -1,53 +1,112 @@
 = reveal.js backend for Asciidoctor
 :toc: preamble
 :toclevels: 2
+:uri-us: https://github.com/asciidoctor/asciidoctor-reveal.js
+:uri-asciidoctor: https://github.com/asciidoctor/asciidoctor
+:uri-asciidoctorjs: https://github.com/asciidoctor/asciidoctor.js
+:uri-revealjs-home: http://lab.hakim.se/reveal-js/
+:uri-revealjs-gh: https://github.com/hakimel/reveal.js
 :uri-nodejs-download: https://nodejs.org/en/download/
 
 // Changes made here should be sync'ed in packages.json's readme field
-The https://github.com/asciidoctor/asciidoctor-reveal.js[reveal.js backend] is a collection of Slim templates for https://github.com/asciidoctor/asciidoctor[Asciidoctor] that transform an AsciiDoc document into HTML5 slides animated by http://lab.hakim.se/reveal-js/[reveal.js].
+The {uri-us}[reveal.js backend] is a collection of templates for {uri-asciidoctor}[Asciidoctor] (or {uri-asciidoctorjs}[Asciidoctor.js]) that transform an AsciiDoc document into HTML5 slides animated by {uri-revealjs-home}[reveal.js].
 
 //image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
 
+There are two main technology stacks that can transform AsciiDoc into HTML5 / Reveal.js:
 
-== Prerequisites
+* Asciidoctor / Ruby / Slim / Bundler (<<ruby, instructions here>>)
+* Asciidoctor.js / JavaScript / Jade / Node.js (<<javascript, instructions here>>)
 
-NOTE: Since Asciidoctor can run in JavaScript, we also provide a <<node-package>>.
+Right now the Ruby / Slim templates are more featureful but that is changing quickly.
 
-. Ensure Asciidoctor, Slim and their dependencies are installed:
 
-  $ gem install asciidoctor tilt thread_safe slim
+[[ruby]]
+== Ruby Setup
 
-. Clone `asciidoctor/asciidoctor-reveal.js` to get templates for rendering presentation HTML:
+NOTE: asciidoctor-reveal.js is now a Ruby Gem.
+To ensure repeatability, we recommend that you manage your presentation projects using bundler.
 
-  $ git clone git://github.com/asciidoctor/asciidoctor-reveal.js.git
+For a quick start clone our https://github.com/obilodeau/presentation-revealjs-starter[starter repository] and follow instructions there.
 
-. Copy or clone presentation library (to output destination/branch)
+For more complete instructions, read on.
 
-  $ git clone -b 3.0.0 git://github.com/hakimel/reveal.js.git
+NOTE: If you want to use reveal.js 2, please clone the asciidoctor-reveal.js repo and switch to the reveal.js-2.x branch.
 
-== Rendering the AsciiDoc into slides
+
+=== Prerequisites
+
+. Install http://bundler.io/[bundler] (if not already installed)  using your system's package manager or with:
+
+  $ gem install bundler
+
+. If you're using RVM, make sure you switch away from any gemset:
+
+  $ rvm use default
++
+or
++
+  $ rvm use system
+
+
+=== Install
+
+NOTE: These instructions should be repeated for every presentation project.
+
+. Create project directory
+
+  $ mkdir my-awesome-presentation
+  $ cd my-awesome-presentation
+
+. Create a file named `Gemfile` with the following content:
++
+----
+source 'https://rubygems.org'
+
+gem 'asciidoctor-revealjs', github: 'asciidoctor/asciidoctor-reveal.js', branch: 'revealjs-backend'
+----
++
+NOTE: For some reason, when you use the system Ruby on Fedora, you also have to add the json gem to the Gemfile.
++
+. Install the gems into the project
+
+  $ bundle config --local github.https true
+  $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
+
+. Optional: Copy or clone reveal.js presentation framework.
+  Allows you to modify themes or view slides offline.
+
+  $ git clone -b 3.3.0 --depth 1 https://github.com/hakimel/reveal.js.git
+
+
+=== Rendering the AsciiDoc into slides
 
 . Create content in a file (*.adoc, *.ad, etc.).
-  See examples in <<Some Examples>> section to get started or files in `test/`.
+  See examples in <<Syntax Examples>> section to get started or look at files in `test/`.
 
-. Generate HTML presentation from the Asciidoctor templates
+. Generate HTML presentation from the AsciiDoc source
 
-  $ asciidoctor -T templates/slim CONTENT_FILE
-
-NOTE: If you want to use reveal.js 2, please switch your asciidoctor-reveal.js repo to the reveal.js-2.x branch.
+  $ bundle exec asciidoctor-revealjs CONTENT_FILE.adoc
 
 TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
 
-[[node-package]]
-== Node package
+
+[[javascript]]
+== Node / JavaScript Setup
+
+=== Prerequisites
 
 First you must install and configure {uri-nodejs-download}[Node.js] on your machine.
+
+=== Install
 
 Using npm:
 
  $ npm i --save asciidoctor.js@1.5.5-2
  $ npm i --save asciidoctor-template.js@1.5.5-2
  $ npm i --save asciidoctor-reveal.js@1.5.5-2
+
+=== Rendering the AsciiDoc into slides
 
 Once the package is installed, you can convert AsciiDoc files using Reveal.js backend.
 Here we are converting a file named `presentation.adoc` into a Reveal.js presentation using Node.js:
@@ -95,7 +154,7 @@ To render the slides, run:
 You can open the `presentation.html` file in your browser and enjoy!
 
 
-== Some Examples
+== Syntax Examples
 
 // FIXME: incomplete
 
@@ -122,7 +181,7 @@ Actually things aren't that bad
 --
 ----
 
-In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js' default behavior) with https://github.com/hakimel/reveal.js#speaker-notes[speaker notes].
+In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js' default behavior) with {uri-revealjs-gh}#speaker-notes[speaker notes].
 
 
 === Slides without titles
@@ -151,7 +210,7 @@ NOTE: `conceal` and `notitle` have the advantage that the slide still has an id 
 Is very yellow
 ----
 
-Slide Three applies the attribute https://github.com/hakimel/reveal.js/#slide-backgrounds[data-background-color] to the `reveal.js` <section> tag.
+Slide Three applies the attribute {uri-revealjs-gh}#slide-backgrounds[data-background-color] to the `reveal.js` <section> tag.
 Anything accepted by CSS color formats works.
 
 
@@ -167,7 +226,7 @@ image::cover.jpg[background, size=cover]
 This will put `cover.jpg` as the slide's background image.
 It sets `reveal.js'` `data-background-image` attribute.
 The `size` attribute is also supported.
-See the https://github.com/hakimel/reveal.js/#image-backgrounds[relevant reveal.js documentation] for details.
+See the {uri-revealjs-gh}#image-backgrounds[relevant reveal.js documentation] for details.
 
 NOTE: Background images file names are now relative to the `:imagedir:` attribute if set.
 
@@ -202,7 +261,7 @@ For example:
 == Nice background!
 ----
 
-See https://github.com/hakimel/reveal.js#video-backgrounds[the relevant reveal.js documentation] for details.
+See {uri-revealjs-gh}#video-backgrounds[the relevant reveal.js documentation] for details.
 Note that the `data-` prefix is not required in asciidoc files.
 
 
@@ -215,7 +274,7 @@ The background can be replaced with anything a browser can render in an iframe u
 == a youtube video
 ----
 
-See https://github.com/hakimel/reveal.js#iframe-backgrounds[the relevant reveal.js documentation] for details.
+See {uri-revealjs-gh}#iframe-backgrounds[the relevant reveal.js documentation] for details.
 
 
 === Slide Transitions
@@ -232,7 +291,7 @@ This slide will override the presentation transition and zoom!
 Choose from three transition speeds: default, fast or slow!
 ----
 
-See https://github.com/hakimel/reveal.js/#slide-transitions[the relevant reveal.js documentation] for details.
+See {uri-revealjs-gh}#slide-transitions[the relevant reveal.js documentation] for details.
 
 
 === Fragments
@@ -250,7 +309,7 @@ See https://github.com/hakimel/reveal.js/#slide-transitions[the relevant reveal.
 Slide Four has bullets that are revealed one after the other.
 This is what `reveal.js` calls http://lab.hakim.se/reveal-js/#/fragments[fragments].
 Applying the step option or role on a list (`[%step]` or `[.step]`) will do the trick.
-Here is https://github.com/hakimel/reveal.js#fragments[the relevant reveal.js
+Here is {uri-revealjs-gh}#fragments[the relevant reveal.js
 documentation] on the topic.
 Note that only `fade-in` is supported for lists at the moment.
 
@@ -268,7 +327,7 @@ To apply that class to block simply use asciidoctor's class assignment:
 
     [.stretch]
 
-See https://github.com/hakimel/reveal.js#stretching-elements[reveal.js documentation on stretching elements].
+See {uri-revealjs-gh}#stretching-elements[reveal.js documentation on stretching elements].
 
 
 === Videos
@@ -351,7 +410,7 @@ This is a vertical subslide
 
 Slide Six uses the vertical slide feature of `reveal.js`.
 Slide Six.One will be rendered vertically below Slide Six.
-Here is https://github.com/hakimel/reveal.js#markup[the relevant reveal.js
+Here is {uri-revealjs-gh}#markup[the relevant reveal.js
 documentation] on that topic.
 
 
@@ -365,7 +424,7 @@ title that look like this: `:name: value`.
 This back-end supports changing the color, image, video, iframe and
 transitions of the title slide.
 
-Read https://github.com/hakimel/reveal.js/#slide-backgrounds[the relevant
+Read {uri-revealjs-gh}#slide-backgrounds[the relevant
 reveal.js documentation] to understand what attributes need to be set.
 Keep in mind that for title slides you must replace `data-` with
 `title-slide-`.
@@ -462,6 +521,7 @@ section[data-state="topic"] h2 {
 ----
 
 
+// FIXME this is no longer accurate
 == About Jade Templates
 
 `/templates/jade` directory contains jade template files they are ported from `/templates/slim` templates. These templates were written to support reveal.js backend for Asciidoctor.js environment that is currently using in https://github.com/asciidocfx/AsciidocFX[AsciidocFX] editor. You can look at the https://github.com/asciidocfx/asciidoctor.js-reveal-demo[demo].
@@ -478,7 +538,7 @@ NOTE: Default settings are based on `reveal.js` default settings.
 
 |:revealjs_theme:
 |beige, *black*, league, night, serif, simple, sky, solarized, white
-|Chooses one of reveal.js' https://github.com/hakimel/reveal.js#theming[built-in themes].
+|Chooses one of reveal.js' {uri-revealjs-gh}#theming[built-in themes].
 
 |:revealjs_customtheme:
 |<file\|URL>
@@ -493,7 +553,8 @@ Default is built-in [path]_lib/css/zenburn.css_.
 |:revealjsdir:
 |<file\|URL>
 |Overrides reveal.js directory.
-Example: ../reveal.js
+Example: ../reveal.js or
+https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0
 
 |:revealjs_controls:
 |*true*, false
@@ -594,7 +655,7 @@ Defaults to none
 
 If you want to build a custom theme or customize an existing one you should
 look at the
-https://github.com/hakimel/reveal.js/blob/master/css/theme/README.md[reveal.js
+{uri-revealjs-gh}/blob/master/css/theme/README.md[reveal.js
 theme documentation] and use the `revealjs_customtheme` AsciiDoc attribute to
 activate it.
 

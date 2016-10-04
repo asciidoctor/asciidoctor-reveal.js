@@ -1,7 +1,6 @@
 = HACKING asciidoctor-reveal.js
 :toc: preamble
 :toclevels: 2
-:uri-nodejs-download: https://nodejs.org/en/download/
 
 Short instructions that aim to help potential contributors.
 
