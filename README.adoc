@@ -63,7 +63,7 @@ NOTE: These instructions should be repeated for every presentation project.
 ----
 source 'https://rubygems.org'
 
-gem 'asciidoctor-revealjs', github: 'asciidoctor/asciidoctor-reveal.js', branch: 'revealjs-backend'
+gem 'asciidoctor-revealjs', github: 'asciidoctor/asciidoctor-reveal.js'
 ----
 +
 NOTE: For some reason, when you use the system Ruby on Fedora, you also have to add the json gem to the Gemfile.
