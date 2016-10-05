@@ -1,0 +1,46 @@
+= {project-name} Changelog
+:project-name: asciidoctor-reveal.js
+:uri-repo: https://github.com/asciidoctor/asciidoctor-reveal.js
+
+This document provides a high-level view of the changes introduced in {project-name} by release.
+For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
+
+== 1.0.0 (2016-09-06) - @obilodeau
+
+Since this is the first ever "release" of asciidoctor-reveal.js (we used to do continuous improvements w/o releases in the past), this list focuses on the major enhancements introduced over the last few weeks.
+
+Enhancements::
+  * Initial release
+  * Ruby package (#93)
+  * Node package (#95)
+  * `:customcss:` attribute for easy per-presentation CSS (#85)
+  * Video support improvements (#81)
+  * Reveal.js `data-state` support (#61)
+  * Subtitle partioning (#70)
+  * Background image rework (#52)
+  * `:imagesdir:` properly enforced (#17, #67)
+
+////
+Compliance::
+  * item
+
+Bug fixes::
+  * item
+
+Infrastructure::
+  * item
+////
+
+=== Release meta
+
+Released by @obilodeau
+
+{uri-repo}/issues?q=milestone%3A1.0[issues resolved] |
+{uri-repo}/releases/tag/1.0[git tag]
+// TODO full-diff when we can at the next release
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+Alexander Heusingfeld, Andrea Bedini, Antoine Sabot-Durand, Brian Street, Charles Moulliard, Dan Allen, Danny Hyun, Emmanuel Bernard, gtoast, Guillaume Grossetie, Jacob Aae Mikkelsen, Jakub Jirutka, Jozef Skrabo, Julien Grenier, Julien Kirch, kubamarchwicki, lifei, Nico Rikken, nipa, Olivier Bilodeau, Patrick van Dissel, phrix32, Rahman Usta, Robert Panzer, Rob Winch, Thomas and Wendell Smith

@@ -225,3 +225,25 @@ Then proceed as documented in the `README.adoc`.
 
 . Check that the new version is available on https://www.npmjs.com/package/asciidoctor-reveal.js[npmjs.com]
 
+
+== Ruby gem
+
+=== Publish a new version
+
+. Update the version in `lib/asciidoctor-revealjs/version.rb`
+. Update the changelog
+** Generate author list with `git log <commit>.. --format="%aN" --reverse | perl -e 'my %dedupe; while (<STDIN>) { print unless $dedupe{$_}++}' | sort `
+. Prepare release commit
+** commit msg: Prepare %version% release
+** release commit (--allow-empty) msg: Release %version%
+. Tag the release commit
+. Push your changes (including the tag)
+. Update version (+1 bugfix and append '.dev') and commit
+** commit msg: Begin development on next release
+. Pushing the gem on rubygems.org:
++
+ $ gem build asciidoctor-revealjs.gemspec
+ $ gem push asciidoctor-revealjs-X.Y.Z.gem
+
+. Check that the new version is available on https://rubygems.org/gems/asciidoctor-revealjs[rubygems.org]
+
