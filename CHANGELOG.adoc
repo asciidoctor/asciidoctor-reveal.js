@@ -35,8 +35,8 @@ Infrastructure::
 
 Released by @obilodeau
 
-{uri-repo}/issues?q=milestone%3A1.0[issues resolved] |
-{uri-repo}/releases/tag/1.0[git tag]
+{uri-repo}/issues?q=milestone%3A1.0.0[issues resolved] |
+{uri-repo}/releases/tag/v1.0.0[git tag]
 // TODO full-diff when we can at the next release
 
 === Credits
