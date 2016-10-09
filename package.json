@@ -1,6 +1,6 @@
 {
   "name": "asciidoctor-reveal.js",
-  "version": "1.5.5-2",
+  "version": "1.5.5-3",
   "description": "Reveal.js backend templates for Asciidoctor.js, implemented in Jade",
   "engines": {
     "node": ">=0.12"
@@ -35,7 +35,7 @@
   "homepage": "https://github.com/asciidoctor/asciidoctor-reveal.js",
   "dependencies": {
     "reveal.js": "3.3.0",
-    "asciidoctor-template.js": "1.5.5-2"
+    "asciidoctor-template.js": "1.5.5-3"
   },
   "readme": "# reveal.js backend for Asciidoctor\n\nThe [reveal.js backend](https://github.com/asciidoctor/asciidoctor-reveal.js) is a collection of templates for [Asciidoctor](https://github.com/asciidoctor/asciidoctor) (or [Asciidoctor.js](https://github.com/asciidoctor/asciidoctor.js)) that transform an AsciiDoc document into HTML5 slides animated by [reveal.js](http://lab.hakim.se/reveal-js/).\n\nThis is the npm module. For setup instructions and the AsciiDoc syntax to use to write a presentation see the module's documentation at [https://github.com/asciidoctor/asciidoctor-reveal.js](https://github.com/asciidoctor/asciidoctor-reveal.js).\n"
 }
