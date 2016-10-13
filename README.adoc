@@ -105,7 +105,7 @@ Using npm:
 
  $ npm i --save asciidoctor.js@1.5.5-2
  $ npm i --save asciidoctor-template.js@1.5.5-2
- $ npm i --save asciidoctor-reveal.js@1.5.5-2
+ $ npm i --save asciidoctor-reveal.js
 
 === Rendering the AsciiDoc into slides
 
