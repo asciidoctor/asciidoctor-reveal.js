@@ -213,24 +213,9 @@ NOTE: The relative portion of the last command is where you are installing the l
 Then proceed as documented in the `README.adoc`.
 
 
-=== Publish a new version
+== Release process
 
-. Update the "version" field in `package.json`
-. Commit and push your changes
-. Create a tag
-. Using npm:
-+
- $ npm login
- $ npm publish
-
-. Check that the new version is available on https://www.npmjs.com/package/asciidoctor-reveal.js[npmjs.com]
-
-
-== Ruby gem
-
-=== Publish a new version
-
-. Update the version in `lib/asciidoctor-revealjs/version.rb`
+. Update the version in `lib/asciidoctor-revealjs/version.rb` and `package.json`
 . Update the changelog
 ** Generate author list with:
 +
@@ -248,6 +233,12 @@ Then proceed as documented in the `README.adoc`.
  $ gem push asciidoctor-revealjs-X.Y.Z.gem
 
 . Check that the new version is available on https://rubygems.org/gems/asciidoctor-revealjs[rubygems.org]
+. Publish the node package on npm:
++
+ $ npm login
+ $ npm publish
+
+. Check that the new version is available on https://www.npmjs.com/package/asciidoctor-reveal.js[npmjs.com]
 . Update version (+1 bugfix and append '.dev') and commit
 ** commit msg: Begin development on next release
 
