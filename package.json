@@ -1,6 +1,6 @@
 {
   "name": "asciidoctor-reveal.js",
-  "version": "1.0.1",
+  "version": "1.0.2.dev",
   "description": "Reveal.JS back-end for Asciidoctor and Asciidoctor.js. Write slides in AsciiDoc!",
   "engines": {
     "node": ">=0.12"
