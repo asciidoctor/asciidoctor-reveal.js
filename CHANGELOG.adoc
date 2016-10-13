@@ -5,7 +5,24 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
-== 1.0.0 (2016-09-06) - @obilodeau
+== 1.0.1 (2016-10-12) - @obilodeau
+
+Enhancements::
+  * Documentation: aligned release process for both npm and ruby gems packages
+  * npm package in sync with ruby gem
+
+////
+Compliance::
+  * item
+
+Bug fixes::
+  * item
+
+Infrastructure::
+  * item
+////
+
+== 1.0.0 (2016-10-06) - @obilodeau
 
 Since this is the first ever "release" of asciidoctor-reveal.js (we used to do continuous improvements w/o releases in the past), this list focuses on the major enhancements introduced over the last few weeks.
 
@@ -19,17 +36,6 @@ Enhancements::
   * Subtitle partioning (#70)
   * Background image rework (#52)
   * `:imagesdir:` properly enforced (#17, #67)
-
-////
-Compliance::
-  * item
-
-Bug fixes::
-  * item
-
-Infrastructure::
-  * item
-////
 
 === Release meta
 
