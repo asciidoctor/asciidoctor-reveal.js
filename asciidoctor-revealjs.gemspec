@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.email = ['olivier@bottomlesspit.org']
   s.homepage = 'https://github.com/asciidoctor/asciidoctor-reveal.js'
   s.summary = 'Converts AsciiDoc to HTML for a Reveal.js presentation'
-  s.description = 'An Asciidoctor converter that generates the HTML component of a Reveal.js presentation from AsciiDoc.'
+  s.description = 'Reveal.JS back-end for Asciidoctor and Asciidoctor.js. Write slides in AsciiDoc!'
   s.license = 'MIT'
   s.required_ruby_version = '>= 1.9.3'
 

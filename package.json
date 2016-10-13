@@ -1,7 +1,7 @@
 {
   "name": "asciidoctor-reveal.js",
-  "version": "1.5.5-2",
-  "description": "Reveal.js backend templates for Asciidoctor.js, implemented in Jade",
+  "version": "1.0.0-rc1",
+  "description": "Reveal.JS back-end for Asciidoctor and Asciidoctor.js. Write slides in AsciiDoc!",
   "engines": {
     "node": ">=0.12"
   },
