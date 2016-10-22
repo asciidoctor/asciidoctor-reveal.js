@@ -8,6 +8,10 @@
 :uri-revealjs-gh: https://github.com/hakimel/reveal.js
 :uri-nodejs-download: https://nodejs.org/en/download/
 
+ifdef::env-github[]
+image:http://img.shields.io/npm/v/asciidoctor-reveal.js.svg[npm version, link=https://www.npmjs.org/package/asciidoctor-reveal.js]
+endif::[]
+
 // Changes made here should be sync'ed in packages.json's readme field
 The {uri-us}[reveal.js backend] is a collection of templates for {uri-asciidoctor}[Asciidoctor] (or {uri-asciidoctorjs}[Asciidoctor.js]) that transform an AsciiDoc document into HTML5 slides animated by {uri-revealjs-home}[reveal.js].
 
