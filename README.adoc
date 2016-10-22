@@ -103,8 +103,7 @@ First you must install and configure {uri-nodejs-download}[Node.js] on your mach
 
 Using npm:
 
- $ npm i --save asciidoctor.js@1.5.5-2
- $ npm i --save asciidoctor-template.js@1.5.5-2
+ $ npm i --save asciidoctor.js@1.5.5-3
  $ npm i --save asciidoctor-reveal.js
 
 === Rendering the AsciiDoc into slides
@@ -115,20 +114,16 @@ Here we are converting a file named `presentation.adoc` into a Reveal.js present
 .asciidoctor-revealjs.js
 [source, javascript]
 ----
-// Load asciidoctor.js + asciidoctor-template.js
+// Load asciidoctor.js + asciidoctor-reveal.js
 var asciidoctor = require('asciidoctor.js')();
 var Asciidoctor = asciidoctor.Asciidoctor();
-var Opal = asciidoctor.Opal;
-Opal.load('nodejs');
-Opal.load('pathname');
-require('asciidoctor-template.js');
+
+require('asciidoctor-reveal.js');
 
 // Convert the document 'presentation.adoc' using Reveal.js backend
 var attributes = 'revealjsdir=node_modules/reveal.js@';
-var options = Opal.hash({safe: 'safe',
-                         backend: 'revealjs',
-                         attributes: attributes});
-Asciidoctor.$convert_file('presentation.adoc', options); // <1>
+var options = {safe: 'safe', backend: 'revealjs', attributes: attributes});
+Asciidoctor.convertFile('presentation.adoc', options); // <1>
 ----
 <1> Creates a file named `presentation.html` (in the directory where command is run)
 

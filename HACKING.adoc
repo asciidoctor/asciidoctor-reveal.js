@@ -204,8 +204,7 @@ In order to test the Node package, you need to create a test project adjacent to
 
 Now, install the dependencies:
 
- $ npm i --save asciidoctor.js@1.5.5-2
- $ npm i --save asciidoctor-template.js@1.5.5-2
+ $ npm i --save asciidoctor.js@1.5.5-3
  $ npm i --save ../asciidoctor-reveal.js
 
 NOTE: The relative portion of the last command is where you are installing the local `asciidoctor-reveal.js` version from.
@@ -233,6 +232,10 @@ Then proceed as documented in the `README.adoc`.
  $ gem push asciidoctor-revealjs-X.Y.Z.gem
 
 . Check that the new version is available on https://rubygems.org/gems/asciidoctor-revealjs[rubygems.org]
+. Build the node package:
++
+ $ npm run build
+
 . Publish the node package on npm:
 +
  $ npm login
