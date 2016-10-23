@@ -9,7 +9,8 @@
 :uri-nodejs-download: https://nodejs.org/en/download/
 
 ifdef::env-github[]
-image:http://img.shields.io/npm/v/asciidoctor-reveal.js.svg[npm version, link=https://www.npmjs.org/package/asciidoctor-reveal.js]
+image:http://img.shields.io/gem/v/asciidoctor-revealjs.svg[gem, link=https://rubygems.org/gems/asciidoctor-revealjs]
+image:http://img.shields.io/npm/v/asciidoctor-reveal.js.svg[npm, link=https://www.npmjs.org/package/asciidoctor-reveal.js]
 endif::[]
 
 // Changes made here should be sync'ed in packages.json's readme field
