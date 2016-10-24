@@ -122,7 +122,7 @@ require('asciidoctor-reveal.js');
 
 // Convert the document 'presentation.adoc' using Reveal.js backend
 var attributes = 'revealjsdir=node_modules/reveal.js@';
-var options = {safe: 'safe', backend: 'revealjs', attributes: attributes});
+var options = {safe: 'safe', backend: 'revealjs', attributes: attributes};
 Asciidoctor.convertFile('presentation.adoc', options); // <1>
 ----
 <1> Creates a file named `presentation.html` (in the directory where command is run)
