@@ -232,7 +232,7 @@ Then proceed as documented in the `README.adoc`.
  $ gem push asciidoctor-revealjs-X.Y.Z.gem
 
 . Check that the new version is available on https://rubygems.org/gems/asciidoctor-revealjs[rubygems.org]
-. Build the node package:
+. Build the node package (make sure you have `devDependencies` installed with: `npm install`):
 +
  $ npm run build
 
