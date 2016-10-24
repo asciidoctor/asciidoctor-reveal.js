@@ -242,6 +242,6 @@ Then proceed as documented in the `README.adoc`.
  $ npm publish
 
 . Check that the new version is available on https://www.npmjs.com/package/asciidoctor-reveal.js[npmjs.com]
-. Update version (+1 bugfix and append '.dev') and commit
+. Update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev') and commit
 ** commit msg: Begin development on next release
 
