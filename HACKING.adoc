@@ -247,6 +247,8 @@ Then proceed as documented in the `README.adoc`.
 
 == Ruby and asciidoctor-doctest tests
 
+=== Running tests
+
 We recommend tests to be run with a fresh install of all dependencies in a local folder that won't affect your ruby install (a `.bundle/` in this directory):
 
     bundle --path=.bundle/gems --binstubs=.bundle/.bin
@@ -258,3 +260,17 @@ Then you can execute the tests with:
 However, if you have all dependencies properly installed this command should run the tests successfully:
 
     rake test
+
+=== Generating HTML test target
+
+Tests were bootstrapped by generating them from asciidoctor-doctest's test corpus.
+This is done using the following command:
+
+    bundle exec rake generate
+
+=== Custom tests
+
+TODO
+
+// We will need full header_footer tests also, not just embedded which I think tests our use case poorly.
+// See https://github.com/asciidoctor/asciidoctor-doctest#options for the feature that we will need to trigger
