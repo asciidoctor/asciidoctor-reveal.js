@@ -9,3 +9,7 @@ test/reveal.js/
 node_modules/
 npm-debug.log
 build/
+
+# rubygems stuff
+Gemfile.lock
+.bundle/

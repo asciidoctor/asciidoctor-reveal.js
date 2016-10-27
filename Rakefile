@@ -1,4 +1,4 @@
-require 'asciidoctor/doctest'
+#require 'asciidoctor/doctest'
 require 'rake/testtask'
 require 'thread_safe'
 require 'tilt'
@@ -7,16 +7,17 @@ Rake::TestTask.new(:test) do |task|
   task.description = 'Run tests for templates'
   task.pattern = 'test/templates_test.rb'
   task.libs << 'test'
+  task.test_files = FileList['test/**/*_test.rb']
 end
 
-DocTest::GeneratorTask.new(:generate) do |task|
-  task.output_suite = DocTest::HTML::ExamplesSuite.new(
-    examples_path: 'test/examples/revealjs',
-# XXX do I need that?
-#    paragraph_xpath: './div/p/node()'
-  )
-  task.converter_opts[:template_dirs] = 'templates/slim'
-end
+#DocTest::GeneratorTask.new(:generate) do |task|
+#  task.output_suite = DocTest::HTML::ExamplesSuite.new(
+#    examples_path: 'test/examples/revealjs',
+## XXX do I need that? it's in helper also
+##    paragraph_xpath: './div/p/node()'
+#  )
+#  task.converter_opts[:template_dirs] = 'templates/slim'
+#end
 
 # When no task specified, run test.
 task :default => :test

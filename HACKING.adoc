@@ -91,7 +91,7 @@ You can also query asciidoctor's documentation:
 * http://pryrepl.org/
 * http://discuss.asciidoctor.org/Interactively-debugging-a-template-with-a-REPL-td4498.html
 
-== Tests
+== Manual Tests
 
 In order to help troubleshoot issues and test syntax improvements, some minimalist asciidoc test files are provided.
 You can render the tests files and then load them in a browser and check if `asciidoctor-reveal.js` behaves as expected.
@@ -245,3 +245,16 @@ Then proceed as documented in the `README.adoc`.
 . Update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev') and commit
 ** commit msg: Begin development on next release
 
+== Ruby and asciidoctor-doctest tests
+
+We recommend tests to be run with a fresh install of all dependencies in a local folder that won't affect your ruby install (a `.bundle/` in this directory):
+
+    bundle --path=.bundle/gems --binstubs=.bundle/.bin
+
+Then you can execute the tests with:
+
+    bundle exec rake test
+
+However, if you have all dependencies properly installed this command should run the tests successfully:
+
+    rake test
