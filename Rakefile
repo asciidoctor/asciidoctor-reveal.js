@@ -1,4 +1,5 @@
 require 'asciidoctor/doctest'
+require "bundler/gem_tasks"
 require 'rake/testtask'
 require 'thread_safe'
 require 'tilt'
@@ -13,7 +14,6 @@ end
 DocTest::GeneratorTask.new(:generate) do |task|
   task.output_suite = DocTest::HTML::ExamplesSuite.new(
     examples_path: 'test/output',
-    # not sure about that xpath stuff
     paragraph_xpath: './div/p/node()'
   )
   task.converter_opts[:template_dirs] = 'templates/slim'
