@@ -1,11 +1,13 @@
-require 'asciidoctor/converter/html5'
-require 'asciidoctor/converter/composite'
-require 'asciidoctor/converter/template'
+unless RUBY_ENGINE == 'opal'
+  require 'asciidoctor/converter/html5'
+  require 'asciidoctor/converter/composite'
+  require 'asciidoctor/converter/template'
+end
 
 module Asciidoctor; module Revealjs
 
   class Converter < ::Asciidoctor::Converter::CompositeConverter
-    ProvidedTemplatesDir = ::File.expand_path '../../../templates', __FILE__
+    ProvidedTemplatesDir = RUBY_ENGINE == 'opal' ? 'node_modules/asciidoctor-reveal.js/templates' : (::File.expand_path '../../../templates', __FILE__)
     register_for 'revealjs'
 
     def initialize backend, opts = {}
