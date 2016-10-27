@@ -5,11 +5,10 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
-== 1.0.1 (2016-10-12) - @obilodeau
+== 1.0.2-dev (<releaseDate>)
 
 Enhancements::
-  * Documentation: aligned release process for both npm and ruby gems packages
-  * npm package in sync with ruby gem
+  * Ruby back-end is now compiled in Javascript with Opal (#115)
 
 ////
 Compliance::
@@ -21,6 +20,12 @@ Bug fixes::
 Infrastructure::
   * item
 ////
+
+== 1.0.1 (2016-10-12) - @obilodeau
+
+Enhancements::
+  * Documentation: aligned release process for both npm and ruby gems packages
+  * npm package in sync with ruby gem
 
 == 1.0.0 (2016-10-06) - @obilodeau
 
