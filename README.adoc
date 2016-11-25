@@ -33,13 +33,12 @@ endif::[]
 
 There are two main technology stacks that can transform AsciiDoc into HTML5 / Reveal.js:
 
-* Asciidoctor / Ruby / Slim / Bundler (<<ruby, instructions here>>)
-* Asciidoctor.js / JavaScript / Jade / Node.js (<<javascript, instructions here>>)
+* Asciidoctor / Ruby / Slim / Bundler (See <<Ruby Setup>>)
+* Asciidoctor.js / JavaScript / Jade / Node.js (See <<Node / JavaScript Setup>>)
 
 Right now the Ruby / Slim templates are more featureful but that is changing quickly.
 
 
-[[ruby]]
 == Ruby Setup
 
 NOTE: asciidoctor-reveal.js is now a Ruby Gem.
@@ -110,7 +109,6 @@ NOTE: For some reason, when you use the system Ruby on Fedora, you also have to 
 TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
 
 
-[[javascript]]
 == Node / JavaScript Setup
 
 === Prerequisites
@@ -346,7 +344,7 @@ See {uri-revealjs-gh}#stretching-elements[reveal.js documentation on stretching 
 
 === Videos
 
-In addition to <<background_videos,background videos>>, videos can be inserted directly into slides.
+In addition to <<Background videos,background videos>>, videos can be inserted directly into slides.
 The syntax is the standard http://asciidoctor.org/docs/user-manual/#video[asciidoc video block macro] syntax.
 
 ----
@@ -523,7 +521,7 @@ In AsciiDoc the `data-state` can be applied to a slide by adding a state attribu
 ----
 
 That state can be queried from Javascript or used in CSS to apply further customization to your slide deck.
-For example, by combining this feature with the <<_css_override, CSS override>> one, you can alter fonts for specific pages with this CSS:
+For example, by combining this feature with the <<CSS override>> one, you can alter fonts for specific pages with this CSS:
 
 ----
 @import 'https://fonts.googleapis.com/css?family=Baloo+Bhai';
