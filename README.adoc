@@ -1,4 +1,5 @@
-= reveal.js backend for Asciidoctor
+= Reveal.js converter for Asciidoctor
+Olivier Bilodeau <https://github.com/obilodeau[@obilodeau]>; Guillaume Grossetie <https://github.com/mogztter[@mogztter]>; Dan Allen <https://github.com/mojavelinux[@mojavelinux]>; Rahman Usta <https://github.com/rahmanusta[@rahmanusta]>; Charles Moulliard <https://github.com/cmoulliard[@cmoulliard]>
 ifdef::env-github,env-browser[]
 :toc: preamble
 :toclevels: 2
@@ -9,15 +10,14 @@ endif::[]
 :uri-revealjs-home: http://lab.hakim.se/reveal-js/
 :uri-revealjs-gh: https://github.com/hakimel/reveal.js
 :uri-nodejs-download: https://nodejs.org/en/download/
-:uri-us: {uri-project-repo}
 
 ifdef::env-github[]
 image:http://img.shields.io/gem/v/asciidoctor-revealjs.svg[gem, link=https://rubygems.org/gems/asciidoctor-revealjs]
 image:http://img.shields.io/npm/v/asciidoctor-reveal.js.svg[npm, link=https://www.npmjs.org/package/asciidoctor-reveal.js]
 endif::[]
 
-// Changes made here should be sync'ed in packages.json's readme field
-The {uri-us}[reveal.js backend] is a collection of templates for {uri-asciidoctor}[Asciidoctor] (or {uri-asciidoctorjs}[Asciidoctor.js]) that transform an AsciiDoc document into HTML5 slides animated by {uri-revealjs-home}[reveal.js].
+// IMPORTANT: Changes made to this description should be sync'ed with the readme field in package.json.
+{uri-project-repo}[Asciidoctor reveal.js] is a converter for {uri-asciidoctor}[Asciidoctor] and {uri-asciidoctorjs}[Asciidoctor.js] that transforms an AsciiDoc document into an HTML5 presentation designed to be executed by the {uri-revealjs-home}[reveal.js] presentation framework.
 
 //image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
 
@@ -669,7 +669,7 @@ activate it.
 
 == Copyright and Licensing
 
-Copyright (C) 2012-2016 Olivier Bilodeau, Charles Moulliard, Dan Allen and the Asciidoctor Project.
+Copyright (C) 2012-2016 {authors} and the Asciidoctor Project.
 Free use of this software is granted under the terms of the MIT License.
 
 See the <<LICENSE#,LICENSE>> file for details.
