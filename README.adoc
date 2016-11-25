@@ -1,12 +1,15 @@
 = reveal.js backend for Asciidoctor
+ifdef::env-github,env-browser[]
 :toc: preamble
 :toclevels: 2
-:uri-us: https://github.com/asciidoctor/asciidoctor-reveal.js
+endif::[]
+:uri-project-repo: https://github.com/asciidoctor/asciidoctor-reveal.js
 :uri-asciidoctor: https://github.com/asciidoctor/asciidoctor
 :uri-asciidoctorjs: https://github.com/asciidoctor/asciidoctor.js
 :uri-revealjs-home: http://lab.hakim.se/reveal-js/
 :uri-revealjs-gh: https://github.com/hakimel/reveal.js
 :uri-nodejs-download: https://nodejs.org/en/download/
+:uri-us: {uri-project-repo}
 
 ifdef::env-github[]
 image:http://img.shields.io/gem/v/asciidoctor-revealjs.svg[gem, link=https://rubygems.org/gems/asciidoctor-revealjs]
