@@ -226,6 +226,7 @@ Then proceed as documented in the `README.adoc`.
 . Tag the release commit
 ** Annotated Tag msg: Version %version%
 . Push your changes (including the tag)
+. Make a release on github (from changelog and copy from previous releases)
 . Pushing the gem on rubygems.org:
 +
  $ gem build asciidoctor-revealjs.gemspec
