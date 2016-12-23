@@ -5,7 +5,7 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
-== 1.0.2-dev (<releaseDate>)
+== 1.0.2 (2016-12-22) - @obilodeau
 
 Enhancements::
   * Ruby back-end is now compiled in Javascript with Opal (#115)
