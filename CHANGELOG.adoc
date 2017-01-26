@@ -25,7 +25,7 @@ Infrastructure::
 === Release meta
 
 {uri-repo}/issues?q=milestone%3A1.0.2[issues resolved] |
-{uri-repo}/releases/tag/v1.0.2[git tag]
+{uri-repo}/releases/tag/v1.0.2[git tag] |
 {uri-repo}/compare/v1.0.1...v1.0.2[full diff]
 
 === Credits
