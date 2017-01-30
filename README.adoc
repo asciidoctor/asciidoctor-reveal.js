@@ -531,6 +531,25 @@ section[data-state="topic"] h2 {
 }
 ----
 
+=== Admonitions
+
+Asciidoctor font-based http://asciidoctor.org/docs/user-manual/#admonition[admonitions] are supported.
+Make sure to add the following attribute to your document:
+
+----
+:icons: font
+----
+
+Here is an example slide:
+
+----
+== But first
+
+WARNING: This presentation is dangerous!
+----
+
+Here are details about Asciidoctor's http://asciidoctor.org/docs/user-manual/#admonition-icons[Admonition icons] support.
+
 
 // FIXME this is no longer accurate
 == About Jade Templates
