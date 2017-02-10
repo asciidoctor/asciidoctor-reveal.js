@@ -1,6 +1,7 @@
 = {project-name} Changelog
 :project-name: asciidoctor-reveal.js
 :uri-repo: https://github.com/asciidoctor/asciidoctor-reveal.js
+:uri-issue: {uri-repo}/issues/
 
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
@@ -10,10 +11,10 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 Enhancements::
   * Documentation improvements
 
-////
 Compliance::
-  * item
+  * Added `data-state: title` to the title slide ({uri-issue}123[#123])
 
+////
 Bug fixes::
   * item
 
