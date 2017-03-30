@@ -14,10 +14,10 @@ Enhancements::
 Compliance::
   * Added `data-state: title` to the title slide ({uri-issue}123[#123])
 
-////
 Bug fixes::
-  * item
+  * Fixed consistency issues with boolean values handling in revealjs settings ({uri-issue}125[#125])
 
+////
 Infrastructure::
   * item
 
