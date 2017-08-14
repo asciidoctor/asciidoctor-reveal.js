@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = Dir['README.adoc', 'LICENSE.adoc', 'HACKING.adoc']
   s.require_paths = ['lib']
 
-  s.add_runtime_dependency 'asciidoctor', '~> 1.5.6.1'
+  s.add_runtime_dependency 'asciidoctor', '~> 1.5.6'
   s.add_runtime_dependency 'slim', '~> 3.0.6'
   s.add_runtime_dependency 'thread_safe', '~> 0.3.5'
 
