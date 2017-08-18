@@ -274,3 +274,5 @@ TODO
 
 // We will need full header_footer tests also, not just embedded which I think tests our use case poorly.
 // See https://github.com/asciidoctor/asciidoctor-doctest#options for the feature that we will need to trigger
+// Everything is in document.adoc so far due to doctest's way of mapping the input test files to Asciidoctor's AST.
+// There might be a better way to organize the testing better.

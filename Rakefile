@@ -17,6 +17,7 @@ DocTest::GeneratorTask.new(:generate) do |task|
     paragraph_xpath: './div/p/node()'
   )
   task.converter_opts[:template_dirs] = 'templates/slim'
+  task.examples_path.unshift 'test/input'
 end
 
 # When no task specified, run test.
