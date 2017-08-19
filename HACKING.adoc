@@ -45,7 +45,7 @@ It is very useful to discover a complex object hierarchy like what asciidoctor o
 
 ==== Initial Setup
 
-    gem install pry
+    bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
 ==== Usage
 
@@ -56,11 +56,10 @@ In order to be dropped into the debugger at a specific point in a template simpl
 - binding.pry
 ----
 
-Then run asciidoctor from the command-line to generate your document and you'll be dropped in the debugger:
+Then run `asciidoctor-revealjs` from the command-line to generate your document and you'll be dropped in the debugger:
 
 ----
-$ make
-asciidoctor -T templates/slim -b revealjs test/level-sections.adoc
+$ bundle exec asciidoctor-revealjs examples/video.adoc
 asciidoctor: WARNING: level-sections.adoc: line 29: section title out of sequence: expected level 2, got level 3
 
 From: /home/olivier/src/asciidoc/asciidoctor-reveal.js/templates/slim/section.html.slim @ line 3 :
@@ -94,7 +93,7 @@ You can also query asciidoctor's documentation:
 == Manual Tests
 
 In order to help troubleshoot issues and test syntax improvements, some minimalist asciidoc test files are provided.
-You can render the tests files and then load them in a browser and check if `asciidoctor-reveal.js` behaves as expected.
+You can render the tests files and then load them in a browser and check if `asciidoctor-revealjs` behaves as expected.
 
 === Initial Setup
 
@@ -104,29 +103,23 @@ done with `bundler`:
     bundle config --local github.https true
     bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
-Go to `test/` folder and install `reveal.js`:
+Go to `test/output/slim/` folder and install `reveal.js`:
 
-    cd test/
+    cd test/output/slim/
     git clone https://github.com/hakimel/reveal.js.git
 
 === Render tests into .html
 
 From the project's root directory:
 
-    make
+    bundle exec rake generate FORCE=yes
 
 === Open rendered files
 
-You can open the generated `.html` in a Web browser.
-For convenience the following command will open the last modified file:
+NOTE: Right now, https://github.com/asciidoctor/asciidoctor-doctest/issues/12[doctest issue #12] means that the generated examples will not be pretty.
 
-    make open
+You can open the generated `.html` in `test/output/slim/` in a Web browser.
 
-Additionally, if you want to test with a minimalist web server:
-
-    make serve
-
-The server is running in the foreground and needs `Ctrl-C` to be killed.
 
 == Jade templates
 
@@ -136,6 +129,8 @@ out of sync with our asciidoctor's slim templates.
 To test the jade templates, install AsciidocFX and copy the jade templates
 over to AsciidocFX's `conf/slide/templates/revealjs/` directory. Then use
 AsciidocFX to render the slides.
+
+Alternatively, the https://github.com/asciidoctor/asciidoctor-reveal.js/#node-javascript-setup[node/npm asciidoctor-revealjs setup] can be used.
 
 
 == Attribute inheritence
