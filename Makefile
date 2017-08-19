@@ -6,7 +6,7 @@ MOST_RECENT=$(shell ls -t test/*.html | head -1)
 default: $(patsubst %.adoc,%.html,$(TESTS))
 
 %.html: %.adoc
-	asciidoctor -T templates/slim -b revealjs $<
+	bundle exec ./bin/asciidoctor-revealjs $<
 
 open:
 	"$(shell which xdg-open || which open || which x-www-browser)" $(MOST_RECENT)

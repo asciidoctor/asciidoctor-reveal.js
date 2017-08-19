@@ -1,7 +1,20 @@
-= reveal.js backend for Asciidoctor
+= Reveal.js converter for Asciidoctor
+Olivier Bilodeau <https://github.com/obilodeau[@obilodeau]>; Guillaume Grossetie <https://github.com/mogztter[@mogztter]>; Dan Allen <https://github.com/mojavelinux[@mojavelinux]>; Rahman Usta <https://github.com/rahmanusta[@rahmanusta]>; Charles Moulliard <https://github.com/cmoulliard[@cmoulliard]>
+ifdef::env-github,env-browser[]
 :toc: preamble
 :toclevels: 2
-:uri-us: https://github.com/asciidoctor/asciidoctor-reveal.js
+endif::[]
+ifdef::env-github[]
+:status:
+:outfilesuffix: .adoc
+:!toc-title:
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+:uri-project-repo: https://github.com/asciidoctor/asciidoctor-reveal.js
 :uri-asciidoctor: https://github.com/asciidoctor/asciidoctor
 :uri-asciidoctorjs: https://github.com/asciidoctor/asciidoctor.js
 :uri-revealjs-home: http://lab.hakim.se/reveal-js/
@@ -13,20 +26,19 @@ image:http://img.shields.io/gem/v/asciidoctor-revealjs.svg[gem, link=https://rub
 image:http://img.shields.io/npm/v/asciidoctor-reveal.js.svg[npm, link=https://www.npmjs.org/package/asciidoctor-reveal.js]
 endif::[]
 
-// Changes made here should be sync'ed in packages.json's readme field
-The {uri-us}[reveal.js backend] is a collection of templates for {uri-asciidoctor}[Asciidoctor] (or {uri-asciidoctorjs}[Asciidoctor.js]) that transform an AsciiDoc document into HTML5 slides animated by {uri-revealjs-home}[reveal.js].
+// IMPORTANT: Changes made to this description should be sync'ed with the readme field in package.json.
+{uri-project-repo}[Asciidoctor reveal.js] is a converter for {uri-asciidoctor}[Asciidoctor] and {uri-asciidoctorjs}[Asciidoctor.js] that transforms an AsciiDoc document into an HTML5 presentation designed to be executed by the {uri-revealjs-home}[reveal.js] presentation framework.
 
 //image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
 
-There are two main technology stacks that can transform AsciiDoc into HTML5 / Reveal.js:
+There are two main technology stacks that can transform AsciiDoc into HTML5 / reveal.js:
 
-* Asciidoctor / Ruby / Slim / Bundler (<<ruby, instructions here>>)
-* Asciidoctor.js / JavaScript / Jade / Node.js (<<javascript, instructions here>>)
+* Asciidoctor / Ruby / Slim / Bundler (See <<Ruby Setup>>)
+* Asciidoctor.js / JavaScript / Jade / Node.js (See <<Node / JavaScript Setup>>)
 
 Right now the Ruby / Slim templates are more featureful but that is changing quickly.
 
 
-[[ruby]]
 == Ruby Setup
 
 NOTE: asciidoctor-reveal.js is now a Ruby Gem.
@@ -65,6 +77,7 @@ NOTE: These instructions should be repeated for every presentation project.
 
 . Create a file named `Gemfile` with the following content:
 +
+[source,ruby]
 ----
 source 'https://rubygems.org'
 
@@ -97,7 +110,6 @@ NOTE: For some reason, when you use the system Ruby on Fedora, you also have to 
 TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
 
 
-[[javascript]]
 == Node / JavaScript Setup
 
 === Prerequisites
@@ -113,19 +125,19 @@ Using npm:
 
 === Rendering the AsciiDoc into slides
 
-Once the package is installed, you can convert AsciiDoc files using Reveal.js backend.
-Here we are converting a file named `presentation.adoc` into a Reveal.js presentation using Node.js:
+Once the package is installed, you can convert AsciiDoc files using reveal.js converter.
+Here we are converting a file named `presentation.adoc` into a reveal.js presentation using Node.js:
 
 .asciidoctor-revealjs.js
 [source, javascript]
 ----
-// Load asciidoctor.js + asciidoctor-reveal.js
+// Load asciidoctor.js and asciidoctor-reveal.js
 var asciidoctor = require('asciidoctor.js')();
 var Asciidoctor = asciidoctor.Asciidoctor();
 
 require('asciidoctor-reveal.js');
 
-// Convert the document 'presentation.adoc' using Reveal.js backend
+// Convert the document 'presentation.adoc' using the reveal.js converter
 var attributes = 'revealjsdir=node_modules/reveal.js@';
 var options = {safe: 'safe', backend: 'revealjs', attributes: attributes};
 Asciidoctor.convertFile('presentation.adoc', options); // <1>
@@ -182,7 +194,7 @@ Actually things aren't that bad
 --
 ----
 
-In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js' default behavior) with {uri-revealjs-gh}#speaker-notes[speaker notes].
+In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js`' default behavior) with {uri-revealjs-gh}#speaker-notes[speaker notes].
 
 
 === Slides without titles
@@ -225,7 +237,7 @@ image::cover.jpg[background, size=cover]
 ----
 
 This will put `cover.jpg` as the slide's background image.
-It sets `reveal.js'` `data-background-image` attribute.
+It sets reveal.js`' `data-background-image` attribute.
 The `size` attribute is also supported.
 See the {uri-revealjs-gh}#image-backgrounds[relevant reveal.js documentation] for details.
 
@@ -320,9 +332,7 @@ Note that only `fade-in` is supported for lists at the moment.
 Reveal.js supports a special class that will give all available screen space to an HTML node.
 This class element is named `stretch`.
 
-__
 Sometimes it's desirable to have an element, like an image or video, stretch to consume as much space as possible within a given slide.
-__
 
 To apply that class to block simply use asciidoctor's class assignment:
 
@@ -333,7 +343,7 @@ See {uri-revealjs-gh}#stretching-elements[reveal.js documentation on stretching 
 
 === Videos
 
-In addition to <<background_videos,background videos>>, videos can be inserted directly into slides.
+In addition to <<Background videos,background videos>>, videos can be inserted directly into slides.
 The syntax is the standard http://asciidoctor.org/docs/user-manual/#video[asciidoc video block macro] syntax.
 
 ----
@@ -422,7 +432,7 @@ The title slide is customized via Asciidoc attributes.
 These are the global variable assigned at the top of a document under the lead
 title that look like this: `:name: value`.
 
-This back-end supports changing the color, image, video, iframe and
+This converter supports changing the color, image, video, iframe and
 transitions of the title slide.
 
 Read {uri-revealjs-gh}#slide-backgrounds[the relevant
@@ -439,15 +449,15 @@ include::test/title-slide-image.adoc[]
 The title slide is also added a `title` CSS class to help with template
 customization.
 
-=== Content meant for multiple back-ends
+=== Content meant for multiple converters
 
 Some content can be created with both slides and book in mind.
 
 To mark slides split points you can use preprocessor conditionals combined
-with back-end declaration.
+with a backend declaration.
 Breaking points are set using slides with no title `=== !` wrapped in a
 conditional: `ifdef::backend-revealjs[=== !]`.
-In the end, the whole document has to be compiled with the back-end option:
+In the end, the whole document has to be compiled with the backend option:
 `-b revealjs`
 
 For example:
@@ -510,7 +520,7 @@ In AsciiDoc the `data-state` can be applied to a slide by adding a state attribu
 ----
 
 That state can be queried from Javascript or used in CSS to apply further customization to your slide deck.
-For example, by combining this feature with the <<_css_override, CSS override>> one, you can alter fonts for specific pages with this CSS:
+For example, by combining this feature with the <<CSS override>> one, you can alter fonts for specific pages with this CSS:
 
 ----
 @import 'https://fonts.googleapis.com/css?family=Baloo+Bhai';
@@ -521,15 +531,34 @@ section[data-state="topic"] h2 {
 }
 ----
 
+=== Admonitions
+
+Asciidoctor font-based http://asciidoctor.org/docs/user-manual/#admonition[admonitions] are supported.
+Make sure to add the following attribute to your document:
+
+----
+:icons: font
+----
+
+Here is an example slide:
+
+----
+== But first
+
+WARNING: This presentation is dangerous!
+----
+
+Here are details about Asciidoctor's http://asciidoctor.org/docs/user-manual/#admonition-icons[Admonition icons] support.
+
 
 // FIXME this is no longer accurate
 == About Jade Templates
 
-`/templates/jade` directory contains jade template files they are ported from `/templates/slim` templates. These templates were written to support reveal.js backend for Asciidoctor.js environment that is currently using in https://github.com/asciidocfx/AsciidocFX[AsciidocFX] editor. You can look at the https://github.com/asciidocfx/asciidoctor.js-reveal-demo[demo].
+`/templates/jade` directory contains jade template files they are ported from `/templates/slim` templates. These templates were written to support the reveal.js converter for Asciidoctor.js environment that is currently using in https://github.com/asciidocfx/AsciidocFX[AsciidocFX] editor. You can look at the https://github.com/asciidocfx/asciidoctor.js-reveal-demo[demo].
 
-== reveal.js Options
+== Reveal.js Options
 
-There are some attributes that can be set at the top of the document which they are specific of +revealjs+ backend.
+There are some attributes that can be set at the top of the document which they are specific of `revealjs` converter.
 
 NOTE: Default settings are based on `reveal.js` default settings.
 
@@ -539,7 +568,7 @@ NOTE: Default settings are based on `reveal.js` default settings.
 
 |:revealjs_theme:
 |beige, *black*, league, night, serif, simple, sky, solarized, white
-|Chooses one of reveal.js' {uri-revealjs-gh}#theming[built-in themes].
+|Chooses one of reveal.js`' {uri-revealjs-gh}#theming[built-in themes].
 
 |:revealjs_customtheme:
 |<file\|URL>
@@ -666,7 +695,7 @@ activate it.
 
 == Copyright and Licensing
 
-Copyright (C) 2012-2016 Olivier Bilodeau, Charles Moulliard, Dan Allen and the Asciidoctor Project.
+Copyright (C) 2012-2016 {authors} and the Asciidoctor Project.
 Free use of this software is granted under the terms of the MIT License.
 
-See the <<LICENSE#,LICENSE>> file for details.
+ifdef::env-github,env-browser[See the <<LICENSE#,LICENSE>> file for details.]

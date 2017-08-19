@@ -98,6 +98,14 @@ You can render the tests files and then load them in a browser and check if `asc
 
 === Initial Setup
 
+Make sure to have a working version of `asciidoctor-reveals` this is usually
+done with `bundler`:
+
+    bundle config --local github.https true
+    bundle --path=.bundle/gems --binstubs=.bundle/.bin
+
+Go to `test/` folder and install `reveal.js`:
+
     cd test/
     git clone https://github.com/hakimel/reveal.js.git
 
@@ -226,6 +234,7 @@ Then proceed as documented in the `README.adoc`.
 . Tag the release commit
 ** Annotated Tag msg: Version %version%
 . Push your changes (including the tag)
+. Make a release on github (from changelog and copy from previous releases)
 . Pushing the gem on rubygems.org:
 +
  $ gem build asciidoctor-revealjs.gemspec
