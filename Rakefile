@@ -13,11 +13,11 @@ end
 
 DocTest::GeneratorTask.new(:generate) do |task|
   task.output_suite = DocTest::HTML::ExamplesSuite.new(
-    examples_path: 'test/output',
+    examples_path: 'test/output/slim',
     paragraph_xpath: './div/p/node()'
   )
   task.converter_opts[:template_dirs] = 'templates/slim'
-  task.examples_path.unshift 'test/input'
+  task.examples_path.unshift 'examples'
 end
 
 # When no task specified, run test.

@@ -1,0 +1,9 @@
+// .preamble
+// Demonstration of the presence of a preamble
+// :header_footer:
+= Presentation Title
+Author Name
+
+Preamble
+
+== Slide 2

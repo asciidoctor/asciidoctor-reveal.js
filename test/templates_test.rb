@@ -1,7 +1,7 @@
 require 'test_helper'
 
-DocTest.examples_path.unshift 'test/input'
-DocTest.examples_path.unshift 'test/output'
+DocTest.examples_path.unshift 'examples'
+DocTest.examples_path.unshift 'test/output/slim'
 
 class TestTemplates < DocTest::Test
   converter_opts template_dirs: 'templates/slim'

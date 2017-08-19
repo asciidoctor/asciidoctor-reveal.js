@@ -2,8 +2,7 @@
 /*.html
 
 # test stuff
-test/*.html
-test/reveal.js/
+/test/output/slim/reveal.js/
 
 # node stuff
 node_modules/

@@ -1,0 +1,6 @@
+= Examples
+
+Minimal AsciiDoc slide-decks to showcase reveal.js' features or test for regressions.
+
+They are also used in automated testing.
+Because of that some metadata (AsciiDoc comments `//`) is present.

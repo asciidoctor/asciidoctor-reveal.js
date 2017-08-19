@@ -101,7 +101,7 @@ NOTE: For some reason, when you use the system Ruby on Fedora, you also have to 
 === Rendering the AsciiDoc into slides
 
 . Create content in a file (*.adoc, *.ad, etc.).
-  See examples in <<Syntax Examples>> section to get started or look at files in `test/`.
+  See examples in <<Syntax Examples>> section to get started.
 
 . Generate HTML presentation from the AsciiDoc source
 
@@ -169,9 +169,8 @@ You can open the `presentation.html` file in your browser and enjoy!
 
 == Syntax Examples
 
-// FIXME: incomplete
-
 Let's see some examples of `revealjs` backend features.
+Additional examples can be found in the AsciiDoc files (.adoc) in `examples/`.
 
 === Basic presentation with speaker notes
 

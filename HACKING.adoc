@@ -272,16 +272,15 @@ However, if you have all dependencies properly installed this command should run
 
 === Generating HTML test target
 
-Tests were bootstrapped by generating them from asciidoctor-doctest's test corpus.
+Tests were bootstrapped by generating them from asciidoctor-doctest's test corpus and current asciidoctor-revealjs' slim template engine.
 This is done using the following command:
 
     bundle exec rake generate
 
 === Custom tests
 
-TODO
+Files in the `examples/` directory are used as tests.
+Resulting slides are kept in `test/output/slim/`.
 
-// We will need full header_footer tests also, not just embedded which I think tests our use case poorly.
-// See https://github.com/asciidoctor/asciidoctor-doctest#options for the feature that we will need to trigger
-// Everything is in document.adoc so far due to doctest's way of mapping the input test files to Asciidoctor's AST.
-// There might be a better way to organize the testing better.
+// TODO :header_footer: tests are broken.
+// See upstream issue: https://github.com/asciidoctor/asciidoctor-doctest/issues/12

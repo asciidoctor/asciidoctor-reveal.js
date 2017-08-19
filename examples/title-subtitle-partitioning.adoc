@@ -1,0 +1,6 @@
+// .subtitle
+// Use of the AsciiDoc automatic subtitle partitionning.
+// :header_footer:
+= Catch phrase: Longer more explicit title introducing the real concept
+
+== Slide 2
