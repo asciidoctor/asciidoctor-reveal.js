@@ -9,19 +9,7 @@ DocTest::RakeTasks.new do |t|
   t.converter_opts = { template_dirs: 'templates/slim' }
 end
 
-# DocTest::RakeTasks.new(:doctest) do |t|
-#   t.output_suite = DocTest::IO::XML
-#   t.output_suite_opts = {
-#     examples_path: 'test/output/slim'
-#   }
-#   # add extra input examples (optional)
-#   t.input_suite_opts = {
-#     examples_path: [ *DocTest.examples_path, 'examples' ]
-#   }
-#   t.converter_opts = {
-#     template_dirs: 'templates/slim'
-#   }
-# end
+# TODO add a rake task to render fully working examples to look at them in a browser
 
 # When no task specified, run test.
 task :default => :doctest
