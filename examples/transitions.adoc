@@ -1,5 +1,6 @@
 // .transitions
 // Demonstration of various styles of reveal.js transitions applied on a per-slide bassis.
+// :include: //div[@class="slides"]
 // :header_footer:
 = Slide Transitions
 :backend: revealjs

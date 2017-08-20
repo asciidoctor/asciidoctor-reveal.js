@@ -1,5 +1,6 @@
 // .video
 // Demonstration of various reveal.js video features and AsciiDoc compact syntax for youtube.
+// :include: //div[@class="slides"]
 // :header_footer:
 = Video tests
 

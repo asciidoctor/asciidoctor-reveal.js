@@ -1,5 +1,6 @@
 // .sections
 // Demonstration of section levels and their specific reveal.js integration.
+// :include: //div[@class="slides"]
 // :header_footer:
 = Levels
 :backend: revealjs

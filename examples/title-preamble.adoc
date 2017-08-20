@@ -1,5 +1,6 @@
 // .preamble
 // Demonstration of the presence of a preamble
+// :include: //div[@class="slides"]
 // :header_footer:
 = Presentation Title
 Author Name

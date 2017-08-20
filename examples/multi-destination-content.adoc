@@ -1,6 +1,7 @@
 // .multiple-backend-destination
 // Demonstration of having the same AsciiDoc source generate different files based on usage context.
 // This test will only test the revealjs render.
+// :include: //div[@class="slides"]
 // :header_footer:
 = My Doc
 John Doe <John@example.net>

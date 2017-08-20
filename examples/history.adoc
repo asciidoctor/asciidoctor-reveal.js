@@ -1,6 +1,9 @@
+// .history
+// Enables Reveal.JS' browser history feature
+// :include: //body/script | //div[@class="slides"]
+// :header_footer:
 = History
 :backend: revealjs
-// enables browser history
 :revealjs_history: true
 
 == First slide

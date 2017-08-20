@@ -1,5 +1,6 @@
 // .video
 // Use of the title-slide-background-video feature of reveal.js
+// :include: //div[@class="slides"]
 // :header_footer:
 = EPIC TITLE
 :revealjs_theme: white

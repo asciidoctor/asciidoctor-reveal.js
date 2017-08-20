@@ -4,7 +4,7 @@ require 'tilt'
 
 DocTest::RakeTasks.new do |t|
   t.output_examples :html, path: 'test/output/slim'
-  t.input_examples :asciidoc, path: 'examples'
+  t.input_examples :asciidoc, path: [ *DocTest.examples_path, 'examples' ]
   t.converter = DocTest::HTML::Converter
   t.converter_opts = { template_dirs: 'templates/slim' }
 end

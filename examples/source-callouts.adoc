@@ -1,5 +1,6 @@
 // .source-callouts
 // Demonstration of source callouts
+// :include: //div[@class="slides"]
 // :header_footer:
 = Presentation
 Me

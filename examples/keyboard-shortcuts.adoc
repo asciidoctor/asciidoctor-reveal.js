@@ -1,5 +1,6 @@
 // .keyboard-shortcuts
 // Demonstration of keyboard shortcuts extension.
+// :include: //div[@class="slides"]
 // :header_footer:
 = Keyboard shortcuts
 :experimental:

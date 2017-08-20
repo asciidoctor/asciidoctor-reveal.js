@@ -2,6 +2,7 @@
 // Demonstration of the old image background syntax.
 // We should retain compatibility for a while.
 // See https://github.com/asciidoctor/asciidoctor-reveal.js/pull/52
+// :include: //div[@class="slides"]
 // :header_footer:
 = Test slide deck
 :imagesdir: images

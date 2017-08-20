@@ -1,5 +1,6 @@
 // .vertical-slides
 // Demonstration of reveal.js vertical slides.
+// :include: //div[@class="slides"]
 // :header_footer:
 = Vertical Slides
 :backend: revealjs

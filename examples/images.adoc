@@ -1,5 +1,6 @@
 // .images
 // Demonstration of revealjs images embedding with some options.
+// :include: //div[@class="slides"]
 // :header_footer:
 = Images tests
 :imagesdir: images
