@@ -29,7 +29,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'thread_safe', '~> 0.3.5'
 
   s.add_development_dependency 'rake', '~> 10.4.2'
-  # TODO once there is a doctest release with our fix, we can uncomment that one and remove the hack from the Gemfile
-  #s.add_development_dependency 'asciidoctor-doctest', '~> 2.0.0.beta.3'
+  s.add_development_dependency 'asciidoctor-doctest', '~> 2.0.0.beta.4'
   s.add_development_dependency 'pry', '~> 0.10.4'
 end
