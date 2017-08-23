@@ -259,23 +259,20 @@ We recommend tests to be run with a fresh install of all dependencies in a local
 
 Then you can execute the tests with:
 
-    bundle exec rake test
+    bundle exec rake doctest
 
 However, if you have all dependencies properly installed this command should run the tests successfully:
 
-    rake test
+    rake doctest
 
 === Generating HTML test target
 
-Tests were bootstrapped by generating them from asciidoctor-doctest's test corpus and current asciidoctor-revealjs' slim template engine.
+Tests were bootstrapped by https://github.com/asciidoctor/asciidoctor-doctest/#generate-examples[generating them from asciidoctor-doctest's test corpus] and current asciidoctor-revealjs' slim template engine.
 This is done using the following command:
 
-    bundle exec rake generate
+    bundle exec rake doctest:generate FORCE=y
 
 === Custom tests
 
 Files in the `examples/` directory are used as tests.
 Resulting slides are kept in `test/output/slim/`.
-
-// TODO :header_footer: tests are broken.
-// See upstream issue: https://github.com/asciidoctor/asciidoctor-doctest/issues/12
