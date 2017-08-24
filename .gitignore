@@ -10,6 +10,7 @@
 node_modules/
 npm-debug.log
 build/
+/dist/main.js
 
 # ruby stuff
 /.bundle/

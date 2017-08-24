@@ -1,5 +1,6 @@
 module.exports = Builder;
 
+var fs = require('fs');
 var async = require('async');
 var log = require('bestikk-log');
 var bfs = require('bestikk-fs');
@@ -24,6 +25,7 @@ Builder.prototype.build = function (callback) {
 
   async.series([
     function (callback) { builder.clean(callback); }, // clean
+    function (callback) { builder.replaceUnsupportedFeatures(callback); }, // replace unsupported features
     function (callback) { builder.compile(callback); }, // compile
     function (callback) { builder.copyToDist(callback); } // copy to dist
   ], function () {
@@ -49,6 +51,17 @@ Builder.prototype.compile = function (callback) {
   var opalCompiler = new OpalCompiler({dynamicRequireLevel: 'ignore'});
   opalCompiler.compile('asciidoctor-revealjs', 'build/asciidoctor-revealjs.js', ['lib']);
   typeof callback === 'function' && callback();
+};
+
+Builder.prototype.replaceUnsupportedFeatures = function (callback) {
+  log.task('Replace unsupported features');
+  const path = 'lib/asciidoctor-revealjs/converter.rb';
+  let data = fs.readFileSync(path, 'utf8');
+  log.debug('Replace String#<< with Array#<<');
+  data = data.replace(/([^ ]*) = ''/g, '$1 = \[\]');
+  data = data.replace(/^(\s*)(_[a-z1-9_\[\]]*)$/gm, '$1$2 = $2 * \'\'');
+  fs.writeFileSync(path, data, 'utf8');
+  callback();
 };
 
 Builder.prototype.copyToDist = function (callback) {

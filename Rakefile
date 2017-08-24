@@ -21,10 +21,13 @@ namespace :build do
   end
 
   file CONVERTER_FILE, [:mode] => FileList["#{TEMPLATES_DIR}/*"] do |t, args|
+    #require 'asciidoctor-templates-compiler'
+    require_relative 'lib/asciidoctor-templates-compiler'
+    require 'slim-htag'
 
     File.open(CONVERTER_FILE, 'w') do |file|
       $stderr.puts "Generating #{file.path}."
-      Asciidoctor::TemplatesCompiler::Slim.compile_converter(
+      Asciidoctor::TemplatesCompiler::RevealjsSlim.compile_converter(
           templates_dir: TEMPLATES_DIR,
           class_name: 'Asciidoctor::Revealjs::Converter',
           register_for: ['revealjs'],
