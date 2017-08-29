@@ -226,7 +226,7 @@ Then proceed as documented in the `README.adoc`.
 . Update the changelog
 ** Generate author list with:
 +
-    git log <commit>.. --format="%aN" --reverse | perl -e 'my %dedupe; while (<STDIN>) { print unless $dedupe{$_}++}' | sort
+    git log <prev-version-tag>.. --format="%aN" --reverse | perl -e 'my %dedupe; while (<STDIN>) { print unless $dedupe{$_}++}' | sort
 
 . Prepare release commit
 ** commit msg: Prepare %version% release
