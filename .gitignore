@@ -2,6 +2,7 @@
 /*.html
 
 # test stuff
+/examples/*.html
 /examples/reveal.js/
 
 # node stuff
