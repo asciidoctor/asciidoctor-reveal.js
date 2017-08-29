@@ -6,6 +6,34 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
+== Master branch
+
+////
+Enhancements::
+
+Compliance::
+
+Bug fixes::
+
+////
+Infrastructure::
+  * https://github.com/asciidoctor/asciidoctor-doctest[Asciidoctor-doctest] integration.
+    This layer of automated testing should help prevent regressions and improve our development process. ({uri-issue}116[#116]).
+
+////
+=== Release meta
+
+{uri-repo}/releases/tag/v1.0.3[git tag] |
+{uri-repo}/compare/v1.0.2...v1.0.3[full diff]
+////
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+@jirutka, @Mogztter
+
+
 == 1.0.3 (2017-08-28) - @obilodeau
 
 Enhancements::
@@ -17,11 +45,6 @@ Compliance::
 Bug fixes::
   * Pinned Asciidoctor version requirement to 1.5.4 to avoid dealing with {uri-issue}132[#132] in the 1.0.x series
   * Fixed consistency issues with boolean values handling in revealjs settings ({uri-issue}125[#125])
-
-////
-Infrastructure::
-  * item
-////
 
 === Release meta
 
