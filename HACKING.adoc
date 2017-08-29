@@ -247,7 +247,7 @@ Then proceed as documented in the `README.adoc`.
 
 . Publish the node package on npm:
 +
- $ npm login
+ $ npm login # only required if not already authenticated
  $ npm publish
 
 . Check that the new version is available on https://www.npmjs.com/package/asciidoctor-reveal.js[npmjs.com]
