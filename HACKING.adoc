@@ -45,7 +45,7 @@ It is very useful to discover a complex object hierarchy like what asciidoctor o
 
 ==== Initial Setup
 
-    gem install pry
+    bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
 ==== Usage
 
@@ -56,11 +56,10 @@ In order to be dropped into the debugger at a specific point in a template simpl
 - binding.pry
 ----
 
-Then run asciidoctor from the command-line to generate your document and you'll be dropped in the debugger:
+Then run `asciidoctor-revealjs` from the command-line to generate your document and you'll be dropped in the debugger:
 
 ----
-$ make
-asciidoctor -T templates/slim -b revealjs test/level-sections.adoc
+$ bundle exec asciidoctor-revealjs examples/video.adoc
 asciidoctor: WARNING: level-sections.adoc: line 29: section title out of sequence: expected level 2, got level 3
 
 From: /home/olivier/src/asciidoc/asciidoctor-reveal.js/templates/slim/section.html.slim @ line 3 :
@@ -91,10 +90,10 @@ You can also query asciidoctor's documentation:
 * http://pryrepl.org/
 * http://discuss.asciidoctor.org/Interactively-debugging-a-template-with-a-REPL-td4498.html
 
-== Tests
+== Manual Tests
 
 In order to help troubleshoot issues and test syntax improvements, some minimalist asciidoc test files are provided.
-You can render the tests files and then load them in a browser and check if `asciidoctor-reveal.js` behaves as expected.
+You can render the tests files and then load them in a browser and check if `asciidoctor-revealjs` behaves as expected.
 
 === Initial Setup
 
@@ -104,29 +103,23 @@ done with `bundler`:
     bundle config --local github.https true
     bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
-Go to `test/` folder and install `reveal.js`:
+Go to `test/output/slim/` folder and install `reveal.js`:
 
-    cd test/
+    cd test/output/slim/
     git clone https://github.com/hakimel/reveal.js.git
 
 === Render tests into .html
 
 From the project's root directory:
 
-    make
+    bundle exec rake generate FORCE=yes
 
 === Open rendered files
 
-You can open the generated `.html` in a Web browser.
-For convenience the following command will open the last modified file:
+NOTE: Right now, https://github.com/asciidoctor/asciidoctor-doctest/issues/12[doctest issue #12] means that the generated examples will not be pretty.
 
-    make open
+You can open the generated `.html` in `test/output/slim/` in a Web browser.
 
-Additionally, if you want to test with a minimalist web server:
-
-    make serve
-
-The server is running in the foreground and needs `Ctrl-C` to be killed.
 
 == Jade templates
 
@@ -136,6 +129,8 @@ out of sync with our asciidoctor's slim templates.
 To test the jade templates, install AsciidocFX and copy the jade templates
 over to AsciidocFX's `conf/slide/templates/revealjs/` directory. Then use
 AsciidocFX to render the slides.
+
+Alternatively, the https://github.com/asciidoctor/asciidoctor-reveal.js/#node-javascript-setup[node/npm asciidoctor-revealjs setup] can be used.
 
 
 == Attribute inheritence
@@ -254,3 +249,30 @@ Then proceed as documented in the `README.adoc`.
 . Update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev') and commit
 ** commit msg: Begin development on next release
 
+== Ruby and asciidoctor-doctest tests
+
+=== Running tests
+
+We recommend tests to be run with a fresh install of all dependencies in a local folder that won't affect your ruby install (a `.bundle/` in this directory):
+
+    bundle --path=.bundle/gems --binstubs=.bundle/.bin
+
+Then you can execute the tests with:
+
+    bundle exec rake doctest
+
+However, if you have all dependencies properly installed this command should run the tests successfully:
+
+    rake doctest
+
+=== Generating HTML test target
+
+Tests were bootstrapped by https://github.com/asciidoctor/asciidoctor-doctest/#generate-examples[generating them from asciidoctor-doctest's test corpus] and current asciidoctor-revealjs' slim template engine.
+This is done using the following command:
+
+    bundle exec rake doctest:generate FORCE=y
+
+=== Custom tests
+
+Files in the `examples/` directory are used as tests.
+Resulting slides are kept in `test/output/slim/`.

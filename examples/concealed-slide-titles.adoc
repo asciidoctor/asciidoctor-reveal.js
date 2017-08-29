@@ -1,0 +1,20 @@
+// .concealed-slide-titles
+// The three different ways to hide slide titles
+// :include: //div[@class="slides"]
+// :header_footer:
+= Concealed Slide Titles
+:backend: revealjs
+
+== !
+
+This
+
+[%notitle]
+== Presentation
+
+presentation's titles
+
+[%conceal]
+== Concealed
+
+should be concealed

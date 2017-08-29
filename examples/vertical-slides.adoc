@@ -1,0 +1,24 @@
+// .vertical-slides
+// Demonstration of reveal.js vertical slides.
+// :include: //div[@class="slides"]
+// :header_footer:
+= Vertical Slides
+:backend: revealjs
+
+== First slide
+
+First content
+
+=== Vertical 1
+
+Content
+
+=== Vertical 2
+
+More content
+
+==== Another level
+
+== Second horizontal slide
+
+And that is all folks

@@ -2,8 +2,8 @@
 /*.html
 
 # test stuff
-test/*.html
-test/reveal.js/
+/examples/*.html
+/examples/reveal.js/
 
 # node stuff
 node_modules/

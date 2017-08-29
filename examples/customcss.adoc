@@ -1,0 +1,9 @@
+// .customcss
+// Use of the customcss attribute to load external CSS
+// :include: //body/script | //div[@class="slides"]
+// :header_footer:
+= Custom CSS
+Author
+:customcss: customcss.css
+
+== Slide 1

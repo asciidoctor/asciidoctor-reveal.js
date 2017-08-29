@@ -1,0 +1,18 @@
+// .revealjs-slide-state
+// Demonstration of adding state to a slide and that it can be used by CSS.
+// :include: //div[@class="slides"]
+// :header_footer:
+= Title
+:topic: state=title,background-color=white
+:customcss: slide-state.css
+
+== First slide
+
+Content
+
+[{topic}]
+== Topic slide
+
+== Second slide
+
+Content

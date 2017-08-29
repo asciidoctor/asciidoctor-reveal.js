@@ -1,0 +1,20 @@
+// .transitions
+// Demonstration of various styles of reveal.js transitions applied on a per-slide bassis.
+// :include: //div[@class="slides"]
+// :header_footer:
+= Slide Transitions
+:backend: revealjs
+
+== !
+
+This
+
+[%notitle, transition="zoom"]
+== Zoom zoom
+
+This slide will override the presentation transition and zoom!
+
+[%notitle, transition-speed="fast"]
+== Speed
+
+Choose from three transition speeds: default, fast or slow!

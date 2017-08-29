@@ -1,0 +1,19 @@
+// .images
+// Demonstration of revealjs images embedding with some options.
+// :include: //div[@class="slides"]
+// :header_footer:
+= Images tests
+:imagesdir: images
+
+== Normal
+
+image::web_surfing_time.gif[]
+
+== Stretched
+
+[.stretch]
+image::web_surfing_time.gif[]
+
+== Hardcoded
+
+image::web_surfing_time.gif[width="1200"]

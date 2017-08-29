@@ -22,6 +22,7 @@ endif::[]
 :uri-nodejs-download: https://nodejs.org/en/download/
 
 ifdef::env-github[]
+image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
 image:http://img.shields.io/gem/v/asciidoctor-revealjs.svg[gem, link=https://rubygems.org/gems/asciidoctor-revealjs]
 image:http://img.shields.io/npm/v/asciidoctor-reveal.js.svg[npm, link=https://www.npmjs.org/package/asciidoctor-reveal.js]
 endif::[]
@@ -29,7 +30,6 @@ endif::[]
 // IMPORTANT: Changes made to this description should be sync'ed with the readme field in package.json.
 {uri-project-repo}[Asciidoctor reveal.js] is a converter for {uri-asciidoctor}[Asciidoctor] and {uri-asciidoctorjs}[Asciidoctor.js] that transforms an AsciiDoc document into an HTML5 presentation designed to be executed by the {uri-revealjs-home}[reveal.js] presentation framework.
 
-//image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
 
 There are two main technology stacks that can transform AsciiDoc into HTML5 / reveal.js:
 
@@ -101,7 +101,7 @@ NOTE: For some reason, when you use the system Ruby on Fedora, you also have to 
 === Rendering the AsciiDoc into slides
 
 . Create content in a file (*.adoc, *.ad, etc.).
-  See examples in <<Syntax Examples>> section to get started or look at files in `test/`.
+  See examples in <<Syntax Examples>> section to get started.
 
 . Generate HTML presentation from the AsciiDoc source
 
@@ -169,9 +169,8 @@ You can open the `presentation.html` file in your browser and enjoy!
 
 == Syntax Examples
 
-// FIXME: incomplete
-
 Let's see some examples of `revealjs` backend features.
+Additional examples can be found in the AsciiDoc files (.adoc) in `examples/`.
 
 === Basic presentation with speaker notes
 

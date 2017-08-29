@@ -1,0 +1,180 @@
+<!-- .basic -->
+<div class="olist arabic">
+  <ol class="arabic">
+    <li>
+      <p>Step 1</p>
+    </li>
+    <li>
+      <p>Step 2</p>
+    </li>
+    <li>
+      <p>Step 3</p>
+    </li>
+  </ol>
+</div>
+
+<!-- .with-start -->
+<div class="olist arabic">
+  <ol class="arabic" start="6">
+    <li>
+      <p>Step 1</p>
+    </li>
+    <li>
+      <p>Step 2</p>
+    </li>
+    <li>
+      <p>Step 3</p>
+    </li>
+  </ol>
+</div>
+
+<!-- .with-reversed -->
+<div class="olist arabic">
+  <ol class="arabic">
+    <li>
+      <p>Step 1</p>
+    </li>
+    <li>
+      <p>Step 2</p>
+    </li>
+    <li>
+      <p>Step 3</p>
+    </li>
+  </ol>
+</div>
+
+<!-- .with-numeration-styles -->
+<div class="olist decimal">
+  <ol class="decimal">
+    <li>
+      <p>level 1</p>
+      <div class="olist upperalpha">
+        <ol class="upperalpha" type="A">
+          <li>
+            <p>level 2</p>
+            <div class="olist loweralpha">
+              <ol class="loweralpha" type="a">
+                <li>
+                  <p>level 3</p>
+                  <div class="olist lowerroman">
+                    <ol class="lowerroman" type="i">
+                      <li>
+                        <p>level 4</p>
+                        <div class="olist lowergreek">
+                          <ol class="lowergreek">
+                            <li>
+                              <p>level 5</p>
+                            </li>
+                          </ol>
+                        </div>
+                      </li>
+                    </ol>
+                  </div>
+                </li>
+              </ol>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </li>
+  </ol>
+</div>
+
+<!-- .with-title -->
+<div class="olist arabic">
+  <div class="title">Steps</div>
+  <ol class="arabic">
+    <li>
+      <p>Step 1</p>
+    </li>
+    <li>
+      <p>Step 2</p>
+    </li>
+    <li>
+      <p>Step 3</p>
+    </li>
+  </ol>
+</div>
+
+<!-- .with-id-and-role -->
+<div class="olist arabic green" id="steps">
+  <ol class="arabic">
+    <li>
+      <p>Step 1</p>
+    </li>
+    <li>
+      <p>Step 2</p>
+    </li>
+    <li>
+      <p>Step 3</p>
+    </li>
+  </ol>
+</div>
+
+<!-- .max-nesting -->
+<div class="olist arabic">
+  <ol class="arabic">
+    <li>
+      <p>level 1</p>
+      <div class="olist loweralpha">
+        <ol class="loweralpha" type="a">
+          <li>
+            <p>level 2</p>
+            <div class="olist lowerroman">
+              <ol class="lowerroman" type="i">
+                <li>
+                  <p>level 3</p>
+                  <div class="olist upperalpha">
+                    <ol class="upperalpha" type="A">
+                      <li>
+                        <p>level 4</p>
+                        <div class="olist upperroman">
+                          <ol class="upperroman" type="I">
+                            <li>
+                              <p>level 5</p>
+                            </li>
+                          </ol>
+                        </div>
+                      </li>
+                    </ol>
+                  </div>
+                </li>
+              </ol>
+            </div>
+          </li>
+          <li>
+            <p>level 2</p>
+          </li>
+        </ol>
+      </div>
+    </li>
+  </ol>
+</div>
+
+<!-- .complex-content -->
+<div class="olist arabic">
+  <ol class="arabic">
+    <li>
+      <p>Every list item has at least one paragraph of content, which may be wrapped, even using a hanging indent.</p>
+      <div class="paragraph">
+        <p>Additional paragraphs or blocks are adjoined by putting a list continuation on a line adjacent to both blocks.</p>
+      </div>
+      <div class="dlist">
+        <dl>
+          <dt class="hdlist1">list continuation</dt>
+          <dd>
+            <p>a plus sign (<code>+</code>) on a line by itself</p>
+          </dd>
+        </dl>
+      </div>
+    </li>
+    <li>
+      <p>A literal paragraph does not require a list continuation.</p>
+      <div class="literalblock">
+        <div class="content">
+          <pre>$ gem install asciidoctor</pre>
+        </div>
+      </div>
+    </li>
+  </ol>
+</div>

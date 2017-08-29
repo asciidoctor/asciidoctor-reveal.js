@@ -1,0 +1,20 @@
+sudo: false
+git:
+  # use depth 2 just in case two refs get pushed at once (like a tag)
+  depth: 2
+language: ruby
+rvm:
+- 2.4
+- 2.3
+- 2.2
+- 2.1
+- jruby-9k
+env:
+  global:
+  # use system libraries to speed up installation of nokogiri
+  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+script:
+- bundle exec rake doctest
+- bundle exec rake examples:convert
+notifications:
+  email: false

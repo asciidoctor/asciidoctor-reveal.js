@@ -1,0 +1,13 @@
+// .image
+// Use of the title-slide-background-image feature of reveal.js
+// :include: //div[@class="slides"]
+// :header_footer:
+= EPIC TITLE
+:imagesdir: images
+:title-slide-background-image: 70s.jpg
+:title-slide-transition: zoom
+:title-slide-transition-speed: fast
+
+== Next slide
+
+Content

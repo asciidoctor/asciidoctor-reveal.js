@@ -1,0 +1,10 @@
+// .color
+// Use of the title-slide-background-color feature of reveal.js
+// :include: //div[@class="slides"]
+// :header_footer:
+= EPIC TITLE
+:title-slide-background-color: red
+
+== Next slide
+
+Content

@@ -1,0 +1,21 @@
+// .speaker-notes
+// Demonstration of speaker notes
+// :include: //div[@class="slides"]
+// :header_footer:
+= Title Slide
+:backend: revealjs
+
+== Slide One
+
+* Foo
+* Bar
+* World
+
+== Slide Two
+
+Hello World - Good Bye Cruel World
+
+[NOTE.speaker]
+--
+Actually things aren't that bad
+--

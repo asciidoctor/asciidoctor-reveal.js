@@ -1,0 +1,22 @@
+// .stretch_class
+// This example shows the impact of using the reveal.js special stretch CSS class
+// :include: //div[@class="slides"]
+// :header_footer:
+= Stretch class
+
+== First slide
+
+Some content
+
+Nothing stretched
+
+See?
+
+== Second slide
+
+Some content
+
+[.stretch]
+Stretched
+
+See?

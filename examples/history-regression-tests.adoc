@@ -1,0 +1,17 @@
+// .history-regression-tests
+// Demonstration of revealjs history regression.
+// See https://github.com/asciidoctor/asciidoctor-reveal.js/pull/99 and https://github.com/asciidoctor/asciidoctor-reveal.js/issues/127
+// :include: //body/script | //div[@class="slides"]
+// :header_footer:
+= First Slide
+:revealjs_history: true
+
+== Second Slide
+
+== 3rd Slide
+// slide that starts with a number
+
+== P3rhaps this won't work
+// Second char is a number
+
+== Illegal çhàrâctérß
