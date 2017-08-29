@@ -1,6 +1,6 @@
 {
   "name": "asciidoctor-reveal.js",
-  "version": "1.0.3-dev",
+  "version": "1.0.3",
   "description": "A Reveal.js converter for Asciidoctor and Asciidoctor.js. Write your slides in AsciiDoc!",
   "main": "dist/main.js",
   "engines": {

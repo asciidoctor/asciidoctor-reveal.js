@@ -6,7 +6,7 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
-== Master branch
+== 1.0.3 (2017-08-28) - @obilodeau
 
 Enhancements::
   * Documentation improvements
@@ -15,24 +15,24 @@ Compliance::
   * Added `data-state: title` to the title slide ({uri-issue}123[#123])
 
 Bug fixes::
+  * Pinned Asciidoctor version requirement to 1.5.4 to avoid dealing with {uri-issue}132[#132] in the 1.0.x series
   * Fixed consistency issues with boolean values handling in revealjs settings ({uri-issue}125[#125])
 
 ////
 Infrastructure::
   * item
+////
 
 === Release meta
 
-{uri-repo}/issues?q=milestone%3A1.0.2[issues resolved] |
-{uri-repo}/releases/tag/v1.0.2[git tag] |
-{uri-repo}/compare/v1.0.1...v1.0.2[full diff]
+{uri-repo}/releases/tag/v1.0.3[git tag] |
+{uri-repo}/compare/v1.0.2...v1.0.3[full diff]
 
 === Credits
 
 Thanks to the following people who contributed to this release:
 
-...
-////
+Dan Allen, nipa, Olivier Bilodeau, Pi3r
 
 
 == 1.0.2 (2016-12-22) - @obilodeau
