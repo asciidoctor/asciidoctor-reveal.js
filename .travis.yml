@@ -13,6 +13,8 @@ env:
   global:
   # use system libraries to speed up installation of nokogiri
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
-script: bundle exec rake doctest
+script:
+- bundle exec rake doctest
+- bundle exec rake examples:convert
 notifications:
   email: false
