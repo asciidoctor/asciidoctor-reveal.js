@@ -7,11 +7,11 @@
       td.icon
         - if @document.attr? :icons, 'font'
           - icon_mapping = Hash['caution', 'fire', 'important', 'exclamation-circle', 'note', 'info-circle', 'tip', 'lightbulb-o', 'warning', 'warning']
-          i class=%(fa fa-#{icon_mapping[attr :name]}) title=@caption
+          i class=%(fa fa-#{icon_mapping[attr :name]}) title=(attr :textlabel) || @caption
         - elsif @document.attr? :icons
           img src=icon_uri(attr :name) alt=@caption
         - else
-          .title=@caption
+          .title=(attr :textlabel) || @caption
       td.content
         - if title?
           .title=title

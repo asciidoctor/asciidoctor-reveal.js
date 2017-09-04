@@ -5,7 +5,7 @@
     - nowrap = !(@document.attr? :prewrap) || (option? 'nowrap')
     / implicit listing blocks and source blocks are rendered as code
     / explicit listing blocks stay listing
-    - if @style == 'source' || (@style == 'listing' && !(attr? 1, 'listing'))
+    - if @style == 'source' || (@style == 'listing' && attributes[1] != 'listing')
       - language = attr :language
       - code_class = language ? [language, "language-#{language}"] : nil
       - pre_class = ['highlight']

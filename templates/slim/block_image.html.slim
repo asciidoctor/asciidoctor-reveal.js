@@ -9,7 +9,7 @@
 - if (has_role? 'stretch') && !((attr? :width) || (attr? :height))
   - height = "100%"
 
-- unless attr(1) == 'background' || attr(1) == "canvas"
+- unless attributes[1] == 'background' || attributes[1] == 'canvas'
   .imageblock(id=@id class=roles
       style=[("text-align: #{attr :align}" if attr? :align),("float: #{attr :float}" if attr? :float)].compact.join('; '))
     - if attr? :link
