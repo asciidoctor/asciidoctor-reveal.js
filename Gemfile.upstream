@@ -1,0 +1,5 @@
+# Gemfile used to run travis against asciidoctor's master
+# Useful to catch downstream or upstream issues before they are problematic
+source 'https://rubygems.org'
+gemspec
+gem 'asciidoctor', :git => 'https://github.com/asciidoctor/asciidoctor', :branch => 'master'
