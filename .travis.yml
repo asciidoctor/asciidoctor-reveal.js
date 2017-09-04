@@ -9,6 +9,9 @@ rvm:
 - 2.2
 - 2.1
 - jruby-9k
+gemfile:
+- Gemfile
+- Gemfile.upstream
 env:
   global:
   # use system libraries to speed up installation of nokogiri
