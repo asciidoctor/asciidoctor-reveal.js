@@ -16,11 +16,11 @@
 / process the first image block in the current section that acts as a background
 - section_images = blocks.map do |block|
   - if (ctx = block.context) == :image
-    - ['background', 'canvas'].include?(block.attr 1) ? block : []
+    - ['background', 'canvas'].include?(block.attributes[1]) ? block : []
   - elsif ctx == :section
     - []
   - else
-    - block.find_by(context: :image) {|image| ['background', 'canvas'].include?(image.attr 1) } || []
+    - block.find_by(context: :image) {|image| ['background', 'canvas'].include?(image.attributes[1]) } || []
 - if (bg_image = section_images.flatten.first)
   - data_background_image = image_uri(bg_image.attr 'target')
   / make sure no crash on nil and default values make sense
