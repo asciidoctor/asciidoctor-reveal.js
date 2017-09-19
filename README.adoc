@@ -195,6 +195,8 @@ Actually things aren't that bad
 
 In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js`' default behavior) with {uri-revealjs-gh}#speaker-notes[speaker notes].
 
+Starting with Reveal.js 3.5 speaker notes supports configurable layouts:
+image:https://cloud.githubusercontent.com/assets/629429/21808439/b941eb52-d743-11e6-9936-44ef80c60580.gif[]
 
 === Slides without titles
 
