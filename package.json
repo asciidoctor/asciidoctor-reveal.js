@@ -9,7 +9,6 @@
   },
   "files": [
     "dist",
-    "templates/jade",
     "LICENSE.adoc",
     "README.adoc"
   ],

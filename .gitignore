@@ -4,7 +4,7 @@
 # test stuff
 /examples/*.html
 /examples/reveal.js/
-/test/output/slim/reveal.js/
+/test/doctest/reveal.js/
 
 # node stuff
 node_modules/

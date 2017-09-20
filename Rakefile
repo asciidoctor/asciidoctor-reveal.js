@@ -7,8 +7,7 @@ require 'thread_safe'
 require 'tilt'
 
 CONVERTER_FILE = 'lib/asciidoctor-revealjs/converter.rb'
-# TODO if this experiment works, move everything under templates, no more slim/
-TEMPLATES_DIR = 'templates/slim'
+TEMPLATES_DIR = 'templates'
 
 namespace :build do
   require 'asciidoctor-templates-compiler'
@@ -67,7 +66,7 @@ task :clean do
 end
 
 DocTest::RakeTasks.new do |t|
-  t.output_examples :html, path: 'test/output/slim'
+  t.output_examples :html, path: 'test/doctest'
   t.input_examples :asciidoc, path: [ *DocTest.examples_path, 'examples' ]
   t.converter = DocTest::HTML::Converter
   t.converter_opts = { backend_name: 'revealjs' }
@@ -91,7 +90,7 @@ namespace :examples do
         :safe => 'safe',
         :backend => 'revealjs',
         :base_dir => 'examples',
-        :template_dir => 'templates/slim'
+        :template_dir => 'templates'
       if out.instance_of? Asciidoctor::Document
         puts "✔️".green
       else
