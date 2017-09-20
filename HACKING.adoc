@@ -102,6 +102,7 @@ done with `bundler`:
 
     bundle config --local github.https true
     bundle --path=.bundle/gems --binstubs=.bundle/.bin
+    bundle exec rake build
 
 Go to `test/output/slim/` folder and install `reveal.js`:
 
@@ -207,12 +208,30 @@ In order to test the Node package, you need to create a test project adjacent to
 
 Now, install the dependencies:
 
- $ npm i --save asciidoctor.js@1.5.5-3
+ $ npm i --save asciidoctor.js@1.5.6-preview.3
  $ npm i --save ../asciidoctor-reveal.js
 
 NOTE: The relative portion of the last command is where you are installing the local `asciidoctor-reveal.js` version from.
 
 Then proceed as documented in the `README.adoc`.
+
+
+== RubyGem package
+
+=== Test a local asciidoctor-revealjs version
+
+Compile the converter:
+
+  $ bundle exec rake build
+
+In a clean directory besides the `asciidoctor-reveal.js` repository, create the following `Gemspec` file:
+
+  source 'https://rubygems.org'
+  gem 'asciidoctor-revealjs', :path => '../asciidoctor-reveal.js'
+
+Then run:
+
+  $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
 
 == Release process
@@ -232,6 +251,7 @@ Then proceed as documented in the `README.adoc`.
 . Make a release on github (from changelog and copy from previous releases)
 . Pushing the gem on rubygems.org:
 +
+ $ bundle exec rake build
  $ gem build asciidoctor-revealjs.gemspec
  $ gem push asciidoctor-revealjs-X.Y.Z.gem
 
