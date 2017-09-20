@@ -1,14 +1,7 @@
-# This helper file borrows from the Bespoke converter
-# https://github.com/asciidoctor/asciidoctor-bespoke
-require 'asciidoctor'
-require 'json'
-
-if Gem::Version.new(Asciidoctor::VERSION) <= Gem::Version.new('1.5.3')
-  fail 'asciidoctor: FAILED: reveal.js backend needs Asciidoctor >=1.5.4!'
-end
-
-unless defined? Slim::Include
-  fail 'asciidoctor: FAILED: reveal.js backend needs Slim >= 2.1.0!'
+unless RUBY_ENGINE == 'opal'
+  # This helper file borrows from the Bespoke converter
+  # https://github.com/asciidoctor/asciidoctor-bespoke
+  require 'asciidoctor'
 end
 
 # This module gets mixed in to every node (the context of the template) at the
@@ -29,6 +22,74 @@ module Slim::Helpers
 
   def to_boolean val
     val && val != 'false' && val.to_s != '0' || false
+  end
+
+  ##
+  # These constants and functions are from the asciidictor-html5s project
+  # https://github.com/jirutka/asciidoctor-html5s/blob/a71db48a1dd5196b668b3a3d93693c5d877c5bf3/data/templates/helpers.rb
+
+  # Defaults
+  DEFAULT_TOCLEVELS = 2
+  DEFAULT_SECTNUMLEVELS = 3
+
+
+  VOID_ELEMENTS = %w(area base br col command embed hr img input keygen link
+                     meta param source track wbr)
+
+  ##
+  # Creates an HTML tag with the given name and optionally attributes. Can take
+  # a block that will run between the opening and closing tags.
+  #
+  # @param name [#to_s] the name of the tag.
+  # @param attributes [Hash] (default: {})
+  # @param content [#to_s] the content; +nil+ to call the block. (default: nil).
+  # @yield The block of Slim/HTML code within the tag (optional).
+  # @return [String] a rendered HTML element.
+  #
+
+  def html_tag(name, attributes = {}, content = nil)
+    attrs = attributes.inject([]) do |attrs, (k, v)|
+      next attrs if !v || v.nil_or_empty?
+      v = v.compact.join(' ') if v.is_a? Array
+      attrs << (v == true ? k : %(#{k}="#{v}"))
+    end
+    attrs_str = attrs.empty? ? '' : attrs.join(' ').prepend(' ')
+
+
+    if VOID_ELEMENTS.include? name.to_s
+      %(<#{name}#{attrs_str}>)
+    else
+      content ||= yield if block_given?
+      %(<#{name}#{attrs_str}>#{content}</#{name}>)
+    end
+  end
+
+
+  ##
+  # Returns corrected section level.
+  #
+  # @param sec [Asciidoctor::Section] the section node (default: self).
+  # @return [Integer]
+  #
+  def section_level(sec = self)
+    @_section_level ||= (sec.level == 0 && sec.special) ? 1 : sec.level
+  end
+
+
+  ##
+  # Returns the captioned section's title, optionally numbered.
+  #
+  # @param sec [Asciidoctor::Section] the section node (default: self).
+  # @return [String]
+  #
+  def section_title(sec = self)
+    sectnumlevels = document.attr(:sectnumlevels, DEFAULT_SECTNUMLEVELS).to_i
+
+    if sec.numbered && !sec.caption && sec.level <= sectnumlevels
+      [sec.sectnum, sec.captioned_title].join(' ')
+    else
+      sec.captioned_title
+    end
   end
 
 end

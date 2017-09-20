@@ -4,6 +4,7 @@
 # test stuff
 /examples/*.html
 /examples/reveal.js/
+/test/output/slim/reveal.js/
 
 # node stuff
 node_modules/
@@ -13,3 +14,6 @@ build/
 # ruby stuff
 /.bundle/
 /Gemfile.lock
+
+# the compiled slim template
+/lib/asciidoctor-revealjs/converter.rb

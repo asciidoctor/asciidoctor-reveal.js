@@ -49,7 +49,7 @@ Builder.prototype.compile = function (callback) {
   var opalCompiler = new OpalCompiler({dynamicRequireLevel: 'ignore'});
   opalCompiler.compile('asciidoctor-revealjs', 'build/asciidoctor-revealjs.js', ['lib']);
   typeof callback === 'function' && callback();
-}
+};
 
 Builder.prototype.copyToDist = function (callback) {
   var builder = this;
