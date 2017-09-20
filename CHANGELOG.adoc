@@ -8,9 +8,10 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 
 == Master branch
 
-////
 Enhancements::
+  * Support for Asciidoctor 1.5.6 ({uri-issue}132[#132], {uri-issue}136[#136])
 
+////
 Compliance::
 
 Bug fixes::
@@ -19,6 +20,9 @@ Bug fixes::
 Infrastructure::
   * https://github.com/asciidoctor/asciidoctor-doctest[Asciidoctor-doctest] integration.
     This layer of automated testing should help prevent regressions and improve our development process. ({uri-issue}116[#116]).
+  * Travis-CI integration to automatically run doctests and examples AsciiDoc conversions
+  * Travis-CI tests are triggered by changes done in Asciidoctor.
+    We will detect upstream changes affecting us sooner.
 
 ////
 === Release meta
