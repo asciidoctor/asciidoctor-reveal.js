@@ -713,7 +713,7 @@ activate it.
 
 == Minimum Requirements
 
-* asciidoctor 1.5.4
+* asciidoctor 1.5.6
 
 == Copyright and Licensing
 
