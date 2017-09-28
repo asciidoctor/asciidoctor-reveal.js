@@ -44,6 +44,23 @@ Thanks to the following people who contributed to this release:
 @jirutka, @Mogztter
 
 
+== 1.0.4 (2017-09-27) - @obilodeau
+
+Bug fixes::
+  * Dependency problems leading to crashes when used from Asciidoctor.js ({uri-issue}145[#145])
+
+=== Release meta
+
+{uri-repo}/releases/tag/v1.0.4[git tag] |
+{uri-repo}/compare/v1.0.3...v1.0.4[full diff]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+Olivier Bilodeau, Guillaume Grossetie
+
+
 == 1.0.3 (2017-08-28) - @obilodeau
 
 Enhancements::
