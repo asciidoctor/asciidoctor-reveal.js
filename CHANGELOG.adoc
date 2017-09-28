@@ -6,6 +6,34 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
+== 1.0.4 (2017-09-27) - @obilodeau
+
+Bug fixes::
+  * Dependency problems leading to crashes when used from Asciidoctor.js ({uri-issue}145[#145])
+
+////
+Enhancements::
+  * item
+
+Compliance::
+  * item
+
+Infrastructure::
+  * item
+////
+
+=== Release meta
+
+{uri-repo}/releases/tag/v1.0.4[git tag] |
+{uri-repo}/compare/v1.0.3...v1.0.4[full diff]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+Olivier Bilodeau, Guillaume Grossetie
+
+
 == 1.0.3 (2017-08-28) - @obilodeau
 
 Enhancements::
@@ -17,11 +45,6 @@ Compliance::
 Bug fixes::
   * Pinned Asciidoctor version requirement to 1.5.4 to avoid dealing with {uri-issue}132[#132] in the 1.0.x series
   * Fixed consistency issues with boolean values handling in revealjs settings ({uri-issue}125[#125])
-
-////
-Infrastructure::
-  * item
-////
 
 === Release meta
 
