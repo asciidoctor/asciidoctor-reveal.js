@@ -102,6 +102,7 @@ done with `bundler`:
 
     bundle config --local github.https true
     bundle --path=.bundle/gems --binstubs=.bundle/.bin
+    bundle exec rake build
 
 Go to `test/output/slim/` folder and install `reveal.js`:
 
@@ -203,16 +204,39 @@ In order to test the Node package, you need to create a test project adjacent to
 
  $ mkdir test-project
  $ cd test-project
- $ npm init -y
 
-Now, install the dependencies:
+Now, install the dependencies.
 
- $ npm i --save asciidoctor.js@1.5.5-3
+WARNING: It is important to track `Asciidoctor.js` and `bestikk-opal-compiler` versions together.
+The `opal-compiler` used to compile our node package must match `asciidoctor.js` `opal-runtime`.
+The former is explicitly installed by users on install and the later is specified in our `package.json`.
+When you update one remember to update the other.
+Versions known to work together can be found here, just replace <tag> with the `asciidoctor.js` release you are interested in: https://github.com/asciidoctor/asciidoctor.js/blob/<tag>/package.json
+
+ $ npm i --save asciidoctor.js@1.5.6-preview.3
  $ npm i --save ../asciidoctor-reveal.js
 
 NOTE: The relative portion of the last command is where you are installing the local `asciidoctor-reveal.js` version from.
 
 Then proceed as documented in the `README.adoc`.
+
+
+== RubyGem package
+
+=== Test a local asciidoctor-revealjs version
+
+Compile the converter:
+
+  $ bundle exec rake build
+
+In a clean directory besides the `asciidoctor-reveal.js` repository, create the following `Gemspec` file:
+
+  source 'https://rubygems.org'
+  gem 'asciidoctor-revealjs', :path => '../asciidoctor-reveal.js'
+
+Then run:
+
+  $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
 
 == Release process
@@ -232,6 +256,7 @@ Then proceed as documented in the `README.adoc`.
 . Make a release on github (from changelog and copy from previous releases)
 . Pushing the gem on rubygems.org:
 +
+ $ bundle exec rake build
  $ gem build asciidoctor-revealjs.gemspec
  $ gem push asciidoctor-revealjs-X.Y.Z.gem
 

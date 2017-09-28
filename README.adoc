@@ -82,7 +82,6 @@ NOTE: These instructions should be repeated for every presentation project.
 source 'https://rubygems.org'
 
 gem 'asciidoctor-revealjs' # latest released version
-#gem 'asciidoctor-revealjs', github: 'asciidoctor/asciidoctor-reveal.js' # github master branch
 ----
 +
 NOTE: For some reason, when you use the system Ruby on Fedora, you also have to add the json gem to the Gemfile.
@@ -120,7 +119,9 @@ First you must install and configure {uri-nodejs-download}[Node.js] on your mach
 
 Using npm:
 
- $ npm i --save asciidoctor.js@1.5.5-3
+// TODO once 1.1.0 is released, update this to: asciidoctor.js@1.5.6-preview.3 (or whichever fixes our current problems)
+
+ $ npm i --save asciidoctor.js@1.5.5-5
  $ npm i --save asciidoctor-reveal.js
 
 === Rendering the AsciiDoc into slides
@@ -133,14 +134,12 @@ Here we are converting a file named `presentation.adoc` into a reveal.js present
 ----
 // Load asciidoctor.js and asciidoctor-reveal.js
 var asciidoctor = require('asciidoctor.js')();
-var Asciidoctor = asciidoctor.Asciidoctor();
-
 require('asciidoctor-reveal.js');
 
 // Convert the document 'presentation.adoc' using the reveal.js converter
-var attributes = 'revealjsdir=node_modules/reveal.js@';
+var attributes = {'revealjsdir': 'node_modules/reveal.js@'};
 var options = {safe: 'safe', backend: 'revealjs', attributes: attributes};
-Asciidoctor.convertFile('presentation.adoc', options); // <1>
+asciidoctor.convertFile('presentation.adoc', options); // <1>
 ----
 <1> Creates a file named `presentation.html` (in the directory where command is run)
 
@@ -162,7 +161,7 @@ Asciidoctor.convertFile('presentation.adoc', options); // <1>
 
 To render the slides, run:
 
-    node asciidoctor-reveal.js
+    node asciidoctor-revealjs.js
 
 You can open the `presentation.html` file in your browser and enjoy!
 
@@ -174,6 +173,7 @@ Additional examples can be found in the AsciiDoc files (.adoc) in `examples/`.
 
 === Basic presentation with speaker notes
 
+[source, asciidoc]
 ----
 = Title Slide
 
@@ -208,6 +208,7 @@ There are a few ways to have no titles on slides.
 
 Here is an example of the three techniques in action:
 
+[source, asciidoc]
 ----
 include::test/concealed-slide-titles.adoc[]
 ----
@@ -217,6 +218,7 @@ NOTE: `conceal` and `notitle` have the advantage that the slide still has an id 
 
 === Background colors
 
+[source, asciidoc]
 ----
 [background-color="yellow"]
 == Slide Three
@@ -230,6 +232,7 @@ Anything accepted by CSS color formats works.
 
 === Background images
 
+[source, asciidoc]
 ----
 [%notitle]
 == Grand Announcement
@@ -246,6 +249,7 @@ NOTE: Background images file names are now relative to the `:imagedir:` attribut
 
 NOTE: The `canvas` keyword can be used instead of `background` for the same effect.
 
+[source, asciidoc]
 ----
 [%notitle]
 == The Great Goat
@@ -261,6 +265,7 @@ As you can see, you can use a URL to specify your image resource too.
 
 A background video for a slide can be specified using the `background-video` element attribute.
 
+[source, asciidoc]
 ----
 [background-video="https://my.video/file.mp4",background-video-loop=true,background-video-muted=true]
 == Nice background!
@@ -270,6 +275,7 @@ For convenience `background-video-loop` and `background-video-muted` attributes 
 
 For example:
 
+[source, asciidoc]
 ----
 [background-video="https://my.video/file.mp4",options="loop,muted"]
 == Nice background!
@@ -283,6 +289,7 @@ Note that the `data-` prefix is not required in asciidoc files.
 
 The background can be replaced with anything a browser can render in an iframe using the `background-iframe` reveal.js feature.
 
+[source, asciidoc]
 ----
 [%notitle,background-iframe="https://www.youtube.com/embed/LaApqL4QjH8?rel=0&start=3&enablejsapi=1&autoplay=1&loop=1&controls=0&modestbranding=1"]
 == a youtube video
@@ -293,6 +300,7 @@ See {uri-revealjs-gh}#iframe-backgrounds[the relevant reveal.js documentation] f
 
 === Slide Transitions
 
+[source, asciidoc]
 ----
 [transition=zoom, %notitle]
 == Zoom zoom
@@ -310,6 +318,7 @@ See {uri-revealjs-gh}#slide-transitions[the relevant reveal.js documentation] fo
 
 === Fragments
 
+[source, asciidoc]
 ----
 == Slide Four
 
@@ -347,6 +356,7 @@ See {uri-revealjs-gh}#stretching-elements[reveal.js documentation on stretching 
 In addition to <<Background videos,background videos>>, videos can be inserted directly into slides.
 The syntax is the standard http://asciidoctor.org/docs/user-manual/#video[asciidoc video block macro] syntax.
 
+[source, asciidoc]
 ----
 == Trains, we love trains!
 
@@ -359,12 +369,13 @@ To override that behavior use the `width` and `height` named attributes.
 
 === Syntax highlighting
 
-[listing]
+[source, asciidoc]
 ....
 == Slide Five
 
 Uses highlighted code
 
+[source, python]
 ----
 print "Hello World"
 ----
@@ -376,7 +387,7 @@ An explicit `[listing]` block will not be highlighted.
 `highlight.js` does language auto-detection but using the `language="..."` attribute will hint the highlighter.
 For example this will highlight this source code as Perl:
 
-[listing]
+[source, asciidoc]
 ....
 == Slide Five
 
@@ -395,6 +406,7 @@ These handle callouts correctly.
 
 To use http://coderay.rubychan.de[Coderay]:
 
+[source, asciidoc]
 ----
 = Title slide
 :source-highlighter: coderay
@@ -402,6 +414,7 @@ To use http://coderay.rubychan.de[Coderay]:
 
 To use http://pygments.org[Pygments]:
 
+[source, asciidoc]
 ----
 = Title slide
 :source-highlighter: pygments
@@ -409,7 +422,7 @@ To use http://pygments.org[Pygments]:
 
 === Vertical slides
 
-[listing]
+[source, asciidoc]
 ....
 == Slide Six
 
@@ -443,6 +456,7 @@ Keep in mind that for title slides you must replace `data-` with
 
 Here is an example:
 
+[source, asciidoc]
 ----
 include::test/title-slide-image.adoc[]
 ----
@@ -463,6 +477,7 @@ In the end, the whole document has to be compiled with the backend option:
 
 For example:
 
+[source, asciidoc]
 ----
 == Main section
 
@@ -495,6 +510,7 @@ Doing so, you can then easily override specific elements of your theme per prese
 
 For example, to do proper position-independent text placement of a title slide with a specific background you can use:
 
+[source, css]
 ----
 .reveal section.title h1 {
     margin-top: 2.3em;
@@ -515,6 +531,7 @@ If the `:customcss:` attribute value is empty then `asciidoctor-revealjs.css` is
 Reveal.js supports a {uri-revealjs-gh}#slide-states[data-state] tag that can be added on slides which gets rendered into `<section>` tags.
 In AsciiDoc the `data-state` can be applied to a slide by adding a state attribute to a section like this:
 
+[source, asciidoc]
 ----
 [state=topic]
 == Epic Topic
@@ -523,6 +540,7 @@ In AsciiDoc the `data-state` can be applied to a slide by adding a state attribu
 That state can be queried from Javascript or used in CSS to apply further customization to your slide deck.
 For example, by combining this feature with the <<CSS override>> one, you can alter fonts for specific pages with this CSS:
 
+[source, css]
 ----
 @import 'https://fonts.googleapis.com/css?family=Baloo+Bhai';
 
@@ -537,12 +555,14 @@ section[data-state="topic"] h2 {
 Asciidoctor font-based http://asciidoctor.org/docs/user-manual/#admonition[admonitions] are supported.
 Make sure to add the following attribute to your document:
 
+[source, asciidoc]
 ----
 :icons: font
 ----
 
 Here is an example slide:
 
+[source, asciidoc]
 ----
 == But first
 
@@ -692,11 +712,11 @@ activate it.
 
 == Minimum Requirements
 
-* asciidoctor 1.5.4
+* asciidoctor 1.5.6
 
 == Copyright and Licensing
 
-Copyright (C) 2012-2016 {authors} and the Asciidoctor Project.
+Copyright (C) 2012-2017 {authors} and the Asciidoctor Project.
 Free use of this software is granted under the terms of the MIT License.
 
 ifdef::env-github,env-browser[See the <<LICENSE#,LICENSE>> file for details.]

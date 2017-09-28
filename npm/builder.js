@@ -1,5 +1,6 @@
 module.exports = Builder;
 
+var fs = require('fs');
 var async = require('async');
 var log = require('bestikk-log');
 var bfs = require('bestikk-fs');
@@ -49,7 +50,7 @@ Builder.prototype.compile = function (callback) {
   var opalCompiler = new OpalCompiler({dynamicRequireLevel: 'ignore'});
   opalCompiler.compile('asciidoctor-revealjs', 'build/asciidoctor-revealjs.js', ['lib']);
   typeof callback === 'function' && callback();
-}
+};
 
 Builder.prototype.copyToDist = function (callback) {
   var builder = this;

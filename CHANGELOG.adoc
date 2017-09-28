@@ -10,16 +10,22 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 
 Enhancements::
   * Support for Asciidoctor 1.5.6 ({uri-issue}132[#132], {uri-issue}136[#136])
+  * Compiling slim templates to Ruby allows us to drop Jade templates for Asciidoctor.js users
+    ({uri-issue}63[#63], {uri-issue}131[#131])
+  * Minor documentation polish
+
+Compliance::
+  * Users of Asciidoctor (Ruby) and Asciidoctor.js (Javascript) now run the same set of templates meaning that we achieved feature parity between the two implementations
+    ({uri-issue}63[#63], {uri-issue}131[#131])
 
 ////
-Compliance::
-
 Bug fixes::
 
 ////
 Infrastructure::
   * https://github.com/asciidoctor/asciidoctor-doctest[Asciidoctor-doctest] integration.
-    This layer of automated testing should help prevent regressions and improve our development process. ({uri-issue}116[#116]).
+    This layer of automated testing should help prevent regressions and improve our development process.
+    ({uri-issue}92[#92], {uri-issue}116[#116])
   * Travis-CI integration to automatically run doctests and examples AsciiDoc conversions
   * Travis-CI tests are triggered by changes done in Asciidoctor.
     We will detect upstream changes affecting us sooner.
@@ -36,6 +42,23 @@ Infrastructure::
 Thanks to the following people who contributed to this release:
 
 @jirutka, @Mogztter
+
+
+== 1.0.4 (2017-09-27) - @obilodeau
+
+Bug fixes::
+  * Dependency problems leading to crashes when used from Asciidoctor.js ({uri-issue}145[#145])
+
+=== Release meta
+
+{uri-repo}/releases/tag/v1.0.4[git tag] |
+{uri-repo}/compare/v1.0.3...v1.0.4[full diff]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+Olivier Bilodeau, Guillaume Grossetie
 
 
 == 1.0.3 (2017-08-28) - @obilodeau
