@@ -1,6 +1,9 @@
 / OPTIONS PROCESSING
-/ strip IDs the same way revealjs does (remove when hakimel/reveal.js#1230 is fixed)
-- _id = id.gsub(/[^a-zA-Z0-9\-\_\:\.]/, '')
+/ strip IDs the same way revealjs does to make links to direct slides work using URL fragments gh#127
+/ Strip unallowed characters globally then strip anything non a-Z from start of string until something matches
+/ TODO remove when hakimel/reveal.js#1230 is fixed
+- _id = id.gsub(/[^a-zA-Z0-9\-\_\:\.]/, '').gsub(/^[^a-zA-Z]+/, '')
+
 
 / hide slides on %conceal, %notitle and named "!"
 - titleless = (title = self.title) == '!'
