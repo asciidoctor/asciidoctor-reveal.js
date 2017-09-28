@@ -119,7 +119,7 @@ First you must install and configure {uri-nodejs-download}[Node.js] on your mach
 
 Using npm:
 
- $ npm i --save asciidoctor.js@1.5.5-3
+ $ npm i --save asciidoctor.js@1.5.5-5
  $ npm i --save asciidoctor-reveal.js
 
 === Rendering the AsciiDoc into slides
