@@ -207,10 +207,10 @@ In order to test the Node package, you need to create a test project adjacent to
 
 Now, install the dependencies.
 
-WARNING: It is important to track `Asciidoctor.js`, `Asciidoctor-template.js` and `bestikk-opal-compiler` versions all together.
+WARNING: It is important to track `Asciidoctor.js` and `bestikk-opal-compiler` versions together.
 The `opal-compiler` used to compile our node package must match `asciidoctor.js` `opal-runtime`.
-The first one is explicitly installed by users on install and the two later are specified in our `package.json`.
-When you update one remember to update the others.
+The former is explicitly installed by users on install and the later is specified in our `package.json`.
+When you update one remember to update the other.
 Versions known to work together can be found here, just replace <tag> with the `asciidoctor.js` release you are interested in: https://github.com/asciidoctor/asciidoctor.js/blob/<tag>/package.json
 
  $ npm i --save asciidoctor.js@1.5.6-preview.3
