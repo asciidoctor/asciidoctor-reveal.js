@@ -1,12 +1,14 @@
 module.exports = Builder;
 
-var fs = require('fs');
 var async = require('async');
 var log = require('bestikk-log');
 var bfs = require('bestikk-fs');
+var path = require('path');
 var OpalCompiler = require('bestikk-opal-compiler');
 
 function Builder () {
+  this.examplesBuildDir = path.join('build', 'examples');
+  this.examplesDir = 'examples';
 }
 
 Builder.prototype.build = function (callback) {
@@ -48,7 +50,7 @@ Builder.prototype.removeBuildDirSync = function () {
 Builder.prototype.compile = function (callback) {
   log.task('compile');
   var opalCompiler = new OpalCompiler({dynamicRequireLevel: 'ignore'});
-  opalCompiler.compile('asciidoctor-revealjs', 'build/asciidoctor-revealjs.js', ['lib']);
+  opalCompiler.compile('asciidoctor-revealjs', 'build/asciidoctor-reveal.js', ['lib']);
   typeof callback === 'function' && callback();
 };
 
@@ -57,7 +59,7 @@ Builder.prototype.copyToDist = function (callback) {
 
   log.task('copy to dist/');
   builder.removeDistDirSync();
-  bfs.copySync('build/asciidoctor-revealjs.js', 'dist/main.js');
+  bfs.copySync('build/asciidoctor-reveal.js', 'dist/main.js');
   //bfs.copySync('templates/jade', 'dist/templates');
   typeof callback === 'function' && callback(); 
 };
@@ -66,4 +68,35 @@ Builder.prototype.removeDistDirSync = function () {
   log.debug('remove dist directory');
   bfs.removeSync('dist');
   bfs.mkdirsSync('dist/templates');
+};
+
+Builder.prototype.examples = function (callback) {
+  const builder = this;
+
+  async.series([
+    callback => builder.build(callback), // Build
+    callback => builder.compileExamples(callback), // Compile examples
+  ], () => {
+    log.info(`
+In order to visualize the result, a local HTTP server must be started within the root of this project otherwise you will have cross-origin issues.
+For this purpose, you can run the following command to start a HTTP server locally: 'npm run server'.`);
+    log.success(`You can now open: build/examples/`);
+    typeof callback === 'function' && callback();
+  });
+};
+
+Builder.prototype.compileExamples = function (callback) {
+  log.task('compile examples');
+  bfs.mkdirsSync(this.examplesBuildDir);
+
+  // Load asciidoctor.js and local asciidoctor-reveal.js
+  var asciidoctor = require('asciidoctor.js')();
+  require('../build/asciidoctor-reveal.js');
+
+  // Convert *a* document using the reveal.js converter
+  var attributes = {'revealjsdir': 'node_modules/reveal.js@'};
+  var options = {safe: 'safe', backend: 'revealjs', attributes: attributes};
+  asciidoctor.convertFile(path.join(this.examplesDir, 'level-sections.adoc'), options);
+
+  callback();
 };

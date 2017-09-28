@@ -23,6 +23,7 @@ script:
 - bundle exec rake examples:convert
 - npm install
 - npm run build
+- npm test
 
 notifications:
   email: false
