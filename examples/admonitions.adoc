@@ -1,0 +1,38 @@
+// .admonitions-font
+// :include: //div[@class="slides"]
+// :header_footer:
+= Admonitions
+:backend: revealjs
+:icons: font
+
+== Admonition
+
+IMPORTANT: This presentation is important
+
+== Admonition block
+
+[WARNING]
+====
+This is a warning block
+====
+
+== Admonition block complex
+
+[NOTE]
+.Keeping notes
+====
+These are very thorough notes.
+
+* With
+* Bullets
+====
+
+== Admonition with caption
+
+[TIP, caption='ProTip(TM)']
+.Reveal.JS
+====
+Use include blocks to split your talks into small sections.
+It's easier to reorganize afterwards.
+====
+
