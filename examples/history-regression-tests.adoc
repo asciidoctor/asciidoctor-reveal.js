@@ -14,4 +14,21 @@
 == P3rhaps this won't work
 // Second char is a number
 
+== 5th Slide
+// is it skipped by reveal.js?
+
 == Illegal çhàrâctérß
+
+[[explicit]]
+== Explicit section id
+
+== 67848727
+// Everything should be stripped in the id
+
+== Repeated title
+
+== !
+// Explicit no title
+
+== Repeated title
+// Exact same title means exact same id
