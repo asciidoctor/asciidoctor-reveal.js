@@ -18,10 +18,11 @@ Compliance::
   * Users of Asciidoctor (Ruby) and Asciidoctor.js (Javascript) now run the same set of templates meaning that we achieved feature parity between the two implementations
     ({uri-issue}63[#63], {uri-issue}131[#131])
 
-////
 Bug fixes::
+  * Reveal.js https://github.com/hakimel/reveal.js/#configuration[history feature] now works.
+    We are working around Reveal.js' section id character limits.
+    ({uri-issue}127[#127], {uri-issue}150[#150], https://github.com/hakimel/reveal.js/issues/1346[hakimel/reveal.js#1346])
 
-////
 Infrastructure::
   * https://github.com/asciidoctor/asciidoctor-doctest[Asciidoctor-doctest] integration.
     This layer of automated testing should help prevent regressions and improve our development process.
