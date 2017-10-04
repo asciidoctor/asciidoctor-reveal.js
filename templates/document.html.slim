@@ -143,7 +143,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         // - null: Media will only autoplay if data-autoplay is present
         // - true: All media will autoplay, regardless of individual setting
         // - false: No media will autoplay, regardless of individual setting
-        autoPlayMedia: #{to_boolean(attr 'revealjs_autoPlayMedia', null)},
+        autoPlayMedia: #{attr 'revealjs_autoPlayMedia', 'null'},
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
