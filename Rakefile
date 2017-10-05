@@ -98,6 +98,14 @@ namespace :examples do
       end
     end
   end
+
+  task :serve do
+    puts "View rendered examples at: http://127.0.0.1:5000/"
+    puts "Exit with Ctrl-C"
+    Dir.chdir('examples') do
+      `ruby -run -e httpd . -p 5000 -b 127.0.0.1`
+    end
+  end
 end
 
 task 'doctest:test' => 'prepare-converter'
