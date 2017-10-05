@@ -84,6 +84,17 @@ You can also query asciidoctor's documentation:
 
     [4] pry(#<Asciidoctor::Section>)> ? find_by
 
+If you install the `pry-byebug` gem you get additional debugging capabilities.
+See the gem's documentation for details.
+
+Since 1.1.0, templates are compiled. It is easier to inject the debug
+triggering statements and use the templates directly instead of debugging
+compiled templates. You can call the slim templates directly with:
+
+// TODO it's still not clear whether `-r slim-htag` is required right now (#153)
+
+    bundle exec asciidoctor --trace -T templates/ examples/customcss.adoc
+
 === References
 
 * https://github.com/asciidoctor/asciidoctor.org/issues/80#issuecomment-145698579
