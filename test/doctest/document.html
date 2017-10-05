@@ -30,8 +30,12 @@
     <link href="reveal.js/css/theme/black.css" id="theme" rel="stylesheet">
     <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
-      document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-    </script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]-->
   </head>
   <body>
     <div class="reveal">
@@ -49,6 +53,8 @@
         controls: true,
         // Display a presentation progress bar
         progress: true,
+        // Set default timing of 2 minutes per slide
+        defaultTiming: 3,
         // Display the page number of the current slide
         slideNumber: false,
         // Push each slide change to the browser history
@@ -65,11 +71,23 @@
         loop: false,
         // Change the presentation direction to be RTL
         rtl: false,
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
         // Turns fragments on and off globally
         fragments: true,
         // Flags if the presentation is running in an embedded mode,
         // i.e. contained within a limited portion of the screen
         embedded: false,
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+        // Global override for autolaying embedded media (video/audio/iframe)
+        // - null: Media will only autoplay if data-autoplay is present
+        // - true: All media will autoplay, regardless of individual setting
+        // - false: No media will autoplay, regardless of individual setting
+        autoPlayMedia: null,
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
@@ -117,8 +135,8 @@
             { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
             { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-            { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+            { src: 'reveal.js/plugin/notes/notes.js', async: true }
         ]
       });
     </script>
@@ -139,8 +157,12 @@
     <link href="reveal.js/css/theme/black.css" id="theme" rel="stylesheet">
     <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
-      document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-    </script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]-->
   </head>
   <body>
     <div class="reveal">
@@ -158,6 +180,8 @@
         controls: true,
         // Display a presentation progress bar
         progress: true,
+        // Set default timing of 2 minutes per slide
+        defaultTiming: 3,
         // Display the page number of the current slide
         slideNumber: false,
         // Push each slide change to the browser history
@@ -174,11 +198,23 @@
         loop: false,
         // Change the presentation direction to be RTL
         rtl: false,
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
         // Turns fragments on and off globally
         fragments: true,
         // Flags if the presentation is running in an embedded mode,
         // i.e. contained within a limited portion of the screen
         embedded: false,
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+        // Global override for autolaying embedded media (video/audio/iframe)
+        // - null: Media will only autoplay if data-autoplay is present
+        // - true: All media will autoplay, regardless of individual setting
+        // - false: No media will autoplay, regardless of individual setting
+        autoPlayMedia: null,
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
@@ -226,8 +262,8 @@
             { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
             { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-            { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+            { src: 'reveal.js/plugin/notes/notes.js', async: true }
         ]
       });
     </script>
@@ -248,8 +284,12 @@
     <link href="reveal.js/css/theme/black.css" id="theme" rel="stylesheet">
     <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
-      document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-    </script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]-->
   </head>
   <body>
     <div class="reveal">
@@ -267,6 +307,8 @@
         controls: true,
         // Display a presentation progress bar
         progress: true,
+        // Set default timing of 2 minutes per slide
+        defaultTiming: 3,
         // Display the page number of the current slide
         slideNumber: false,
         // Push each slide change to the browser history
@@ -283,11 +325,23 @@
         loop: false,
         // Change the presentation direction to be RTL
         rtl: false,
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
         // Turns fragments on and off globally
         fragments: true,
         // Flags if the presentation is running in an embedded mode,
         // i.e. contained within a limited portion of the screen
         embedded: false,
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+        // Global override for autolaying embedded media (video/audio/iframe)
+        // - null: Media will only autoplay if data-autoplay is present
+        // - true: All media will autoplay, regardless of individual setting
+        // - false: No media will autoplay, regardless of individual setting
+        autoPlayMedia: null,
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
@@ -335,8 +389,8 @@
             { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
             { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-            { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+            { src: 'reveal.js/plugin/notes/notes.js', async: true }
         ]
       });
     </script>
@@ -357,8 +411,12 @@
     <link href="reveal.js/css/theme/black.css" id="theme" rel="stylesheet">
     <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
-      document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-    </script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]-->
   </head>
   <body>
     <div class="reveal">
@@ -376,6 +434,8 @@
         controls: true,
         // Display a presentation progress bar
         progress: true,
+        // Set default timing of 2 minutes per slide
+        defaultTiming: 3,
         // Display the page number of the current slide
         slideNumber: false,
         // Push each slide change to the browser history
@@ -392,11 +452,23 @@
         loop: false,
         // Change the presentation direction to be RTL
         rtl: false,
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
         // Turns fragments on and off globally
         fragments: true,
         // Flags if the presentation is running in an embedded mode,
         // i.e. contained within a limited portion of the screen
         embedded: false,
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+        // Global override for autolaying embedded media (video/audio/iframe)
+        // - null: Media will only autoplay if data-autoplay is present
+        // - true: All media will autoplay, regardless of individual setting
+        // - false: No media will autoplay, regardless of individual setting
+        autoPlayMedia: null,
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
@@ -444,8 +516,8 @@
             { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
             { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-            { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+            { src: 'reveal.js/plugin/notes/notes.js', async: true }
         ]
       });
     </script>
@@ -466,8 +538,12 @@
     <link href="reveal.js/css/theme/black.css" id="theme" rel="stylesheet">
     <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
-      document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-    </script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]-->
   </head>
   <body>
     <div class="reveal">
@@ -485,6 +561,8 @@
         controls: true,
         // Display a presentation progress bar
         progress: true,
+        // Set default timing of 2 minutes per slide
+        defaultTiming: 3,
         // Display the page number of the current slide
         slideNumber: false,
         // Push each slide change to the browser history
@@ -501,11 +579,23 @@
         loop: false,
         // Change the presentation direction to be RTL
         rtl: false,
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
         // Turns fragments on and off globally
         fragments: true,
         // Flags if the presentation is running in an embedded mode,
         // i.e. contained within a limited portion of the screen
         embedded: false,
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+        // Global override for autolaying embedded media (video/audio/iframe)
+        // - null: Media will only autoplay if data-autoplay is present
+        // - true: All media will autoplay, regardless of individual setting
+        // - false: No media will autoplay, regardless of individual setting
+        autoPlayMedia: null,
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
@@ -553,8 +643,8 @@
             { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
             { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-            { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+            { src: 'reveal.js/plugin/notes/notes.js', async: true }
         ]
       });
     </script>
@@ -574,8 +664,12 @@
     <link href="reveal.js/css/theme/black.css" id="theme" rel="stylesheet">
     <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
-      document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-    </script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]-->
   </head>
   <body>
     <div class="reveal">
@@ -595,6 +689,8 @@
         controls: true,
         // Display a presentation progress bar
         progress: true,
+        // Set default timing of 2 minutes per slide
+        defaultTiming: 3,
         // Display the page number of the current slide
         slideNumber: false,
         // Push each slide change to the browser history
@@ -611,11 +707,23 @@
         loop: false,
         // Change the presentation direction to be RTL
         rtl: false,
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
         // Turns fragments on and off globally
         fragments: true,
         // Flags if the presentation is running in an embedded mode,
         // i.e. contained within a limited portion of the screen
         embedded: false,
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+        // Global override for autolaying embedded media (video/audio/iframe)
+        // - null: Media will only autoplay if data-autoplay is present
+        // - true: All media will autoplay, regardless of individual setting
+        // - false: No media will autoplay, regardless of individual setting
+        autoPlayMedia: null,
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
@@ -663,8 +771,8 @@
             { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
             { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-            { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+            { src: 'reveal.js/plugin/notes/notes.js', async: true }
         ]
       });
     </script>
@@ -684,8 +792,12 @@
     <link href="reveal.js/css/theme/black.css" id="theme" rel="stylesheet">
     <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
-      document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-    </script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]-->
   </head>
   <body>
     <div class="reveal">
@@ -705,6 +817,8 @@
         controls: true,
         // Display a presentation progress bar
         progress: true,
+        // Set default timing of 2 minutes per slide
+        defaultTiming: 3,
         // Display the page number of the current slide
         slideNumber: false,
         // Push each slide change to the browser history
@@ -721,11 +835,23 @@
         loop: false,
         // Change the presentation direction to be RTL
         rtl: false,
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
         // Turns fragments on and off globally
         fragments: true,
         // Flags if the presentation is running in an embedded mode,
         // i.e. contained within a limited portion of the screen
         embedded: false,
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+        // Global override for autolaying embedded media (video/audio/iframe)
+        // - null: Media will only autoplay if data-autoplay is present
+        // - true: All media will autoplay, regardless of individual setting
+        // - false: No media will autoplay, regardless of individual setting
+        autoPlayMedia: null,
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
@@ -773,8 +899,8 @@
             { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
             { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-            { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+            { src: 'reveal.js/plugin/notes/notes.js', async: true }
         ]
       });
     </script>
@@ -794,8 +920,12 @@
     <link href="reveal.js/css/theme/black.css" id="theme" rel="stylesheet">
     <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
-      document.write( '<link rel="stylesheet" href="reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-    </script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? "reveal.js/css/print/pdf.css" : "reveal.js/css/print/paper.css";
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script><!--[if lt IE 9]><script src="reveal.js/lib/js/html5shiv.js"></script><![endif]-->
   </head>
   <body>
     <div class="reveal">
@@ -815,6 +945,8 @@
         controls: true,
         // Display a presentation progress bar
         progress: true,
+        // Set default timing of 2 minutes per slide
+        defaultTiming: 3,
         // Display the page number of the current slide
         slideNumber: false,
         // Push each slide change to the browser history
@@ -831,11 +963,23 @@
         loop: false,
         // Change the presentation direction to be RTL
         rtl: false,
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
         // Turns fragments on and off globally
         fragments: true,
         // Flags if the presentation is running in an embedded mode,
         // i.e. contained within a limited portion of the screen
         embedded: false,
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+        // Global override for autolaying embedded media (video/audio/iframe)
+        // - null: Media will only autoplay if data-autoplay is present
+        // - true: All media will autoplay, regardless of individual setting
+        // - false: No media will autoplay, regardless of individual setting
+        autoPlayMedia: null,
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
@@ -883,8 +1027,8 @@
             { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
             { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
       
-            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-            { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+            { src: 'reveal.js/plugin/notes/notes.js', async: true }
         ]
       });
     </script>
