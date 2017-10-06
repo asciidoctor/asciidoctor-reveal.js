@@ -115,8 +115,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         controls: #{to_boolean(attr 'revealjs_controls', true)},
         // Display a presentation progress bar
         progress: #{to_boolean(attr 'revealjs_progress', true)},
-        // Set default timing of 2 minutes per slide
-        defaultTiming: #{attr 'revealjs_defaultTiming', 3},
+        // Set a per-slide timing for speaker notes, null means none
+        defaultTiming: #{attr 'revealjs_defaultTiming', 'null'},
         // Display the page number of the current slide
         slideNumber: #{to_boolean(attr 'revealjs_slidenumber', false)},
         // Push each slide change to the browser history
