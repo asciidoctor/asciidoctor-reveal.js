@@ -1,0 +1,33 @@
+.reveal section.title h1 {
+	margin-top: 1em;
+	font-size: 4em;
+}
+
+.reveal section.title small {
+	margin-top: 9em;
+	font-weight: bold;
+	color: grey;
+}
+
+.reveal section.topic h2 {
+	margin-top: 2.5em;
+	font-size: 3em;
+}
+
+.reveal div.center {
+	margin-top: 20%;
+}
+
+.reveal section.has-dark-background h2,
+.reveal section.has-dark-background h3 {
+	color: white !important;
+	border-bottom: none !important;
+}
+
+.reveal section.has-dark-background p {
+	color: darkgrey;
+}
+
+.reveal section span.right {
+	margin: 0px 0px;
+}
