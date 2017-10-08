@@ -261,6 +261,10 @@ Then run:
  $ gem push asciidoctor-revealjs-X.Y.Z.gem
 
 . Check that the new version is available on https://rubygems.org/gems/asciidoctor-revealjs[rubygems.org]
+. Generate a compatible version of the Ruby converter (using opal mode)
++
+ $ bundle exec rake build:converter:opal
+
 . Build the node package (make sure you have `devDependencies` installed with: `npm install`):
 +
  $ npm run build

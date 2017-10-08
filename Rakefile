@@ -13,16 +13,16 @@ namespace :build do
   require 'asciidoctor-templates-compiler'
   require 'slim-htag'
 
-  generator = if :mode == :opal
-    Temple::Generators::ArrayBuffer.new(freeze_static: false)
-  else
-    Temple::Generators::StringBuffer
-  end
-
   file CONVERTER_FILE, [:mode] => FileList["#{TEMPLATES_DIR}/*"] do |t, args|
     #require 'asciidoctor-templates-compiler'
     require_relative 'lib/asciidoctor-templates-compiler'
     require 'slim-htag'
+
+    generator = if args[:mode] == :opal
+      Temple::Generators::ArrayBuffer.new(freeze_static: false)
+    else
+     Temple::Generators::StringBuffer
+    end
 
     File.open(CONVERTER_FILE, 'w') do |file|
       $stderr.puts "Generating #{file.path}."
@@ -53,6 +53,11 @@ namespace :build do
     desc 'Compile Slim templates and generate converter.rb (fast mode)'
     task :fast do
       Rake::Task[CONVERTER_FILE].invoke
+    end
+
+    desc 'Compile Slim templates and generate converter.rb (opal mode)'
+    task :opal do
+      Rake::Task[CONVERTER_FILE].invoke(:opal)
     end
   end
 

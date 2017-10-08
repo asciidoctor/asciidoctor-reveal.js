@@ -4,7 +4,7 @@
   "description": "A Reveal.js converter for Asciidoctor and Asciidoctor.js. Write your slides in AsciiDoc!",
   "main": "dist/main.js",
   "engines": {
-    "node": ">=0.12",
+    "node": ">=4",
     "npm": ">=3.0.0"
   },
   "files": [
@@ -39,7 +39,8 @@
   },
   "homepage": "https://github.com/asciidoctor/asciidoctor-reveal.js",
   "dependencies": {
-    "reveal.js": "3.3.0"
+    "reveal.js": "3.3.0",
+    "asciidoctor.js": "1.5.6-preview.4"
   },
   "devDependencies": {
     "async": "^1.5.0",
