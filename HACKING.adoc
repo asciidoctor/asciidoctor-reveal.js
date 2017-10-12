@@ -195,31 +195,33 @@ You can apply that label to a pull request that is complete and ready for review
 
 Makes triaging easier.
 
-
 == Node package
 
 === Test a local asciidoctor-reveal.js version
 
-In order to test the Node package, you need to create a test project adjacent to the clone of the `asciidoctor-reveal.js` repository:
+In order to test the Node package, you first need to create a tarball of the project using the command `npm pack`.
+This command will produce a file named `asciidoctor-reveal.js-<version>.tgz` in the working directory.
+
+Then, create a test project adjacent to the clone of the [.path]_asciidoctor-reveal.js_ repository:
 
  $ mkdir test-project
  $ cd test-project
 
-Now, install the dependencies.
+Now, install the dependencies from the tarball:
+
+ $ npm i --save ../asciidoctor-reveal.js/asciidoctor-reveal.js-<version>.tgz
+
+NOTE: The relative portion of the last command is where you are installing the local `asciidoctor-reveal.js` version from.
+
+Then proceed as documented in the `README.adoc`.
+
+=== Upgrade Asciidoctor.js version
 
 WARNING: It is important to track `Asciidoctor.js` and `bestikk-opal-compiler` versions together.
 The `opal-compiler` used to compile our node package must match `asciidoctor.js` `opal-runtime`.
 The former is explicitly installed by users on install and the later is specified in our `package.json`.
 When you update one remember to update the other.
 Versions known to work together can be found here, just replace <tag> with the `asciidoctor.js` release you are interested in: https://github.com/asciidoctor/asciidoctor.js/blob/<tag>/package.json
-
- $ npm i --save asciidoctor.js@1.5.6-preview.3
- $ npm i --save ../asciidoctor-reveal.js
-
-NOTE: The relative portion of the last command is where you are installing the local `asciidoctor-reveal.js` version from.
-
-Then proceed as documented in the `README.adoc`.
-
 
 == RubyGem package
 
@@ -261,6 +263,10 @@ Then run:
  $ gem push asciidoctor-revealjs-X.Y.Z.gem
 
 . Check that the new version is available on https://rubygems.org/gems/asciidoctor-revealjs[rubygems.org]
+. Generate a compatible version of the Ruby converter (using opal mode)
++
+ $ bundle exec rake build:converter:opal
+
 . Build the node package (make sure you have `devDependencies` installed with: `npm install`):
 +
  $ npm run build
