@@ -13,7 +13,7 @@ Enhancements::
   * Support for Asciidoctor.js 1.5.6-preview.4 ({uri-issue}130[#130], {uri-issue}143[#143], {uri-issue}156[#156])
   * Compiling slim templates to Ruby allows us to drop Jade templates for Asciidoctor.js users
     ({uri-issue}63[#63], {uri-issue}131[#131])
-  * Minor documentation polish
+  * Documentation polish ({uri-issue}153[#153] and more)
 
 Compliance::
   * Users of Asciidoctor (Ruby) and Asciidoctor.js (Javascript) now run the same set of templates meaning that we achieved feature parity between the two implementations
