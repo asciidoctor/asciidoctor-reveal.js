@@ -33,10 +33,10 @@ endif::[]
 
 There are two main technology stacks that can transform AsciiDoc into HTML5 / reveal.js:
 
-* Asciidoctor / Ruby / Slim / Bundler (See <<Ruby Setup>>)
-* Asciidoctor.js / JavaScript / Jade / Node.js (See <<Node / JavaScript Setup>>)
+* Asciidoctor / Ruby / Bundler (See <<Ruby Setup>>)
+* Asciidoctor.js / JavaScript (Node.js) / NPM (See <<Node / JavaScript Setup>>)
 
-Right now the Ruby / Slim templates are more featureful but that is changing quickly.
+Right now the Asciidoctor / Ruby stack is the better tested one but with the changes in v1.1.0 they have feature parity.
 
 
 == Ruby Setup
@@ -568,11 +568,6 @@ WARNING: This presentation is dangerous!
 
 Here are details about Asciidoctor's http://asciidoctor.org/docs/user-manual/#admonition-icons[Admonition icons] support.
 
-
-// FIXME this is no longer accurate
-== About Jade Templates
-
-`/templates/jade` directory contains jade template files they are ported from `/templates/slim` templates. These templates were written to support the reveal.js converter for Asciidoctor.js environment that is currently using in https://github.com/asciidocfx/AsciidocFX[AsciidocFX] editor. You can look at the https://github.com/asciidocfx/asciidoctor.js-reveal-demo[demo].
 
 == Reveal.js Options
 

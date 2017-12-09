@@ -6,13 +6,22 @@ Short instructions that aim to help potential contributors.
 
 == Inspect the template system
 
-
 To understand what you have access to in templates you can inject some ruby.
 With the slim templating system, this is done by prepending the lines with a dash (`-`) and inserting a ruby statement.
 Two complementary approaches can be used to explore the context offered by asciidoctor through the template system:
 
 * logging on the command line via print-like statements
 * jump into the context through an interactive debugger
+
+[NOTE]
+--
+Starting with v1.1.0 the slim templates are compiled to Ruby in order to
+use the same templates from Asciidoctor.js (Javascript / Node.js ecosystem).
+Don't forget to recompile the templates if you make changes to them.
+This can be done by running:
+
+    bundle exec rake build
+--
 
 === Print debugging information
 
@@ -133,19 +142,9 @@ NOTE: Right now, https://github.com/asciidoctor/asciidoctor-doctest/issues/12[do
 You can open the generated `.html` in `test/output/slim/` in a Web browser.
 
 
-== Jade templates
+== Asciidoctor API's gotchas
 
-Jade templates are used by AsciidocFX. Since they are separate they might be
-out of sync with our asciidoctor's slim templates.
-
-To test the jade templates, install AsciidocFX and copy the jade templates
-over to AsciidocFX's `conf/slide/templates/revealjs/` directory. Then use
-AsciidocFX to render the slides.
-
-Alternatively, the https://github.com/asciidoctor/asciidoctor-reveal.js/#node-javascript-setup[node/npm asciidoctor-revealjs setup] can be used.
-
-
-== Attribute inheritence
+=== Attribute inheritence
 
 The attr and attr? methods inherit by default. That means if they don't find the attribute defined on the node, they look on the document.
 
@@ -319,4 +318,4 @@ This is done using the following command:
 === Custom tests
 
 Files in the `examples/` directory are used as tests.
-Resulting slides are kept in `test/output/slim/`.
+Resulting slides are kept in `test/doctest/`.
