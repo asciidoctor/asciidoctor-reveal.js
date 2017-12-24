@@ -83,6 +83,7 @@ namespace :examples do
   desc 'Converts all the test slides into fully working examples that you can look in a browser'
   # converted slides will be put in examples/ directory
   task :convert do
+    require 'slim-htag'
     Dir.glob('examples/*.adoc') do |_file|
       print "Converting file #{_file}... "
       out = Asciidoctor.convert_file _file,
