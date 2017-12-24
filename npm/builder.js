@@ -67,7 +67,7 @@ Builder.prototype.copyToDist = function (callback) {
 Builder.prototype.removeDistDirSync = function () {
   log.debug('remove dist directory');
   bfs.removeSync('dist');
-  bfs.mkdirsSync('dist/templates');
+  bfs.mkdirsSync('dist');
 };
 
 Builder.prototype.examples = function (callback) {
