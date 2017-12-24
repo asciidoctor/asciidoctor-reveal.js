@@ -5,6 +5,7 @@ ifdef::env-github,env-browser[]
 :toclevels: 2
 endif::[]
 ifdef::env-github[]
+:branch: master
 :status:
 :outfilesuffix: .adoc
 :!toc-title:
@@ -38,6 +39,14 @@ There are two main technology stacks that can transform AsciiDoc into HTML5 / re
 
 Right now the Asciidoctor / Ruby stack is the better tested one but with the changes in v1.1.0 they have feature parity.
 
+ifeval::['{branch}' == 'master']
+NOTE: You're viewing the documentation for the upcoming release.
+If you're looking for the documentation for an older release, please refer to one of the following branches: +
+{uri-project-repo}/tree/maint-1.0.x#readme[1.0.x]
+&hybull;
+{uri-project-repo}/tree/reveal.js-2.x#readme[Unversioned pre-release] (compatible with RevealJS 2.x)
+endif::[]
+
 
 == Ruby Setup
 
@@ -47,8 +56,6 @@ To ensure repeatability, we recommend that you manage your presentation projects
 For a quick start clone our https://github.com/obilodeau/presentation-revealjs-starter[starter repository] and follow instructions there.
 
 For more complete instructions, read on.
-
-NOTE: If you want to use reveal.js 2, please clone the asciidoctor-reveal.js repo and switch to the reveal.js-2.x branch.
 
 
 === Prerequisites
