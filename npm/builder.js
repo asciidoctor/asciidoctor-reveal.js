@@ -101,8 +101,13 @@ Builder.prototype.convertExamples = function (callback) {
   fs.readdir(this.examplesDir, (err, files) => {
     files.forEach(filename => {
       if (path.extname(filename) == '.adoc') {
-        asciidoctor.convertFile(path.join(this.examplesDir, filename), options);
-        log.info(`Processed ${filename}`);
+        try {
+          asciidoctor.convertFile(path.join(this.examplesDir, filename), options);
+          log.info(`Successfully converted ${filename}`);
+        }
+        catch (err) {
+          log.error(`Error converting ${filename}: ${err}`);
+        }
       }
     });
   })
