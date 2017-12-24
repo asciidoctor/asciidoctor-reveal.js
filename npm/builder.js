@@ -3,6 +3,7 @@ module.exports = Builder;
 var async = require('async');
 var log = require('bestikk-log');
 var bfs = require('bestikk-fs');
+var fs = require('fs');
 var path = require('path');
 var OpalCompiler = require('bestikk-opal-compiler');
 
@@ -94,8 +95,17 @@ Builder.prototype.convertExamples = function (callback) {
 
   // Convert *a* document using the reveal.js converter
   var attributes = {'revealjsdir': 'node_modules/reveal.js@'};
-  var options = {safe: 'safe', backend: 'revealjs', attributes: attributes};
-  asciidoctor.convertFile(path.join(this.examplesDir, 'level-sections.adoc'), options);
+  var options = {safe: 'safe', backend: 'revealjs', attributes: attributes, to_dir: this.examplesBuildDir};
+
+
+  fs.readdir(this.examplesDir, (err, files) => {
+    files.forEach(filename => {
+      if (path.extname(filename) == '.adoc') {
+        asciidoctor.convertFile(path.join(this.examplesDir, filename), options);
+        log.info(`Processed ${filename}`);
+      }
+    });
+  })
 
   callback();
 };
