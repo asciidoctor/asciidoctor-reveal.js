@@ -210,8 +210,13 @@ Makes triaging easier.
 
 === Test a local asciidoctor-reveal.js version
 
-In order to test the Node package, you first need to create a tarball of the project using the command `npm pack`.
-This command will produce a file named `asciidoctor-reveal.js-<version>.tgz` in the working directory.
+In order to test the Node package, you first need to build the converter into Javascript and create a tarball of the project.
+
+  $ bundle exec rake build:converter:opal
+  $ npm run build
+  $ npm pack
+
+That last command will produce a file named `asciidoctor-reveal.js-<version>.tgz` in the working directory.
 
 Then, create a test project adjacent to the clone of the [.path]_asciidoctor-reveal.js_ repository:
 
