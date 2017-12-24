@@ -22,7 +22,9 @@ script:
 - bundle exec rake doctest
 - bundle exec rake examples:convert
 - npm install
+- bundle exec rake build:converter:opal
 - npm run build
+- npm test
 
 notifications:
   email: false
