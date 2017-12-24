@@ -31,6 +31,9 @@ Infrastructure::
   * Travis-CI integration to automatically run doctests and examples AsciiDoc conversions
   * Travis-CI tests are triggered by changes done in Asciidoctor.
     We will detect upstream changes affecting us sooner.
+  * Smoke tests for our Javascript / Node / Asciidoctor.js toolchain (integrated in Travis-CI also)
+  * `npm run examples` will convert all examples using the Javascript / Node / Asciidoctor.js toolchain ({uri-issue}149[#149])
+  * `rake examples:serve` will run a Web server from `examples/` so you can preview rendered examples ({uri-issue}154[#154])
 
 ////
 === Release meta
