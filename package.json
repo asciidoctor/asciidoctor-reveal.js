@@ -15,7 +15,7 @@
   "scripts": {
     "build": "node npm/build.js",
     "test": "node test/smoke.js",
-    "test": "node npm/examples.js"
+    "examples": "node npm/examples.js"
   },
   "repository": {
     "type": "git",

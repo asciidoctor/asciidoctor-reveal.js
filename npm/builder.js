@@ -75,18 +75,17 @@ Builder.prototype.examples = function (callback) {
 
   async.series([
     callback => builder.build(callback), // Build
-    callback => builder.compileExamples(callback), // Compile examples
+    callback => builder.convertExamples(callback), // Convert the examples
   ], () => {
     log.info(`
-In order to visualize the result, a local HTTP server must be started within the root of this project otherwise you will have cross-origin issues.
-For this purpose, you can run the following command to start a HTTP server locally: 'npm run server'.`);
-    log.success(`You can now open: build/examples/`);
+Examples will be converted from AsciiDoc to HTML for Reveal.js. We expect no errors to happen.`);
+    log.success(`Examples were converted and generated in: build/examples/`);
     typeof callback === 'function' && callback();
   });
 };
 
-Builder.prototype.compileExamples = function (callback) {
-  log.task('compile examples');
+Builder.prototype.convertExamples = function (callback) {
+  log.task('convert examples');
   bfs.mkdirsSync(this.examplesBuildDir);
 
   // Load asciidoctor.js and local asciidoctor-reveal.js
