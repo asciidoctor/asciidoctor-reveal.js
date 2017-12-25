@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 require File.expand_path '../lib/asciidoctor-revealjs/version', __FILE__
+require 'open3'
 
 Gem::Specification.new do |s|
   s.name = 'asciidoctor-revealjs'
@@ -17,8 +18,8 @@ Gem::Specification.new do |s|
   rescue
     Dir['**/*']
   end
+  # TODO should we still package template files now that they are built into ruby?
   s.files = files.grep %r/^(?:(?:examples|lib|templates)\/.+|Gemfile|Rakefile|(?:CHANGELOG|LICENSE|README)\.adoc|#{s.name}\.gemspec)$/
-
 
   s.executables = ['asciidoctor-revealjs']
   s.extra_rdoc_files = Dir['README.adoc', 'LICENSE.adoc', 'HACKING.adoc']
