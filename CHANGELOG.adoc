@@ -9,6 +9,7 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 == Master branch
 
 Enhancements::
+  * Support for Reveal.JS 3.5.0+ ({uri-issue}146[#146], {uri-issue}151[#151])
   * Support for Asciidoctor 1.5.6 ({uri-issue}132[#132], {uri-issue}136[#136], {uri-issue}142[#142])
   * Support for Asciidoctor.js 1.5.6-preview.4 ({uri-issue}130[#130], {uri-issue}143[#143], {uri-issue}156[#156])
   * Compiling slim templates to Ruby allows us to drop Jade templates for Asciidoctor.js users
