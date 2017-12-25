@@ -1,24 +1,32 @@
-<!-- .history -->
+<!-- .theme-custom -->
+<link href="reveal.js/css/reveal.css" rel="stylesheet"><link href="reveal.js/css/theme/owasp.css" id="theme" rel="stylesheet"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><link href="theme-custom.css" rel="stylesheet">
 <div class="slides">
   <section class="title" data-state="title">
-    <h1>History</h1>
+    <h1>OWASP Theme</h1>
   </section>
-  <section id="first_slide">
-    <h2>First slide</h2>
-    <div class="paragraph">
-      <p>Uno</p>
-    </div>
+  <section class="topic" data-background-color="#da291c" id="a_ctf_wtf_is_that">
+    <h2>A CTF, WTF is that?</h2>
   </section>
-  <section id="second_slide">
-    <h2>Second slide</h2>
-    <div class="paragraph">
-      <p>Dos</p>
-    </div>
+  <section class="topic" data-background-color="black" id="ctf_capture_the_flags">
+    <h2>CTF ⇒ Capture The Flags</h2>
   </section>
-  <section id="third_slide">
-    <h2>Third slide</h2>
-    <div class="paragraph">
-      <p>Tres</p>
+  <section id="actually_they_are">
+    <h2>Actually, they are…​</h2>
+    <div class="ulist">
+      <ul>
+        <li>
+          <p>hacking games</p>
+        </li>
+        <li>
+          <p>hacking puzzles</p>
+        </li>
+        <li>
+          <p>computer science puzzle</p>
+        </li>
+        <li>
+          <p>nerd puzzles</p>
+        </li>
+      </ul>
     </div>
   </section>
 </div>
@@ -26,7 +34,7 @@
   // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
   Reveal.initialize({
     // Display controls in the bottom right corner
-    controls: true,
+    controls: false,
     // Display a presentation progress bar
     progress: true,
     // Set a per-slide timing for speaker notes, null means none
@@ -34,13 +42,13 @@
     // Display the page number of the current slide
     slideNumber: false,
     // Push each slide change to the browser history
-    history: true,
+    history: false,
     // Enable keyboard shortcuts for navigation
     keyboard: true,
     // Enable the slide overview mode
     overview: true,
     // Vertical centering of slides
-    center: true,
+    center: false,
     // Enables touch navigation on devices with touch input
     touch: true,
     // Loop the presentation
@@ -78,7 +86,7 @@
     previewLinks: false,
     // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
     // NOTE setting the theme in the config no longer works in reveal.js 3.x
-    //theme: Reveal.getQueryHash().theme || 'black',
+    //theme: Reveal.getQueryHash().theme || 'owasp',
     // Transition style (e.g., none, fade, slide, convex, concave, zoom)
     transition: Reveal.getQueryHash().transition || 'slide',
     // Transition speed (e.g., default, fast, slow)
@@ -95,8 +103,8 @@
     // The "normal" size of the presentation, aspect ratio will be preserved
     // when the presentation is scaled to fit different resolutions. Can be
     // specified using percentage units.
-    width: 960,
-    height: 700,
+    width: 1280,
+    height: 720,
   
     // Factor of the display size that should remain empty around the content
     margin: 0.1,

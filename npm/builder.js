@@ -8,7 +8,6 @@ var path = require('path');
 var OpalCompiler = require('bestikk-opal-compiler');
 
 function Builder () {
-  this.examplesBuildDir = path.join('build', 'examples');
   this.examplesDir = 'examples';
 }
 
@@ -87,7 +86,6 @@ Examples will be converted from AsciiDoc to HTML for Reveal.js. We expect no err
 
 Builder.prototype.convertExamples = function (callback) {
   log.task('convert examples');
-  bfs.mkdirsSync(this.examplesBuildDir);
 
   // Load asciidoctor.js and local asciidoctor-reveal.js
   var asciidoctor = require('asciidoctor.js')();
@@ -95,7 +93,7 @@ Builder.prototype.convertExamples = function (callback) {
 
   // Convert *a* document using the reveal.js converter
   var attributes = {'revealjsdir': 'node_modules/reveal.js@'};
-  var options = {safe: 'safe', backend: 'revealjs', attributes: attributes, to_dir: this.examplesBuildDir};
+  var options = {safe: 'safe', backend: 'revealjs', attributes: attributes, to_dir: this.examplesDir};
 
 
   fs.readdir(this.examplesDir, (err, files) => {

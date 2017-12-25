@@ -1,0 +1,33 @@
+// .theme-custom
+// Use of the revealjs_theme attribute to load a different revealjs theme
+// :include: //link[@rel="stylesheet"] | //body/script | //div[@class="slides"]
+// :header_footer:
+= OWASP Theme
+:customcss: theme-custom.css
+// reveal.js config
+:backend: revealjs
+// To use the custom theme, you'll have to add my owasp scss file to a local reveal.js copy then build
+// custom theme from: https://github.com/GoSecure/reveal.js/tree/theme-owasp
+// follow build instructions here: https://github.com/hakimel/reveal.js/blob/master/css/theme/README.md
+:revealjs_theme: owasp
+:revealjs_controls: false
+:revealjs_center: false
+// achieving 16:9
+:revealjs_width: 1280
+:revealjs_height: 720
+// shorthands
+:topic: .topic,background-color="#da291c"
+:key: .topic,background-color="black"
+
+[{topic}]
+== A CTF, WTF is that?
+
+[{key}]
+== CTF => Capture The Flags
+
+== Actually, they are...
+
+* hacking games
+* hacking puzzles
+* computer science puzzle
+* nerd puzzles

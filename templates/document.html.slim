@@ -62,7 +62,13 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       link href="#{revealjsdir}/lib/css/zenburn.css" rel="stylesheet"
     / If the query includes 'print-pdf', use the PDF print sheet
     javascript:
-      document.write( '<link rel="stylesheet" href="#{revealjsdir}/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? "#{revealjsdir}/css/print/pdf.css" : "#{revealjsdir}/css/print/paper.css";
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    /[if lt IE 9]
+      <script src="#{revealjsdir}/lib/js/html5shiv.js"></script>
     - unless (docinfo_content = docinfo :header, '.html').empty?
       =docinfo_content
     - if attr? :customcss
@@ -109,6 +115,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         controls: #{to_boolean(attr 'revealjs_controls', true)},
         // Display a presentation progress bar
         progress: #{to_boolean(attr 'revealjs_progress', true)},
+        // Set a per-slide timing for speaker notes, null means none
+        defaultTiming: #{attr 'revealjs_defaultTiming', 'null'},
         // Display the page number of the current slide
         slideNumber: #{to_boolean(attr 'revealjs_slidenumber', false)},
         // Push each slide change to the browser history
@@ -125,11 +133,23 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         loop: #{to_boolean(attr 'revealjs_loop', false)},
         // Change the presentation direction to be RTL
         rtl: #{to_boolean(attr 'revealjs_rtl', false)},
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: #{to_boolean(attr 'revealjs_shuffle', false)},
         // Turns fragments on and off globally
         fragments: #{to_boolean(attr 'revealjs_fragments', true)},
         // Flags if the presentation is running in an embedded mode,
         // i.e. contained within a limited portion of the screen
         embedded: #{to_boolean(attr 'revealjs_embedded', false)},
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: #{to_boolean(attr 'revealjs_help', true)},
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: #{to_boolean(attr 'revealjs_showNotes', false)},
+        // Global override for autolaying embedded media (video/audio/iframe)
+        // - null: Media will only autoplay if data-autoplay is present
+        // - true: All media will autoplay, regardless of individual setting
+        // - false: No media will autoplay, regardless of individual setting
+        autoPlayMedia: #{attr 'revealjs_autoPlayMedia', 'null'},
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
@@ -157,7 +177,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         parallaxBackgroundImage: '#{attr 'revealjs_parallaxbackgroundimage', ''}',
         // Parallax background size in CSS syntax (e.g., "2100px 900px")
         parallaxBackgroundSize: '#{attr 'revealjs_parallaxbackgroundsize', ''}',
-        
+
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
@@ -170,15 +190,15 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         // Bounds for smallest/largest possible scale to apply to content
         minScale: #{attr 'revealjs_minscale', 0.2},
         maxScale: #{attr 'revealjs_maxscale', 1.5},
-        
+
         // Optional libraries used to extend on reveal.js
         dependencies: [
             { src: '#{revealjsdir}/lib/js/classList.js', condition: function() { return !document.body.classList; } },
             { src: '#{revealjsdir}/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
             { src: '#{revealjsdir}/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
             #{(attr? 'source-highlighter', 'highlightjs') ? "{ src: '#{revealjsdir}/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }," : nil}
-            { src: '#{revealjsdir}/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-            { src: '#{revealjsdir}/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            { src: '#{revealjsdir}/plugin/zoom-js/zoom.js', async: true },
+            { src: '#{revealjsdir}/plugin/notes/notes.js', async: true }
         ]
       });
     - unless (docinfo_content = (docinfo :footer, '.html')).empty?

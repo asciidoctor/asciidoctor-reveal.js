@@ -15,6 +15,8 @@
     controls: true,
     // Display a presentation progress bar
     progress: true,
+    // Set a per-slide timing for speaker notes, null means none
+    defaultTiming: null,
     // Display the page number of the current slide
     slideNumber: false,
     // Push each slide change to the browser history
@@ -31,11 +33,23 @@
     loop: false,
     // Change the presentation direction to be RTL
     rtl: false,
+    // Randomizes the order of slides each time the presentation loads
+    shuffle: false,
     // Turns fragments on and off globally
     fragments: true,
     // Flags if the presentation is running in an embedded mode,
     // i.e. contained within a limited portion of the screen
     embedded: false,
+    // Flags if we should show a help overlay when the questionmark
+    // key is pressed
+    help: true,
+    // Flags if speaker notes should be visible to all viewers
+    showNotes: false,
+    // Global override for autolaying embedded media (video/audio/iframe)
+    // - null: Media will only autoplay if data-autoplay is present
+    // - true: All media will autoplay, regardless of individual setting
+    // - false: No media will autoplay, regardless of individual setting
+    autoPlayMedia: null,
     // Number of milliseconds between automatically proceeding to the
     // next slide, disabled when set to 0, this value can be overwritten
     // by using a data-autoslide attribute on your slides
@@ -83,8 +97,8 @@
         { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
         { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
   
-        { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-        { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+        { src: 'reveal.js/plugin/notes/notes.js', async: true }
     ]
   });
 </script>

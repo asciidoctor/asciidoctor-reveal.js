@@ -10,6 +10,7 @@ Me
 
 == Callout
 
+// FIXME source callouts are broken right now
 [source, rust]
 ----
 fn main() {
