@@ -6,7 +6,7 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
-== Master branch
+== 1.1.0 (2017-12-25) - @obilodeau
 
 Enhancements::
   * Support for Reveal.JS 3.5.0+ ({uri-issue}146[#146], {uri-issue}151[#151])
@@ -36,18 +36,16 @@ Infrastructure::
   * `npm run examples` will convert all examples using the Javascript / Node / Asciidoctor.js toolchain ({uri-issue}149[#149])
   * `rake examples:serve` will run a Web server from `examples/` so you can preview rendered examples ({uri-issue}154[#154])
 
-////
 === Release meta
 
-{uri-repo}/releases/tag/v1.0.3[git tag] |
-{uri-repo}/compare/v1.0.2...v1.0.3[full diff]
-////
+{uri-repo}/releases/tag/v1.1.0[git tag] |
+{uri-repo}/compare/v1.0.4...v1.1.0[full diff]
 
 === Credits
 
 Thanks to the following people who contributed to this release:
 
-@jirutka, @Mogztter
+@jirutka, Dan Allen, Guillaume Grossetie, Jacob Aae Mikkelsen, Olivier Bilodeau, Rahul Somasunderam
 
 
 == 1.0.4 (2017-09-27) - @obilodeau
