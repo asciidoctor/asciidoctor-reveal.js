@@ -4,6 +4,7 @@
 # test stuff
 /examples/*.html
 /examples/reveal.js/
+/examples/node_modules
 
 # node stuff
 node_modules/
