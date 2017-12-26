@@ -383,6 +383,16 @@ To override that behavior use the `width` and `height` named attributes.
 
 === Syntax highlighting
 
+To enable https://highlightjs.org/[highlight.js] for syntax highlighting (which is the `revealjs` default):
+
+[source, asciidoc]
+----
+= Title slide
+:source-highlighter: highlightjs
+----
+
+With enabled source-highlighter you can write code blocks as usual:
+
 [source, asciidoc]
 ....
 == Slide Five
@@ -395,7 +405,6 @@ print "Hello World"
 ----
 ....
 
-`revealjs` uses https://highlightjs.org/[highlight.js] to do its syntax highlighting by default.
 By default `[source]` blocks and blocks delimited by `----` will be highlighted.
 An explicit `[listing]` block will not be highlighted.
 `highlight.js` does language auto-detection but using the `language="..."` attribute will hint the highlighter.
