@@ -1,7 +1,16 @@
-- if @document.attr? :icons, 'font'
-  i.conum data-value=@text
-  b="(#{@text})"
-- elsif @document.attr? :icons
-  img src=icon_uri("callouts/#{@text}") alt=@text
-- else
-  b="(#{@text})"
+- if @document.attr? :source-highlighter, 'highlightjs'
+  - if @document.attr? :icons, 'font'
+    i.conum[data-noescape data-value=@text]
+    b[data-noescape] "(#{@text})"
+  - elsif @document.attr? :icons
+    img[data-noescape src=icon_uri("callouts/#{@text}") alt=@text]
+  - else
+    b[data-noescape] "(#{@text})"
+- else 
+  - if @document.attr? :icons, 'font'
+    i.conum data-value=@text
+    b="(#{@text})"
+  - elsif @document.attr? :icons
+    img src=icon_uri("callouts/#{@text}") alt=@text
+  - else
+    b="(#{@text})"
