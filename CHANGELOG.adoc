@@ -6,6 +6,19 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
+== Master branch
+
+Enhancements::
+  * Documentation improvements ({uri-issue}165[#165])
+
+////
+=== Release meta
+
+{uri-repo}/releases/tag/v1.1.0[git tag] |
+{uri-repo}/compare/v1.0.4...v1.1.0[full diff]
+////
+
+
 == 1.1.0 (2017-12-25) - @obilodeau
 
 Enhancements::
