@@ -10,6 +10,7 @@
       - code_class = language ? [language, "language-#{language}"] : nil
       - pre_class = ['highlight']
       - pre_lang = nil
+      - code_noescape = false
       - case attr 'source-highlighter'
       - when 'coderay'
         - pre_class = ['CodeRay']
@@ -25,9 +26,10 @@
         - pre_lang = language
         - pre_class = code_class = nil
         - nowrap = false
-      /- when 'highlightjs', 'highlight.js'
+      - when 'highlightjs', 'highlight.js'
+        - code_noescape=true
       - pre_class << 'nowrap' if nowrap
       pre class=pre_class lang=pre_lang
-        code class=code_class =content
+        code data-noescape=code_noescape class=code_class =content
     - else
       pre class=(nowrap ? 'nowrap' : nil) =content
