@@ -11,6 +11,9 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 Enhancements::
   * Documentation improvements ({uri-issue}165[#165])
 
+Compliance::
+  * Code listing callouts now work properly ({uri-issue}166[#166], {uri-issue}167[#167])
+
 ////
 === Release meta
 
