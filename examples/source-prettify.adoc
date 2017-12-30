@@ -1,0 +1,16 @@
+// .source-prettify
+// Demonstration of source highlighting with prettify
+// :include: //div[@class="slides"]
+// :header_footer:
+= Source Code with Prettify
+:icons: font
+:source-highlighter: prettify
+
+== Use the Source
+
+[source, rust]
+----
+fn main() {
+    println!("Hello World!");
+}
+----

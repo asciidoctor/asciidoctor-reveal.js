@@ -1,0 +1,32 @@
+// .source-pygments
+// Demonstration of source highlighting with pygments
+// :include: //div[@class="slides"]
+// :header_footer:
+= Source Code with Pygments
+:icons: font
+:source-highlighter: pygments
+:pygments-style: paraiso-dark
+
+== Requirements
+
+WARNING: This will not work from Asciidoctor.js
+
+[NOTE]
+====
+For this to work. You need to add:
+
+    gem 'pygments.rb'
+
+to your `Gemfile` and re-run:
+
+    bundle install
+====
+
+== Use the Source
+
+[source, rust]
+----
+fn main() {
+    println!("Hello World!");
+}
+----
