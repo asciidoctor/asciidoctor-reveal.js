@@ -14,6 +14,9 @@ Enhancements::
 Compliance::
   * Code listing callouts now work properly ({uri-issue}166[#166], {uri-issue}167[#167])
 
+Bug fixes::
+  * The version 1.1.0 Ruby Gem was broken due to a packaging error ({uri-issue}172[#172])
+
 ////
 === Release meta
 
