@@ -222,10 +222,16 @@ There are a few ways to have no titles on slides.
 
 Here is an example of the three techniques in action:
 
+ifdef::env-github,env-browser[]
+include::examples/concealed-slide-titles.adoc[]
+endif::[]
+
+ifndef::env-github+env-browser[]
 [source, asciidoc]
 ----
 include::examples/concealed-slide-titles.adoc[]
 ----
+endif::[]
 
 NOTE: `conceal` and `notitle` have the advantage that the slide still has an id so it can be linked to.
 
@@ -479,10 +485,16 @@ Keep in mind that for title slides you must replace `data-` with
 
 Here is an example:
 
+ifdef::env-github,env-browser[]
+include::examples/title-slide-image.adoc[]
+endif::[]
+
+ifndef::env-github+env-browser[]
 [source, asciidoc]
 ----
-include::test/title-slide-image.adoc[]
+include::examples/title-slide-image.adoc[]
 ----
+endif::[]
 
 The title slide is also added a `title` CSS class to help with template
 customization.
