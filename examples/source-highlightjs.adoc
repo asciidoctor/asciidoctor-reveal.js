@@ -1,0 +1,16 @@
+// .source-highlightjs
+// Demonstration of source highlighting with highlightjs
+// :include: //div[@class="slides"]
+// :header_footer:
+= Source Code with Highlight.JS
+:icons: font
+:source-highlighter: highlightjs
+
+== Use the Source
+
+[source, rust]
+----
+fn main() {
+    println!("Hello World!");
+}
+----

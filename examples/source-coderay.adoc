@@ -1,0 +1,33 @@
+// .source-coderay
+// Demonstration of source highlighting with coderay
+// :include: //div[@class="slides"]
+// :header_footer:
+= Source Code with Coderay
+:icons: font
+:source-highlighter: coderay
+:coderay-css: style
+
+== Requirements
+
+WARNING: This will not work from Asciidoctor.js
+
+[NOTE]
+====
+For this to work. You need to add:
+
+    gem 'coderay'
+
+to your `Gemfile` and re-run:
+
+    bundle install
+====
+
+== Use the Source
+
+[source, ruby]
+----
+# My first Ruby program
+# On my way to Ruby fame & fortune!
+
+puts 'Hello, world!'
+----
