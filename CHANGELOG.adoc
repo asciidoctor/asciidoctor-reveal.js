@@ -13,6 +13,7 @@ Enhancements::
 
 Compliance::
   * Code listing callouts now work properly ({uri-issue}166[#166], {uri-issue}167[#167])
+  * More source code listing examples and tests ({uri-issue}163[#163], {uri-issue}170[#170])
 
 ////
 === Release meta
