@@ -9,7 +9,7 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 == Master branch
 
 Enhancements::
-  * Documentation improvements ({uri-issue}163[#163], {uri-issue}165[#165], {uri-issue}169[#169], {uri-issue}175[#175])
+  * Documentation improvements ({uri-issue}163[#163], {uri-issue}165[#165], {uri-issue}169[#169], {uri-issue}173[#173], {uri-issue}175[#175])
 
 Compliance::
   * Code listing callouts now work properly ({uri-issue}22[#22], {uri-issue}166[#166], {uri-issue}167[#167])
