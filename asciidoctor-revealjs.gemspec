@@ -14,7 +14,12 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 1.9.3'
 
   files = begin
-    (result = Open3.popen3('git ls-files -z') {|_, out| out.read }.split %(\0)).empty? ? Dir['**/*'] : result
+    if (result = Open3.popen3('git ls-files -z') {|_, out| out.read }.split %(\0)).empty?
+      Dir['**/*']
+    else
+      # converter.rb is built locally before packaging but ignored by git. Adding manually.
+      result + ['lib/asciidoctor-revealjs/converter.rb']
+    end
   rescue
     Dir['**/*']
   end
