@@ -383,15 +383,18 @@ To override that behavior use the `width` and `height` named attributes.
 
 === Syntax highlighting
 
-To enable https://highlightjs.org/[highlight.js] for syntax highlighting (which is the `revealjs` default):
+Reveal.js is well integrated with https://highlightjs.org/[highlight.js] for syntax highlighting.
+Asciidoctor-reveal.js supports that.
+You can activate highlight.js syntax highlighting (disabled by default) by setting the `source-highlighter` document attribute as follows:
 
 [source, asciidoc]
 ----
-= Title slide
+= Presentation Title
+// [...] other document attributes
 :source-highlighter: highlightjs
 ----
 
-With enabled source-highlighter you can write code blocks as usual:
+Once enabled you can write code blocks as usual:
 
 [source, asciidoc]
 ....
@@ -421,27 +424,10 @@ print "$0: hello world\n"
 ....
 
 [NOTE]
-Currently `revealjs` uses a rather old version of https://highlightjs.org/[highlight.js] that does not handle callouts correctly.
-To fix this download a current version of https://highlightjs.org/[highlight.js] and copy it to `reveal.js/plugin/highlight/highlight.js`.
+Alternatively, you can use http://coderay.rubychan.de[Coderay] or http://pygments.org[Pygments] as syntax highlighters if you are using the Asciidoctor/Ruby/Bundler toolchain (not Asciidoctor.js/Javascript/NPM).
+Check the `examples/` directory for examples and notes about what needs to be done for them to work.
+They are considered unsupported by the asciidoctor-reveal.js project.
 
-Alternatively, you can use http://coderay.rubychan.de[Coderay] or http://pygments.org[Pygments] as the highlighter.
-These handle callouts correctly.
-
-To use http://coderay.rubychan.de[Coderay]:
-
-[source, asciidoc]
-----
-= Title slide
-:source-highlighter: coderay
-----
-
-To use http://pygments.org[Pygments]:
-
-[source, asciidoc]
-----
-= Title slide
-:source-highlighter: pygments
-----
 
 === Vertical slides
 
