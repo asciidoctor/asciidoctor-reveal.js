@@ -220,17 +220,17 @@ There are a few ways to have no titles on slides.
 * Adding the `notitle` option to your slide
 * Adding the `conceal` option to your slide
 
+ifeval::[{safe-mode-level} >= 20]
+See <<examples/concealed-slide-titles.adoc#,concealed-slide-titles.adoc>>.
+endif::[]
+ifeval::[{safe-mode-level} < 20]
 Here is an example of the three techniques in action:
 
-ifdef::env-github,env-browser[]
-include::examples/concealed-slide-titles.adoc[]
-endif::[]
-
-ifndef::env-github+env-browser[]
-[source, asciidoc]
-----
-include::examples/concealed-slide-titles.adoc[]
-----
+.concealed-slide-titles.adoc
+[source,asciidoc]
+....
+include::examples/concealed-slide-titles.adoc[lines=5..-1]
+....
 endif::[]
 
 NOTE: `conceal` and `notitle` have the advantage that the slide still has an id so it can be linked to.
@@ -478,26 +478,23 @@ title that look like this: `:name: value`.
 This converter supports changing the color, image, video, iframe and
 transitions of the title slide.
 
-Read {uri-revealjs-gh}#slide-backgrounds[the relevant
-reveal.js documentation] to understand what attributes need to be set.
-Keep in mind that for title slides you must replace `data-` with
-`title-slide-`.
+Read {uri-revealjs-gh}#slide-backgrounds[the relevant reveal.js documentation] to understand what attributes need to be set.
+Keep in mind that for title slides you must replace `data-` with `title-slide-`.
 
+ifeval::[{safe-mode-level} >= 20]
+See <<examples/title-slide-image.adoc#,title-slide-image.adoc>>.
+endif::[]
+ifeval::[{safe-mode-level} < 20]
 Here is an example:
 
-ifdef::env-github,env-browser[]
-include::examples/title-slide-image.adoc[]
+.title-slide-image.adoc
+[source,asciidoc]
+....
+include::examples/title-slide-image.adoc[lines=5..-1]
+....
 endif::[]
 
-ifndef::env-github+env-browser[]
-[source, asciidoc]
-----
-include::examples/title-slide-image.adoc[]
-----
-endif::[]
-
-The title slide is also added a `title` CSS class to help with template
-customization.
+The title slide is also added a `title` CSS class to help with template customization.
 
 === Content meant for multiple converters
 
