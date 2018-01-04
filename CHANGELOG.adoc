@@ -6,7 +6,9 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
-== Master branch
+== 1.1.1 (2018-01-03)
+
+An emergency bugfix release due to a problem in the Ruby Gem package
 
 Enhancements::
   * Documentation improvements ({uri-issue}163[#163], {uri-issue}165[#165], {uri-issue}169[#169], {uri-issue}173[#173], {uri-issue}175[#175])
@@ -18,12 +20,21 @@ Compliance::
 Bug fixes::
   * The version 1.1.0 Ruby Gem was broken due to a packaging error ({uri-issue}172[#172])
 
-////
 === Release meta
 
-{uri-repo}/releases/tag/v1.1.0[git tag] |
-{uri-repo}/compare/v1.0.4...v1.1.0[full diff]
-////
+* Released on: 2018-01-03
+* Released by: Olivier Bilodeau
+* Release beer: Croque-Mort Double IPA, À la fût
+
+{uri-repo}/releases/tag/v1.1.1[git tag] |
+{uri-repo}/compare/v1.1.0...v1.1.1[full diff] |
+{uri-repo}/milestone/5[milestone]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+Dietrich Schulten, Olivier Bilodeau
 
 
 == 1.1.0 (2017-12-25) - @obilodeau
