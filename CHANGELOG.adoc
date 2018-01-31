@@ -6,9 +6,35 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
+== 1.1.3 (2018-01-31)
+
+A repackage of 1.1.2 with a fix for Ruby 2.5 environments
+
+Bug fixes::
+  * Worked around a problem in ruby-beautify with the compiled Slim template under Ruby 2.5
+
+=== Release meta
+
+* Released on: 2018-01-31
+* Released by: Olivier Bilodeau
+* Release coffee: Santropol Dark Espresso
+
+{uri-repo}/releases/tag/v1.1.3[git tag] |
+{uri-repo}/compare/v1.1.2...v1.1.3[full diff]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+Jakub Jirutka, Olivier Bilodeau
+
+
 == 1.1.2 (2018-01-30)
 
-A bugfix release due to a problem rendering tables using the Javascript / Node.js toolchain
+NOTE: No packaged version of this release were produced.
+
+A bugfix release due to a problem rendering tables using the Javascript /
+Node.js toolchain.
 
 Enhancements::
   * Documentation improvements ({uri-issue}181[#181])
