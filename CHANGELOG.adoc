@@ -14,6 +14,21 @@ Enhancements::
 Bug fixes::
   * Fixed crash with presentations with a table used from Javascript/Node.js setup ({uri-issue}178[#178])
 
+=== Release meta
+
+* Released on: 2018-01-30
+* Released by: Olivier Bilodeau
+* Release beer: A sad Belgian Moon in a Smoke Meat joint
+
+{uri-repo}/releases/tag/v1.1.2[git tag] |
+{uri-repo}/compare/v1.1.1...v1.1.2[full diff]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+Guillaume Grossetie, Tobias Placht, Olivier Bilodeau
+
 
 == 1.1.1 (2018-01-03)
 
