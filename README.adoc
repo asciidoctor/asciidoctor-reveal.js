@@ -113,6 +113,11 @@ NOTE: For some reason, when you use the system Ruby on Fedora, you also have to 
 
   $ bundle exec asciidoctor-revealjs CONTENT_FILE.adoc
 
+. Generate HTML presentation from the AsciiDoc source without cloning reveal.js framework
+
+    $ bundle exec asciidoctor-revealjs \
+      -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0 index.adoc
+      
 TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
 
 
