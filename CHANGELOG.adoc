@@ -6,6 +6,12 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
+== 1.1.2 (master)
+
+Bug fixes::
+  * Fixed crash with presentations with a table used from Javascript/Node.js setup ({uri-issue}178[#178])
+
+
 == 1.1.1 (2018-01-03)
 
 An emergency bugfix release due to a problem in the Ruby Gem package
