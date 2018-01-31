@@ -53,7 +53,7 @@ module Slim::Helpers
       v = v.compact.join(' ') if v.is_a? Array
       attrs << (v == true ? k : %(#{k}="#{v}"))
     end
-    attrs_str = attrs.empty? ? '' : attrs.join(' ').prepend(' ')
+    attrs_str = attrs.empty? ? '' : ' ' + attrs.join(' ')
 
 
     if VOID_ELEMENTS.include? name.to_s
