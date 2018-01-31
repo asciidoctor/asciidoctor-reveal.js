@@ -6,7 +6,9 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
-== 1.1.2 (master)
+== 1.1.2 (2018-01-30)
+
+A bugfix release due to a problem rendering tables using the Javascript / Node.js toolchain
 
 Enhancements::
   * Documentation improvements ({uri-issue}181[#181])
