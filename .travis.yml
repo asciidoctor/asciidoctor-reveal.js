@@ -25,6 +25,7 @@ script:
 - npm install
 - bundle exec rake build:converter:opal
 - npm run build
+- npm run examples
 - npm test
 
 notifications:
