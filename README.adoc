@@ -628,7 +628,7 @@ Default is built-in [path]_lib/css/zenburn.css_.
 |<file\|URL>
 |Overrides reveal.js directory.
 Example: ../reveal.js or
-https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0
+https://cdnjs.com/libraries/reveal.js/3.6.0[https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0]
 
 |:revealjs_controls:
 |*true*, false
