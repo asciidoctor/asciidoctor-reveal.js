@@ -198,8 +198,13 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
             { src: '#{revealjsdir}/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
             #{(attr? 'source-highlighter', 'highlightjs') ? "{ src: '#{revealjsdir}/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }," : nil}
             { src: '#{revealjsdir}/plugin/zoom-js/zoom.js', async: true },
-            { src: '#{revealjsdir}/plugin/notes/notes.js', async: true }
-        ]
+            { src: '#{revealjsdir}/plugin/notes/notes.js', async: true },
+            { src: '#{revealjsdir}/plugin/print-pdf/print-pdf.js', async: true } ,
+            #{(attr? 'revealjs_plugins_add') ? File.read(attr('revealjs_plugins_add', '')) : ""}
+        ], 
+
+        #{(attr? 'revealjs_plugins_setup') ? File.read(attr('revealjs_plugins_setup', '')) : ""}
+
       });
     - unless (docinfo_content = (docinfo :footer, '.html')).empty?
       =docinfo_content
