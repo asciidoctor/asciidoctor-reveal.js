@@ -732,6 +732,21 @@ look at the
 theme documentation] and use the `revealjs_customtheme` AsciiDoc attribute to
 activate it.
 
+=== Additional plugins
+
+The plugins shipped with reveal.js are enabled per default.
+
+To add additional plugins, download the and specify them in a comma separated list in a file that is accessible from your presentation.
+
+If plugins needs additional configuration, add this in on other file.
+
+To make asciidoctor-reveal aware of these plugins specify the following attributes:
+
+----
+:revealjs_plugins_add: myplugins/add.js
+:revealjs_plugins_setup: myplugins/setup.js
+----
+
 == Minimum Requirements
 
 * asciidoctor 1.5.6
