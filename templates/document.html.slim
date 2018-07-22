@@ -200,10 +200,10 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
             { src: '#{revealjsdir}/plugin/zoom-js/zoom.js', async: true },
             { src: '#{revealjsdir}/plugin/notes/notes.js', async: true },
             { src: '#{revealjsdir}/plugin/print-pdf/print-pdf.js', async: true } ,
-            #{(attr? 'revealjs_plugins_add') ? File.read(attr('revealjs_plugins_add', '')) : ""}
+            #{(attr? 'revealjs_plugins') ? File.read(attr('revealjs_plugins', '')) : ""}
         ], 
 
-        #{(attr? 'revealjs_plugins_setup') ? File.read(attr('revealjs_plugins_setup', '')) : ""}
+        #{(attr? 'revealjs_plugins_configuration') ? File.read(attr('revealjs_plugins_configuration', '')) : ""}
 
       });
     - unless (docinfo_content = (docinfo :footer, '.html')).empty?
