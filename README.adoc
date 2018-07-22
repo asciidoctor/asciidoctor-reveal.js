@@ -734,18 +734,18 @@ activate it.
 
 === Additional plugins
 
-The plugins shipped with reveal.js are enabled per default.
+Additional reveal.js plugins can be installed and activated using AsciiDoc attributes and external javascript files.
 
-To add additional plugins, download the and specify them in a comma separated list in a file that is accessible from your presentation.
+. Extract the plugin files in a directory
+. Create a Javascript file that will contain the Javascript statements to load the plugin (only one required even if you are using several plugins)
+. Add a `:revealjs_plugins:` attribute to point to that Javascript file
+. (Optional) Add a `:revealjs_plugins_configuration:` attribute to point to a Javascript file that configures the plugins you use
 
-If plugins needs additional configuration, add this in on other file.
+Looking at the example provided in the repository will provide guidance: link:examples/revealjs-plugins.adoc[AsciiDoc source], link:examples/revealjs-plugins.js[Plugin Loader], link:examples/revealjs-plugins-conf.js[Plugin Configuration].
 
-To make asciidoctor-reveal aware of these plugins specify the following attributes:
+Read {uri-revealjs-gh}#dependencies[the relevant reveal.js documentation] to understand more about reveal.js plugins.
+A {uri-revealjs-gh}/wiki/Plugins,-Tools-and-Hardware[list of existing reveal.js plugins] is also maintained upstream.
 
-----
-:revealjs_plugins: plugins/list.js
-:revealjs_plugins_configuration: plugins/config.js
-----
 
 == Minimum Requirements
 
