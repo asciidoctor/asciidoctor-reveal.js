@@ -1,0 +1,16 @@
+// .revealjs-plugins
+// Use of the revealjs_plugins attribute to load custom revealjs plugins
+// :include: //body/script | //div[@class="slides"]
+// :header_footer:
+= Custom Plugins
+Author
+:revealjs_plugins: examples/revealjs-plugins.js
+:revealjs_plugins_configuration: examples/revealjs-plugins-conf.js
+
+== Slide 1
+
+Content 1
+
+== Slide 2
+
+Content 2
