@@ -199,9 +199,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
             #{(attr? 'source-highlighter', 'highlightjs') ? "{ src: '#{revealjsdir}/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }," : nil}
             { src: '#{revealjsdir}/plugin/zoom-js/zoom.js', async: true },
             { src: '#{revealjsdir}/plugin/notes/notes.js', async: true },
-            { src: '#{revealjsdir}/plugin/print-pdf/print-pdf.js', async: true } ,
             #{(attr? 'revealjs_plugins') ? File.read(attr('revealjs_plugins', '')) : ""}
-        ], 
+        ],
 
         #{(attr? 'revealjs_plugins_configuration') ? File.read(attr('revealjs_plugins_configuration', '')) : ""}
 
