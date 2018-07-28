@@ -1,32 +1,19 @@
-<!-- .theme-custom -->
-<link href="reveal.js/css/reveal.css" rel="stylesheet"><link href="reveal.js/css/theme/owasp.css" id="theme" rel="stylesheet"><link href="reveal.js/lib/css/zenburn.css" rel="stylesheet"><link href="theme-custom.css" rel="stylesheet">
+<!-- .revealjs-plugins -->
 <div class="slides">
   <section class="title" data-state="title">
-    <h1>OWASP Theme</h1>
+    <h1>Custom Plugins</h1>
+    <p class="author"><small>Author</small></p>
   </section>
-  <section class="topic" data-background-color="#da291c" id="a_ctf_wtf_is_that">
-    <h2>A CTF, WTF is that?</h2>
+  <section id="slide_1">
+    <h2>Slide 1</h2>
+    <div class="paragraph">
+      <p>Content 1</p>
+    </div>
   </section>
-  <section class="topic" data-background-color="black" id="ctf_capture_the_flags">
-    <h2>CTF ⇒ Capture The Flags</h2>
-  </section>
-  <section id="actually_they_are">
-    <h2>Actually, they are…​</h2>
-    <div class="ulist">
-      <ul>
-        <li>
-          <p>hacking games</p>
-        </li>
-        <li>
-          <p>hacking puzzles</p>
-        </li>
-        <li>
-          <p>computer science puzzle</p>
-        </li>
-        <li>
-          <p>nerd puzzles</p>
-        </li>
-      </ul>
+  <section id="slide_2">
+    <h2>Slide 2</h2>
+    <div class="paragraph">
+      <p>Content 2</p>
     </div>
   </section>
 </div>
@@ -34,7 +21,7 @@
   // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
   Reveal.initialize({
     // Display controls in the bottom right corner
-    controls: false,
+    controls: true,
     // Display a presentation progress bar
     progress: true,
     // Set a per-slide timing for speaker notes, null means none
@@ -48,7 +35,7 @@
     // Enable the slide overview mode
     overview: true,
     // Vertical centering of slides
-    center: false,
+    center: true,
     // Enables touch navigation on devices with touch input
     touch: true,
     // Loop the presentation
@@ -86,7 +73,7 @@
     previewLinks: false,
     // Theme (e.g., beige, black, league, night, serif, simple, sky, solarized, white)
     // NOTE setting the theme in the config no longer works in reveal.js 3.x
-    //theme: Reveal.getQueryHash().theme || 'owasp',
+    //theme: Reveal.getQueryHash().theme || 'black',
     // Transition style (e.g., none, fade, slide, convex, concave, zoom)
     transition: Reveal.getQueryHash().transition || 'slide',
     // Transition speed (e.g., default, fast, slow)
@@ -103,8 +90,8 @@
     // The "normal" size of the presentation, aspect ratio will be preserved
     // when the presentation is scaled to fit different resolutions. Can be
     // specified using percentage units.
-    width: 1280,
-    height: 720,
+    width: 960,
+    height: 700,
   
     // Factor of the display size that should remain empty around the content
     margin: 0.1,
@@ -121,9 +108,21 @@
   
         { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
         { src: 'reveal.js/plugin/notes/notes.js', async: true },
+        { src: 'revealjs-plugins/reveal.js-menu/menu.js' },
+  { src: 'revealjs-plugins/chalkboard/chalkboard.js' }
   
     ],
   
+    menu: {
+      side: 'right'
+  },
+  keyboard: {
+  	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
+  	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
+  	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
+  	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
+  	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
+  },
   
   
   });
