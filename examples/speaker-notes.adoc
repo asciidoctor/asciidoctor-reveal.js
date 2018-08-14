@@ -13,9 +13,32 @@
 
 == Slide Two
 
-Hello World - Good Bye Cruel World
+Hello Speaker Notes
+
+[.notes]
+****
+* this is the new block type for speaker notes: sidebar
+* `notes` role required (written `.notes` in block attribute)
+* source is slightly more compact
+* and not tied to an admonition which can be useful in slides
+****
+
+== Slide Three
+
+Other speaker notes styles
+
+[.notes]
+--
+* Using open blocks work too
+* Yay!
+--
+
+== Slide Four
+
+Hello Old Style Speaker Notes
 
 [NOTE.speaker]
 --
-Actually things aren't that bad
+* notes using admonition block still work
+* `aside` or `notes` roles also valid in addition to `speaker`
 --

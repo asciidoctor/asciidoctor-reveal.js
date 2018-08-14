@@ -195,15 +195,17 @@ Additional examples can be found in the AsciiDoc files (.adoc) in `examples/`.
 
 == Slide Two
 
-Hello World - Good Bye Cruel World
+A Great Story
 
-[NOTE.speaker]
+[.notes]
 --
-Actually things aren't that bad
+* tell anecdote
+* make a point
 --
 ----
 
 In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js`' default behavior) with {uri-revealjs-gh}#speaker-notes[speaker notes].
+Other syntax exists to create speaker notes, see `examples/speaker-notes.adoc`.
 
 Starting with Reveal.js 3.5 speaker notes supports configurable layouts:
 image:https://cloud.githubusercontent.com/assets/629429/21808439/b941eb52-d743-11e6-9936-44ef80c60580.gif[]
