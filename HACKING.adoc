@@ -124,22 +124,22 @@ done with `bundler`:
     bundle --path=.bundle/gems --binstubs=.bundle/.bin
     bundle exec rake build
 
-Go to `test/output/slim/` folder and install `reveal.js`:
+Go to `test/doctest` folder and install `reveal.js`:
 
-    cd test/output/slim/
+    cd test/doctest/
     git clone https://github.com/hakimel/reveal.js.git
 
 === Render tests into .html
 
 From the project's root directory:
 
-    bundle exec rake generate FORCE=yes
+    bundle exec rake doctest::generate FORCE=yes
 
 === Open rendered files
 
 NOTE: Right now, https://github.com/asciidoctor/asciidoctor-doctest/issues/12[doctest issue #12] means that the generated examples will not be pretty.
 
-You can open the generated `.html` in `test/output/slim/` in a Web browser.
+You can open the generated `.html` in `test/doctest/` in a Web browser.
 
 
 == Asciidoctor API's gotchas
