@@ -194,11 +194,11 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         // Optional libraries used to extend on reveal.js
         dependencies: [
             { src: '#{revealjsdir}/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-            { src: '#{revealjsdir}/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-            { src: '#{revealjsdir}/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            #{(attr? 'omit-plugin-marked', 'true') ? "" :  "{ src: '#{revealjsdir}/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } }," }
+            #{(attr? 'omit-plugin-markdown', 'true') ? "" :  "{ src: '#{revealjsdir}/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } }," }
             #{(attr? 'source-highlighter', 'highlightjs') ? "{ src: '#{revealjsdir}/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }," : nil}
-            { src: '#{revealjsdir}/plugin/zoom-js/zoom.js', async: true },
-            { src: '#{revealjsdir}/plugin/notes/notes.js', async: true },
+            #{(attr? 'omit-plugin-zoom', 'true') ? "" :  "{ src: '#{revealjsdir}/plugin/zoom-js/zoom.js', async: true }," }
+            #{(attr? 'omit-plugin-notes', 'true') ? "" :  "{ src: '#{revealjsdir}/plugin/notes/notes.js', async: true }," }
             #{(attr? 'revealjs_plugins') ? File.read(attr('revealjs_plugins', '')) : ""}
         ],
 
