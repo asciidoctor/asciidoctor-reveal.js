@@ -732,6 +732,29 @@ look at the
 theme documentation] and use the `revealjs_customtheme` AsciiDoc attribute to
 activate it.
 
+=== Default plugins
+
+Per default, the generated presentation will have the following reveal.js plugins enabled
+
+* plugin/markdown/marked.js
+* plugin/markdown/markdown.js
+* plugin/zoom-js/zoom.js
+* plugin/notes/notes.js
+
+All this plugins are part of the reveal.js distribution.
+
+To disable a plugin, it is possible to set the omit-plugin-[plugin name] attribute to `true`.
+
+To disable all of the plugins set the following attributes:
+
+----
+:omit-plugin-marked: true
+:omit-plugin-markdown: true
+:omit-plugin-zoom: true
+:omit-plugin-notes: true
+----
+
+
 === Additional plugins
 
 Additional reveal.js plugins can be installed and activated using AsciiDoc attributes and external javascript files.
