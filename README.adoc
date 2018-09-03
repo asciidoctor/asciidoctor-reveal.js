@@ -755,6 +755,18 @@ To disable all of the plugins set the following attributes:
 ----
 
 
+reveal.js ships a plugin that allows to create pdf from slides.
+To enable this plugin, set the enable-plugin-pdf to true.
+
+----
+:enable-plugin-pdf: true
+----
+
+When the plugin is enabled and you run your presentation in a browser with `?print-pdf` at the end of the url, than use the default print function to print the website to a pdf document. 
+
+TIP: To work properly, this plugin requires a chrome base browser.
+
+
 === Additional plugins
 
 Additional reveal.js plugins can be installed and activated using AsciiDoc attributes and external javascript files.
