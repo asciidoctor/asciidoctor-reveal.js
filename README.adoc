@@ -734,7 +734,7 @@ activate it.
 
 === Default plugins
 
-Per default, the generated presentation will have the following reveal.js plugins enabled
+Per default, the generated presentation will have the following reveal.js plugins enabled:
 
 * plugin/markdown/marked.js
 * plugin/markdown/markdown.js
