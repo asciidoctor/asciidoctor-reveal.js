@@ -1,6 +1,5 @@
-- if (has_role? 'aside') or (has_role? 'speaker')
-  aside.notes
-    =content
+- if (has_role? 'aside') or (has_role? 'speaker') or (has_role? 'notes')
+  include notes.html.slim
 - else
   .admonitionblock id=@id class=[(attr :name),role]
     table: tr

@@ -92,6 +92,20 @@ module Slim::Helpers
     end
   end
 
+
+  # Between delimiters (--) is code taken from asciidoctor-bespoke 1.0.0.alpha.1
+  # Licensed under MIT, Copyright (C) 2015-2016 Dan Allen and the Asciidoctor Project
+  #--
+  # Retrieve the converted content, wrap it in a `<p>` element if
+  # the content_model equals :simple and return the result.
+  #
+  # Returns the block content as a String, wrapped inside a `<p>` element if
+  # the content_model equals `:simple`.
+  def resolve_content
+    @content_model == :simple ? %(<p>#{content}</p>) : content
+  end
+  #--
+
 end
 
 # More custom functions can be added in another namespace if required

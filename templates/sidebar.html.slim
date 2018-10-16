@@ -1,5 +1,8 @@
-.sidebarblock id=@id class=role
-  .content
-    - if title?
-      .title=title
-    =content
+- if (has_role? 'aside') or (has_role? 'speaker') or (has_role? 'notes')
+  include notes.html.slim
+- else
+  .sidebarblock id=@id class=role
+    .content
+      - if title?
+        .title=title
+      =content
