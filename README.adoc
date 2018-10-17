@@ -743,23 +743,23 @@ Per default, the generated presentation will have the following reveal.js plugin
 
 All this plugins are part of the reveal.js distribution.
 
-To disable a plugin, it is possible to set the omit-plugin-[plugin name] attribute to `true`.
+To disable a plugin, it is possible to set the `omit-plugin-[plugin name]` attribute.
 
 To disable all of the plugins set the following attributes:
 
 ----
-:omit-plugin-marked: true
-:omit-plugin-markdown: true
-:omit-plugin-zoom: true
-:omit-plugin-notes: true
+:omit-plugin-marked:
+:omit-plugin-markdown:
+:omit-plugin-zoom:
+:omit-plugin-notes:
 ----
 
 
 reveal.js ships a plugin that allows to create pdf from slides.
-To enable this plugin, set the enable-plugin-pdf to true.
+To enable this plugin, set the `enable-plugin-pdf` attribute.
 
 ----
-:enable-plugin-pdf: true
+:enable-plugin-pdf:
 ----
 
 When the plugin is enabled and you run your presentation in a browser with `?print-pdf` at the end of the url, than use the default print function to print the website to a pdf document. 
