@@ -734,18 +734,18 @@ activate it.
 
 === Default plugins
 
-Per default, the generated presentation will have the following reveal.js plugins enabled:
+By default, the generated presentation will have the following reveal.js plugins enabled:
 
 * plugin/markdown/marked.js
 * plugin/markdown/markdown.js
 * plugin/zoom-js/zoom.js
 * plugin/notes/notes.js
 
-All this plugins are part of the reveal.js distribution.
+All these plugins are part of the reveal.js distribution.
 
 To disable a plugin, it is possible to set the `omit-plugin-[plugin name]` attribute.
 
-To disable all of the plugins set the following attributes:
+For example, to disable all of the plugins set the following document attributes:
 
 ----
 :omit-plugin-marked:
@@ -762,9 +762,9 @@ To enable this plugin, set the `enable-plugin-pdf` attribute.
 :enable-plugin-pdf:
 ----
 
-When the plugin is enabled and you run your presentation in a browser with `?print-pdf` at the end of the url, than use the default print function to print the website to a pdf document. 
+When the plugin is enabled and you run your presentation in a browser with `?print-pdf` at the end of the URL, then use the default print function to print the website to a pdf document.
 
-TIP: To work properly, this plugin requires a chrome base browser.
+TIP: To work properly, this plugin requires a Chrome-based browser.
 
 
 === Additional plugins
