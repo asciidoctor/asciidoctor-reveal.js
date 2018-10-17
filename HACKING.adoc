@@ -6,13 +6,22 @@ Short instructions that aim to help potential contributors.
 
 == Inspect the template system
 
-
 To understand what you have access to in templates you can inject some ruby.
 With the slim templating system, this is done by prepending the lines with a dash (`-`) and inserting a ruby statement.
 Two complementary approaches can be used to explore the context offered by asciidoctor through the template system:
 
 * logging on the command line via print-like statements
 * jump into the context through an interactive debugger
+
+[NOTE]
+--
+Starting with v1.1.0 the slim templates are compiled to Ruby in order to
+use the same templates from Asciidoctor.js (Javascript / Node.js ecosystem).
+Don't forget to recompile the templates if you make changes to them.
+This can be done by running:
+
+    bundle exec rake build
+--
 
 === Print debugging information
 
@@ -84,6 +93,17 @@ You can also query asciidoctor's documentation:
 
     [4] pry(#<Asciidoctor::Section>)> ? find_by
 
+If you install the `pry-byebug` gem you get additional debugging capabilities.
+See the gem's documentation for details.
+
+Since 1.1.0, templates are compiled. It is easier to inject the debug
+triggering statements and use the templates directly instead of debugging
+compiled templates. You can call the slim templates directly with:
+
+// TODO it's still not clear whether `-r slim-htag` is required right now (#153)
+
+    bundle exec asciidoctor --trace -T templates/ examples/customcss.adoc
+
 === References
 
 * https://github.com/asciidoctor/asciidoctor.org/issues/80#issuecomment-145698579
@@ -102,38 +122,29 @@ done with `bundler`:
 
     bundle config --local github.https true
     bundle --path=.bundle/gems --binstubs=.bundle/.bin
+    bundle exec rake build
 
-Go to `test/output/slim/` folder and install `reveal.js`:
+Go to `test/doctest` folder and install `reveal.js`:
 
-    cd test/output/slim/
+    cd test/doctest/
     git clone https://github.com/hakimel/reveal.js.git
 
 === Render tests into .html
 
 From the project's root directory:
 
-    bundle exec rake generate FORCE=yes
+    bundle exec rake doctest::generate FORCE=yes
 
 === Open rendered files
 
 NOTE: Right now, https://github.com/asciidoctor/asciidoctor-doctest/issues/12[doctest issue #12] means that the generated examples will not be pretty.
 
-You can open the generated `.html` in `test/output/slim/` in a Web browser.
+You can open the generated `.html` in `test/doctest/` in a Web browser.
 
 
-== Jade templates
+== Asciidoctor API's gotchas
 
-Jade templates are used by AsciidocFX. Since they are separate they might be
-out of sync with our asciidoctor's slim templates.
-
-To test the jade templates, install AsciidocFX and copy the jade templates
-over to AsciidocFX's `conf/slide/templates/revealjs/` directory. Then use
-AsciidocFX to render the slides.
-
-Alternatively, the https://github.com/asciidoctor/asciidoctor-reveal.js/#node-javascript-setup[node/npm asciidoctor-revealjs setup] can be used.
-
-
-== Attribute inheritence
+=== Attribute inheritence
 
 The attr and attr? methods inherit by default. That means if they don't find the attribute defined on the node, they look on the document.
 
@@ -194,25 +205,55 @@ You can apply that label to a pull request that is complete and ready for review
 
 Makes triaging easier.
 
-
 == Node package
 
 === Test a local asciidoctor-reveal.js version
 
-In order to test the Node package, you need to create a test project adjacent to the clone of the `asciidoctor-reveal.js` repository:
+In order to test the Node package, you first need to build the converter into Javascript and create a tarball of the project.
+
+  $ bundle exec rake build:converter:opal
+  $ npm run build
+  $ npm pack
+
+That last command will produce a file named `asciidoctor-reveal.js-<version>.tgz` in the working directory.
+
+Then, create a test project adjacent to the clone of the [.path]_asciidoctor-reveal.js_ repository:
 
  $ mkdir test-project
  $ cd test-project
- $ npm init -y
 
-Now, install the dependencies:
+Now, install the dependencies from the tarball:
 
- $ npm i --save asciidoctor.js@1.5.5-3
- $ npm i --save ../asciidoctor-reveal.js
+ $ npm i --save ../asciidoctor-reveal.js/asciidoctor-reveal.js-<version>.tgz
 
 NOTE: The relative portion of the last command is where you are installing the local `asciidoctor-reveal.js` version from.
 
 Then proceed as documented in the `README.adoc`.
+
+=== Upgrade Asciidoctor.js version
+
+WARNING: It is important to track `Asciidoctor.js` and `bestikk-opal-compiler` versions together.
+The `opal-compiler` used to compile our node package must match `asciidoctor.js` `opal-runtime`.
+The former is explicitly installed by users on install and the later is specified in our `package.json`.
+When you update one remember to update the other.
+Versions known to work together can be found here, just replace <tag> with the `asciidoctor.js` release you are interested in: https://github.com/asciidoctor/asciidoctor.js/blob/<tag>/package.json
+
+== RubyGem package
+
+=== Test a local asciidoctor-revealjs version
+
+Compile the converter:
+
+  $ bundle exec rake build
+
+In a clean directory besides the `asciidoctor-reveal.js` repository, create the following `Gemspec` file:
+
+  source 'https://rubygems.org'
+  gem 'asciidoctor-revealjs', :path => '../asciidoctor-reveal.js'
+
+Then run:
+
+  $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
 
 == Release process
@@ -232,10 +273,15 @@ Then proceed as documented in the `README.adoc`.
 . Make a release on github (from changelog and copy from previous releases)
 . Pushing the gem on rubygems.org:
 +
+ $ bundle exec rake build
  $ gem build asciidoctor-revealjs.gemspec
  $ gem push asciidoctor-revealjs-X.Y.Z.gem
 
 . Check that the new version is available on https://rubygems.org/gems/asciidoctor-revealjs[rubygems.org]
+. Generate a compatible version of the Ruby converter (using opal mode)
++
+ $ bundle exec rake build:converter:opal
+
 . Build the node package (make sure you have `devDependencies` installed with: `npm install`):
 +
  $ npm run build
@@ -248,6 +294,8 @@ Then proceed as documented in the `README.adoc`.
 . Check that the new version is available on https://www.npmjs.com/package/asciidoctor-reveal.js[npmjs.com]
 . Update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev') and commit
 ** commit msg: Begin development on next release
+. Submit a PR upstream to sync the documentation on asciidoctor.org
+** Modify this page: https://github.com/asciidoctor/asciidoctor.org/edit/master/docs/asciidoctor-revealjs.adoc
 
 == Ruby and asciidoctor-doctest tests
 
@@ -275,4 +323,4 @@ This is done using the following command:
 === Custom tests
 
 Files in the `examples/` directory are used as tests.
-Resulting slides are kept in `test/output/slim/`.
+Resulting slides are kept in `test/doctest/`.

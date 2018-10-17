@@ -1,0 +1,22 @@
+// .source-highlightjs-html
+// Avoiding regressions with HTML source code inside source block
+// :include: //div[@class="slides"]
+// :header_footer:
+= HTML Source Code with Highlight.JS
+:icons: font
+:source-highlighter: highlightjs
+
+== Use the Source
+
+[source, html]
+----
+<b>This should be source code and not bold</b>
+----
+
+== Callouts
+
+[source, html]
+----
+<b>complex code</b> <!--1-->
+----
+<1> complex code needs a callout

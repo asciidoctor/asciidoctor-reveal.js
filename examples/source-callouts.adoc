@@ -2,18 +2,17 @@
 // Demonstration of source callouts
 // :include: //div[@class="slides"]
 // :header_footer:
-= Presentation
-Me
+= Source code callouts
 :icons: font
 :source-highlighter: highlightjs
-// FIXME coderay, pygments and rouge should also be tested
 
 == Callout
 
+// FIXME Callout with `:icons: font` not styled as a numbered ball (#168)
 [source, rust]
 ----
 fn main() {
     println!("Hello World!"); // <1>
-    }
+}
 ----
 <1> `println!` is a macro.

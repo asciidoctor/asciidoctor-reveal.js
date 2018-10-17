@@ -5,6 +5,7 @@ ifdef::env-github,env-browser[]
 :toclevels: 2
 endif::[]
 ifdef::env-github[]
+:branch: master
 :status:
 :outfilesuffix: .adoc
 :!toc-title:
@@ -33,10 +34,18 @@ endif::[]
 
 There are two main technology stacks that can transform AsciiDoc into HTML5 / reveal.js:
 
-* Asciidoctor / Ruby / Slim / Bundler (See <<Ruby Setup>>)
-* Asciidoctor.js / JavaScript / Jade / Node.js (See <<Node / JavaScript Setup>>)
+* Asciidoctor / Ruby / Bundler (See <<Ruby Setup>>)
+* Asciidoctor.js / JavaScript (Node.js) / NPM (See <<Node / JavaScript Setup>>)
 
-Right now the Ruby / Slim templates are more featureful but that is changing quickly.
+Right now the Asciidoctor / Ruby stack is the better tested one but with the changes in v1.1.0 they have feature parity.
+
+ifeval::['{branch}' == 'master']
+NOTE: You're viewing the documentation for the upcoming release.
+If you're looking for the documentation for an older release, please refer to one of the following branches: +
+{uri-project-repo}/tree/maint-1.0.x#readme[1.0.x]
+&hybull;
+{uri-project-repo}/tree/reveal.js-2.x#readme[Unversioned pre-release] (compatible with RevealJS 2.x)
+endif::[]
 
 
 == Ruby Setup
@@ -47,8 +56,6 @@ To ensure repeatability, we recommend that you manage your presentation projects
 For a quick start clone our https://github.com/obilodeau/presentation-revealjs-starter[starter repository] and follow instructions there.
 
 For more complete instructions, read on.
-
-NOTE: If you want to use reveal.js 2, please clone the asciidoctor-reveal.js repo and switch to the reveal.js-2.x branch.
 
 
 === Prerequisites
@@ -82,7 +89,6 @@ NOTE: These instructions should be repeated for every presentation project.
 source 'https://rubygems.org'
 
 gem 'asciidoctor-revealjs' # latest released version
-#gem 'asciidoctor-revealjs', github: 'asciidoctor/asciidoctor-reveal.js' # github master branch
 ----
 +
 NOTE: For some reason, when you use the system Ruby on Fedora, you also have to add the json gem to the Gemfile.
@@ -95,7 +101,7 @@ NOTE: For some reason, when you use the system Ruby on Fedora, you also have to 
 . Optional: Copy or clone reveal.js presentation framework.
   Allows you to modify themes or view slides offline.
 
-  $ git clone -b 3.3.0 --depth 1 https://github.com/hakimel/reveal.js.git
+  $ git clone -b 3.6.0 --depth 1 https://github.com/hakimel/reveal.js.git
 
 
 === Rendering the AsciiDoc into slides
@@ -104,6 +110,12 @@ NOTE: For some reason, when you use the system Ruby on Fedora, you also have to 
   See examples in <<Syntax Examples>> section to get started.
 
 . Generate HTML presentation from the AsciiDoc source
+
+  $ bundle exec asciidoctor-revealjs \
+    -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0 CONTENT_FILE.adoc
+
+. If you did the optional step of having a local reveal.js clone you can
+  convert AsciiDoc source with
 
   $ bundle exec asciidoctor-revealjs CONTENT_FILE.adoc
 
@@ -122,8 +134,7 @@ Using npm:
 
 Create a directory to place slides. Initialize the directory to store npm packages within that directory. 
 
- $ npm init
- $ npm i --save asciidoctor.js@1.5.5-3
+ $ echo {} > package.json               # eliminates warnings, use `npm init` if you prefer
  $ npm i --save asciidoctor-reveal.js
 
 === Rendering the AsciiDoc into slides
@@ -136,14 +147,12 @@ Here we are converting a file named `presentation.adoc` into a reveal.js present
 ----
 // Load asciidoctor.js and asciidoctor-reveal.js
 var asciidoctor = require('asciidoctor.js')();
-var Asciidoctor = asciidoctor.Asciidoctor();
-
 require('asciidoctor-reveal.js');
 
 // Convert the document 'presentation.adoc' using the reveal.js converter
-var attributes = 'revealjsdir=node_modules/reveal.js@';
+var attributes = {'revealjsdir': 'node_modules/reveal.js@'};
 var options = {safe: 'safe', backend: 'revealjs', attributes: attributes};
-Asciidoctor.convertFile('presentation.adoc', options); // <1>
+asciidoctor.convertFile('presentation.adoc', options); // <1>
 ----
 <1> Creates a file named `presentation.html` (in the directory where command is run)
 
@@ -165,7 +174,7 @@ Asciidoctor.convertFile('presentation.adoc', options); // <1>
 
 To render the slides, run:
 
-    node asciidoctor-reveal.js
+    node asciidoctor-revealjs.js
 
 You can open the `presentation.html` file in your browser and enjoy!
 
@@ -177,6 +186,7 @@ Additional examples can be found in the AsciiDoc files (.adoc) in `examples/`.
 
 === Basic presentation with speaker notes
 
+[source, asciidoc]
 ----
 = Title Slide
 
@@ -188,16 +198,29 @@ Additional examples can be found in the AsciiDoc files (.adoc) in `examples/`.
 
 == Slide Two
 
-Hello World - Good Bye Cruel World
+A Great Story
 
-[NOTE.speaker]
+[.notes]
 --
-Actually things aren't that bad
+* tell anecdote
+* make a point
 --
 ----
 
 In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js`' default behavior) with {uri-revealjs-gh}#speaker-notes[speaker notes].
+Other syntax exists to create speaker notes, see `examples/speaker-notes.adoc`.
 
+Starting with Reveal.js 3.5 speaker notes supports configurable layouts:
+image:https://cloud.githubusercontent.com/assets/629429/21808439/b941eb52-d743-11e6-9936-44ef80c60580.gif[]
+
+Speaker notes are opened by pressing `s`.
+With Reveal.js 3.5 they require a webserver to work.
+This limitation is not present in 3.6.
+You can get a Web server running quickly with:
+
+    ruby -run -e httpd . -p 5000 -b 127.0.0.1
+
+Then use your browser to navigate to the URL \http://localhost:5000.
 
 === Slides without titles
 
@@ -207,17 +230,29 @@ There are a few ways to have no titles on slides.
 * Adding the `notitle` option to your slide
 * Adding the `conceal` option to your slide
 
+ifeval::[{safe-mode-level} >= 20]
+See <<examples/concealed-slide-titles.adoc#,concealed-slide-titles.adoc>>.
+endif::[]
+ifeval::[{safe-mode-level} < 20]
 Here is an example of the three techniques in action:
 
-----
-include::test/concealed-slide-titles.adoc[]
-----
+.concealed-slide-titles.adoc
+[source,asciidoc]
+....
+include::examples/concealed-slide-titles.adoc[lines=5..-1]
+....
+endif::[]
 
 NOTE: `conceal` and `notitle` have the advantage that the slide still has an id so it can be linked to.
+
+IMPORTANT: Like the first page of an AsciiDoc document, the first slide is handled differently.
+           To hide the whole slide use the `:notitle:` http://asciidoctor.org/docs/user-manual/#header-summary[document attribute].
+           To achieve the effect of hiding only the first slide's title, combine the `:notitle:` attribute on the first slide and use `[%notitle]` on the second slide which will, in effect, be your first slide now.
 
 
 === Background colors
 
+[source, asciidoc]
 ----
 [background-color="yellow"]
 == Slide Three
@@ -231,6 +266,7 @@ Anything accepted by CSS color formats works.
 
 === Background images
 
+[source, asciidoc]
 ----
 [%notitle]
 == Grand Announcement
@@ -243,10 +279,11 @@ It sets reveal.js`' `data-background-image` attribute.
 The `size` attribute is also supported.
 See the {uri-revealjs-gh}#image-backgrounds[relevant reveal.js documentation] for details.
 
-NOTE: Background images file names are now relative to the `:imagedir:` attribute if set.
+NOTE: Background images file names are now relative to the `:imagesdir:` attribute if set.
 
 NOTE: The `canvas` keyword can be used instead of `background` for the same effect.
 
+[source, asciidoc]
 ----
 [%notitle]
 == The Great Goat
@@ -262,6 +299,7 @@ As you can see, you can use a URL to specify your image resource too.
 
 A background video for a slide can be specified using the `background-video` element attribute.
 
+[source, asciidoc]
 ----
 [background-video="https://my.video/file.mp4",background-video-loop=true,background-video-muted=true]
 == Nice background!
@@ -271,6 +309,7 @@ For convenience `background-video-loop` and `background-video-muted` attributes 
 
 For example:
 
+[source, asciidoc]
 ----
 [background-video="https://my.video/file.mp4",options="loop,muted"]
 == Nice background!
@@ -284,6 +323,7 @@ Note that the `data-` prefix is not required in asciidoc files.
 
 The background can be replaced with anything a browser can render in an iframe using the `background-iframe` reveal.js feature.
 
+[source, asciidoc]
 ----
 [%notitle,background-iframe="https://www.youtube.com/embed/LaApqL4QjH8?rel=0&start=3&enablejsapi=1&autoplay=1&loop=1&controls=0&modestbranding=1"]
 == a youtube video
@@ -294,6 +334,7 @@ See {uri-revealjs-gh}#iframe-backgrounds[the relevant reveal.js documentation] f
 
 === Slide Transitions
 
+[source, asciidoc]
 ----
 [transition=zoom, %notitle]
 == Zoom zoom
@@ -311,6 +352,7 @@ See {uri-revealjs-gh}#slide-transitions[the relevant reveal.js documentation] fo
 
 === Fragments
 
+[source, asciidoc]
 ----
 == Slide Four
 
@@ -348,6 +390,7 @@ See {uri-revealjs-gh}#stretching-elements[reveal.js documentation on stretching 
 In addition to <<Background videos,background videos>>, videos can be inserted directly into slides.
 The syntax is the standard http://asciidoctor.org/docs/user-manual/#video[asciidoc video block macro] syntax.
 
+[source, asciidoc]
 ----
 == Trains, we love trains!
 
@@ -360,24 +403,37 @@ To override that behavior use the `width` and `height` named attributes.
 
 === Syntax highlighting
 
-[listing]
+Reveal.js is well integrated with https://highlightjs.org/[highlight.js] for syntax highlighting.
+Asciidoctor-reveal.js supports that.
+You can activate highlight.js syntax highlighting (disabled by default) by setting the `source-highlighter` document attribute as follows:
+
+[source, asciidoc]
+----
+= Presentation Title
+// [...] other document attributes
+:source-highlighter: highlightjs
+----
+
+Once enabled you can write code blocks as usual:
+
+[source, asciidoc]
 ....
 == Slide Five
 
 Uses highlighted code
 
+[source, python]
 ----
 print "Hello World"
 ----
 ....
 
-`revealjs` uses https://highlightjs.org/[highlight.js] to do its syntax highlighting by default.
 By default `[source]` blocks and blocks delimited by `----` will be highlighted.
 An explicit `[listing]` block will not be highlighted.
 `highlight.js` does language auto-detection but using the `language="..."` attribute will hint the highlighter.
 For example this will highlight this source code as Perl:
 
-[listing]
+[source, asciidoc]
 ....
 == Slide Five
 
@@ -388,29 +444,14 @@ print "$0: hello world\n"
 ....
 
 [NOTE]
-Currently `revealjs` uses a rather old version of https://highlightjs.org/[highlight.js] that does not handle callouts correctly.
-To fix this download a current version of https://highlightjs.org/[highlight.js] and copy it to `reveal.js/plugin/highlight/highlight.js`.
+Alternatively, you can use http://coderay.rubychan.de[Coderay] or http://pygments.org[Pygments] as syntax highlighters if you are using the Asciidoctor/Ruby/Bundler toolchain (not Asciidoctor.js/Javascript/NPM).
+Check the `examples/` directory for examples and notes about what needs to be done for them to work.
+They are considered unsupported by the asciidoctor-reveal.js project.
 
-Alternatively, you can use http://coderay.rubychan.de[Coderay] or http://pygments.org[Pygments] as the highlighter.
-These handle callouts correctly.
-
-To use http://coderay.rubychan.de[Coderay]:
-
-----
-= Title slide
-:source-highlighter: coderay
-----
-
-To use http://pygments.org[Pygments]:
-
-----
-= Title slide
-:source-highlighter: pygments
-----
 
 === Vertical slides
 
-[listing]
+[source, asciidoc]
 ....
 == Slide Six
 
@@ -437,19 +478,23 @@ title that look like this: `:name: value`.
 This converter supports changing the color, image, video, iframe and
 transitions of the title slide.
 
-Read {uri-revealjs-gh}#slide-backgrounds[the relevant
-reveal.js documentation] to understand what attributes need to be set.
-Keep in mind that for title slides you must replace `data-` with
-`title-slide-`.
+Read {uri-revealjs-gh}#slide-backgrounds[the relevant reveal.js documentation] to understand what attributes need to be set.
+Keep in mind that for title slides you must replace `data-` with `title-slide-`.
 
+ifeval::[{safe-mode-level} >= 20]
+See <<examples/title-slide-image.adoc#,title-slide-image.adoc>>.
+endif::[]
+ifeval::[{safe-mode-level} < 20]
 Here is an example:
 
-----
-include::test/title-slide-image.adoc[]
-----
+.title-slide-image.adoc
+[source,asciidoc]
+....
+include::examples/title-slide-image.adoc[lines=5..-1]
+....
+endif::[]
 
-The title slide is also added a `title` CSS class to help with template
-customization.
+The title slide is also added a `title` CSS class to help with template customization.
 
 === Content meant for multiple converters
 
@@ -464,6 +509,7 @@ In the end, the whole document has to be compiled with the backend option:
 
 For example:
 
+[source, asciidoc]
 ----
 == Main section
 
@@ -496,6 +542,7 @@ Doing so, you can then easily override specific elements of your theme per prese
 
 For example, to do proper position-independent text placement of a title slide with a specific background you can use:
 
+[source, css]
 ----
 .reveal section.title h1 {
     margin-top: 2.3em;
@@ -516,6 +563,7 @@ If the `:customcss:` attribute value is empty then `asciidoctor-revealjs.css` is
 Reveal.js supports a {uri-revealjs-gh}#slide-states[data-state] tag that can be added on slides which gets rendered into `<section>` tags.
 In AsciiDoc the `data-state` can be applied to a slide by adding a state attribute to a section like this:
 
+[source, asciidoc]
 ----
 [state=topic]
 == Epic Topic
@@ -524,6 +572,7 @@ In AsciiDoc the `data-state` can be applied to a slide by adding a state attribu
 That state can be queried from Javascript or used in CSS to apply further customization to your slide deck.
 For example, by combining this feature with the <<CSS override>> one, you can alter fonts for specific pages with this CSS:
 
+[source, css]
 ----
 @import 'https://fonts.googleapis.com/css?family=Baloo+Bhai';
 
@@ -538,12 +587,14 @@ section[data-state="topic"] h2 {
 Asciidoctor font-based http://asciidoctor.org/docs/user-manual/#admonition[admonitions] are supported.
 Make sure to add the following attribute to your document:
 
+[source, asciidoc]
 ----
 :icons: font
 ----
 
 Here is an example slide:
 
+[source, asciidoc]
 ----
 == But first
 
@@ -552,11 +603,6 @@ WARNING: This presentation is dangerous!
 
 Here are details about Asciidoctor's http://asciidoctor.org/docs/user-manual/#admonition-icons[Admonition icons] support.
 
-
-// FIXME this is no longer accurate
-== About Jade Templates
-
-`/templates/jade` directory contains jade template files they are ported from `/templates/slim` templates. These templates were written to support the reveal.js converter for Asciidoctor.js environment that is currently using in https://github.com/asciidocfx/AsciidocFX[AsciidocFX] editor. You can look at the https://github.com/asciidocfx/asciidoctor.js-reveal-demo[demo].
 
 == Reveal.js Options
 
@@ -586,7 +632,7 @@ Default is built-in [path]_lib/css/zenburn.css_.
 |<file\|URL>
 |Overrides reveal.js directory.
 Example: ../reveal.js or
-https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.3.0
+https://cdnjs.com/libraries/reveal.js/3.6.0[https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0]
 
 |:revealjs_controls:
 |*true*, false
@@ -691,13 +737,28 @@ look at the
 theme documentation] and use the `revealjs_customtheme` AsciiDoc attribute to
 activate it.
 
+=== Additional plugins
+
+Additional reveal.js plugins can be installed and activated using AsciiDoc attributes and external javascript files.
+
+. Extract the plugin files in a directory
+. Create a Javascript file that will contain the Javascript statements to load the plugin (only one required even if you are using several plugins)
+. Add a `:revealjs_plugins:` attribute to point to that Javascript file
+. (Optional) Add a `:revealjs_plugins_configuration:` attribute to point to a Javascript file that configures the plugins you use
+
+Looking at the example provided in the repository will provide guidance: link:examples/revealjs-plugins.adoc[AsciiDoc source], link:examples/revealjs-plugins.js[Plugin Loader], link:examples/revealjs-plugins-conf.js[Plugin Configuration].
+
+Read {uri-revealjs-gh}#dependencies[the relevant reveal.js documentation] to understand more about reveal.js plugins.
+A {uri-revealjs-gh}/wiki/Plugins,-Tools-and-Hardware[list of existing reveal.js plugins] is also maintained upstream.
+
+
 == Minimum Requirements
 
-* asciidoctor 1.5.4
+* asciidoctor 1.5.6
 
 == Copyright and Licensing
 
-Copyright (C) 2012-2016 {authors} and the Asciidoctor Project.
+Copyright (C) 2012-2018 {authors} and the Asciidoctor Project.
 Free use of this software is granted under the terms of the MIT License.
 
 ifdef::env-github,env-browser[See the <<LICENSE#,LICENSE>> file for details.]

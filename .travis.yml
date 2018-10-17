@@ -3,7 +3,9 @@ git:
   # use depth 2 just in case two refs get pushed at once (like a tag)
   depth: 2
 language: ruby
+node_js: lts/*
 rvm:
+- 2.5
 - 2.4
 - 2.3
 - 2.2
@@ -17,7 +19,14 @@ env:
   # use system libraries to speed up installation of nokogiri
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
 script:
+- bundle exec rake build
 - bundle exec rake doctest
 - bundle exec rake examples:convert
+- npm install
+- bundle exec rake build:converter:opal
+- npm run build
+- npm run examples
+- npm test
+
 notifications:
   email: false

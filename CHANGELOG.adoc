@@ -6,32 +6,155 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
-== Master branch
+== master (unreleased)
 
-////
 Enhancements::
+  * Easier speaker notes: a `.notes` role that apply to many AsciiDoc blocks (open, sidebar and admonition) ({uri-issue}202[#202])
+  * Documentation improvements ({uri-issue}182[#182], {uri-issue}190[#190], {uri-issue}203[#203])
+  * Support for Asciidoctor.js 1.5.6-rc.1 and build simplification ({uri-issue}189[#189])
+  * Support to specify and use reveal.js plugins without modifying {project-name}'s source code ({uri-issue}196[#196], {uri-issue}118[#118])
 
-Compliance::
+
+== 1.1.3 (2018-01-31)
+
+A repackage of 1.1.2 with a fix for Ruby 2.5 environments
 
 Bug fixes::
+  * Worked around a problem in ruby-beautify with the compiled Slim template under Ruby 2.5
 
-////
-Infrastructure::
-  * https://github.com/asciidoctor/asciidoctor-doctest[Asciidoctor-doctest] integration.
-    This layer of automated testing should help prevent regressions and improve our development process. ({uri-issue}116[#116]).
-
-////
 === Release meta
 
-{uri-repo}/releases/tag/v1.0.3[git tag] |
-{uri-repo}/compare/v1.0.2...v1.0.3[full diff]
-////
+* Released on: 2018-01-31
+* Released by: Olivier Bilodeau
+* Release coffee: Santropol Dark Espresso
+
+{uri-repo}/releases/tag/v1.1.3[git tag] |
+{uri-repo}/compare/v1.1.2...v1.1.3[full diff]
 
 === Credits
 
 Thanks to the following people who contributed to this release:
 
-@jirutka, @Mogztter
+Jakub Jirutka, Olivier Bilodeau
+
+
+== 1.1.2 (2018-01-30)
+
+NOTE: No packaged version of this release were produced.
+
+A bugfix release due to a problem rendering tables using the Javascript /
+Node.js toolchain.
+
+Enhancements::
+  * Documentation improvements ({uri-issue}181[#181])
+
+Bug fixes::
+  * Fixed crash with presentations with a table used from Javascript/Node.js setup ({uri-issue}178[#178])
+
+=== Release meta
+
+* Released on: 2018-01-30
+* Released by: Olivier Bilodeau
+* Release beer: A sad Belgian Moon in a Smoke Meat joint
+
+{uri-repo}/releases/tag/v1.1.2[git tag] |
+{uri-repo}/compare/v1.1.1...v1.1.2[full diff]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+Guillaume Grossetie, Tobias Placht, Olivier Bilodeau
+
+
+== 1.1.1 (2018-01-03)
+
+An emergency bugfix release due to a problem in the Ruby Gem package
+
+Enhancements::
+  * Documentation improvements ({uri-issue}163[#163], {uri-issue}165[#165], {uri-issue}169[#169], {uri-issue}173[#173], {uri-issue}175[#175])
+
+Compliance::
+  * Code listing callouts now work properly ({uri-issue}22[#22], {uri-issue}166[#166], {uri-issue}167[#167])
+  * More source code listing examples and tests ({uri-issue}163[#163], {uri-issue}170[#170])
+
+Bug fixes::
+  * The version 1.1.0 Ruby Gem was broken due to a packaging error ({uri-issue}172[#172])
+
+=== Release meta
+
+* Released on: 2018-01-03
+* Released by: Olivier Bilodeau
+* Release beer: Croque-Mort Double IPA, À la fût
+
+{uri-repo}/releases/tag/v1.1.1[git tag] |
+{uri-repo}/compare/v1.1.0...v1.1.1[full diff] |
+{uri-repo}/milestone/5[milestone]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+Dietrich Schulten, Olivier Bilodeau
+
+
+== 1.1.0 (2017-12-25) - @obilodeau
+
+Enhancements::
+  * Support for Reveal.JS 3.5.0+ ({uri-issue}146[#146], {uri-issue}151[#151])
+  * Support for Asciidoctor 1.5.6 ({uri-issue}132[#132], {uri-issue}136[#136], {uri-issue}142[#142])
+  * Support for Asciidoctor.js 1.5.6-preview.4 ({uri-issue}130[#130], {uri-issue}143[#143], {uri-issue}156[#156])
+  * Compiling slim templates to Ruby allows us to drop Jade templates for Asciidoctor.js users
+    ({uri-issue}63[#63], {uri-issue}131[#131])
+  * Documentation polish ({uri-issue}153[#153], {uri-issue}158[#158] and more)
+
+Compliance::
+  * Users of Asciidoctor (Ruby) and Asciidoctor.js (Javascript) now run the same set of templates meaning that we achieved feature parity between the two implementations
+    ({uri-issue}63[#63], {uri-issue}131[#131])
+
+Bug fixes::
+  * Reveal.js https://github.com/hakimel/reveal.js/#configuration[history feature] now works.
+    We are working around Reveal.js' section id character limits.
+    ({uri-issue}127[#127], {uri-issue}150[#150], https://github.com/hakimel/reveal.js/issues/1346[hakimel/reveal.js#1346])
+
+Infrastructure::
+  * https://github.com/asciidoctor/asciidoctor-doctest[Asciidoctor-doctest] integration.
+    This layer of automated testing should help prevent regressions and improve our development process.
+    ({uri-issue}92[#92], {uri-issue}116[#116])
+  * Travis-CI integration to automatically run doctests and examples AsciiDoc conversions
+  * Travis-CI tests are triggered by changes done in Asciidoctor.
+    We will detect upstream changes affecting us sooner.
+  * Smoke tests for our Javascript / Node / Asciidoctor.js toolchain (integrated in Travis-CI also)
+  * `npm run examples` will convert all examples using the Javascript / Node / Asciidoctor.js toolchain ({uri-issue}149[#149])
+  * `rake examples:serve` will run a Web server from `examples/` so you can preview rendered examples ({uri-issue}154[#154])
+
+=== Release meta
+
+{uri-repo}/releases/tag/v1.1.0[git tag] |
+{uri-repo}/compare/v1.0.4...v1.1.0[full diff]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+@jirutka, Dan Allen, Guillaume Grossetie, Jacob Aae Mikkelsen, Olivier Bilodeau, Rahul Somasunderam
+
+
+== 1.0.4 (2017-09-27) - @obilodeau
+
+Bug fixes::
+  * Dependency problems leading to crashes when used from Asciidoctor.js ({uri-issue}145[#145])
+
+=== Release meta
+
+{uri-repo}/releases/tag/v1.0.4[git tag] |
+{uri-repo}/compare/v1.0.3...v1.0.4[full diff]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+Olivier Bilodeau, Guillaume Grossetie
 
 
 == 1.0.3 (2017-08-28) - @obilodeau

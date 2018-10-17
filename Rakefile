@@ -1,27 +1,98 @@
+#!/usr/bin/env rake
+
 require 'asciidoctor'
 require 'asciidoctor/doctest'
 require 'colorize'
 require 'thread_safe'
 require 'tilt'
 
+CONVERTER_FILE = 'lib/asciidoctor-revealjs/converter.rb'
+TEMPLATES_DIR = 'templates'
+
+file CONVERTER_FILE => FileList["#{TEMPLATES_DIR}/*"] do
+  build_converter :fast
+end
+
+namespace :build do
+  desc 'Compile Slim templates and generate converter.rb'
+  task :converter => 'clean' do
+    # NOTE: using mode :fast by default due to a bug in ruby-beautify under Ruby 2.5
+    #       https://github.com/erniebrodeur/ruby-beautify/issues/45
+    build_converter :fast
+  end
+
+  desc 'Compile Slim templates and generate converter.rb for Opal'
+  task 'converter:opal' => 'clean' do
+    build_converter :opal
+  end
+end
+
+task :build => 'build:converter'
+
+task :clean do
+  rm_rf CONVERTER_FILE
+end
+
+def build_converter(mode = :pretty)
+  #require 'asciidoctor-templates-compiler'
+  require_relative 'lib/asciidoctor-templates-compiler'
+  require 'slim-htag'
+
+  generator = if mode == :opal
+    Temple::Generators::ArrayBuffer.new(freeze_static: false)
+  else
+    Temple::Generators::StringBuffer
+  end
+
+  File.open(CONVERTER_FILE, 'w') do |file|
+    puts "Generating #{file.path} (mode: #{mode})."
+
+    Asciidoctor::TemplatesCompiler::RevealjsSlim.compile_converter(
+      templates_dir: TEMPLATES_DIR,
+      class_name: 'Asciidoctor::Revealjs::Converter',
+      register_for: ['revealjs'],
+      backend_info: {
+        basebackend: 'html',
+        outfilesuffix: '.html',
+        filetype: 'html',
+      },
+      delegate_backend: 'html5',
+      engine_opts: {
+        generator: generator,
+      },
+      pretty: (mode == :pretty),
+      output: file
+    )
+  end
+end
+
 DocTest::RakeTasks.new do |t|
-  t.output_examples :html, path: 'test/output/slim'
+  t.output_examples :html, path: 'test/doctest'
   t.input_examples :asciidoc, path: [ *DocTest.examples_path, 'examples' ]
   t.converter = DocTest::HTML::Converter
-  t.converter_opts = { template_dirs: 'templates/slim' }
+  t.converter_opts = { backend_name: 'revealjs' }
+end
+
+task 'prepare-converter' do
+  # Run as an external process to ensure that it will not affect tests
+  # environment with extra loaded modules (especially slim).
+  `bundle exec rake #{CONVERTER_FILE}`
+
+  require_relative 'lib/asciidoctor-revealjs'
 end
 
 namespace :examples do
   desc 'Converts all the test slides into fully working examples that you can look in a browser'
   # converted slides will be put in examples/ directory
   task :convert do
+    require 'slim-htag'
     Dir.glob('examples/*.adoc') do |_file|
       print "Converting file #{_file}... "
       out = Asciidoctor.convert_file _file,
         :safe => 'safe',
         :backend => 'revealjs',
         :base_dir => 'examples',
-        :template_dir => 'templates/slim'
+        :template_dir => 'templates'
       if out.instance_of? Asciidoctor::Document
         puts "✔️".green
       else
@@ -29,7 +100,17 @@ namespace :examples do
       end
     end
   end
+
+  task :serve do
+    puts "View rendered examples at: http://127.0.0.1:5000/"
+    puts "Exit with Ctrl-C"
+    Dir.chdir('examples') do
+      `ruby -run -e httpd . -p 5000 -b 127.0.0.1`
+    end
+  end
 end
 
+task 'doctest:test' => 'prepare-converter'
+task 'doctest:generate' => 'prepare-converter'
 # When no task specified, run test.
 task :default => :doctest
