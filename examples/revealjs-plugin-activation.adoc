@@ -1,0 +1,16 @@
+// .revealjs-plugin-activation
+// Use of the revealjs_plugin_... attributes to enable and disable some revealjs plugins
+// :include: //body/script | //div[@class="slides"]
+// :header_footer:
+= Default Plugins Changes
+Author
+:revealjs_plugins_pdf: enabled
+:revealjs_plugins_marked: disabled
+
+== Slide 1
+
+Content 1
+
+== Slide 2
+
+Content 2
