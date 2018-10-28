@@ -737,6 +737,40 @@ look at the
 theme documentation] and use the `revealjs_customtheme` AsciiDoc attribute to
 activate it.
 
+=== Default plugins
+
+By default, generated presentations will have the following reveal.js plugins enabled:
+
+* plugin/markdown/marked.js
+* plugin/markdown/markdown.js
+* plugin/zoom-js/zoom.js
+* plugin/notes/notes.js
+
+All these plugins are part of the reveal.js distribution.
+
+To enable or disable a built-in plugin, it is possible to set the `revealjs_plugin_[plugin name]` attribute to `enable` or `disable`.
+
+For example, to disable all the default plugins set the following document attributes:
+
+----
+:revealjs_plugin_marked: disabled
+:revealjs_plugin_markdown: disabled
+:revealjs_plugin_zoom: disabled
+:revealjs_plugin_notes: disabled
+----
+
+reveal.js ships with a plugin that allows to create a PDF from a slide deck.
+To enable this plugin, set the `revealjs_plugin_pdf` attribute.
+
+----
+:revealjs_plugin_pdf: enabled
+----
+
+When the plugin is enabled and you run your presentation in a browser with `?print-pdf` at the end of the URL, you can then use the default print function to print the slide deck into a PDF document.
+
+TIP: To work properly, this plugin requires a Chrome-based browser.
+
+
 === Additional plugins
 
 Additional reveal.js plugins can be installed and activated using AsciiDoc attributes and external javascript files.
