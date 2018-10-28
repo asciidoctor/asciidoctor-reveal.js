@@ -741,8 +741,6 @@ activate it.
 
 By default, generated presentations will have the following reveal.js plugins enabled:
 
-* plugin/markdown/marked.js
-* plugin/markdown/markdown.js
 * plugin/zoom-js/zoom.js
 * plugin/notes/notes.js
 
@@ -753,8 +751,6 @@ To enable or disable a built-in plugin, it is possible to set the `revealjs_plug
 For example, to disable all the default plugins set the following document attributes:
 
 ----
-:revealjs_plugin_marked: disabled
-:revealjs_plugin_markdown: disabled
 :revealjs_plugin_zoom: disabled
 :revealjs_plugin_notes: disabled
 ----
