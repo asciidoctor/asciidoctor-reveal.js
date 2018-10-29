@@ -678,6 +678,10 @@ https://cdnjs.com/libraries/reveal.js/3.6.0[https://cdnjs.cloudflare.com/ajax/li
 |*true*, false
 |Turns fragments on and off globally.
 
+|:revealjs_fragmentInURL:
+|true, *false*
+|Flags whether to include the current fragment in the URL, so that reloading brings you to the same fragment position
+
 |:revealjs_embedded:
 |true, *false*
 |Flags if the presentation is running in an embedded mode (i.e., contained within a limited portion of the screen).

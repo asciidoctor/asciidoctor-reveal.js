@@ -1,0 +1,23 @@
+// .revealjs-features
+// This example tests some of Reveal.js 3.7.0 features
+// :include: //body/script | //div[@class="slides"]
+// :header_footer:
+= Reveal.JS
+:revealjs_history: true
+:revealjs_fragmentInURL: true
+
+== Slide One
+
+Some content
+
+=== And
+
+With Reveal.JS 3.6
+
+=== Fragments
+
+Can now be displayed in URLs
+
+== Second slide
+
+Done
