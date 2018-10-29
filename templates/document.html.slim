@@ -19,6 +19,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       link rel='stylesheet' href=(attr :revealjs_customtheme) id='theme'
     - else
       link rel='stylesheet' href='#{revealjsdir}/css/theme/#{attr 'revealjs_theme', 'black'}.css' id='theme'
+    include asciidoctor_revealjs.css.slim
     - if attr? :icons, 'font'
       - if attr? 'iconfont-remote'
         link rel='stylesheet' href=(attr 'iconfont-cdn', %(#{cdn_base}/font-awesome/4.3.0/css/font-awesome.min.css))
