@@ -31,6 +31,8 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_runtime_dependency 'asciidoctor', ['>= 1.5.6', '< 2.1']
+  s.add_runtime_dependency 'thread_safe', '~> 0.3.5'
+  s.add_runtime_dependency 'concurrent-ruby', '~> 1.0'
 
   s.add_development_dependency 'rake', '~> 10.4.2'
   s.add_development_dependency 'asciidoctor-doctest', '= 2.0.0.beta.4'
