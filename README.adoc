@@ -495,7 +495,7 @@ Or
 See https://asciidoctor.org/docs/user-manual/#role[Asciidoctor's documentation] for more details.
 
 .Image specific note
-In addition to the https://asciidoctor.org/docs/user-manual/#positioning-attributes[existing attributes] to position images, roles can be used as well. However, the shorthand syntax (.) doesn't work in the image macro arguments but must be used above with the angle bracket syntax.
+In addition to the https://asciidoctor.org/docs/user-manual/\#positioning-attributes[existing attributes] to position images, roles can be used as well. However, the shorthand syntax (.) doesn't work in the image macro arguments but must be used above with the angle bracket syntax.
 See <<examples/images.adoc#,images.adoc>> for examples.
 
 Here is a list of supported roles:
