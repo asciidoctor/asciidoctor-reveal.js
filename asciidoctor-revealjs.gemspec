@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.summary = 'Converts AsciiDoc to HTML for a Reveal.js presentation'
   s.description = 'Reveal.JS back-end for Asciidoctor and Asciidoctor.js. Write slides in AsciiDoc!'
   s.license = 'MIT'
-  s.required_ruby_version = '>= 1.9.3'
+  s.required_ruby_version = '>= 2.3.8'
 
   files = begin
     if (result = Open3.popen3('git ls-files -z') {|_, out| out.read }.split %(\0)).empty?
@@ -30,8 +30,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = Dir['README.adoc', 'LICENSE.adoc', 'HACKING.adoc']
   s.require_paths = ['lib']
 
-  s.add_runtime_dependency 'asciidoctor', '~> 1.5.6'
-  s.add_runtime_dependency 'thread_safe', '~> 0.3.5'
+  s.add_runtime_dependency 'asciidoctor', ['>= 1.5.6', '< 2.1']
 
   s.add_development_dependency 'rake', '~> 10.4.2'
   s.add_development_dependency 'asciidoctor-doctest', '= 2.0.0.beta.4'
