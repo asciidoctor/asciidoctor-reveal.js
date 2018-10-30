@@ -15,9 +15,9 @@ Upgrade considerations::
 
 Enhancements::
   * Easier speaker notes: a `.notes` role that apply to many AsciiDoc blocks (open, sidebar and admonition) ({uri-issue}202[#202])
-  * Added a role `right` that would apply a `float: right` to any block where it would be assigned ({uri-issue}197[#197], {uri-issue}213[#213])
+  * Added a role `right` that would apply a `float: right` to any block where it would be assigned ({uri-issue}197[#197], {uri-issue}213[#213], {uri-issue}215[#215])
   * Reveal.js's fragmentInURL option now supported ({uri-issue}206[#206], {uri-issue}214[#214])
-  * Documentation improvements ({uri-issue}141[#141], {uri-issue}182[#182], {uri-issue}190[#190], {uri-issue}203[#203])
+  * Documentation improvements ({uri-issue}141[#141], {uri-issue}182[#182], {uri-issue}190[#190], {uri-issue}203[#203], {uri-issue}215[#215])
   * Support for Asciidoctor.js 1.5.6-rc.1 and build simplification ({uri-issue}189[#189])
   * Support to specify and use reveal.js plugins without modifying {project-name}'s source code ({uri-issue}196[#196], {uri-issue}118[#118], {uri-issue}201[#201], {uri-issue}204[#204])
 
