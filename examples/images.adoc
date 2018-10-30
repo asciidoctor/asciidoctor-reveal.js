@@ -17,3 +17,16 @@ image::web_surfing_time.gif[]
 == Hardcoded
 
 image::web_surfing_time.gif[width="1200"]
+
+== Image Role Right
+
+// This is asciidoctor-revealjs specific, it allows you to put an image on the right even though it is not part of the same block
+// It uses custom CSS, see #197.
+
+image::web_surfing_time.gif[role=right,width=400px]
+
+* Some
+* Points
+* You
+* Won't
+* Look At
