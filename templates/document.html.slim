@@ -138,6 +138,9 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         shuffle: #{to_boolean(attr 'revealjs_shuffle', false)},
         // Turns fragments on and off globally
         fragments: #{to_boolean(attr 'revealjs_fragments', true)},
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: #{to_boolean(attr 'revealjs_fragmentInURL', false)},
         // Flags if the presentation is running in an embedded mode,
         // i.e. contained within a limited portion of the screen
         embedded: #{to_boolean(attr 'revealjs_embedded', false)},
