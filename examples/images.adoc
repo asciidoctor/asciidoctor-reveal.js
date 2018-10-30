@@ -18,6 +18,16 @@ image::web_surfing_time.gif[]
 
 image::web_surfing_time.gif[width="1200"]
 
+== Image Floating
+
+image::web_surfing_time.gif[width=400px,float=right]
+
+* Some
+* Points
+* You
+* Won't
+* Look At
+
 == Image Role Right
 
 // This is asciidoctor-revealjs specific, it allows you to put an image on the right even though it is not part of the same block
@@ -30,3 +40,12 @@ image::web_surfing_time.gif[role=right,width=400px]
 * You
 * Won't
 * Look At
+
+== Image Role Right [alt syntax]
+
+[.right]
+image::web_surfing_time.gif[alt text,width=400px]
+
+* Yup
+* That
+* Too
