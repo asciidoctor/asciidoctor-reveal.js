@@ -43,4 +43,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'asciidoctor-templates-compiler', '~> 0.3.0'
   s.add_development_dependency 'slim', '~> 3.0.6'
   s.add_development_dependency 'slim-htag', '~> 0.1.0'
+  s.add_development_dependency 'opal', '~> 0.11.1'
 end

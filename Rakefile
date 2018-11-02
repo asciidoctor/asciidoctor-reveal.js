@@ -7,6 +7,7 @@ require 'thread_safe'
 require 'tilt'
 
 CONVERTER_FILE = 'lib/asciidoctor-revealjs/converter.rb'
+JS_FILE = 'build/asciidoctor-reveal.js'
 TEMPLATES_DIR = 'templates'
 
 file CONVERTER_FILE => FileList["#{TEMPLATES_DIR}/*"] do
@@ -24,6 +25,24 @@ namespace :build do
   desc 'Compile Slim templates and generate converter.rb for Opal'
   task 'converter:opal' => 'clean' do
     build_converter :opal
+  end
+
+  desc "Transcompile to JavaScript and generate #{JS_FILE}"
+  task :js => 'converter:opal' do
+    require 'opal'
+
+    builder = Opal::Builder.new(compiler_options: {
+      dynamic_require_severity: :error,
+    })
+    builder.append_paths 'lib'
+    builder.build 'asciidoctor-revealjs'
+
+    mkdir_p File.dirname(JS_FILE)
+    File.open(JS_FILE, 'w') do |file|
+      template = File.read('src/asciidoctor-revealjs.tmpl.js')
+      file << template.sub('//OPAL-GENERATED-CODE//', builder.to_s)
+    end
+    File.binwrite "#{JS_FILE}.map", builder.source_map
   end
 end
 
