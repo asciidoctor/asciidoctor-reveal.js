@@ -1,0 +1,22 @@
+= Asciidoctor Reveal.js integration with Babel
+
+== Usage
+
+Install the dependencies:
+
+ $ npm install
+
+Test the project:
+
+ $ npm test
+
+[IMPORTANT]
+====
+An exception will be thrown at runtime:
+
+```
+Converter: uninitialized constant Asciidoctor::Converter
+```
+
+For more details, see https://github.com/asciidoctor/asciidoctor-reveal.js/issues/205.
+====

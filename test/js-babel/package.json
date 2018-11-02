@@ -1,0 +1,27 @@
+{
+  "name": "asciidoctor-reveal.js-integration-babel",
+  "version": "1.0.0",
+  "description": "Asciidoctor Reveal.js converter integration with Babel",
+  "main": "index.js",
+  "scripts": {
+    "test": "babel --presets env main.js -o dist/main.js && node dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mogztter/asciidoctor-reveal.js-integration-babel.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mogztter/asciidoctor-reveal.js-integration-babel/issues"
+  },
+  "homepage": "https://github.com/Mogztter/asciidoctor-reveal.js-integration-babel#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  },
+  "dependencies": {
+    "asciidoctor-reveal.js": "file:../../asciidoctor-reveal.js-1.1.4-dev.tgz"
+  }
+}
