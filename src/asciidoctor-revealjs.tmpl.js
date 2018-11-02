@@ -9,7 +9,7 @@
     if (!mainModule) {
       checkAsciidoctor()
       initialize(Opal)
-      mainModule = Opal.const_get_qualified(Opal.Asciidoctor, 'Revealjs') // FIXME: was Html5s
+      mainModule = Opal.const_get_qualified(Opal.Asciidoctor, 'revealjs') // FIXME: was Html5s
     }
     if (!name) {
       return mainModule
@@ -21,17 +21,6 @@
     if (typeof Opal.Asciidoctor === 'undefined') {
       throw new TypeError('Asciidoctor.js is not loaded')
     }
-  }
-
-  // FIXME I can probably get rid of this
-  /**
-   * @return A new instance of `Asciidoctor::Html5s::AttachedColistTreeprocessor`.
-   */
-  function AttachedColistTreeprocessor () {
-    var processor =  resolveModule('AttachedColistTreeprocessor').$new()
-    processor.process = processor.$process
-
-    return processor
   }
 
   /**
@@ -68,6 +57,7 @@
       checkAsciidoctor()
       registry = Opal.Asciidoctor.Extensions
     }
+    /*
     var processor = AttachedColistTreeprocessor()
 
     // global registry
@@ -81,10 +71,10 @@
     } else {
       throw new TypeError('Invalid registry object')
     }
+    */
   }
 
   var facade = {
-    AttachedColistTreeprocessor: AttachedColistTreeprocessor,
     Converter: Converter,
     getVersion: getVersion,
     register: register,

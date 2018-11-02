@@ -1,7 +1,11 @@
 const asciidoctor = require('asciidoctor.js')();
-require('../dist/main.js');
+const asciidoctorRevealJs = require('../dist/main.js');
+//require('../dist/main.js');
 
 const expect = require('expect.js');
+
+// Register the RevealJs converter
+asciidoctorRevealJs.register()
 
 const attributes = {'revealjsdir': 'node_modules/reveal.js@'};
 const options = {safe: 'safe', backend: 'revealjs', attributes: attributes, 'header_footer': true};
