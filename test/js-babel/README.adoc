@@ -6,6 +6,13 @@ Install the dependencies:
 
  $ npm install
 
+Optional: To install a development version of Asciidoctor-reveal.js (1.1.4 for example):
+
+1. Build npm package (see instructions in `HACKING.adoc` to do so)
+2. Install devel npm package with:
++
+ $ npm i --save ../../asciidoctor-reveal.js-1.1.4-dev.tgz
+
 Test the project:
 
  $ npm test
