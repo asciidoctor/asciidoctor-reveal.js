@@ -19,7 +19,9 @@ const content = `= Title Slide
 
 const result = asciidoctor.convert(content, options)
 
-expect(asciidoctorRevealjs.getVersion()).to.be('1.1.4-dev')
 expect(result).to.contain('<script src="node_modules/reveal.js/js/reveal.js">')
 expect(result).to.contain('<li><p>Foo</p></li>')
 
+// verify version info
+var package_info = require('../package.json')
+expect(asciidoctorRevealjs.getVersion()).to.be(package_info.version)
