@@ -8,6 +8,7 @@ require 'tilt'
 
 CONVERTER_FILE = 'lib/asciidoctor-revealjs/converter.rb'
 JS_FILE = 'build/asciidoctor-reveal.js'
+DIST_FILE = 'dist/main.js'
 TEMPLATES_DIR = 'templates'
 
 file CONVERTER_FILE => FileList["#{TEMPLATES_DIR}/*"] do
@@ -43,6 +44,8 @@ namespace :build do
       file << template.sub('//OPAL-GENERATED-CODE//', builder.to_s)
     end
     File.binwrite "#{JS_FILE}.map", builder.source_map
+
+    cp JS_FILE, DIST_FILE, :verbose => true
   end
 end
 
