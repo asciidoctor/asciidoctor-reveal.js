@@ -147,7 +147,8 @@ Here we are converting a file named `presentation.adoc` into a reveal.js present
 ----
 // Load asciidoctor.js and asciidoctor-reveal.js
 var asciidoctor = require('asciidoctor.js')();
-require('asciidoctor-reveal.js');
+var asciidoctorRevealjs = require('asciidoctor-reveal.js');
+asciidoctorRevealjs.register()
 
 // Convert the document 'presentation.adoc' using the reveal.js converter
 var attributes = {'revealjsdir': 'node_modules/reveal.js@'};
