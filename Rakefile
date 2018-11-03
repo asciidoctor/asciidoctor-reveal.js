@@ -38,7 +38,7 @@ namespace :build do
     builder.append_paths 'lib'
     builder.build 'asciidoctor-revealjs'
 
-    mkdir_p File.dirname(JS_FILE)
+    mkdir_p [File.dirname(JS_FILE), File.dirname(DIST_FILE)]
     File.open(JS_FILE, 'w') do |file|
       template = File.read('src/asciidoctor-revealjs.tmpl.js')
       file << template.sub('//OPAL-GENERATED-CODE//', builder.to_s)
