@@ -3,3 +3,5 @@
 source 'https://rubygems.org'
 gemspec
 gem 'asciidoctor', :git => 'https://github.com/asciidoctor/asciidoctor', :branch => 'master'
+# TODO: remove once asciidoctor-doctest > v2.0.0-beta4 is shipped
+gem 'asciidoctor-doctest', :git => 'https://github.com/asciidoctor/asciidoctor-doctest', :branch => 'master'
