@@ -1,0 +1,30 @@
+= Asciidoctor Reveal.js integration with Babel
+
+This little frame was built to demonstrate a problem when trying to integrate Asciidoctor-reveal.js in a modern javascript project like Reactjs.
+
+You can look at `main.js` to know how to integrate asciidoctor-revealjs into such a framework and we can test from time to time to see if it still works.
+
+
+== Usage
+
+Install the dependencies:
+
+ $ npm install
+
+Optional: To install a development version of Asciidoctor-reveal.js (1.1.4 for example):
+
+1. Build npm package (see instructions in `HACKING.adoc` to do so)
+2. Install devel npm package with:
++
+ $ npm i --save ../../asciidoctor-reveal.js-1.1.4-dev.tgz
+
+Test the project:
+
+ $ npm test
+
+You should obtain HTML looking output on the console that looks like a reveal.js presentation.
+
+== References
+
+* https://github.com/asciidoctor/asciidoctor-reveal.js/issues/205
+* https://github.com/asciidoctor/asciidoctor-reveal.js/issues/219

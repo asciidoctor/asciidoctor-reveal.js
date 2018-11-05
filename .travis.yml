@@ -23,8 +23,7 @@ script:
 - bundle exec rake doctest
 - bundle exec rake examples:convert
 - npm install
-- bundle exec rake build:converter:opal
-- npm run build
+- bundle exec rake build:js
 - npm run examples
 - npm test
 
