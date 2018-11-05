@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.summary = 'Converts AsciiDoc to HTML for a Reveal.js presentation'
   s.description = 'Reveal.JS back-end for Asciidoctor and Asciidoctor.js. Write slides in AsciiDoc!'
   s.license = 'MIT'
-  s.required_ruby_version = '>= 2.3.8'
+  s.required_ruby_version = '>= 2.3.0'
 
   files = begin
     if (result = Open3.popen3('git ls-files -z') {|_, out| out.read }.split %(\0)).empty?
