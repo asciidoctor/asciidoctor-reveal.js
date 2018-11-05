@@ -7,8 +7,8 @@ const asciidoctor = Asciidoctor()
 //import 'asciidoctor-reveal.js'
 
 // NOW SUPPORTED
-import AsciidoctorRevealJs from 'asciidoctor-reveal.js'
-AsciidoctorRevealJs.register()
+import AsciidoctorRevealjs from 'asciidoctor-reveal.js'
+AsciidoctorRevealjs.register()
 
 const attributes = { revealjsdir: 'node_modules/reveal.js@' }
 const options = {
