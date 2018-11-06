@@ -3,7 +3,6 @@
 require 'asciidoctor'
 require 'asciidoctor/doctest'
 require 'colorize'
-require 'thread_safe'
 require 'tilt'
 
 CONVERTER_FILE = 'lib/asciidoctor-revealjs/converter.rb'

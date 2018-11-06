@@ -3,3 +3,8 @@
 source 'https://rubygems.org'
 gemspec
 gem 'asciidoctor', :git => 'https://github.com/asciidoctor/asciidoctor', :branch => 'master'
+# TODO: remove once asciidoctor-doctest > v2.0.0-beta4 is shipped
+gem 'asciidoctor-doctest', :git => 'https://github.com/asciidoctor/asciidoctor-doctest', :branch => 'master'
+# TODO: remove once this PR is merged https://github.com/jirutka/asciidoctor-templates-compiler/pull/4
+#       and asciidoctor-templates-compiler > v0.4.1 is shipped
+gem 'asciidoctor-templates-compiler', :git => 'https://github.com/obilodeau/asciidoctor-templates-compiler', :branch => 'patch-1'
