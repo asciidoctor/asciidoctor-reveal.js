@@ -26,12 +26,15 @@ Enhancements::
   * Easier speaker notes: a `.notes` role that apply to many AsciiDoc blocks (open, sidebar and admonition) ({uri-issue}202[#202])
   * Added a role `right` that would apply a `float: right` to any block where it would be assigned ({uri-issue}197[#197], {uri-issue}213[#213], {uri-issue}215[#215])
   * Reveal.js's fragmentInURL option now supported ({uri-issue}206[#206], {uri-issue}214[#214])
-  * Documentation improvements ({uri-issue}141[#141], {uri-issue}182[#182], {uri-issue}190[#190], {uri-issue}203[#203], {uri-issue}215[#215])
+  * Documentation improvements ({uri-issue}141[#141], {uri-issue}182[#182], {uri-issue}190[#190], {uri-issue}203[#203], {uri-issue}215[#215], {uri-issue}216[#216])
   * Support for Asciidoctor.js 1.5.6 and build simplification ({uri-issue}189[#189], {uri-issue}217[#217])
   * Support to specify and use reveal.js plugins without modifying {project-name}'s source code ({uri-issue}196[#196], {uri-issue}118[#118], {uri-issue}201[#201], {uri-issue}204[#204])
   * Node / Javascript back-end is now loaded on-demand with the `register()` method.
     This allows embedding {project-name} into React or any other modern Javascript environment.
     ({uri-issue}205[#205], {uri-issue}218[#218], {uri-issue}219[#219])
+
+Infrastructure::
+  * Travis testing prepared for upcoming Asciidoctor 2.0 ({uri-issue}216[#216])
 
 
 == 1.1.3 (2018-01-31)
