@@ -253,6 +253,35 @@ IMPORTANT: Like the first page of an AsciiDoc document, the first slide is handl
 
 === Background colors
 
+Background colors for slides can be specified by two means: a classic one and one using AsciiDoc roles.
+See <<examples/background-color.adoc#,background-color.adoc>> for more examples.
+
+==== Using AsciiDoc Roles
+
+Using roles respects the AsciiDoc philosophy of separation of content and presentation.
+Colors are to be defined by CSS and the <<customcss,`:customcss:` attribute>> need to be used to specify the CSS file to load.
+
+[source, asciidoc]
+----
+= Title
+:customcss: my-css.css
+
+[.red]
+== Slide One
+
+Is very red
+----
+
+.my-css.css
+[source, css]
+----
+section.red {
+  background-color: red;
+}
+----
+
+==== Classic
+
 [source, asciidoc]
 ----
 [background-color="yellow"]
@@ -570,6 +599,7 @@ Detailed view diagram
 ----
 
 
+[[customcss]]
 === CSS override
 
 If you use the `:customcss:` document attribute, a CSS file of the name given in the attribute is added to the list of CSS resources loaded by the rendered HTML.
