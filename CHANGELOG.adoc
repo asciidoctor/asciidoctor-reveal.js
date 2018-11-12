@@ -25,6 +25,7 @@ This change enables new use cases like embedding a presentation in a React web a
 Enhancements::
   * Easier speaker notes: a `.notes` role that apply to many AsciiDoc blocks (open, sidebar and admonition) ({uri-issue}202[#202])
   * Added a role `right` that would apply a `float: right` to any block where it would be assigned ({uri-issue}197[#197], {uri-issue}213[#213], {uri-issue}215[#215])
+  * Allow the background color of slides to be set using CSS ({uri-issue}16[#16], {uri-issue}220[#220])
   * Reveal.js's fragmentInURL option now supported ({uri-issue}206[#206], {uri-issue}214[#214])
   * Documentation improvements ({uri-issue}141[#141], {uri-issue}182[#182], {uri-issue}190[#190], {uri-issue}203[#203], {uri-issue}215[#215], {uri-issue}216[#216])
   * Support for Asciidoctor.js 1.5.6 and build simplification ({uri-issue}189[#189], {uri-issue}217[#217])

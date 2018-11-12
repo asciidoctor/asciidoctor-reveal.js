@@ -1,0 +1,18 @@
+section.red {
+  background-color: red;
+}
+
+section.green {
+  background-color: green;
+}
+
+section.blue {
+  background-color: blue;
+}
+
+/* font example */
+@import 'https://fonts.googleapis.com/css?family=Baloo+Bhai';
+section.topic h2,
+section.topic div p {
+    font-family: 'Baloo Bhai', cursive;
+}

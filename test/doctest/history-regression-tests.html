@@ -33,6 +33,15 @@
   </section>
 </div>
 <script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>
+  Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
+    if (slide.getAttribute('data-background-color')) return;
+    var bgColor = getComputedStyle(slide).backgroundColor;
+    if (bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
+      slide.setAttribute('data-background-color', bgColor);
+      slide.style.backgroundColor = 'transparent';
+    }
+  })
+  
   // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
   Reveal.initialize({
     // Display controls in the bottom right corner

@@ -1,0 +1,36 @@
+// .revealjs-background-color
+// Demonstration of background color features of both reveal.js and what can be done with CSS.
+// :include: //div[@class="slides"]
+// :header_footer:
+= Colorful Presentation
+:backend: revealjs
+:customcss: background-color.css
+:topic: state=title
+
+// classic
+[background-color="yellow"]
+== Hello
+
+// New: with roles backed by CSS (see background-color.css)
+[.red]
+== Here
+
+[.green]
+== We
+
+[.blue]
+== Go
+
+// role that alter style but not slide color
+[.topic]
+== Default color
+
+but fancy font
+
+// style role *and* color role (using shorthand markup)
+// could also be written in long form like this:
+// [role="topic red"]
+[.topic.red]
+== fancy font
+
+and color!
