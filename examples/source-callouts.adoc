@@ -8,7 +8,6 @@
 
 == Callout
 
-// FIXME Callout with `:icons: font` not styled as a numbered ball (#168)
 [source, rust]
 ----
 fn main() {
