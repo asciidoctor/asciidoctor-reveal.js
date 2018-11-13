@@ -16,3 +16,14 @@ fn main() {
 }
 ----
 <1> `println!` is a macro.
+
+== Stretched Callout
+
+[source, rust, role=stretch]
+----
+fn main() { // <1>
+    println!("Hello World!"); // <2>
+}
+----
+<1> `fn` for function
+<2> `println!` is a macro.

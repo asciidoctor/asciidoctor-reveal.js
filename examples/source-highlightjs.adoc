@@ -14,3 +14,12 @@ fn main() {
     println!("Hello World!");
 }
 ----
+
+== Stretch the Source
+
+[source, rust, role="stretch"]
+----
+fn main() {
+    println!("Hello stretched World!");
+}
+----
