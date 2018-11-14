@@ -4,6 +4,21 @@
 
 Short instructions that aim to help potential contributors.
 
+== Getting Started
+
+* Setup the Asciidoctor-revealjs plugin in <<ruby-localversion,development mode>>
+* Modify the http://slim-lang.com/[slim templates] in `templates/`
+* Templates need to be compiled before being used, do so with:
+
+    bundle exec rake build
+
+* Then using the following command will render slides with your template changes baked in:
+
+    bundle exec asciidoctor-revealjs <source.adoc>
+
+The next section will provide further help on how to use `print` statements or a debugger to assist development.
+
+
 == Inspect the template system
 
 To understand what you have access to in templates you can inject some ruby.
@@ -239,6 +254,7 @@ Versions known to work together can be found by looking at the Asciidoctor.js re
 
 == RubyGem package
 
+[[ruby-localversion]]
 === Test a local asciidoctor-revealjs version
 
 Compile the converter:
