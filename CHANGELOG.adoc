@@ -18,6 +18,9 @@ Upgrade considerations::
 +
 This change enables new use cases like embedding a presentation in a React web app.
 
+  * Custom CSS might require adjustments.
+    Source and listing block are less deeply nested into `div` blocks now.
+    See {uri-issue}195[#195] and {uri-issue}223[#223].
   * The reveal.js `marked` and `markdown` plugins are disabled by default now.
     It is unlikely that they could have been used anyway.
     See {uri-issue}204[#204].
@@ -33,6 +36,9 @@ Enhancements::
   * Node / Javascript back-end is now loaded on-demand with the `register()` method.
     This allows embedding {project-name} into React or any other modern Javascript environment.
     ({uri-issue}205[#205], {uri-issue}218[#218], {uri-issue}219[#219])
+
+Bug Fixes::
+  * Reveal.js' `stretch` class now works with listing blocks ({uri-issue}195[#195], {uri-issue}223[#223])
 
 Infrastructure::
   * Travis testing prepared for upcoming Asciidoctor 2.0 ({uri-issue}216[#216])
