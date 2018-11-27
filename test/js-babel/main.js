@@ -10,11 +10,9 @@ const asciidoctor = Asciidoctor()
 import AsciidoctorRevealjs from 'asciidoctor-reveal.js'
 AsciidoctorRevealjs.register()
 
-const attributes = { revealjsdir: 'node_modules/reveal.js@' }
 const options = {
   safe: 'safe',
   backend: 'revealjs',
-  attributes: attributes,
   header_footer: true
 }
 

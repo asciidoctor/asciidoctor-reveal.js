@@ -2,7 +2,10 @@ doctype 5
 html lang=(attr :lang, 'en' unless attr? :nolang)
   head
     meta charset="utf-8"
-    - revealjsdir = (attr :revealjsdir, 'reveal.js')
+    - if RUBY_ENGINE == 'opal' && JAVASCRIPT_PLATFORM == 'node'
+      - revealjsdir = (attr :revealjsdir, 'node_modules/reveal.js')
+    - else
+      - revealjsdir = (attr :revealjsdir, 'reveal.js')
     - unless (asset_uri_scheme = (attr 'asset-uri-scheme', 'https')).empty?
       - asset_uri_scheme = %(#{asset_uri_scheme}:)
     - cdn_base = %(#{asset_uri_scheme}//cdnjs.cloudflare.com/ajax/libs)
