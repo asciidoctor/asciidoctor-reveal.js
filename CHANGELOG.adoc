@@ -36,6 +36,7 @@ Enhancements::
   * Node / Javascript back-end is now loaded on-demand with the `register()` method.
     This allows embedding {project-name} into React or any other modern Javascript environment.
     ({uri-issue}205[#205], {uri-issue}218[#218], {uri-issue}219[#219])
+  * `revealjsdir` attribute is set to a more sensible default when running under Node.js ({uri-issue}191[#191], {uri-issue}228[#228])
 
 Compliance::
   * AsciiDoc source callout icons now work ({uri-issue}54[#54], {uri-issue}168[#168], {uri-issue}224[#224])
