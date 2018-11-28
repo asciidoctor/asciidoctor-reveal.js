@@ -694,7 +694,7 @@ Default is built-in [path]_lib/css/zenburn.css_.
 |Overrides reveal.js directory.
 Example: ../reveal.js or
 https://cdnjs.com/libraries/reveal.js/3.6.0[https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0].
-Default is `reveal.js/` unless in a Nodejs environment where it is `node_modules/reveal.js/`.
+Default is `reveal.js/` unless in a Node.js environment where it is `node_modules/reveal.js/`.
 
 |:revealjs_controls:
 |*true*, false
