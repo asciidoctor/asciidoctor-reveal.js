@@ -16,13 +16,19 @@
 [.red.background]
 == Here
 
+Red
+
 [.green]
 == We
 
-NOTE: background color shouldn't be visible
+Green
+
+NOTE: Green background color shouldn't be applied to the whole slide
 
 [.blue.canvas]
 == Go
+
+Blue
 
 // role that alter style but not slide color
 [.topic]
