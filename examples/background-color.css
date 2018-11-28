@@ -1,12 +1,12 @@
-section.red {
+section.red.background {
   background-color: red;
 }
 
-section.green {
+section.green.background {
   background-color: green;
 }
 
-section.blue {
+section.blue.canvas {
   background-color: blue;
 }
 

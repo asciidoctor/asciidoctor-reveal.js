@@ -247,7 +247,7 @@ IMPORTANT: Like the first page of an AsciiDoc document, the first slide is handl
            To achieve the effect of hiding only the first slide's title, combine the `:notitle:` attribute on the first slide and use `[%notitle]` on the second slide which will, in effect, be your first slide now.
 
 
-=== Background colors
+=== Background Colors
 
 Background colors for slides can be specified by two means: a classic one and one using AsciiDoc roles.
 See <<examples/background-color.adoc#,background-color.adoc>> for more examples.
@@ -256,13 +256,16 @@ See <<examples/background-color.adoc#,background-color.adoc>> for more examples.
 
 Using roles respects the AsciiDoc philosophy of separation of content and presentation.
 Colors are to be defined by CSS and the <<customcss,`:customcss:` attribute>> need to be used to specify the CSS file to load.
+To avoid clashing with existing reveal.js themes or CSS, a specific CSS class called `background` is expected to be present.
+Here is an example:
+
 
 [source, asciidoc]
 ----
 = Title
 :customcss: my-css.css
 
-[.red]
+[.red.background]
 == Slide One
 
 Is very red
@@ -271,10 +274,12 @@ Is very red
 .my-css.css
 [source, css]
 ----
-section.red {
+section.red.background {
   background-color: red;
 }
 ----
+
+NOTE: The `canvas` keyword can be used instead of `background` for the same effect.
 
 ==== Classic
 

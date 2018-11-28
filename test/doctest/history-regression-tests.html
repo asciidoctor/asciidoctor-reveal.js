@@ -35,6 +35,8 @@
 <script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>
   Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
     if (slide.getAttribute('data-background-color')) return;
+    // user needs to explicitly say he wants CSS color to override otherwise we might break custom css or theme (#226)
+    if (!(slide.classList.contains('canvas') || slide.classList.contains('background'))) return;
     var bgColor = getComputedStyle(slide).backgroundColor;
     if (bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
       slide.setAttribute('data-background-color', bgColor);
