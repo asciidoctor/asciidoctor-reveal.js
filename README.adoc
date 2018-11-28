@@ -151,8 +151,7 @@ var asciidoctorRevealjs = require('asciidoctor-reveal.js');
 asciidoctorRevealjs.register()
 
 // Convert the document 'presentation.adoc' using the reveal.js converter
-var attributes = {'revealjsdir': 'node_modules/reveal.js@'};
-var options = {safe: 'safe', backend: 'revealjs', attributes: attributes};
+var options = {safe: 'safe', backend: 'revealjs'};
 asciidoctor.convertFile('presentation.adoc', options); // <1>
 ----
 <1> Creates a file named `presentation.html` (in the directory where command is run)
@@ -161,9 +160,6 @@ asciidoctor.convertFile('presentation.adoc', options); // <1>
 [source, asciidoc]
 ----
 = Title Slide
-// depending on your npm version, you might need to override the default
-// 'revealjsdir' value by removing the comments from the line below:
-//:revealjsdir: node_modules/asciidoctor-reveal.js/node_modules/reveal.js
 
 == Slide One
 
@@ -697,7 +693,8 @@ Default is built-in [path]_lib/css/zenburn.css_.
 |<file\|URL>
 |Overrides reveal.js directory.
 Example: ../reveal.js or
-https://cdnjs.com/libraries/reveal.js/3.6.0[https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0]
+https://cdnjs.com/libraries/reveal.js/3.6.0[https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0].
+Default is `reveal.js/` unless in a Node.js environment where it is `node_modules/reveal.js/`.
 
 |:revealjs_controls:
 |*true*, false

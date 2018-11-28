@@ -14,7 +14,7 @@ const asciidoctorRevealjs = require('../build/asciidoctor-reveal.js');
 asciidoctorRevealjs.register()
 
 // Convert *a* document using the reveal.js converter
-var attributes = {'revealjsdir': 'node_modules/reveal.js@'};
+var attributes = {'revealjsdir': 'reveal.js'};
 var options = {safe: 'safe', backend: 'revealjs', attributes: attributes, to_dir: examplesDir};
 
 fs.readdir(examplesDir, (err, files) => {

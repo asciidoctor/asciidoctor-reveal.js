@@ -7,8 +7,7 @@ const expect = require('expect.js')
 // Register the reveal.js converter
 asciidoctorRevealjs.register()
 
-const attributes = {'revealjsdir': 'node_modules/reveal.js@'}
-const options = {safe: 'safe', backend: 'revealjs', attributes: attributes, 'header_footer': true}
+const options = {safe: 'safe', backend: 'revealjs', 'header_footer': true}
 const content = `= Title Slide
 
 == Slide One
