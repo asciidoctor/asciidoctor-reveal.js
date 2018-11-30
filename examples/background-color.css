@@ -1,4 +1,4 @@
-section.red {
+section.red.background {
   background-color: red;
 }
 
@@ -6,7 +6,7 @@ section.green {
   background-color: green;
 }
 
-section.blue {
+section.blue.canvas {
   background-color: blue;
 }
 

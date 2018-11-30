@@ -6,20 +6,29 @@
 :backend: revealjs
 :customcss: background-color.css
 :topic: state=title
+:icons: font
 
 // classic
 [background-color="yellow"]
 == Hello
 
 // New: with roles backed by CSS (see background-color.css)
-[.red]
+[.red.background]
 == Here
+
+Red
 
 [.green]
 == We
 
-[.blue]
+Green
+
+NOTE: Green background color shouldn't be applied to the whole slide
+
+[.blue.canvas]
 == Go
+
+Blue
 
 // role that alter style but not slide color
 [.topic]
@@ -29,8 +38,8 @@ but fancy font
 
 // style role *and* color role (using shorthand markup)
 // could also be written in long form like this:
-// [role="topic red"]
-[.topic.red]
+// [role="topic red background"]
+[.topic.red.background]
 == fancy font
 
 and color!
