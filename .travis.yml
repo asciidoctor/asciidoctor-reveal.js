@@ -1,4 +1,3 @@
-sudo: false
 git:
   # use depth 2 just in case two refs get pushed at once (like a tag)
   depth: 2
@@ -26,6 +25,5 @@ script:
 - bundle exec rake build:js
 - npm run examples
 - npm test
-
 notifications:
   email: false
