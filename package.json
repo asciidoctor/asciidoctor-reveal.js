@@ -42,7 +42,7 @@
   "homepage": "https://github.com/asciidoctor/asciidoctor-reveal.js",
   "dependencies": {
     "asciidoctor.js": "1.5.6",
-    "reveal.js": "3.6.0"
+    "reveal.js": "3.7.0"
   },
   "devDependencies": {
     "bestikk-log": "0.1.0",
