@@ -19,8 +19,14 @@
 
 == Illegal çhàrâctérß
 
-[[explicit]]
+[[explicit_with_anchor]]
 == Explicit section id
+
+[id=explicit_with_id]
+== Another Explicit Section Id
+
+[#explicit_with_short_anchor]
+== 3rd Explicit is the Charm
 
 == 67848727
 // Everything should be stripped in the id
@@ -32,3 +38,7 @@
 
 == Repeated title
 // Exact same title means exact same id
+
+== hello こんにちは
+
+== hello 你好

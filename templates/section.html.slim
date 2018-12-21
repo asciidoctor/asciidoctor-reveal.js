@@ -1,10 +1,4 @@
 / OPTIONS PROCESSING
-/ strip IDs the same way revealjs does to make links to direct slides work using URL fragments gh#127
-/ Strip unallowed characters globally then strip anything non a-Z from start of string until something matches
-/ TODO remove when hakimel/reveal.js#1230 is fixed
-- _id = id.gsub(/[^a-zA-Z0-9\-\_\:\.]/, '').gsub(/^[^a-zA-Z]+/, '')
-
-
 / hide slides on %conceal, %notitle and named "!"
 - titleless = (title = self.title) == '!'
 - hide_title = (titleless || (option? :notitle) || (option? :conceal))
@@ -43,7 +37,7 @@
 - if @level == 1 && !vertical_slides.empty?
   section
     / TODO: try to get rid of duplication w/ standalone slide section
-    section(id=(titleless ? nil : _id)
+    section(id=(titleless ? nil : id)
       class=roles
       data-transition=(attr 'transition')
       data-transition-speed=(attr 'transition-speed')
@@ -72,7 +66,7 @@
     h level=(@level) =title
     =content.chomp
   - else
-    section(id=(titleless ? nil : _id)
+    section(id=(titleless ? nil : id)
       class=roles
       data-transition=(attr 'transition')
       data-transition-speed=(attr 'transition-speed')
