@@ -711,7 +711,22 @@ Default is `reveal.js/` unless in a Node.js environment where it is `node_module
 
 |:revealjs_slideNumber:
 |true, *false*
-|Display the page number of the current slide.
+a|Display the page number of the current slide.
+*true* will display the slide number with default formatting.
+Additional formatting is available:
+
+h.v:: horizontal . vertical slide number (default)
+h/v:: horizontal / vertical slide number
+c:: flattened slide number
+c/t:: flattened slide number / total slides
+
+|:revealjs_showSlideNumber:
+|*all*, speaker, print
+a|Control which views the slide number displays on using the "showSlideNumber" value:
+
+all:: show on all views (default)
+speaker:: only show slide numbers on speaker notes view
+print:: only show slide numbers when printing to PDF
 
 |:revealjs_history:
 |true, *false*
