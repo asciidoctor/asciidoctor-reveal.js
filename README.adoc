@@ -710,7 +710,7 @@ Default is `reveal.js/` unless in a Node.js environment where it is `node_module
 |Display a presentation progress bar.
 
 |:revealjs_slideNumber:
-|true, *false*
+|true, *false*, h.v, h/v, c, c/t
 a|Display the page number of the current slide.
 *true* will display the slide number with default formatting.
 Additional formatting is available:
