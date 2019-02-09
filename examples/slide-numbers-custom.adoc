@@ -1,0 +1,18 @@
+// .revealjs-slide-numbers-custom
+// Demonstration of reveal.js slide numbers parameters. Introduced for tests.
+// :include: //div[@class="slides"]
+// :header_footer:
+= Title
+:revealjs_slidenumber: c/t
+
+== First slide
+
+Content
+
+== Second slide
+
+Content
+
+== Third slide
+
+Content

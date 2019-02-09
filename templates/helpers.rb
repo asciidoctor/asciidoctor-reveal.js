@@ -24,6 +24,15 @@ module Slim::Helpers
     val && val != 'false' && val.to_s != '0' || false
   end
 
+  # false needs to be verbatim everything else is a string.
+  # Calling side isn't responsible for quoting so we are doing it here
+  def to_valid_slidenumber val
+    # corner case: empty is empty attribute which is true
+    return true if val == ""
+    # using to_s here handles both the 'false' string and the false boolean
+    val.to_s == 'false' ? false : "'#{val}'"
+  end
+
   ##
   # These constants and functions are from the asciidictor-html5s project
   # https://github.com/jirutka/asciidoctor-html5s/blob/a71db48a1dd5196b668b3a3d93693c5d877c5bf3/data/templates/helpers.rb

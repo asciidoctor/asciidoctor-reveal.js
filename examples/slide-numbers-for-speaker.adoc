@@ -1,0 +1,23 @@
+// .revealjs-slide-numbers-for-speaker
+// Demonstration of reveal.js slide numbers parameters. Introduced for tests.
+// :include: //div[@class="slides"]
+// :header_footer:
+= Title
+:revealjs_slidenumber: c/t
+:revealjs_showslidenumber: speaker
+
+== First slide
+
+Content
+
+=== First step
+
+Content
+
+== Second slide
+
+Content
+
+== Third slide
+
+Content

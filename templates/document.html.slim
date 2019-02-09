@@ -133,7 +133,9 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         // Set a per-slide timing for speaker notes, null means none
         defaultTiming: #{attr 'revealjs_defaultTiming', 'null'},
         // Display the page number of the current slide
-        slideNumber: #{to_boolean(attr 'revealjs_slidenumber', false)},
+        slideNumber: #{to_valid_slidenumber(attr 'revealjs_slidenumber', false)},
+        // Control which views the slide number displays on
+        showSlideNumber: '#{attr 'revealjs_showslidenumber', 'all'}',
         // Push each slide change to the browser history
         history: #{to_boolean(attr 'revealjs_history', false)},
         // Enable keyboard shortcuts for navigation
