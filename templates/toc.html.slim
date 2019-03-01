@@ -11,7 +11,7 @@
 /  div id=toc_id class=toc_role
 /    .title id=toc_title_id =toc_title
 /    =Asciidoctor::HTML5::DocumentTemplate.outline(@document, toc_levels)
-#toc class=(attr 'toc-class', 'toc')
-  #toctitle =(attr 'toc-title')
+#toc class=(document.attr 'toc-class', 'toc')
+  #toctitle =(document.attr 'toc-title')
   / Renders block_outline.html.
   = converter.convert document, 'outline'

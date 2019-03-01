@@ -46,7 +46,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
           TeX: {#{eqnums_opt}}
           });
       script src='#{cdn_base}/mathjax/2.4.0/MathJax.js?config=TeX-MML-AM_HTMLorMML'
-    - case attr 'source-highlighter'
+    - case document.attr 'source-highlighter'
     - when 'coderay'
       - if (attr 'coderay-css', 'class') == 'class'
         - if @safe >= Asciidoctor::SafeMode::SECURE || (attr? :linkcss)
@@ -214,7 +214,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         // Optional libraries used to extend on reveal.js
         dependencies: [
             { src: '#{revealjsdir}/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-            #{(attr? 'source-highlighter', 'highlightjs') ? "{ src: '#{revealjsdir}/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }," : nil}
+            #{(document.attr? 'source-highlighter', 'highlightjs') ? "{ src: '#{revealjsdir}/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }," : nil}
             #{(attr? 'revealjs_plugin_zoom', 'disabled') ? "" :  "{ src: '#{revealjsdir}/plugin/zoom-js/zoom.js', async: true }," }
             #{(attr? 'revealjs_plugin_notes', 'disabled') ? "" :  "{ src: '#{revealjsdir}/plugin/notes/notes.js', async: true }," }
             #{(attr? 'revealjs_plugin_marked', 'enabled') ? "{ src: '#{revealjsdir}/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } }," : "" }
