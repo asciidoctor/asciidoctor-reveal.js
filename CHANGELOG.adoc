@@ -47,6 +47,7 @@ Enhancements::
 Compliance::
   * AsciiDoc source callout icons now work ({uri-issue}54[#54], {uri-issue}168[#168], {uri-issue}224[#224])
   * New reveal.js 3.7.0 features supported: the new `slideNumber` formats and `showSlideNumber` configuration parameter are now supported ({uri-issue}212[#212], {uri-issue}239[#239])
+  * Asciidoctor 2.0 ready ({uri-issue}245[#245])
 
 Bug Fixes::
   * Reveal.js' `stretch` class now works with listing blocks ({uri-issue}195[#195], {uri-issue}223[#223])
