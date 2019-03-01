@@ -48,7 +48,7 @@ Enhancements::
 
 Compliance::
   * AsciiDoc source callout icons now work ({uri-issue}54[#54], {uri-issue}168[#168], {uri-issue}224[#224])
-  * New reveal.js 3.7.0 features supported: `controlsTutorial`, `controlsLayout`, `controlsBackArrows`, new `slideNumber` formats, `showSlideNumber`, `autoSlideMethod`, `parallaxBackgroundHorizontal`, `parallaxBackgroundVertical` and `display` configuration parameters are now supported ({uri-issue}212[#212], {uri-issue}239[#239], TODO)
+  * New reveal.js 3.7.0 features supported: `controlsTutorial`, `controlsLayout`, `controlsBackArrows`, new `slideNumber` formats, `showSlideNumber`, `autoSlideMethod`, `parallaxBackgroundHorizontal`, `parallaxBackgroundVertical` and `display` configuration parameters are now supported ({uri-issue}212[#212], {uri-issue}239[#239], {uri-issue}208[#208], {uri-issue}242[#242])
   * Asciidoctor 2.0 ready ({uri-issue}245[#245])
 
 Bug Fixes::
@@ -63,9 +63,9 @@ Infrastructure::
 
 === Release meta
 
-* Released on: 2018-02-28
+* Released on: 2019-02-28
 * Released by: Olivier Bilodeau
-* Release beer: President's Choice Blonde Brew De-alcoholized Beer
+* Release beer: President's Choice Blonde Brew De-alcoholized Beer (Sober February Successfully Completed!)
 
 {uri-repo}/releases/tag/v2.0.0[git tag] |
 {uri-repo}/compare/v1.1.3...v2.0.0[full diff] |
