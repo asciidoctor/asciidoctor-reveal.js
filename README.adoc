@@ -40,8 +40,10 @@ There are two main technology stacks that can transform AsciiDoc into HTML5 / re
 Right now the Asciidoctor / Ruby stack is the better tested one but with the changes in v1.1.0 they have feature parity.
 
 ifeval::['{branch}' == 'master']
-NOTE: You're viewing the documentation for the upcoming release.
-If you're looking for the documentation for an older release, please refer to one of the following branches: +
+NOTE: You're viewing the documentation for an upcoming release.
+If you're looking for the documentation for the current release or an older one, please click on the appropriate link below: +
+{uri-project-repo}/tree/v1.1.3#readme[1.1.3] (latest release)
+&hybull;
 {uri-project-repo}/tree/maint-1.0.x#readme[1.0.x]
 &hybull;
 {uri-project-repo}/tree/reveal.js-2.x#readme[Unversioned pre-release] (compatible with RevealJS 2.x)
