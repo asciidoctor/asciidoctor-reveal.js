@@ -6,7 +6,7 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
-== master (unreleased)
+== 2.0.0 (2019-02-28)
 
 Upgrade considerations::
   * Node.js API change!
@@ -60,6 +60,22 @@ Bug Fixes::
 Infrastructure::
   * Travis testing prepared for upcoming Asciidoctor 2.0 ({uri-issue}216[#216])
   * Travis testing for Ruby 2.6 ({uri-issue}243[#243])
+
+=== Release meta
+
+* Released on: 2018-02-28
+* Released by: Olivier Bilodeau
+* Release beer: President's Choice Blonde Brew De-alcoholized Beer
+
+{uri-repo}/releases/tag/v2.0.0[git tag] |
+{uri-repo}/compare/v1.1.3...v2.0.0[full diff] |
+{uri-repo}/milestone/6[milestone]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+a4z, Dan Allen, Guillaume Grossetie, Harald, Jakub Jirutka, Olivier Bilodeau, stevewillson, Vivien Didelot
 
 
 == 1.1.3 (2018-01-31)

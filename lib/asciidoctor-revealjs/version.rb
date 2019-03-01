@@ -1,5 +1,5 @@
 module Asciidoctor
 module Revealjs
-  VERSION = '1.1.4-dev'
+  VERSION = '2.0.0'
 end
 end
