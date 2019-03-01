@@ -286,6 +286,7 @@ Then run:
 ** Annotated Tag msg: Version %version%
 . Push your changes (including the tag)
 . Make a release on github (from changelog and copy from previous releases)
+** Useful vim regex for AsciiDoc to Markdown: `:%s/{uri-issue}\d\+\(\(\[#\d\+\)]\)/\1(https:\/\/github.com\/asciidoctor\/asciidoctor-reveal.js\/issues\/\2)/gc`
 . Pushing the gem on rubygems.org:
 +
  $ bundle exec rake build
