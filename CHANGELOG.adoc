@@ -27,6 +27,8 @@ This change enables new use cases like embedding a presentation in a React web a
   * The reveal.js `marked` and `markdown` plugins are disabled by default now.
     It is unlikely that they could have been used anyway.
     See {uri-issue}204[#204].
+  * Dropped the ability to override the Reveal.JS theme and transitions dynamically with the URL query.
+    Was not compatible with Reveal.JS 3.x series released 4 years ago.
 
 Enhancements::
   * Easier speaker notes: a `.notes` role that apply to many AsciiDoc blocks (open, sidebar and admonition) ({uri-issue}202[#202])
@@ -46,7 +48,7 @@ Enhancements::
 
 Compliance::
   * AsciiDoc source callout icons now work ({uri-issue}54[#54], {uri-issue}168[#168], {uri-issue}224[#224])
-  * New reveal.js 3.7.0 features supported: the new `slideNumber` formats and `showSlideNumber` configuration parameter are now supported ({uri-issue}212[#212], {uri-issue}239[#239])
+  * New reveal.js 3.7.0 features supported: `controlsTutorial`, `controlsLayout`, `controlsBackArrows`, new `slideNumber` formats, `showSlideNumber`, `autoSlideMethod`, `parallaxBackgroundHorizontal`, `parallaxBackgroundVertical` and `display` configuration parameters are now supported ({uri-issue}212[#212], {uri-issue}239[#239], TODO)
   * Asciidoctor 2.0 ready ({uri-issue}245[#245])
 
 Bug Fixes::
@@ -57,6 +59,7 @@ Bug Fixes::
 
 Infrastructure::
   * Travis testing prepared for upcoming Asciidoctor 2.0 ({uri-issue}216[#216])
+  * Travis testing for Ruby 2.6 ({uri-issue}243[#243])
 
 
 == 1.1.3 (2018-01-31)
