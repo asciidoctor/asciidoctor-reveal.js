@@ -6,6 +6,14 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
+
+== master (unreleased)
+
+Compliance::
+  * Dropped support for verse table cells ({uri-issue}246[#246]).
+    Asciidoctor 2.0 dropped it, we follow.
+
+
 == 2.0.0 (2019-02-28)
 
 Upgrade considerations::
