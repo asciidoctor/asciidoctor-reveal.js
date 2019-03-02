@@ -21,7 +21,7 @@ table(id=@id class=['tableblock',"frame-#{attr :frame, 'all'}","grid-#{attr :gri
                 - cell_content = cell.text
               - else
                 - case cell.style
-                - when :verse, :literal
+                - when :literal
                   - cell_content = cell.text
                 - else
                   - cell_content = cell.content
@@ -35,8 +35,6 @@ table(id=@id class=['tableblock',"frame-#{attr :frame, 'all'}","grid-#{attr :gri
                   - case cell.style
                   - when :asciidoc
                     div=cell_content
-                  - when :verse
-                    .verse=cell_content
                   - when :literal
                     .literal: pre=cell_content
                   - when :header
