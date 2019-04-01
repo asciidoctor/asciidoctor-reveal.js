@@ -136,10 +136,9 @@ First you must install and configure {uri-nodejs-download}[Node.js] on your mach
 
 Using npm:
 
-Create a directory to place slides. Initialize the directory to store npm packages within that directory. 
+Create a directory to place slides. Initialize the directory to store npm packages within that directory.
 
- $ echo {} > package.json               # eliminates warnings, use `npm init` if you prefer
- $ npm i --save asciidoctor-reveal.js
+ $ npm i --save asciidoctor asciidoctor-reveal.js
 
 === Rendering the AsciiDoc into slides
 
@@ -173,9 +172,34 @@ asciidoctor.convertFile('presentation.adoc', options); // <1>
 
 ----
 
-To render the slides, run:
+To convert the sample presentation into slides, open a terminal and type:
 
-    node asciidoctor-revealjs.js
+ $ $(npm bin)/asciidoctor -r asciidoctor-reveal.js -b revealjs presentation.adoc
+
+The above command will generate a file named [.path]_presentation.html_.
+You can open this file in a browser.
+
+==== Using the JavaScript API
+
+Alternatively, you can use the JavaScript API to register the converter and convert a document:
+
+.convert-slides.js
+[source,javascript]
+----
+// Load Asciidoctor.js and the reveal.js converter
+var asciidoctor = require('@asciidoctor/core')()
+var asciidoctorRevealjs = require('asciidoctor-reveal.js')
+asciidoctorRevealjs.register()
+
+// Convert the document 'presentation.adoc' using the reveal.js converter
+var options = { safe: 'safe', backend: 'revealjs' }
+asciidoctor.convertFile('presentation.adoc', options) // <1>
+----
+<1> Creates a file named `presentation.html` (in the directory where command is run)
+
+To execute the script, open a terminal and type:
+
+ $ node convert-slides.js
 
 You can open the `presentation.html` file in your browser and enjoy!
 

@@ -1,4 +1,4 @@
-const asciidoctor = require('asciidoctor.js')()
+const asciidoctor = require('@asciidoctor/core')()
 const asciidoctorRevealjs = require('../dist/main.js')
 //require('../dist/main.js')
 
@@ -7,7 +7,7 @@ const expect = require('expect.js')
 // Register the reveal.js converter
 asciidoctorRevealjs.register()
 
-const options = {safe: 'safe', backend: 'revealjs', 'header_footer': true}
+const options = {safe: 'safe', backend: 'revealjs', standalone: true}
 const content = `= Title Slide
 
 == Slide One
