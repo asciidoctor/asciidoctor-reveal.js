@@ -130,12 +130,12 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         controls: #{to_boolean(attr 'revealjs_controls', true)},
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide
-        controlsTutorial: #{to_boolean(attr 'revealjs_controlsTutorial', true)},
+        controlsTutorial: #{to_boolean(attr 'revealjs_controlstutorial', true)},
         // Determines where controls appear, "edges" or "bottom-right"
-        controlsLayout: '#{attr 'revealjs_controlsLayout', 'bottom-right'}',
+        controlsLayout: '#{attr 'revealjs_controlslayout', 'bottom-right'}',
         // Visibility rule for backwards navigation arrows; "faded", "hidden"
         // or "visible"
-        controlsBackArrows: '#{attr 'revealjs_controlsBackArrows', 'faded'}',
+        controlsBackArrows: '#{attr 'revealjs_controlsbackarrows', 'faded'}',
         // Display a presentation progress bar
         progress: #{to_boolean(attr 'revealjs_progress', true)},
         // Display the page number of the current slide
@@ -162,7 +162,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         fragments: #{to_boolean(attr 'revealjs_fragments', true)},
         // Flags whether to include the current fragment in the URL,
         // so that reloading brings you to the same fragment position
-        fragmentInURL: #{to_boolean(attr 'revealjs_fragmentInURL', false)},
+        fragmentInURL: #{to_boolean(attr 'revealjs_fragmentinurl', false)},
         // Flags if the presentation is running in an embedded mode,
         // i.e. contained within a limited portion of the screen
         embedded: #{to_boolean(attr 'revealjs_embedded', false)},
@@ -170,49 +170,49 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         // key is pressed
         help: #{to_boolean(attr 'revealjs_help', true)},
         // Flags if speaker notes should be visible to all viewers
-        showNotes: #{to_boolean(attr 'revealjs_showNotes', false)},
+        showNotes: #{to_boolean(attr 'revealjs_shownotes', false)},
         // Global override for autolaying embedded media (video/audio/iframe)
         // - null: Media will only autoplay if data-autoplay is present
         // - true: All media will autoplay, regardless of individual setting
         // - false: No media will autoplay, regardless of individual setting
-        autoPlayMedia: #{attr 'revealjs_autoPlayMedia', 'null'},
+        autoPlayMedia: #{attr 'revealjs_autoplaymedia', 'null'},
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
-        autoSlide: #{attr 'revealjs_autoSlide', 0},
+        autoSlide: #{attr 'revealjs_autoslide', 0},
         // Stop auto-sliding after user input
-        autoSlideStoppable: #{to_boolean(attr 'revealjs_autoSlideStoppable', true)},
+        autoSlideStoppable: #{to_boolean(attr 'revealjs_autoslidestoppable', true)},
         // Use this method for navigation when auto-sliding
-        autoSlideMethod: #{attr 'revealjs_autoSlideMethod', 'Reveal.navigateNext'},
+        autoSlideMethod: #{attr 'revealjs_autoslidemethod', 'Reveal.navigateNext'},
         // Specify the average time in seconds that you think you will spend
         // presenting each slide. This is used to show a pacing timer in the
         // speaker view
-        defaultTiming: #{attr 'revealjs_defaultTiming', 120},
+        defaultTiming: #{attr 'revealjs_defaulttiming', 120},
         // Enable slide navigation via mouse wheel
-        mouseWheel: #{to_boolean(attr 'revealjs_mouseWheel', false)},
+        mouseWheel: #{to_boolean(attr 'revealjs_mousewheel', false)},
         // Hides the address bar on mobile devices
-        hideAddressBar: #{to_boolean(attr 'revealjs_hideAddressBar', true)},
+        hideAddressBar: #{to_boolean(attr 'revealjs_hideaddressbar', true)},
         // Opens links in an iframe preview overlay
         // Add `data-preview-link` and `data-preview-link="false"` to customise each link
         // individually
-        previewLinks: #{to_boolean(attr 'revealjs_previewLinks', false)},
+        previewLinks: #{to_boolean(attr 'revealjs_previewlinks', false)},
         // Transition style (e.g., none, fade, slide, convex, concave, zoom)
         transition: '#{attr 'revealjs_transition', 'slide'}',
         // Transition speed (e.g., default, fast, slow)
-        transitionSpeed: '#{attr 'revealjs_transitionSpeed', 'default'}',
+        transitionSpeed: '#{attr 'revealjs_transitionspeed', 'default'}',
         // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
-        backgroundTransition: '#{attr 'revealjs_backgroundTransition', 'fade'}',
+        backgroundTransition: '#{attr 'revealjs_backgroundtransition', 'fade'}',
         // Number of slides away from the current that are visible
-        viewDistance: #{attr 'revealjs_viewDistance', 3},
+        viewDistance: #{attr 'revealjs_viewdistance', 3},
         // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
-        parallaxBackgroundImage: '#{attr 'revealjs_parallaxBackgroundImage', ''}',
+        parallaxBackgroundImage: '#{attr 'revealjs_parallaxbackgroundimage', ''}',
         // Parallax background size in CSS syntax (e.g., "2100px 900px")
-        parallaxBackgroundSize: '#{attr 'revealjs_parallaxBackgroundSize', ''}',
+        parallaxBackgroundSize: '#{attr 'revealjs_parallaxbackgroundsize', ''}',
         // Number of pixels to move the parallax background per slide
         // - Calculated automatically unless specified
         // - Set to 0 to disable movement along an axis
-        parallaxBackgroundHorizontal: #{attr 'revealjs_parallaxBackgroundHorizontal', 'null'},
-        parallaxBackgroundVertical: #{attr 'revealjs_parallaxBackgroundVertical', 'null'},
+        parallaxBackgroundHorizontal: #{attr 'revealjs_parallaxbackgroundhorizontal', 'null'},
+        parallaxBackgroundVertical: #{attr 'revealjs_parallaxbackgroundvertical', 'null'},
         // The display mode that will be used to show slides
         display: '#{attr 'revealjs_display', 'block'}',
 
