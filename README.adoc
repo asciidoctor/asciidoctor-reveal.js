@@ -136,7 +136,7 @@ First you must install and configure {uri-nodejs-download}[Node.js] on your mach
 
 Using npm:
 
-Create a directory to place slides. Initialize the directory to store npm packages within that directory. 
+Create a directory to place slides. Initialize the directory to store npm packages within that directory.
 
  $ echo {} > package.json               # eliminates warnings, use `npm init` if you prefer
  $ npm i --save asciidoctor-reveal.js
@@ -877,6 +877,16 @@ a|Number of pixels to move the parallax background per slide
 |<a valid CSS display mode>
 |The display mode that will be used to show slides.
 Defaults to *block*
+
+|:revealjs_pdfSeparateFragments:
+|*true*, false
+|In PDF export, put each fragment on a separate page.
+Defaults to *true*
+
+|:revealjs_pdfMaxPagesPerSlide:
+|<integer>
+|In PDF export, when a slide does not fit on a single page, maximum number of pages.
+Defaults to *1*
 |===
 
 If you want to build a custom theme or customize an existing one you should
