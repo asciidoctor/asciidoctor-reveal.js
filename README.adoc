@@ -677,7 +677,7 @@ Here are details about Asciidoctor's http://asciidoctor.org/docs/user-manual/#ad
 == Reveal.js Options
 
 There are some attributes that can be set at the top of the document which they are specific of `revealjs` converter.
-They are applied in the link:templates/document.html.slim[document template]
+They are applied in the link:templates/document.html.slim[document template].
 
 NOTE: Default settings are based on `reveal.js` default settings.
 
