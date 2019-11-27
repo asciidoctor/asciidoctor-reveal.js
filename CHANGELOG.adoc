@@ -13,6 +13,9 @@ Compliance::
   * Dropped support for verse table cells ({uri-issue}246[#246]).
     Asciidoctor 2.0 dropped it, we follow.
 
+Enhancements::
+  * Documentation improvements ({uri-issue}264[#264])
+
 
 == 2.0.0 (2019-02-28)
 
