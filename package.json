@@ -27,8 +27,7 @@
     "library",
     "backend",
     "template",
-    "reveal.js",
-    "jade"
+    "reveal.js"
   ],
   "authors": [
     "Guillaume Grossetie (https://github.com/mogztter)"
