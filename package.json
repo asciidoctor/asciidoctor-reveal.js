@@ -7,11 +7,7 @@
     "node": ">=4",
     "npm": ">=3.0.0"
   },
-  "files": [
-    "dist",
-    "LICENSE.adoc",
-    "README.adoc"
-  ],
+  "files": [],
   "scripts": {
     "build": "node npm/build.js",
     "test": "node test/smoke.js",
