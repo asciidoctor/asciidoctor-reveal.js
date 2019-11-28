@@ -130,37 +130,38 @@ TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by kee
 
 === Prerequisites
 
-First you must install and configure {uri-nodejs-download}[Node.js] on your machine.
+First you must install and configure {uri-nodejs-download}[Node] on your machine.
 
 === Install
 
-Using npm:
+We recommend to install the dependencies in a project directory, such as the directory where your AsciiDoc presentations are stored.
+If you don't have a `package.json` file in your project directory, you can create one to eliminate warnings during the installation using:
 
-Create a directory to place slides. Initialize the directory to store npm packages within that directory.
+ $ echo {} > package.json # or `npm init` if you prefer
+
+You can now install the dependencies:
 
  $ npm i --save asciidoctor asciidoctor-reveal.js
 
-=== Rendering the AsciiDoc into slides
+=== Convert AsciiDoc into slides
 
-Once the package is installed, you can convert AsciiDoc files using reveal.js converter.
-Here we are converting a file named `presentation.adoc` into a reveal.js presentation using Node.js:
+Once the dependencies are installed, verify that the `asciidoctor` command is available by running:
 
-.asciidoctor-revealjs.js
-[source, javascript]
+ $ $(npm bin)/asciidoctor --version
+
+The command should report the Asciidoctor CLI version in the terminal:
+
+[source,console]
 ----
-// Load asciidoctor.js and asciidoctor-reveal.js
-var asciidoctor = require('asciidoctor.js')();
-var asciidoctorRevealjs = require('asciidoctor-reveal.js');
-asciidoctorRevealjs.register()
-
-// Convert the document 'presentation.adoc' using the reveal.js converter
-var options = {safe: 'safe', backend: 'revealjs'};
-asciidoctor.convertFile('presentation.adoc', options); // <1>
+Asciidoctor.js 2.0.3 (Asciidoctor 2.0.9) [https://asciidoctor.org]
+Runtime Environment (node v10.15.1 on linux)
+CLI version 2.0.1
 ----
-<1> Creates a file named `presentation.html` (in the directory where command is run)
+
+If you don't have an existing presentation, you can create a sample presentation named [.path]_presentation.adoc_:
 
 .presentation.adoc
-[source, asciidoc]
+[source,asciidoc]
 ----
 = Title Slide
 
@@ -202,7 +203,6 @@ To execute the script, open a terminal and type:
  $ node convert-slides.js
 
 You can open the `presentation.html` file in your browser and enjoy!
-
 
 == Syntax Examples
 
