@@ -9,12 +9,15 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 
 == master (unreleased)
 
+Important Bug Fix::
+  * Fixed an issue that caused all `reveal.js` options in CamelCase to use the default value instead of one specified as an AsciiDoc attribute ({uri-issue}263[#263], {uri-issue}267[#267])
+
 Compliance::
   * Dropped support for verse table cells ({uri-issue}246[#246]).
-    Asciidoctor 2.0 dropped it, we follow.
+    Asciidoctor 2.0 dropped it, we followed.
 
 Enhancements::
-  * Documentation improvements ({uri-issue}264[#264])
+  * Documentation improvements ({uri-issue}264[#264], {uri-issue}278[#278], {uri-issue}280[#280])
 
 
 == 2.0.0 (2019-02-28)
