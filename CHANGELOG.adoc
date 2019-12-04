@@ -6,6 +6,46 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
+== master (unreleased)
+
+Enhancements::
+  * Babel integration example API updated to use {project-name} 2.x API ({uri-issue}285[#285])
+
+Bug Fixes::
+  * Babel integration example updated for security ({uri-issue}285[#285])
+
+
+== 2.0.1 (2019-12-04)
+
+Important Bug Fix::
+  * Fixed an issue that caused all `reveal.js` options in CamelCase to use the default value instead of one specified as an AsciiDoc attribute ({uri-issue}263[#263], {uri-issue}267[#267])
+
+Compliance::
+  * Dropped support for verse table cells ({uri-issue}246[#246]).
+    Asciidoctor 2.0 dropped it, we followed.
+
+Enhancements::
+  * Documentation improvements ({uri-issue}264[#264], {uri-issue}278[#278], {uri-issue}280[#280])
+
+Bug Fixes::
+  * Yarn.lock updates for security ({uri-issue}283[#283])
+
+=== Release meta
+
+* Released on: 2019-12-04
+* Released by: Olivier Bilodeau
+* Release whisky: Lot No. 40 Single Copper Pot Still Rye Whisky
+
+{uri-repo}/releases/tag/v2.0.1[git tag] |
+{uri-repo}/compare/v2.0.0...v2.0.1[full diff]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+Benjamin Schmid, Guillaume Grossetie, Olivier Bilodeau
+
+
 == 2.0.0 (2019-02-28)
 
 Upgrade considerations::
