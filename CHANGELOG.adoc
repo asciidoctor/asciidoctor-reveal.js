@@ -19,6 +19,9 @@ Compliance::
 Enhancements::
   * Documentation improvements ({uri-issue}264[#264], {uri-issue}278[#278], {uri-issue}280[#280])
 
+Bug Fixes::
+  * Yarn.lock updates for security ({uri-issue}283[#283])
+
 
 == 2.0.0 (2019-02-28)
 
