@@ -1,35 +1,19 @@
-- if title?
-  .title=captioned_title
-- nowrap = !(@document.attr? :prewrap) || (option? 'nowrap')
-/ implicit listing blocks and source blocks are rendered as code
-/ explicit listing blocks stay listing
-- if @style == 'source' || (@style == 'listing' && attributes[1] != 'listing')
-  - language = attr :language
-  - code_class = language ? [language, "language-#{language}"] : nil
-  - pre_class = ['highlight']
-  - pre_lang = nil
-  - code_noescape = false
-  - case document.attr 'source-highlighter'
-  - when 'coderay'
-    - pre_class = ['CodeRay']
-  - when 'pygments'
-    - pre_class = ['pygments','highlight']
-  - when 'prettify'
-    - pre_class = ['prettyprint']
-    - pre_class << 'linenums' if attr? :linenums
-    - pre_class << language if language
-    - pre_class << "language-#{language}" if language
-    - code_class = nil
-  - when 'html-pipeline'
-    - pre_lang = language
-    - pre_class = code_class = nil
-    - nowrap = false
-  - when 'highlightjs', 'highlight.js'
-    - code_noescape=true
-  - pre_class << 'nowrap' if nowrap
-  - pre_class << 'listingblock'
-  - pre_class << role if role
-  pre class=pre_class lang=pre_lang id=@id
-    code data-noescape=code_noescape class=code_class =content
+- nowrap = (option? 'nowrap') || !(document.attr? 'prewrap')
+- syntax_hl = document.syntax_highlighter
+- if @style == 'source'
+  - lang = attr :language
+  - if syntax_hl
+    - doc_attrs = document.attributes
+    - css_mode = (doc_attrs[%(#{syntax_hl.name}-css)] || :class).to_sym
+    - style = doc_attrs[%(#{syntax_hl.name}-style)]
+    - opts = syntax_hl.highlight? ? { css_mode: css_mode, style: style } : {}
+    - opts[:nowrap] = nowrap
+  - else
+    - pre_open = %(<pre class="highlight#{nowrap ? ' nowrap' : ''}"><code#{lang ? %[ class="language-#{lang}" data-lang="#{lang}"] : ''}>)
+    - pre_close = '</code></pre>'
 - else
-  pre class=(nowrap ? 'nowrap' : nil) =content
+  - pre_open = %(<pre#{nowrap ? ' class="nowrap"' : ''}>)
+  - pre_close = '</pre>'
+- id_attribute = id ? %( id="#{id}") : ''
+- title_element = title? ? %(<div class="title">#{captioned_title}</div>\n) : ''
+=%(<div#{id_attribute} class="listingblock#{(role = self.role) ? " #{role}" : ''}">#{title_element}<div class="content">#{syntax_hl ? (syntax_hl.format self, lang, opts) : pre_open + (content || '') + pre_close}</div></div>)
