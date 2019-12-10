@@ -926,6 +926,16 @@ Defaults to *block*
 |<percentage value>
 | Factor of the display size that should remain empty around the content. Defaults to *0.1*
 
+|:revealjs_pdfseparatefragments:
+|*true*, false
+|In PDF export, put each fragment on a separate page.
+Defaults to *true*
+
+|:revealjs_pdfmaxpagesperslide:
+|<integer>
+|In PDF export, when a slide does not fit on a single page, maximum number of pages.
+Defaults to *1*
+
 |===
 
 If you want to build a custom theme or customize an existing one you should
