@@ -1,0 +1,141 @@
+= Table styles
+
+== Default table with header
+
+[cols=2*,options=header]
+|===
+| Header 1
+| Header 2
+
+| Row 1, Col1
+| Row 1, Col2
+
+| Row 2, Col1
+| Row 2, Col2
+
+|===
+
+== Frames
+
+=== Frame none
+
+[cols=2*,frame=none,options=header]
+|===
+| Header 1
+| Header 2
+
+| Row 1, Col1
+| Row 1, Col2
+
+| Row 2, Col1
+| Row 2, Col2
+
+|===
+
+=== Frame sides
+
+[cols=2*,frame=sides,options=header]
+|===
+| Header 1
+| Header 2
+
+| Row 1, Col1
+| Row 1, Col2
+
+| Row 2, Col1
+| Row 2, Col2
+
+|===
+
+=== Frame topbot
+
+[cols=2*,frame=topbot,options=header]
+|===
+| Header 1
+| Header 2
+
+| Row 1, Col1
+| Row 1, Col2
+
+| Row 2, Col1
+| Row 2, Col2
+
+|===
+
+== Grid
+
+=== Grid none
+
+[cols=2*,grid=none,options=header]
+|===
+| Header 1
+| Header 2
+
+| Row 1, Col1
+| Row 1, Col2
+
+| Row 2, Col1
+| Row 2, Col2
+
+|===
+
+=== Grid cols
+
+[cols=2*,grid=cols,options=header]
+|===
+| Header 1
+| Header 2
+
+| Row 1, Col1
+| Row 1, Col2
+
+| Row 2, Col1
+| Row 2, Col2
+
+|===
+
+=== Grid rows
+
+[cols=2*,grid=rows,options=header]
+|===
+| Header 1
+| Header 2
+
+| Row 1, Col1
+| Row 1, Col2
+
+| Row 2, Col1
+| Row 2, Col2
+
+|===
+
+== Combo
+
+=== Grid none, frame none
+
+[cols=2*,grid=none,frame=none,options=header]
+|===
+| Header 1
+| Header 2
+
+| Row 1, Col1
+| Row 1, Col2
+
+| Row 2, Col1
+| Row 2, Col2
+
+|===
+
+== Alignments
+
+[cols="^,<,>", options="header"]
+|===
+
+| Name
+| Description
+| Version
+
+| Asciidoctor
+| Awesome way to write documentation
+| 2.0.4
+|===
