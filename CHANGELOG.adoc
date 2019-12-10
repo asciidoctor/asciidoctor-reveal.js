@@ -40,6 +40,7 @@ Enhancements::
   * Added support for Reveal.js PDF export options ({uri-issue}277[#277])
   * Babel integration example API updated to use {project-name} 2.x API ({uri-issue}285[#285])
   * Node.js package clean-ups ({uri-issue}279[#279], {uri-issue}281[#281], {uri-issue}282[#282])
+  * Upgrade Opal to use a compatible version with Asciidoctor.js 2.0.3 ({uri-issue}289[#289])
 
 Bug Fixes::
   * Babel integration example updated for security ({uri-issue}285[#285])
