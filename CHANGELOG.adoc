@@ -8,9 +8,28 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 
 == master (unreleased)
 
+Upgrade considerations::
+  * Node.js packaging changes!
+    With the arrival of Asciidoctor.js 2.0.0 you can now use a command line interface (CLI) just like with Asciidoctor Ruby:
+
+    $(npm bin)/asciidoctor -r asciidoctor-reveal.js -b revealjs presentation.adoc
++
+If you want to keep generating your reveal.js presentations using the Node.js API, you need to change the following code.
+Instead of:
+
+    var asciidoctorRevealjs = require('asciidoctor-reveal.js');
+    asciidoctorRevealjs.register()
++
+Use:
+
+    var asciidoctor = require('@asciidoctor/core')()
+    var asciidoctorRevealjs = require('asciidoctor-reveal.js')
+    asciidoctorRevealjs.register()
+
 Enhancements::
+  * Support for Asciidoctor.js 2.0.0+ which brings a command line interface ({uri-issue}254[#254])
   * Babel integration example API updated to use {project-name} 2.x API ({uri-issue}285[#285])
-  * Node package clean-ups ({uri-issue}279[#279], {uri-issue}281[#281], {uri-issue}282[#282])
+  * Node.js package clean-ups ({uri-issue}279[#279], {uri-issue}281[#281], {uri-issue}282[#282])
 
 Bug Fixes::
   * Babel integration example updated for security ({uri-issue}285[#285])
