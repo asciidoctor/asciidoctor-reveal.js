@@ -42,7 +42,7 @@ Right now the Asciidoctor / Ruby stack is the better tested one but with the cha
 ifeval::['{branch}' == 'master']
 NOTE: You're viewing the documentation for an upcoming release.
 If you're looking for the documentation for the current release or an older one, please click on the appropriate link below: +
-{uri-project-repo}/tree/v2.0.0#readme[2.0.0] (latest release)
+{uri-project-repo}/tree/v2.0.1#readme[2.0.1] (latest release)
 &hybull;
 {uri-project-repo}/tree/v1.1.3#readme[1.1.3] (latest from 1.1 series)
 &hybull;
@@ -130,38 +130,43 @@ TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by kee
 
 === Prerequisites
 
-First you must install and configure {uri-nodejs-download}[Node.js] on your machine.
+First you must install and configure {uri-nodejs-download}[Node] on your machine.
 
 === Install
 
-Using npm:
+We recommend to install the dependencies in a project directory, such as the directory where your AsciiDoc presentations are stored.
+If you don't have a `package.json` file in your project directory, you can create one to eliminate warnings during the installation using:
 
-Create a directory to place slides. Initialize the directory to store npm packages within that directory.
+ $ npm init -y
 
- $ echo {} > package.json               # eliminates warnings, use `npm init` if you prefer
- $ npm i --save asciidoctor-reveal.js
+You can now install the dependencies:
 
-=== Rendering the AsciiDoc into slides
+ $ npm i --save asciidoctor asciidoctor-reveal.js
 
-Once the package is installed, you can convert AsciiDoc files using reveal.js converter.
-Here we are converting a file named `presentation.adoc` into a reveal.js presentation using Node.js:
+=== Convert AsciiDoc into slides
 
-.asciidoctor-revealjs.js
-[source, javascript]
+Once the dependencies are installed, verify that the `asciidoctor` command is available.
+On Linux and macOS, open a terminal and type:
+
+ $ $(npm bin)/asciidoctor --version
+
+On Windows, open PowerShell and type:
+
+ $ .\node_modules\.bin\asciidoctor.cmd --version
+
+The command should report the Asciidoctor CLI version in the terminal:
+
+[source,console]
 ----
-// Load asciidoctor.js and asciidoctor-reveal.js
-var asciidoctor = require('asciidoctor.js')();
-var asciidoctorRevealjs = require('asciidoctor-reveal.js');
-asciidoctorRevealjs.register()
-
-// Convert the document 'presentation.adoc' using the reveal.js converter
-var options = {safe: 'safe', backend: 'revealjs'};
-asciidoctor.convertFile('presentation.adoc', options); // <1>
+Asciidoctor.js 2.0.3 (Asciidoctor 2.0.9) [https://asciidoctor.org]
+Runtime Environment (node v10.15.1 on linux)
+CLI version 2.0.1
 ----
-<1> Creates a file named `presentation.html` (in the directory where command is run)
+
+If you don't have an existing presentation, you can create a sample presentation named [.path]_presentation.adoc_:
 
 .presentation.adoc
-[source, asciidoc]
+[source,asciidoc]
 ----
 = Title Slide
 
@@ -173,12 +178,40 @@ asciidoctor.convertFile('presentation.adoc', options); // <1>
 
 ----
 
-To render the slides, run:
+To convert the sample presentation into slides, open a terminal and type:
 
-    node asciidoctor-revealjs.js
+ $ $(npm bin)/asciidoctor -r asciidoctor-reveal.js -b revealjs presentation.adoc
+
+On windows, open PowerShell and type:
+
+ $ .\node_modules\.bin\asciidoctor.cmd -r asciidoctor-reveal.js -b revealjs presentation.adoc
+ 
+The above command will generate a file named [.path]_presentation.html_.
+You can open this file in a browser.
+
+==== Using the JavaScript API
+
+Alternatively, you can use the JavaScript API to register the converter and convert a document:
+
+.convert-slides.js
+[source,javascript]
+----
+// Load Asciidoctor.js and the reveal.js converter
+var asciidoctor = require('@asciidoctor/core')()
+var asciidoctorRevealjs = require('asciidoctor-reveal.js')
+asciidoctorRevealjs.register()
+
+// Convert the document 'presentation.adoc' using the reveal.js converter
+var options = { safe: 'safe', backend: 'revealjs' }
+asciidoctor.convertFile('presentation.adoc', options) // <1>
+----
+<1> Creates a file named `presentation.html` (in the directory where command is run)
+
+To execute the script, open a terminal and type:
+
+ $ node convert-slides.js
 
 You can open the `presentation.html` file in your browser and enjoy!
-
 
 == Syntax Examples
 

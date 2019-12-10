@@ -7,7 +7,7 @@ const examplesDir = 'examples';
 log.task('examples');
 
 // Load asciidoctor.js and local asciidoctor-reveal.js
-const asciidoctor = require('asciidoctor.js')();
+const asciidoctor = require('@asciidoctor/core')();
 const asciidoctorRevealjs = require('../build/asciidoctor-reveal.js');
 
 // Register the reveal.js converter
