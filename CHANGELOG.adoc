@@ -25,9 +25,12 @@ Use:
     var asciidoctor = require('@asciidoctor/core')()
     var asciidoctorRevealjs = require('asciidoctor-reveal.js')
     asciidoctorRevealjs.register()
++
+  * Dropped support for end-of-life Ruby version 2.1 and 2.2 ({uri-issue}247[#247])
 
 Enhancements::
   * Support for Asciidoctor.js 2.0.0+ which brings a command line interface ({uri-issue}254[#254])
+  * Added support for Reveal.js PDF export options ({uri-issue}277[#277])
   * Babel integration example API updated to use {project-name} 2.x API ({uri-issue}285[#285])
   * Node.js package clean-ups ({uri-issue}279[#279], {uri-issue}281[#281], {uri-issue}282[#282])
 
