@@ -26,10 +26,14 @@ Use:
     var asciidoctorRevealjs = require('asciidoctor-reveal.js')
     asciidoctorRevealjs.register()
 +
+  * Custom CSS might require adjustments.
+    Source and listing block encapsulation changed due to our migration to Asciidoctor 2.0.0 Syntax Highlighter API.
+    See {uri-issue}287[#287].
   * Dropped support for end-of-life Ruby version 2.1 and 2.2 ({uri-issue}247[#247])
 
 Enhancements::
   * Support for Asciidoctor.js 2.0.0+ which brings a command line interface ({uri-issue}254[#254])
+  * Migrated to Asciidoctor 2.0.0 new https://github.com/asciidoctor/asciidoctor/releases/tag/v2.0.0[Syntax Highlighter API] ({uri-issue}261[#261], {uri-issue}287[#287])
   * Added support for Reveal.js PDF export options ({uri-issue}277[#277])
   * Babel integration example API updated to use {project-name} 2.x API ({uri-issue}285[#285])
   * Node.js package clean-ups ({uri-issue}279[#279], {uri-issue}281[#281], {uri-issue}282[#282])
