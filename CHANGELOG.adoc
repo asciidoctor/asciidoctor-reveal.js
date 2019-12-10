@@ -31,6 +31,9 @@ Use:
     See {uri-issue}287[#287].
   * Dropped support for end-of-life Ruby version 2.1 and 2.2 ({uri-issue}247[#247])
 
+Compliance::
+  * Added support for table frame, grid, header and alignment options ({uri-issue}29[#29], {uri-issue}42[#42], {uri-issue}56[#56], {uri-issue}288[#288])
+
 Enhancements::
   * Support for Asciidoctor.js 2.0.0+ which brings a command line interface ({uri-issue}254[#254])
   * Migrated to Asciidoctor 2.0.0 new https://github.com/asciidoctor/asciidoctor/releases/tag/v2.0.0[Syntax Highlighter API] ({uri-issue}261[#261], {uri-issue}287[#287])
