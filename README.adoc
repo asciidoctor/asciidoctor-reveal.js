@@ -42,7 +42,7 @@ Right now the Asciidoctor / Ruby stack is the better tested one but with the cha
 ifeval::['{branch}' == 'master']
 NOTE: You're viewing the documentation for an upcoming release.
 If you're looking for the documentation for the current release or an older one, please click on the appropriate link below: +
-{uri-project-repo}/tree/v2.0.0#readme[2.0.0] (latest release)
+{uri-project-repo}/tree/v2.0.1#readme[2.0.1] (latest release)
 &hybull;
 {uri-project-repo}/tree/v1.1.3#readme[1.1.3] (latest from 1.1 series)
 &hybull;
