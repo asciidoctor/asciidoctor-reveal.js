@@ -10,6 +10,7 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 
 Enhancements::
   * Babel integration example API updated to use {project-name} 2.x API ({uri-issue}285[#285])
+  * Node package clean-ups ({uri-issue}279[#279], {uri-issue}281[#281], {uri-issue}282[#282])
 
 Bug Fixes::
   * Babel integration example updated for security ({uri-issue}285[#285])
