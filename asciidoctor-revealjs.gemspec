@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.description = 'Converts AsciiDoc documents into HTML5 presentations designed to be executed by the reveal.js presentation framework.'
   s.license = 'MIT'
 
+
   files = begin
     if (result = Open3.popen3('git ls-files -z') {|_, out| out.read }.split %(\0)).empty?
       Dir['**/*']
@@ -29,7 +30,7 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = Dir['README.adoc', 'LICENSE.adoc', 'HACKING.adoc']
   s.require_paths = ['lib']
 
-  s.add_runtime_dependency 'asciidoctor', ['>= 1.5.6', '< 3.0.0']
+  s.add_runtime_dependency 'asciidoctor', ['>= 2.0.0', '< 3.0.0']
   s.add_runtime_dependency 'thread_safe', '~> 0.3.5'
   s.add_runtime_dependency 'concurrent-ruby', '~> 1.0'
 
