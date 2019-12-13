@@ -35,7 +35,7 @@ endif::[]
 There are two main technology stacks that can transform AsciiDoc into HTML5 / reveal.js:
 
 * Asciidoctor / Ruby / Bundler (See <<Ruby Setup>>)
-* Asciidoctor.js / JavaScript (Node.js) / NPM (See <<Node / JavaScript Setup>>)
+* Asciidoctor.js / JavaScript (Node.js) / npm (See <<Node / JavaScript Setup>>)
 
 Right now the Asciidoctor / Ruby stack is the better tested one but with the changes in v1.1.0 they have feature parity.
 
@@ -512,7 +512,7 @@ print "$0: hello world\n"
 ....
 
 [NOTE]
-Alternatively, you can use http://coderay.rubychan.de[Coderay] or http://pygments.org[Pygments] as syntax highlighters if you are using the Asciidoctor/Ruby/Bundler toolchain (not Asciidoctor.js/Javascript/NPM).
+Alternatively, you can use http://coderay.rubychan.de[Coderay] or http://pygments.org[Pygments] as syntax highlighters if you are using the Asciidoctor/Ruby/Bundler toolchain (not Asciidoctor.js/JavaScript/npm).
 Check the `examples/` directory for examples and notes about what needs to be done for them to work.
 They are considered unsupported by the asciidoctor-reveal.js project.
 
@@ -672,7 +672,7 @@ In AsciiDoc the `data-state` can be applied to a slide by adding a state attribu
 == Epic Topic
 ----
 
-That state can be queried from Javascript or used in CSS to apply further customization to your slide deck.
+That state can be queried from JavaScript or used in CSS to apply further customization to your slide deck.
 For example, by combining this feature with the <<CSS override>> one, you can alter fonts for specific pages with this CSS:
 
 [source, css]
@@ -979,9 +979,9 @@ TIP: To work properly, this plugin requires a Chrome-based browser.
 Additional reveal.js plugins can be installed and activated using AsciiDoc attributes and external javascript files.
 
 . Extract the plugin files in a directory
-. Create a Javascript file that will contain the Javascript statements to load the plugin (only one required even if you are using several plugins)
-. Add a `:revealjs_plugins:` attribute to point to that Javascript file
-. (Optional) Add a `:revealjs_plugins_configuration:` attribute to point to a Javascript file that configures the plugins you use
+. Create a JavaScript file that will contain the JavaScript statements to load the plugin (only one required even if you are using several plugins)
+. Add a `:revealjs_plugins:` attribute to point to that JavaScript file
+. (Optional) Add a `:revealjs_plugins_configuration:` attribute to point to a JavaScript file that configures the plugins you use
 
 Looking at the example provided in the repository will provide guidance: link:examples/revealjs-plugins.adoc[AsciiDoc source], link:examples/revealjs-plugins.js[Plugin Loader], link:examples/revealjs-plugins-conf.js[Plugin Configuration].
 
@@ -995,12 +995,12 @@ Our requirements are expressed in our packages and by our dependencies.
 Basically, all you need is the package manager of the flavor of Asciidoctor-Reveal.js you are interested to run:
 
 * With Ruby / Bundler: A https://www.ruby-lang.org/en/downloads/[recent Ruby] and https://bundler.io/[Bundler]
-* With Javascript (Node.js) / NPM: a https://nodejs.org/en/download/[recent Node.js] environment
+* With JavaScript (Node.js) / npm: a https://nodejs.org/en/download/[recent Node.js] environment
 
 If you need more details about our dependencies check out Asciidoctor dependencies:
 
 * With Ruby / Bundler: https://asciidoctor.org/#requirements[Asciidoctor] 1.5.6
-* With Javascript (Node.js) / NPM: https://github.com/asciidoctor/asciidoctor.js/blob/v1.5.6/package.json[Asciidoctor.js] 1.5.6
+* With JavaScript (Node.js) / npm: https://github.com/asciidoctor/asciidoctor.js/blob/v1.5.6/package.json[Asciidoctor.js] 1.5.6
 
 
 == Contributing
