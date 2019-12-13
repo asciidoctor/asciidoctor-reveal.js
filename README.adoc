@@ -25,7 +25,7 @@ endif::[]
 ifdef::env-github[]
 image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
 image:http://img.shields.io/gem/v/asciidoctor-revealjs.svg[gem, link=https://rubygems.org/gems/asciidoctor-revealjs]
-image:http://img.shields.io/npm/v/asciidoctor-reveal.js.svg[npm, link=https://www.npmjs.org/package/asciidoctor-reveal.js]
+image:http://img.shields.io/npm/v/@asciidoctor/reveal.js.svg[npm, link=https://www.npmjs.org/package/@asciidoctor/reveal.js]
 endif::[]
 
 // IMPORTANT: Changes made to this description should be sync'ed with the readme field in package.json.
@@ -141,7 +141,7 @@ If you don't have a `package.json` file in your project directory, you can creat
 
 You can now install the dependencies:
 
- $ npm i --save asciidoctor asciidoctor-reveal.js
+ $ npm i --save asciidoctor @asciidoctor/reveal.js
 
 === Convert AsciiDoc into slides
 
@@ -180,11 +180,11 @@ If you don't have an existing presentation, you can create a sample presentation
 
 To convert the sample presentation into slides, open a terminal and type:
 
- $ $(npm bin)/asciidoctor -r asciidoctor-reveal.js -b revealjs presentation.adoc
+ $ $(npm bin)/asciidoctor -r @asciidoctor/reveal.js -b revealjs presentation.adoc
 
 On windows, open PowerShell and type:
 
- $ .\node_modules\.bin\asciidoctor.cmd -r asciidoctor-reveal.js -b revealjs presentation.adoc
+ $ .\node_modules\.bin\asciidoctor.cmd -r @asciidoctor/reveal.js -b revealjs presentation.adoc
  
 The above command will generate a file named [.path]_presentation.html_.
 You can open this file in a browser.
@@ -198,7 +198,7 @@ Alternatively, you can use the JavaScript API to register the converter and conv
 ----
 // Load Asciidoctor.js and the reveal.js converter
 var asciidoctor = require('@asciidoctor/core')()
-var asciidoctorRevealjs = require('asciidoctor-reveal.js')
+var asciidoctorRevealjs = require('@asciidoctor/reveal.js')
 asciidoctorRevealjs.register()
 
 // Convert the document 'presentation.adoc' using the reveal.js converter
