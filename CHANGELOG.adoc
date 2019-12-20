@@ -29,6 +29,7 @@ Use:
   * Custom CSS might require adjustments.
     Source and listing block encapsulation changed due to our migration to Asciidoctor 2.0.0 Syntax Highlighter API.
     See {uri-issue}287[#287].
+  * {project-name} now requires Asciidoctor 2.0.0+ or Asciidoctor.js 2.0.0+ ({uri-issue}290[#290])
   * Dropped support for end-of-life Ruby version 2.1 and 2.2 ({uri-issue}247[#247])
 
 Compliance::
