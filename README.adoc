@@ -992,15 +992,15 @@ A {uri-revealjs-gh}/wiki/Plugins,-Tools-and-Hardware[list of existing reveal.js 
 == Minimum Requirements
 
 Our requirements are expressed in our packages and by our dependencies.
-Basically, all you need is the package manager of the flavor of Asciidoctor-Reveal.js you are interested to run:
+Basically, all you need is the package manager of the flavor of Asciidoctor reveal.js you are interested to run:
 
 * With Ruby / Bundler: A https://www.ruby-lang.org/en/downloads/[recent Ruby] and https://bundler.io/[Bundler]
 * With Javascript (Node.js) / NPM: a https://nodejs.org/en/download/[recent Node.js] environment
 
 If you need more details about our dependencies check out Asciidoctor dependencies:
 
-* With Ruby / Bundler: https://asciidoctor.org/#requirements[Asciidoctor] 1.5.6
-* With Javascript (Node.js) / NPM: https://github.com/asciidoctor/asciidoctor.js/blob/v1.5.6/package.json[Asciidoctor.js] 1.5.6
+* With Ruby / Bundler: https://github.com/asciidoctor/asciidoctor/tree/v2.0.10#requirements[Asciidoctor] 2.0.10
+* With Javascript (Node.js) / NPM: https://github.com/asciidoctor/asciidoctor.js/blob/v2.0.3/packages/core/package.json[Asciidoctor.js] 2.0.3
 
 
 == Contributing
