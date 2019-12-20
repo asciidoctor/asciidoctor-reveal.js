@@ -32,7 +32,52 @@
       .reveal div.right {
         float: right;
       }
-      
+
+      .reveal .listingblock.stretch > .content {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre > code {
+        height: 100%;
+        max-height: 100%;
+      }
+
+      /* tables */
+      table{border-collapse:collapse;border-spacing:0}
+      table{margin-bottom:1.25em;border:solid 1px #dedede}
+      table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;text-align:left}
+      table tr th,table tr td{padding:.5625em .625em;font-size:inherit}
+      table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+      td.tableblock>.content{margin-bottom:1.25em}
+      td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+      table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+      table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+      table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+      table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+      table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
+      table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
+      table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+      table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+      table.frame-all{border-width:1px}
+      table.frame-sides{border-width:0 1px}
+      table.frame-topbot,table.frame-ends{border-width:1px 0}
+      .reveal table th.halign-left,.reveal table td.halign-left{text-align:left}
+      .reveal table th.halign-right,.reveal table td.halign-right{text-align:right}
+      .reveal table th.halign-center,.reveal table td.halign-center{text-align:center}
+      .reveal table th.valign-top,.reveal table td.valign-top{vertical-align:top}
+      .reveal table th.valign-bottom,.reveal table td.valign-bottom{vertical-align:bottom}
+      .reveal table th.valign-middle,.reveal table td.valign-middle{vertical-align:middle}
+      table thead th,table tfoot th{font-weight:bold}
+      tbody tr th{display:table-cell;line-height:1.6}
+      tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{font-weight:bold}
+      thead{display:table-header-group}
+
+      .reveal table.grid-none th,.reveal table.grid-none td{border-bottom:0!important}
+
       /* callouts */
       .conum[data-value] {display:inline-block;color:#fff!important;background-color:rgba(50,150,50,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
       .conum[data-value] *{color:#fff!important}
@@ -42,7 +87,6 @@
       b.conum *{color:inherit!important}
       .conum:not([data-value]):empty{display:none}
     </style>
-    <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
@@ -71,7 +115,7 @@
           slide.style.backgroundColor = 'transparent';
         }
       })
-      
+
       // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
       Reveal.initialize({
         // Display presentation control arrows
@@ -163,20 +207,20 @@
         parallaxBackgroundVertical: null,
         // The display mode that will be used to show slides
         display: 'block',
-      
+
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
         width: 960,
         height: 700,
-      
+
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
-      
+
         // Bounds for smallest/largest possible scale to apply to content
         minScale: 0.2,
         maxScale: 1.5,
-      
+
         // PDF Export Options
         // Put each fragment on a separate page
         pdfSeparateFragments: true,
@@ -186,17 +230,17 @@
         // Optional libraries used to extend on reveal.js
         dependencies: [
             { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      
+
             { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
             { src: 'reveal.js/plugin/notes/notes.js', async: true },
-      
-      
-      
-      
+
+
+
+
         ],
-      
-      
-      
+
+
+
       });
     </script>
   </body>
@@ -218,7 +262,52 @@
       .reveal div.right {
         float: right;
       }
-      
+
+      .reveal .listingblock.stretch > .content {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre > code {
+        height: 100%;
+        max-height: 100%;
+      }
+
+      /* tables */
+      table{border-collapse:collapse;border-spacing:0}
+      table{margin-bottom:1.25em;border:solid 1px #dedede}
+      table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;text-align:left}
+      table tr th,table tr td{padding:.5625em .625em;font-size:inherit}
+      table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+      td.tableblock>.content{margin-bottom:1.25em}
+      td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+      table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+      table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+      table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+      table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+      table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
+      table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
+      table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+      table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+      table.frame-all{border-width:1px}
+      table.frame-sides{border-width:0 1px}
+      table.frame-topbot,table.frame-ends{border-width:1px 0}
+      .reveal table th.halign-left,.reveal table td.halign-left{text-align:left}
+      .reveal table th.halign-right,.reveal table td.halign-right{text-align:right}
+      .reveal table th.halign-center,.reveal table td.halign-center{text-align:center}
+      .reveal table th.valign-top,.reveal table td.valign-top{vertical-align:top}
+      .reveal table th.valign-bottom,.reveal table td.valign-bottom{vertical-align:bottom}
+      .reveal table th.valign-middle,.reveal table td.valign-middle{vertical-align:middle}
+      table thead th,table tfoot th{font-weight:bold}
+      tbody tr th{display:table-cell;line-height:1.6}
+      tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{font-weight:bold}
+      thead{display:table-header-group}
+
+      .reveal table.grid-none th,.reveal table.grid-none td{border-bottom:0!important}
+
       /* callouts */
       .conum[data-value] {display:inline-block;color:#fff!important;background-color:rgba(50,150,50,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
       .conum[data-value] *{color:#fff!important}
@@ -228,7 +317,6 @@
       b.conum *{color:inherit!important}
       .conum:not([data-value]):empty{display:none}
     </style>
-    <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
@@ -257,7 +345,7 @@
           slide.style.backgroundColor = 'transparent';
         }
       })
-      
+
       // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
       Reveal.initialize({
         // Display presentation control arrows
@@ -349,16 +437,16 @@
         parallaxBackgroundVertical: null,
         // The display mode that will be used to show slides
         display: 'block',
-      
+
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
         width: 960,
         height: 700,
-      
+
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
-      
+
         // Bounds for smallest/largest possible scale to apply to content
         minScale: 0.2,
         maxScale: 1.5,
@@ -372,17 +460,17 @@
         // Optional libraries used to extend on reveal.js
         dependencies: [
             { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      
+
             { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
             { src: 'reveal.js/plugin/notes/notes.js', async: true },
-      
-      
-      
-      
+
+
+
+
         ],
-      
-      
-      
+
+
+
       });
     </script>
   </body>
@@ -404,7 +492,52 @@
       .reveal div.right {
         float: right;
       }
-      
+
+      .reveal .listingblock.stretch > .content {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre > code {
+        height: 100%;
+        max-height: 100%;
+      }
+
+      /* tables */
+      table{border-collapse:collapse;border-spacing:0}
+      table{margin-bottom:1.25em;border:solid 1px #dedede}
+      table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;text-align:left}
+      table tr th,table tr td{padding:.5625em .625em;font-size:inherit}
+      table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+      td.tableblock>.content{margin-bottom:1.25em}
+      td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+      table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+      table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+      table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+      table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+      table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
+      table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
+      table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+      table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+      table.frame-all{border-width:1px}
+      table.frame-sides{border-width:0 1px}
+      table.frame-topbot,table.frame-ends{border-width:1px 0}
+      .reveal table th.halign-left,.reveal table td.halign-left{text-align:left}
+      .reveal table th.halign-right,.reveal table td.halign-right{text-align:right}
+      .reveal table th.halign-center,.reveal table td.halign-center{text-align:center}
+      .reveal table th.valign-top,.reveal table td.valign-top{vertical-align:top}
+      .reveal table th.valign-bottom,.reveal table td.valign-bottom{vertical-align:bottom}
+      .reveal table th.valign-middle,.reveal table td.valign-middle{vertical-align:middle}
+      table thead th,table tfoot th{font-weight:bold}
+      tbody tr th{display:table-cell;line-height:1.6}
+      tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{font-weight:bold}
+      thead{display:table-header-group}
+
+      .reveal table.grid-none th,.reveal table.grid-none td{border-bottom:0!important}
+
       /* callouts */
       .conum[data-value] {display:inline-block;color:#fff!important;background-color:rgba(50,150,50,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
       .conum[data-value] *{color:#fff!important}
@@ -414,7 +547,6 @@
       b.conum *{color:inherit!important}
       .conum:not([data-value]):empty{display:none}
     </style>
-    <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
@@ -443,7 +575,7 @@
           slide.style.backgroundColor = 'transparent';
         }
       })
-      
+
       // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
       Reveal.initialize({
         // Display presentation control arrows
@@ -535,16 +667,16 @@
         parallaxBackgroundVertical: null,
         // The display mode that will be used to show slides
         display: 'block',
-      
+
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
         width: 960,
         height: 700,
-      
+
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
-      
+
         // Bounds for smallest/largest possible scale to apply to content
         minScale: 0.2,
         maxScale: 1.5,
@@ -558,17 +690,17 @@
         // Optional libraries used to extend on reveal.js
         dependencies: [
             { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      
+
             { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
             { src: 'reveal.js/plugin/notes/notes.js', async: true },
-      
-      
-      
-      
+
+
+
+
         ],
-      
-      
-      
+
+
+
       });
     </script>
   </body>
@@ -590,7 +722,52 @@
       .reveal div.right {
         float: right;
       }
-      
+
+      .reveal .listingblock.stretch > .content {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre > code {
+        height: 100%;
+        max-height: 100%;
+      }
+
+      /* tables */
+      table{border-collapse:collapse;border-spacing:0}
+      table{margin-bottom:1.25em;border:solid 1px #dedede}
+      table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;text-align:left}
+      table tr th,table tr td{padding:.5625em .625em;font-size:inherit}
+      table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+      td.tableblock>.content{margin-bottom:1.25em}
+      td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+      table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+      table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+      table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+      table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+      table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
+      table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
+      table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+      table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+      table.frame-all{border-width:1px}
+      table.frame-sides{border-width:0 1px}
+      table.frame-topbot,table.frame-ends{border-width:1px 0}
+      .reveal table th.halign-left,.reveal table td.halign-left{text-align:left}
+      .reveal table th.halign-right,.reveal table td.halign-right{text-align:right}
+      .reveal table th.halign-center,.reveal table td.halign-center{text-align:center}
+      .reveal table th.valign-top,.reveal table td.valign-top{vertical-align:top}
+      .reveal table th.valign-bottom,.reveal table td.valign-bottom{vertical-align:bottom}
+      .reveal table th.valign-middle,.reveal table td.valign-middle{vertical-align:middle}
+      table thead th,table tfoot th{font-weight:bold}
+      tbody tr th{display:table-cell;line-height:1.6}
+      tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{font-weight:bold}
+      thead{display:table-header-group}
+
+      .reveal table.grid-none th,.reveal table.grid-none td{border-bottom:0!important}
+
       /* callouts */
       .conum[data-value] {display:inline-block;color:#fff!important;background-color:rgba(50,150,50,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
       .conum[data-value] *{color:#fff!important}
@@ -600,7 +777,6 @@
       b.conum *{color:inherit!important}
       .conum:not([data-value]):empty{display:none}
     </style>
-    <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
@@ -629,7 +805,7 @@
           slide.style.backgroundColor = 'transparent';
         }
       })
-      
+
       // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
       Reveal.initialize({
         // Display presentation control arrows
@@ -721,16 +897,16 @@
         parallaxBackgroundVertical: null,
         // The display mode that will be used to show slides
         display: 'block',
-      
+
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
         width: 960,
         height: 700,
-      
+
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
-      
+
         // Bounds for smallest/largest possible scale to apply to content
         minScale: 0.2,
         maxScale: 1.5,
@@ -744,17 +920,17 @@
         // Optional libraries used to extend on reveal.js
         dependencies: [
             { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      
+
             { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
             { src: 'reveal.js/plugin/notes/notes.js', async: true },
-      
-      
-      
-      
+
+
+
+
         ],
-      
-      
-      
+
+
+
       });
     </script>
   </body>
@@ -776,7 +952,52 @@
       .reveal div.right {
         float: right;
       }
-      
+
+      .reveal .listingblock.stretch > .content {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre > code {
+        height: 100%;
+        max-height: 100%;
+      }
+
+      /* tables */
+      table{border-collapse:collapse;border-spacing:0}
+      table{margin-bottom:1.25em;border:solid 1px #dedede}
+      table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;text-align:left}
+      table tr th,table tr td{padding:.5625em .625em;font-size:inherit}
+      table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+      td.tableblock>.content{margin-bottom:1.25em}
+      td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+      table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+      table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+      table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+      table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+      table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
+      table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
+      table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+      table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+      table.frame-all{border-width:1px}
+      table.frame-sides{border-width:0 1px}
+      table.frame-topbot,table.frame-ends{border-width:1px 0}
+      .reveal table th.halign-left,.reveal table td.halign-left{text-align:left}
+      .reveal table th.halign-right,.reveal table td.halign-right{text-align:right}
+      .reveal table th.halign-center,.reveal table td.halign-center{text-align:center}
+      .reveal table th.valign-top,.reveal table td.valign-top{vertical-align:top}
+      .reveal table th.valign-bottom,.reveal table td.valign-bottom{vertical-align:bottom}
+      .reveal table th.valign-middle,.reveal table td.valign-middle{vertical-align:middle}
+      table thead th,table tfoot th{font-weight:bold}
+      tbody tr th{display:table-cell;line-height:1.6}
+      tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{font-weight:bold}
+      thead{display:table-header-group}
+
+      .reveal table.grid-none th,.reveal table.grid-none td{border-bottom:0!important}
+
       /* callouts */
       .conum[data-value] {display:inline-block;color:#fff!important;background-color:rgba(50,150,50,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
       .conum[data-value] *{color:#fff!important}
@@ -786,7 +1007,6 @@
       b.conum *{color:inherit!important}
       .conum:not([data-value]):empty{display:none}
     </style>
-    <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
@@ -815,7 +1035,7 @@
           slide.style.backgroundColor = 'transparent';
         }
       })
-      
+
       // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
       Reveal.initialize({
         // Display presentation control arrows
@@ -907,16 +1127,16 @@
         parallaxBackgroundVertical: null,
         // The display mode that will be used to show slides
         display: 'block',
-      
+
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
         width: 960,
         height: 700,
-      
+
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
-      
+
         // Bounds for smallest/largest possible scale to apply to content
         minScale: 0.2,
         maxScale: 1.5,
@@ -930,17 +1150,17 @@
         // Optional libraries used to extend on reveal.js
         dependencies: [
             { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      
+
             { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
             { src: 'reveal.js/plugin/notes/notes.js', async: true },
-      
-      
-      
-      
+
+
+
+
         ],
-      
-      
-      
+
+
+
       });
     </script>
   </body>
@@ -961,7 +1181,52 @@
       .reveal div.right {
         float: right;
       }
-      
+
+      .reveal .listingblock.stretch > .content {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre > code {
+        height: 100%;
+        max-height: 100%;
+      }
+
+      /* tables */
+      table{border-collapse:collapse;border-spacing:0}
+      table{margin-bottom:1.25em;border:solid 1px #dedede}
+      table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;text-align:left}
+      table tr th,table tr td{padding:.5625em .625em;font-size:inherit}
+      table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+      td.tableblock>.content{margin-bottom:1.25em}
+      td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+      table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+      table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+      table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+      table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+      table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
+      table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
+      table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+      table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+      table.frame-all{border-width:1px}
+      table.frame-sides{border-width:0 1px}
+      table.frame-topbot,table.frame-ends{border-width:1px 0}
+      .reveal table th.halign-left,.reveal table td.halign-left{text-align:left}
+      .reveal table th.halign-right,.reveal table td.halign-right{text-align:right}
+      .reveal table th.halign-center,.reveal table td.halign-center{text-align:center}
+      .reveal table th.valign-top,.reveal table td.valign-top{vertical-align:top}
+      .reveal table th.valign-bottom,.reveal table td.valign-bottom{vertical-align:bottom}
+      .reveal table th.valign-middle,.reveal table td.valign-middle{vertical-align:middle}
+      table thead th,table tfoot th{font-weight:bold}
+      tbody tr th{display:table-cell;line-height:1.6}
+      tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{font-weight:bold}
+      thead{display:table-header-group}
+
+      .reveal table.grid-none th,.reveal table.grid-none td{border-bottom:0!important}
+
       /* callouts */
       .conum[data-value] {display:inline-block;color:#fff!important;background-color:rgba(50,150,50,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
       .conum[data-value] *{color:#fff!important}
@@ -971,7 +1236,6 @@
       b.conum *{color:inherit!important}
       .conum:not([data-value]):empty{display:none}
     </style>
-    <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
@@ -1002,7 +1266,7 @@
           slide.style.backgroundColor = 'transparent';
         }
       })
-      
+
       // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
       Reveal.initialize({
         // Display presentation control arrows
@@ -1094,16 +1358,16 @@
         parallaxBackgroundVertical: null,
         // The display mode that will be used to show slides
         display: 'block',
-      
+
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
         width: 960,
         height: 700,
-      
+
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
-      
+
         // Bounds for smallest/largest possible scale to apply to content
         minScale: 0.2,
         maxScale: 1.5,
@@ -1117,17 +1381,17 @@
         // Optional libraries used to extend on reveal.js
         dependencies: [
             { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      
+
             { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
             { src: 'reveal.js/plugin/notes/notes.js', async: true },
-      
-      
-      
-      
+
+
+
+
         ],
-      
-      
-      
+
+
+
       });
     </script>
   </body>
@@ -1148,7 +1412,52 @@
       .reveal div.right {
         float: right;
       }
-      
+
+      .reveal .listingblock.stretch > .content {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre > code {
+        height: 100%;
+        max-height: 100%;
+      }
+
+      /* tables */
+      table{border-collapse:collapse;border-spacing:0}
+      table{margin-bottom:1.25em;border:solid 1px #dedede}
+      table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;text-align:left}
+      table tr th,table tr td{padding:.5625em .625em;font-size:inherit}
+      table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+      td.tableblock>.content{margin-bottom:1.25em}
+      td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+      table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+      table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+      table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+      table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+      table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
+      table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
+      table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+      table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+      table.frame-all{border-width:1px}
+      table.frame-sides{border-width:0 1px}
+      table.frame-topbot,table.frame-ends{border-width:1px 0}
+      .reveal table th.halign-left,.reveal table td.halign-left{text-align:left}
+      .reveal table th.halign-right,.reveal table td.halign-right{text-align:right}
+      .reveal table th.halign-center,.reveal table td.halign-center{text-align:center}
+      .reveal table th.valign-top,.reveal table td.valign-top{vertical-align:top}
+      .reveal table th.valign-bottom,.reveal table td.valign-bottom{vertical-align:bottom}
+      .reveal table th.valign-middle,.reveal table td.valign-middle{vertical-align:middle}
+      table thead th,table tfoot th{font-weight:bold}
+      tbody tr th{display:table-cell;line-height:1.6}
+      tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{font-weight:bold}
+      thead{display:table-header-group}
+
+      .reveal table.grid-none th,.reveal table.grid-none td{border-bottom:0!important}
+
       /* callouts */
       .conum[data-value] {display:inline-block;color:#fff!important;background-color:rgba(50,150,50,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
       .conum[data-value] *{color:#fff!important}
@@ -1158,7 +1467,6 @@
       b.conum *{color:inherit!important}
       .conum:not([data-value]):empty{display:none}
     </style>
-    <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
@@ -1189,7 +1497,7 @@
           slide.style.backgroundColor = 'transparent';
         }
       })
-      
+
       // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
       Reveal.initialize({
         // Display presentation control arrows
@@ -1281,16 +1589,16 @@
         parallaxBackgroundVertical: null,
         // The display mode that will be used to show slides
         display: 'block',
-      
+
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
         width: 960,
         height: 700,
-      
+
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
-      
+
         // Bounds for smallest/largest possible scale to apply to content
         minScale: 0.2,
         maxScale: 1.5,
@@ -1304,17 +1612,17 @@
         // Optional libraries used to extend on reveal.js
         dependencies: [
             { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      
+
             { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
             { src: 'reveal.js/plugin/notes/notes.js', async: true },
-      
-      
-      
-      
+
+
+
+
         ],
-      
-      
-      
+
+
+
       });
     </script>
   </body>
@@ -1335,7 +1643,52 @@
       .reveal div.right {
         float: right;
       }
-      
+
+      .reveal .listingblock.stretch > .content {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre {
+        height: 100%;
+      }
+
+      .reveal .listingblock.stretch > .content > pre > code {
+        height: 100%;
+        max-height: 100%;
+      }
+
+      /* tables */
+      table{border-collapse:collapse;border-spacing:0}
+      table{margin-bottom:1.25em;border:solid 1px #dedede}
+      table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;text-align:left}
+      table tr th,table tr td{padding:.5625em .625em;font-size:inherit}
+      table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+      td.tableblock>.content{margin-bottom:1.25em}
+      td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+      table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+      table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+      table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+      table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+      table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
+      table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
+      table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+      table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+      table.frame-all{border-width:1px}
+      table.frame-sides{border-width:0 1px}
+      table.frame-topbot,table.frame-ends{border-width:1px 0}
+      .reveal table th.halign-left,.reveal table td.halign-left{text-align:left}
+      .reveal table th.halign-right,.reveal table td.halign-right{text-align:right}
+      .reveal table th.halign-center,.reveal table td.halign-center{text-align:center}
+      .reveal table th.valign-top,.reveal table td.valign-top{vertical-align:top}
+      .reveal table th.valign-bottom,.reveal table td.valign-bottom{vertical-align:bottom}
+      .reveal table th.valign-middle,.reveal table td.valign-middle{vertical-align:middle}
+      table thead th,table tfoot th{font-weight:bold}
+      tbody tr th{display:table-cell;line-height:1.6}
+      tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{font-weight:bold}
+      thead{display:table-header-group}
+
+      .reveal table.grid-none th,.reveal table.grid-none td{border-bottom:0!important}
+
       /* callouts */
       .conum[data-value] {display:inline-block;color:#fff!important;background-color:rgba(50,150,50,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
       .conum[data-value] *{color:#fff!important}
@@ -1345,7 +1698,6 @@
       b.conum *{color:inherit!important}
       .conum:not([data-value]):empty{display:none}
     </style>
-    <link href="reveal.js/lib/css/zenburn.css" rel="stylesheet">
     <script>
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
@@ -1376,7 +1728,7 @@
           slide.style.backgroundColor = 'transparent';
         }
       })
-      
+
       // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
       Reveal.initialize({
         // Display presentation control arrows
@@ -1468,16 +1820,16 @@
         parallaxBackgroundVertical: null,
         // The display mode that will be used to show slides
         display: 'block',
-      
+
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
         width: 960,
         height: 700,
-      
+
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
-      
+
         // Bounds for smallest/largest possible scale to apply to content
         minScale: 0.2,
         maxScale: 1.5,
@@ -1491,17 +1843,17 @@
         // Optional libraries used to extend on reveal.js
         dependencies: [
             { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-      
+
             { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
             { src: 'reveal.js/plugin/notes/notes.js', async: true },
-      
-      
-      
-      
+
+
+
+
         ],
-      
-      
-      
+
+
+
       });
     </script>
   </body>

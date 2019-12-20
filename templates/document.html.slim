@@ -12,6 +12,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     - [:description, :keywords, :author, :copyright].each do |key|
       - if attr? key
         meta name=key content=(attr key)
+    - linkcss = (attr? 'linkcss')
     title=(doctitle sanitize: true, use_fallback: true)
     meta content="yes" name="apple-mobile-web-app-capable"
     meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"
@@ -46,24 +47,10 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
           TeX: {#{eqnums_opt}}
           });
       script src='#{cdn_base}/mathjax/2.4.0/MathJax.js?config=TeX-MML-AM_HTMLorMML'
-    - case document.attr 'source-highlighter'
-    - when 'coderay'
-      - if (attr 'coderay-css', 'class') == 'class'
-        - if @safe >= Asciidoctor::SafeMode::SECURE || (attr? :linkcss)
-          link rel='stylesheet' href=normalize_web_path('asciidoctor-coderay.css', (attr :stylesdir, ''))
-        - else
-          style=Asciidoctor::Stylesheets.instance.coderay_stylesheet_data
-    - when 'pygments'
-      - if (attr 'pygments-css', 'class') == 'class'
-        - if @safe >= Asciidoctor::SafeMode::SECURE || (attr? :linkcss)
-          link rel='stylesheet' href=normalize_web_path('asciidoctor-pygments.css', (attr :stylesdir, ''))
-        - else
-          style=Asciidoctor::Stylesheets.instance.pygments_stylesheet_data(attr 'pygments-style')
-    / For syntax highlighting
-    - if attr? 'highlightjs-theme'
-      link href=(attr 'highlightjs-theme') rel="stylesheet"
-    - else
-      link href="#{revealjsdir}/lib/css/zenburn.css" rel="stylesheet"
+
+    - syntax_hl = self.syntax_highlighter
+    - if syntax_hl && (syntax_hl.docinfo? :head)
+      =syntax_hl.docinfo :head, self, cdn_base_url: cdn_base, linkcss: linkcss, self_closing_tag_slash: '/'
     / If the query includes 'print-pdf', use the PDF print sheet
     javascript:
       var link = document.createElement( 'link' );
@@ -250,5 +237,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         #{(attr? 'revealjs_plugins_configuration') ? File.read(attr('revealjs_plugins_configuration', '')) : ""}
 
       });
+    - if syntax_hl && (syntax_hl.docinfo? :footer)
+      =syntax_hl.docinfo :footer, self, cdn_base_url: cdn_base, linkcss: linkcss, self_closing_tag_slash: '/'
+
     - unless (docinfo_content = (docinfo :footer, '.html')).empty?
       =docinfo_content

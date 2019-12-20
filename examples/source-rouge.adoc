@@ -1,0 +1,41 @@
+// .source-rouge
+// Demonstration of source highlighting with Rouge
+// :include: //div[@class="slides"]
+// :header_footer:
+= Source Code with Rouge
+:icons: font
+:source-highlighter: rouge
+:rouge-style: monokai
+
+== Requirements
+
+WARNING: This will not work from Asciidoctor.js
+
+[NOTE]
+====
+For this to work. You need to add:
+
+    gem 'rouge'
+
+to your `Gemfile` and re-run:
+
+    bundle install
+====
+
+== Use the Source
+
+[source, rust]
+----
+fn main() {
+    println!("Hello World!");
+}
+----
+
+== Stretch the Source
+
+[source, rust, role="stretch"]
+----
+fn main() {
+    println!("Hello stretched World!");
+}
+----
