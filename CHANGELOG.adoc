@@ -47,6 +47,9 @@ Enhancements::
 Bug Fixes::
   * Babel integration example updated for security ({uri-issue}285[#285])
 
+Infrastructure::
+  * Updated Travis' JRuby to fix issues with bundler ({uri-issue}295[#295])
+
 
 == 2.0.1 (2019-12-04)
 
