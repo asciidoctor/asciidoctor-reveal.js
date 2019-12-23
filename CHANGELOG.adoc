@@ -34,6 +34,7 @@ Use:
 
 Compliance::
   * Added support for table frame, grid, header and alignment options ({uri-issue}29[#29], {uri-issue}42[#42], {uri-issue}56[#56], {uri-issue}288[#288])
+  * Added support for Reveal.js data-background-opacity ({uri-issue}269[#269])
 
 Enhancements::
   * Support for Asciidoctor.js 2.0.0+ which brings a command line interface ({uri-issue}254[#254])
