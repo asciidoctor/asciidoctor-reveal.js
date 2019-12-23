@@ -8,7 +8,7 @@
 / extracting block image attributes to find an image to use as a
 / background_image attribute
 - data_background_image, data_background_size, data_background_repeat,
-  data_background_transition = nil
+  data_background_position, data_background_transition = nil
 
 / process the first image block in the current section that acts as a background
 - section_images = blocks.map do |block|
@@ -24,6 +24,7 @@
   - data_background_size = bg_image.attr 'size'
   - data_background_repeat = bg_image.attr 'repeat'
   - data_background_transition = bg_image.attr 'transition'
+  - data_background_position = bg_image.attr 'position'
 
 / background-image section attribute overrides the image one
 - if attr? 'background-image'
@@ -46,6 +47,7 @@
       data-background-size=(data_background_size || attr('background-size'))
       data-background-repeat=(data_background_repeat || attr('background-repeat'))
       data-background-transition=(data_background_transition || attr('background-transition'))
+      data-background-position=(data_background_position || attr('background-position'))
       data-background-iframe=(attr "background-iframe")
       data-background-video=(attr "background-video")
       data-background-video-loop=((attr? 'background-video-loop') || (option? 'loop'))
@@ -76,6 +78,7 @@
       data-background-size=(data_background_size || attr('background-size'))
       data-background-repeat=(data_background_repeat || attr('background-repeat'))
       data-background-transition=(data_background_transition || attr('background-transition'))
+      data-background-position=(data_background_position || attr('background-position'))
       data-background-iframe=(attr "background-iframe")
       data-background-video=(attr "background-video")
       data-background-video-loop=((attr? 'background-video-loop') || (option? 'loop'))
