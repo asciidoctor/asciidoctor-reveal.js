@@ -25,6 +25,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       link rel='stylesheet' href='#{revealjsdir}/css/theme/#{attr 'revealjs_theme', 'black'}.css' id='theme'
     include asciidoctor_revealjs.css.slim
     - if attr? :icons, 'font'
+      / iconfont-remote is implicitly set by Asciidoctor core. See https://github.com/asciidoctor/asciidoctor.org/issues/361
       - if attr? 'iconfont-remote'
         link rel='stylesheet' href=(attr 'iconfont-cdn', %(#{cdn_base}/font-awesome/5.8.2/css/all.min.css))
       - else

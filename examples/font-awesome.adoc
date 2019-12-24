@@ -1,0 +1,24 @@
+// .font-awesome
+// Testing font-awesome icons
+// :include: //body/script | //div[@class="slides"]
+// :header_footer:
+= Font Awesome Tests
+:icons: font
+
+== !
+
+icon:heart[2x]
+
+== !
+
+icon:heart[size=5x]
+
+== !
+
+// TODO
+[red]
+icon:heart[size=5x]
+
+== !
+
+icon:stackpath[size=5x]
