@@ -71,7 +71,7 @@ def build_converter(mode = :pretty)
     Asciidoctor::TemplatesCompiler::RevealjsSlim.compile_converter(
       templates_dir: TEMPLATES_DIR,
       class_name: 'Asciidoctor::Revealjs::Converter',
-      register_for: ['revealjs'],
+      register_for: ['revealjs', 'reveal.js'],
       backend_info: {
         basebackend: 'html',
         outfilesuffix: '.html',

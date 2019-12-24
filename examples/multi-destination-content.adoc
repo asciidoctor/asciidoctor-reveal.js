@@ -50,6 +50,8 @@ Some overview
 ----
 
 ifdef::backend-revealjs[=== !]
+// TODO one day would be nice to allow
+//ifdef::backend-reveal.js[=== !]
 
 Detailed view
 
