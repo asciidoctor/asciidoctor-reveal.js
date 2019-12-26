@@ -23,6 +23,6 @@
     "@babel/preset-env": "^7.7.4"
   },
   "dependencies": {
-    "asciidoctor-reveal.js": "^2.0.0"
+    "@asciidoctor/reveal.js": "^3.0.0-rc1"
   }
 }

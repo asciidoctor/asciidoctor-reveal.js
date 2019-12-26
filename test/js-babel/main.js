@@ -1,5 +1,5 @@
-import Asciidoctor from 'asciidoctor.js'
-import AsciidoctorReveal from 'asciidoctor-reveal.js'
+import Asciidoctor from '@asciidoctor/core'
+import AsciidoctorReveal from '@asciidoctor/reveal.js'
 
 const asciidoctor = Asciidoctor()
 AsciidoctorReveal.register()
