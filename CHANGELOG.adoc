@@ -12,7 +12,7 @@ Upgrade considerations::
   * Node.js packaging changes!
     With the arrival of Asciidoctor.js 2.0.0 you can now use a command line interface (CLI) just like with Asciidoctor Ruby:
 
-    $(npm bin)/asciidoctor -r asciidoctor-reveal.js -b revealjs presentation.adoc
+    $(npm bin)/asciidoctor -r @asciidoctor/reveal.js -b revealjs presentation.adoc
 +
 If you want to keep generating your reveal.js presentations using the Node.js API, you need to change the following code.
 Instead of:
@@ -23,9 +23,10 @@ Instead of:
 Use:
 
     var asciidoctor = require('@asciidoctor/core')()
-    var asciidoctorRevealjs = require('asciidoctor-reveal.js')
+    var asciidoctorRevealjs = require('@asciidoctor/reveal.js')
     asciidoctorRevealjs.register()
 +
+  * Node.js package name changed from `asciidoctor-reveal.js` to `@asciidoctor/reveal.js`
   * Custom CSS might require adjustments.
     Source and listing block encapsulation changed due to our migration to Asciidoctor 2.0.0 Syntax Highlighter API.
     See {uri-issue}287[#287].
