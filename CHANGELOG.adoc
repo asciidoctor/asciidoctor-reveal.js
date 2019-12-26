@@ -26,7 +26,7 @@ Use:
     var asciidoctorRevealjs = require('@asciidoctor/reveal.js')
     asciidoctorRevealjs.register()
 +
-  * Node.js package name changed from `asciidoctor-reveal.js` to `@asciidoctor/reveal.js`
+  * Node.js package name changed from `asciidoctor-reveal.js` to `@asciidoctor/reveal.js` ({uri-issue}252[#252], {uri-issue}291[#291])
   * Custom CSS might require adjustments.
     Source and listing block encapsulation changed due to our migration to Asciidoctor 2.0.0 Syntax Highlighter API.
     See {uri-issue}287[#287].
