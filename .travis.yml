@@ -3,12 +3,15 @@ git:
   depth: 2
 language: ruby
 node_js: lts/*
+before_install:
+# get the latest repository version of rvm to make sure that 'jruby-9' will resolve to an up-to-date version of jruby
+- rvm get head
 rvm:
 - 2.6
 - 2.5
 - 2.4
 - 2.3
-- jruby-9.2.9.0
+- jruby-9
 gemfile:
 - Gemfile
 - Gemfile.upstream
