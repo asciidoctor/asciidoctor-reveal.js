@@ -36,6 +36,7 @@ Use:
 
 Compliance::
   * Added support for table frame, grid, header and alignment options ({uri-issue}29[#29], {uri-issue}42[#42], {uri-issue}56[#56], {uri-issue}288[#288])
+  * Source code callout style aligned with Asciidoctor's ({uri-issue}293[#293], {uri-issue}300[#300])
   * Added support for Reveal.js data-background-opacity ({uri-issue}269[#269])
   * Added support for Reveal.js data-background-position ({uri-issue}273[#273], {uri-issue}274[#274])
 
