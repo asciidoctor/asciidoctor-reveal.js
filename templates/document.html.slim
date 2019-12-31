@@ -78,7 +78,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         = content
         - unless (_docinfo = docinfo :footer, '-revealjs.html').empty?
           = _docinfo
-    script src="#{revealjsdir}/lib/js/head.min.js"
+    // FIXME we need to sync with upstream now, see changes in https://github.com/hakimel/reveal.js/blame/master/index.html
     script src="#{revealjsdir}/js/reveal.js"
     javascript:
       Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
