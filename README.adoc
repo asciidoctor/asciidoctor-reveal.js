@@ -809,6 +809,7 @@ They are applied in the link:templates/document.html.slim[document template].
 
 NOTE: Default settings are based on `reveal.js` default settings.
 
+// FIXME add new 3.8 options here
 [cols="1m,1,2"]
 |===
 |Attribute |Value(s) |Description

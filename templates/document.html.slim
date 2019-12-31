@@ -110,7 +110,10 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         slideNumber: #{to_valid_slidenumber(attr 'revealjs_slidenumber', false)},
         // Control which views the slide number displays on
         showSlideNumber: '#{attr 'revealjs_showslidenumber', 'all'}',
-        // Push each slide change to the browser history
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: #{to_boolean(attr 'revealjs_hash', false)},
+        // Push each slide change to the browser history. Implies `hash: true`
         history: #{to_boolean(attr 'revealjs_history', false)},
         // Enable keyboard shortcuts for navigation
         keyboard: #{to_boolean(attr 'revealjs_keyboard', true)},
@@ -124,6 +127,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         loop: #{to_boolean(attr 'revealjs_loop', false)},
         // Change the presentation direction to be RTL
         rtl: #{to_boolean(attr 'revealjs_rtl', false)},
+        // See https://github.com/hakimel/reveal.js/#navigation-mode
+        navigationMode: '#{attr 'revealjs_navigationmode', 'default'}',
         // Randomizes the order of slides each time the presentation loads
         shuffle: #{to_boolean(attr 'revealjs_shuffle', false)},
         // Turns fragments on and off globally
@@ -144,6 +149,12 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         // - true: All media will autoplay, regardless of individual setting
         // - false: No media will autoplay, regardless of individual setting
         autoPlayMedia: #{attr 'revealjs_autoplaymedia', 'null'},
+        // Global override for preloading lazy-loaded iframes
+        // - null: Iframes with data-src AND data-preload will be loaded when within
+        //   the viewDistance, iframes with only data-src will be loaded when visible
+        // - true: All iframes with data-src will be loaded when within the viewDistance
+        // - false: All iframes with data-src will be loaded only when visible
+        preloadIframes: #{attr 'revealjs_preloadiframes', 'null'},
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
@@ -158,6 +169,10 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         defaultTiming: #{attr 'revealjs_defaulttiming', 120},
         // Enable slide navigation via mouse wheel
         mouseWheel: #{to_boolean(attr 'revealjs_mousewheel', false)},
+        // Hide cursor if inactive
+        hideInactiveCursor: #{to_boolean(attr 'revealjs_hideinactivecursor', true)},
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: #{attr 'revealjs_hidecursortime', 5000},
         // Hides the address bar on mobile devices
         hideAddressBar: #{to_boolean(attr 'revealjs_hideaddressbar', true)},
         // Opens links in an iframe preview overlay
