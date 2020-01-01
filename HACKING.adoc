@@ -248,9 +248,9 @@ Then proceed as documented in the `README.adoc`.
 
 WARNING: It is important to track `Asciidoctor.js` and `opal` versions together.
 The `opal` used to compile our node package must match `asciidoctor.js`'s `opal` requirement.
-The former is specified in our `package.json` and the latter in the `asciidoctor-revealjs.gemspec`.
-When you update one remember to update the other.
 Versions known to work together can be found by looking at the Asciidoctor.js release notes, just replace <tag> with the `asciidoctor.js` release you are interested in: https://github.com/asciidoctor/asciidoctor.js/releases/tag/<tag>.
+Then that Opal version and git revision (if required) must be specified in `asciidoctor-revealjs.gemspec`.
+
 
 == RubyGem package
 
