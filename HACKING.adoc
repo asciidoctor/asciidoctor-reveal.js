@@ -275,6 +275,19 @@ Then run:
 
 == Release process
 
+
+. Update dependencies and test the package in both languages
++
+    bundle update
+    bundle exec rake build
+    bundle exec rake doctest
+    bundle exec rake examples:convert
+    npm update --no-save
+    bundle exec rake build:js
+    npm test
+    npm run examples
+
+. Commit the updated dependencies
 . Update the version in `lib/asciidoctor-revealjs/version.rb` and `package.json`
 . Update the changelog
 ** Generate author list with:
@@ -309,10 +322,6 @@ Then run:
 . Generate the javascript version of the Ruby converter
 +
  $ bundle exec rake build:js
-
-. Test the node package (make sure you have `devDependencies` installed with: `npm install`):
-+
- $ npm run test
 
 . Publish the node package on npm:
 +
