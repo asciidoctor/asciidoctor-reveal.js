@@ -280,6 +280,11 @@ Then run:
     git log <prev-version-tag>.. --format="%aN" --reverse | perl -e 'my %dedupe; while (<STDIN>) { print unless $dedupe{$_}++}' | sort
 
 . Prepare release commit
+** Add the "Slim compiled to Ruby" converter to the git tree (otherwise ignored to avoid noise to the repo)
++
+    bundle exec rake build
+    git add -f lib/asciidoctor-revealjs/converter.rb
+
 ** commit msg: Prepare %version% release
 ** release commit (--allow-empty) msg: Release %version%
 . Tag the release commit
