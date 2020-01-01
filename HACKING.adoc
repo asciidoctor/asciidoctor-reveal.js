@@ -328,7 +328,7 @@ Then run:
  $ npm login # only required if not already authenticated
  $ npm publish
 
-. Check that the new version is available on https://www.npmjs.com/package/asciidoctor-reveal.js[npmjs.com]
+. Check that the new version is available on https://www.npmjs.com/package/@asciidoctor/reveal.js[npmjs.com]
 . Update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev') and commit
 ** commit msg: Begin development on next release
 . Submit a PR upstream to sync the documentation on asciidoctor.org
