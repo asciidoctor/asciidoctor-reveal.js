@@ -17,5 +17,5 @@ build/
 /.bundle/
 /Gemfile.lock
 
-# the compiled slim template
+# the compiled slim template, committed only on releases to avoid noise
 /lib/asciidoctor-revealjs/converter.rb

@@ -207,12 +207,14 @@ Well, for most people.
 
 === Work-in-progress pull-requests
 
-If you prepend "WIP" in front of your pull request we will understand that it is not complete and we will not merge it before you remove the WIP string.
+Letting know to the maintainers that you are working on a feature or a fix is useful.
+Early communication often times save time consuming mistakes or avoids duplicated effort.
+We encourage contributors to communicate with us early.
 
-This is useful to let people know that you are working on stuff.
-Branches are not that visible otherwise but pull requests are.
+Branches on forks of this project are not very visible to maintainers as much as pull requests (PR).
+For this reason we used to recommend sending a PR even if it's not ready and prepend "WIP" in front of its name to let everyone see that you are working on a specific topic.
+Now, instead of prepending "WIP", we recommend using GitHub "draft pull request" feature instead.
 
-You might even be able to get some feedback early which could save you some time.
 
 === 'needs review' label
 
@@ -248,9 +250,9 @@ Then proceed as documented in the `README.adoc`.
 
 WARNING: It is important to track `Asciidoctor.js` and `opal` versions together.
 The `opal` used to compile our node package must match `asciidoctor.js`'s `opal` requirement.
-The former is specified in our `package.json` and the latter in the `asciidoctor-revealjs.gemspec`.
-When you update one remember to update the other.
 Versions known to work together can be found by looking at the Asciidoctor.js release notes, just replace <tag> with the `asciidoctor.js` release you are interested in: https://github.com/asciidoctor/asciidoctor.js/releases/tag/<tag>.
+Then that Opal version and git revision (if required) must be specified in `asciidoctor-revealjs.gemspec`.
+
 
 == RubyGem package
 
@@ -273,6 +275,19 @@ Then run:
 
 == Release process
 
+
+. Update dependencies and test the package in both languages
++
+    bundle update
+    bundle exec rake build
+    bundle exec rake doctest
+    bundle exec rake examples:convert
+    npm update --no-save
+    bundle exec rake build:js
+    npm test
+    npm run examples
+
+. Commit the updated dependencies
 . Update the version in `lib/asciidoctor-revealjs/version.rb` and `package.json`
 . Update the changelog
 ** Generate author list with:
@@ -280,13 +295,23 @@ Then run:
     git log <prev-version-tag>.. --format="%aN" --reverse | perl -e 'my %dedupe; while (<STDIN>) { print unless $dedupe{$_}++}' | sort
 
 . Prepare release commit
+** Add the "Slim compiled to Ruby" converter to the git tree (otherwise ignored to avoid noise to the repo)
++
+    bundle exec rake build
+    git add -f lib/asciidoctor-revealjs/converter.rb
+
 ** commit msg: Prepare %version% release
 ** release commit (--allow-empty) msg: Release %version%
 . Tag the release commit
 ** Annotated Tag msg: Version %version%
 . Push your changes (including the tag)
 . Make a release on github (from changelog and copy from previous releases)
-** Useful vim regex for AsciiDoc to Markdown: `:%s/{uri-issue}\d\+\(\(\[#\d\+\)]\)/\1(https:\/\/github.com\/asciidoctor\/asciidoctor-reveal.js\/issues\/\2)/gc`
+** Useful vim regex for AsciiDoc to Markdown:
++
+    :%s/{uri-issue}\(\d\+\)\[#\d\+]/#\1/gc
+    :%s/{project-name}/asciidoctor-reveal.js/gc
+    :%s/\(.*\)::/## \1/gc
+
 . Pushing the gem on rubygems.org:
 +
  $ bundle exec rake build
@@ -298,16 +323,12 @@ Then run:
 +
  $ bundle exec rake build:js
 
-. Test the node package (make sure you have `devDependencies` installed with: `npm install`):
-+
- $ npm run test
-
 . Publish the node package on npm:
 +
  $ npm login # only required if not already authenticated
  $ npm publish
 
-. Check that the new version is available on https://www.npmjs.com/package/asciidoctor-reveal.js[npmjs.com]
+. Check that the new version is available on https://www.npmjs.com/package/@asciidoctor/reveal.js[npmjs.com]
 . Update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev') and commit
 ** commit msg: Begin development on next release
 . Submit a PR upstream to sync the documentation on asciidoctor.org
