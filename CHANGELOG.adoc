@@ -6,7 +6,20 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
+== master (<unreleased>)
+
+
 == 3.0.0 (2020-01-07)
+
+An API breaking release for Asciidoctor.js users that brings a bright future
+of long term stability.
+New Reveal.js features supported: background opacity, background positions, and PDF export.
+AsciiDoc table options now supported.
+A big FontAwesome update.
+Many other little improvements and polish.
+
+Special heads-up: we are already planning for another major release since Reveal.js 3.8 support will be considered a breaking change.
+They changed how it is loaded and requires a template change incompatible with Reveal.js 3.1-3.7.
 
 Upgrade considerations::
   * Node.js packaging changes!
