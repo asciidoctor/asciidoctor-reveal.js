@@ -43,6 +43,7 @@ Compliance::
 
 Enhancements::
   * Support for Asciidoctor.js 2.0.0+ which brings a command line interface ({uri-issue}254[#254])
+  * Process updates, narrower install version range and compatibility matrix regarding Asciidoctor.js ({uri-issue}187[#187], {uri-issue}303[#303])
   * Migrated to Asciidoctor 2.0.0 new https://github.com/asciidoctor/asciidoctor/releases/tag/v2.0.0[Syntax Highlighter API] ({uri-issue}261[#261], {uri-issue}287[#287])
   * Added support for Reveal.js PDF export options ({uri-issue}277[#277])
   * Upgraded to Font-Awesome 5.8.2 ({uri-issue}268[#268])
