@@ -333,7 +333,7 @@ Then run:
 +
     :%s/{uri-issue}\(\d\+\)\[#\d\+]/#\1/gc
     :%s/{project-name}/asciidoctor-reveal.js/gc
-    :%s/\(.*\)::/## \1/gc
+    :%s/\(.*\)::/### \1/gc
 
 . Pushing the gem on rubygems.org:
 +
