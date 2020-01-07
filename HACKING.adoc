@@ -246,12 +246,33 @@ NOTE: The relative portion of the last command is where you are installing the l
 
 Then proceed as documented in the `README.adoc`.
 
-=== Upgrade Asciidoctor.js version
+[[node-binary-compatibility]]
+=== Binary package compatibility with Asciidoctor.js
 
-WARNING: It is important to track `Asciidoctor.js` and `opal` versions together.
-The `opal` used to compile our node package must match `asciidoctor.js`'s `opal` requirement.
+Asciidoctor.js is source-to-source compiled into JavaScript from Ruby using Opal.
+The JavaScript generated requires a specific version of the Opal-runtime for it to work with Node.js.
+This project is source-to-source compiled into JavaScript from Ruby using Opal too.
+In order for Asciidoctor.js to be able to call code from this converter, the versions of Opal (both runtime and compiler) must be compatible.
+Right now we track the exact git revision of Opal used by Asciidoctor.js and make sure that we match.
+Here is how:
+
 Versions known to work together can be found by looking at the Asciidoctor.js release notes, just replace <tag> with the `asciidoctor.js` release you are interested in: https://github.com/asciidoctor/asciidoctor.js/releases/tag/<tag>.
 Then that Opal version and git revision (if required) must be specified in `asciidoctor-revealjs.gemspec`.
+
+Starting with 3.0.0 we aim to retain binary compatibility between Asciidoctor.js and Asciidoctor-reveal.js.
+This should allow other Asciidoctor extensions to be called along with this converter.
+Asciidoctor.js is no longer a direct dependency but should be seen as a tool that powers this converter.
+We need to allow users to have flexibility in the version they choose to run.
+Asciidoctor.js maintainer told us that he is going to consider binary package incompatibility a major break and so we adjusted our README to tell users to install with a specific version range.
+
+We will track and maintain the README on the major version supported and recommended:
+
+* In the link:README.adoc#node-install[version range to install by default] for a given release (and on master)
+* In the link:README.adoc#asciidoctorjs-compatibility-matrix[compatibility matrix]
+
+See https://github.com/asciidoctor/asciidoctor-reveal.js/issues/187#issuecomment-570771473[this issue] for background details on that topic.
+
+Asciidoctor.js versioning policy is https://asciidoctor-docs.netlify.com/asciidoctor.js/project/version-and-lifecycle-policies/[available here].
 
 
 == RubyGem package
@@ -276,6 +297,8 @@ Then run:
 == Release process
 
 
+. Do we need to do anything regarding our Opal dependency and Asciidoctor.js?
+  See <<node-binary-compatibility,our section on the topic>>.
 . Update dependencies and test the package in both languages
 +
     bundle update

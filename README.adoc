@@ -134,6 +134,7 @@ TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by kee
 
 First you must install and configure {uri-nodejs-download}[Node] on your machine.
 
+[[node-install]]
 === Install
 
 We recommend to install the dependencies in a project directory, such as the directory where your AsciiDoc presentations are stored.
@@ -143,7 +144,7 @@ If you don't have a `package.json` file in your project directory, you can creat
 
 You can now install the dependencies:
 
- $ npm i --save asciidoctor @asciidoctor/reveal.js
+ $ npm i --save asciidoctor@^2.0 @asciidoctor/reveal.js
 
 === Convert AsciiDoc into slides
 
@@ -1003,6 +1004,30 @@ If you need more details about our dependencies check out Asciidoctor dependenci
 
 * With Ruby / Bundler: https://github.com/asciidoctor/asciidoctor/tree/v2.0.10#requirements[Asciidoctor] 2.0.10
 * With JavaScript (Node.js) / NPM: https://github.com/asciidoctor/asciidoctor.js/blob/v2.0.3/packages/core/package.json[Asciidoctor.js] 2.0.3
+
+[[asciidoctorjs-compatibility-matrix]]
+== Asciidoctor.js Compatibility Matrix
+
+NOTE: This section is intended only for more advanced users who combine extensions or maintain slide decks over many releases and need to update their dependencies.
+
+Due to our Ruby to JavaScript conversion process, published npm packages have strict requirements with which version of Asciidoctor.js they are compatible with.
+This table tracks this compatibility.
+
+|===
+|Asciidoctor-reveal.js version |Asciidoctor.js version
+
+|3.x
+|2.x
+
+|2.x
+|1.5.9
+
+|1.1.x
+|1.5.6-preview.4
+|===
+
+Be aware that it is always possible to recompile the converter into JavaScript from source so compatibility can be created by anyone if needed.
+More details on that topic can be found link:HACKING.adoc#node-binary-compatibility[in the development guide].
 
 
 == Showcase Presentations
