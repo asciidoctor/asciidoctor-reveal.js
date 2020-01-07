@@ -6,7 +6,7 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
-== master (unreleased)
+== 3.0.0 (2020-01-07)
 
 Upgrade considerations::
   * Node.js packaging changes!
@@ -59,6 +59,22 @@ Bug Fixes::
 
 Infrastructure::
   * Updated Travis' JRuby to fix issues with bundler ({uri-issue}295[#295])
+
+=== Release meta
+
+* Released on: 2020-01-07
+* Released by: Olivier Bilodeau
+* Release beer: Porter Baltique Édition Spéciale 2019, Les Trois Mousquetaires
+
+{uri-repo}/releases/tag/v3.0.0[git tag] |
+{uri-repo}/compare/v2.0.1...v3.0.0[full diff] |
+{uri-repo}/milestone/7[milestone]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+Benjamin Schmid, Daniel Mulholland, Eiji Onchi, Gérald Quintana, Guillaume Grossetie and Olivier Bilodeau
 
 
 == 2.0.1 (2019-12-04)
