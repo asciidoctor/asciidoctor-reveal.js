@@ -1,2 +1,4 @@
 node_modules/
 dist/*.js
+/README.html
+/slides.html
