@@ -7,7 +7,10 @@
     "node": ">=8.11",
     "npm": ">=5.0.0"
   },
-  "files": [],
+  "bin": {
+    "asciidoctor-revealjs": "npm/asciidoctor-revealjs"
+  },
+  "files": ["npm/asciidoctor-revealjs"],
   "scripts": {
     "test": "node test/smoke.js",
     "examples": "node npm/examples.js"
