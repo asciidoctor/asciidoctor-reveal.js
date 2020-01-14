@@ -6,10 +6,23 @@ process.title = 'asciidoctor-revealjs'
 
 const pkg = require('../package.json')
 const { Options, Invoker, processor } = require('@asciidoctor/cli')
+const asciidoctor = require('@asciidoctor/core')();
+const asciidoctorRevealjs = require('@asciidoctor/reveal.js')
 const path = require('path')
 const EventEmitter = require('events')
 class ProcessorEmitter extends EventEmitter {}
 const processorEmitter = new ProcessorEmitter()
+
+async function convertFiles (files, argv, options, verbose) {
+  for (const file of files) {
+    if (verbose) {
+      console.log(`converting file ${file}`)
+    }
+    //await converter.convert(processor, file, options, argv.timings)
+    options['backend'] = "revealjs"
+    await asciidoctor.convert(file, options, argv.timings)
+  }
+}
 
 let processing = false
 let shouldEmitRequestEvent = false
@@ -40,24 +53,21 @@ class RevealJsInvoker extends Invoker {
     const processArgs = this.options.argv.slice(2)
     const { args } = this.options
     const { verbose, version, files } = args
+
     if (version || (verbose && processArgs.length === 1)) {
       process.stdout.write(`Asciidoctor-Reveal.js ${pkg.version} using `)
       Invoker.printVersion()
       return { exit: true }
     }
 
-    let templates
-    if (templateRequireLib) {
-      templates = Invoker.requireLibrary(templateRequireLib)
-    } else {
-      templates = require('./document/templates.js')
-    }
+    // Register the reveal.js converter
+    asciidoctorRevealjs.register()
 
-    converter.registerTemplateConverter(processor, templates)
+    //converter.registerTemplateConverter(processor, templates)
     Invoker.prepareProcessor(args, processor)
     const options = this.options.options
     if (files && files.length > 0) {
-      await convertFiles(files, args, options, verbose, preview)
+      await convertFiles(files, args, options, verbose)
       return { exit: true }
     } else {
       this.showHelp()
