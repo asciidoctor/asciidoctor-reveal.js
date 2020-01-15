@@ -274,6 +274,15 @@ See https://github.com/asciidoctor/asciidoctor-reveal.js/issues/187#issuecomment
 
 Asciidoctor.js versioning policy is https://asciidoctor-docs.netlify.com/asciidoctor.js/project/version-and-lifecycle-policies/[available here].
 
+=== Debugging
+
+To debug the javascript application, just add `--node-arg=--inspect-brk` to the npx command to run the application.
+For example:
+
+  npx --node-arg=--inspect-brk asciidoctor-revealjs -v presentation.adoc
+
+The open the Chrome Dev Tools and click on the Node logo in the top left corner.
+
 
 == RubyGem package
 
