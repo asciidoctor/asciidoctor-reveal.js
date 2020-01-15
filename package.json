@@ -10,10 +10,13 @@
   "bin": {
     "asciidoctor-revealjs": "npm/asciidoctor-revealjs"
   },
-  "files": ["npm/asciidoctor-revealjs"],
+  "files": [
+    "npm/asciidoctor-revealjs"
+  ],
   "scripts": {
     "test": "node test/smoke.js",
-    "examples": "node npm/examples.js"
+    "examples": "node npm/examples.js",
+    "package": "npm i @asciidoctor/core && pkg -t 'node12-linux-x64,node12-macos-x64,node12-win-x64' package.json --out-path dist/"
   },
   "repository": {
     "type": "git",
@@ -42,11 +45,13 @@
   },
   "homepage": "https://github.com/asciidoctor/asciidoctor-reveal.js",
   "dependencies": {
+    "@asciidoctor/cli": "^3.0.2",
     "reveal.js": "3.7.0"
   },
   "devDependencies": {
-    "@asciidoctor/core": "^2.0.0",
+    "@asciidoctor/core": "^2.0.3",
     "bestikk-log": "0.1.0",
-    "expect.js": "0.3.1"
+    "expect.js": "0.3.1",
+    "pkg": "^4.4.2"
   }
 }
