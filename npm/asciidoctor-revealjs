@@ -5,7 +5,7 @@
 process.title = 'asciidoctor-revealjs'
 
 const { Options, Invoker } = require('@asciidoctor/cli')
-const asciidoctorRevealjs = require('@asciidoctor/reveal.js')
+const asciidoctorRevealjs = require('../dist/main.js')
 asciidoctorRevealjs.register()
 
 const options = new Options({backend: 'revealjs'}).parse(process.argv)
