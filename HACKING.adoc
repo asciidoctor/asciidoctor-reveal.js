@@ -281,7 +281,7 @@ For example:
 
   npx --node-arg=--inspect-brk asciidoctor-revealjs -v presentation.adoc
 
-The open the Chrome Dev Tools and click on the Node logo in the top left corner.
+Then open the Chrome Dev Tools and click on the Node logo in the top left corner.
 
 
 == RubyGem package
