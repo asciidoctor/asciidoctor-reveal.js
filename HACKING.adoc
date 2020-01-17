@@ -276,7 +276,7 @@ Asciidoctor.js versioning policy is https://asciidoctor-docs.netlify.com/asciido
 
 === Debugging
 
-To debug the javascript application, just add `--node-arg=--inspect-brk` to the npx command to run the application.
+To debug the JavaScript application, just add `--node-arg=--inspect-brk` to the npx command to run the application.
 For example:
 
   npx --node-arg=--inspect-brk asciidoctor-revealjs -v presentation.adoc
