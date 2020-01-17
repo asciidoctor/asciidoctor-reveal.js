@@ -1,6 +1,6 @@
 // .font-awesome
 // Testing font-awesome icons
-// :include: //body/script | //div[@class="slides"]
+// :include:  //head//link[@rel="stylesheet"] | //div[@class="slides"]
 // :header_footer:
 = Font Awesome Tests
 :icons: font
