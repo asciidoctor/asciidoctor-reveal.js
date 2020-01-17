@@ -11,10 +11,9 @@ asciidoctorRevealjs.register()
 const options = new Options({backend: 'revealjs'}).parse(process.argv)
 
 class RevealJsInvoker extends Invoker {
-  printVersion () {
+  version () {
     const pkg = require('../package.json')
-    process.stdout.write(`Asciidoctor-Reveal.js ${pkg.version} using `)
-    super.printVersion()
+    return `Asciidoctor-Reveal.js ${pkg.version} using ${super.version()}`
   }
 }
 
