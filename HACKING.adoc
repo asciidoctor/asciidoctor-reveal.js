@@ -274,6 +274,15 @@ See https://github.com/asciidoctor/asciidoctor-reveal.js/issues/187#issuecomment
 
 Asciidoctor.js versioning policy is https://asciidoctor-docs.netlify.com/asciidoctor.js/project/version-and-lifecycle-policies/[available here].
 
+=== Debugging
+
+To debug the JavaScript application, just add `--node-arg=--inspect-brk` to the npx command to run the application.
+For example:
+
+  npx --node-arg=--inspect-brk asciidoctor-revealjs -v presentation.adoc
+
+Then open the Chrome Dev Tools and click on the Node logo in the top left corner.
+
 
 == RubyGem package
 
@@ -352,6 +361,8 @@ Then run:
  $ npm publish
 
 . Check that the new version is available on https://www.npmjs.com/package/@asciidoctor/reveal.js[npmjs.com]
+. Make binaries release
+** Run `npm run package`. Binaries built will be in `dist/`. Upload them to the GitHub release page.
 . Update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev') and commit
 ** Remove the "Slim compiled to Ruby" converter to the git tree (to avoid noise to the repo and `git status` noise)
 +

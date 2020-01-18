@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+'use strict'
+
+process.title = 'asciidoctor-revealjs'
+
+const { Options, Invoker } = require('@asciidoctor/cli')
+const asciidoctorRevealjs = require('../dist/main.js')
+asciidoctorRevealjs.register()
+
+const options = new Options({backend: 'revealjs'}).parse(process.argv)
+
+class RevealJsInvoker extends Invoker {
+  version () {
+    const pkg = require('../package.json')
+    return `Asciidoctor reveal.js ${pkg.version} using ${super.version()}`
+  }
+}
+
+new RevealJsInvoker(options).invoke()
