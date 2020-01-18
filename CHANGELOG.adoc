@@ -9,6 +9,8 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 == master (<unreleased>)
 
 Enhancements::
+  * We know provide native standalone executables for Windows, Linux and macOS using a Node to binary packager ({uri-issue}259[#259], {uri-issue}308[#308])
+  * JavaScript stack now provides a CLI usable with `npx asciidoctor-revealjs` ({uri-issue}308[#308])
   * Updated to Font-Awesome 5.12.0 ({uri-issue}305[#305])
   * Updated dependencies: rake
   * Better tests ({uri-issue}310[#310], {uri-issue}311[#311])
