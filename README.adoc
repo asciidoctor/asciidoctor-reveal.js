@@ -219,7 +219,7 @@ You can open the `presentation.html` file in your browser and enjoy!
 == Standalone Executable
 
 Pre-built binary packages can be downloaded from our {uri-project-repo}/releases[GitHub release page].
-We provide them for Windows 64-bit, Linux 64-bit and MacOS 64-bit.
+We provide them for Windows 64-bit, Linux 64-bit and macOS 64-bit.
 Open an issue if your platform isn't supported.
 The executables are built using the <<Node / JavaScript Setup,Node / JavaScript>> toolchain.
 

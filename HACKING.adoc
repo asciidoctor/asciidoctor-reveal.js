@@ -361,7 +361,7 @@ Then run:
  $ npm publish
 
 . Check that the new version is available on https://www.npmjs.com/package/@asciidoctor/reveal.js[npmjs.com]
-. Make binary releases
+. Make binaries release
 ** Run `npm run package`. Binaries built will be in `dist/`. Upload them to the GitHub release page.
 . Update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev') and commit
 ** Remove the "Slim compiled to Ruby" converter to the git tree (to avoid noise to the repo and `git status` noise)
