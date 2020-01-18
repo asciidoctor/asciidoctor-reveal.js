@@ -13,7 +13,7 @@ const options = new Options({backend: 'revealjs'}).parse(process.argv)
 class RevealJsInvoker extends Invoker {
   version () {
     const pkg = require('../package.json')
-    return `Asciidoctor-Reveal.js ${pkg.version} using ${super.version()}`
+    return `Asciidoctor reveal.js ${pkg.version} using ${super.version()}`
   }
 }
 

@@ -237,11 +237,11 @@ Open a terminal where the executable is and type:
 
  $ ./asciidoctor-revealjs --version
 
-The command should report the Asciidoctor-Reveal.js and Asciidoctor CLI version in the terminal:
+The command should report the Asciidoctor reveal.js and Asciidoctor CLI version in the terminal:
 
 [source,console]
 ----
-Asciidoctor-Reveal.js 3.0.1 using Asciidoctor.js 2.0.3 (Asciidoctor 2.0.9) [https://asciidoctor.org]
+Asciidoctor reveal.js 3.0.1 using Asciidoctor.js 2.0.3 (Asciidoctor 2.0.9) [https://asciidoctor.org]
 Runtime Environment (node v12.13.1 on linux)
 CLI version 3.1.0
 ----
