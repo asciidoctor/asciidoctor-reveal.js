@@ -9,9 +9,10 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 == master (<unreleased>)
 
 Enhancements::
-  * We know provide native standalone executables for Windows, Linux and macOS using a Node to binary packager ({uri-issue}259[#259], {uri-issue}308[#308])
+  * We now provide native standalone executables for Windows, Linux and macOS using a Node to binary packager ({uri-issue}259[#259], {uri-issue}308[#308])
   * JavaScript stack now provides a CLI usable with `npx asciidoctor-revealjs` ({uri-issue}308[#308])
   * Updated to Font-Awesome 5.12.0 ({uri-issue}305[#305])
+  * Ruby command line interface now shows {project-name} version in addition to Asciidoctor version ({uri-issue}313[#313])
   * Updated dependencies: rake
   * Better tests ({uri-issue}310[#310], {uri-issue}311[#311])
 
@@ -21,8 +22,7 @@ Bug Fixes::
 
 == 3.0.0 (2020-01-07)
 
-An API breaking release for Asciidoctor.js users that brings a bright future
-of long term stability.
+An API breaking release for Asciidoctor.js users that brings a bright future of long term stability.
 New Reveal.js features supported: background opacity, background positions, and PDF export.
 AsciiDoc table options now supported.
 A big FontAwesome update.
