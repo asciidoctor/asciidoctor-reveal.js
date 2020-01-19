@@ -6,7 +6,9 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
-== master (<unreleased>)
+== 3.1.0 (2020-01-18)
+
+Fixed a regression with Font-Awesome brand icons, added a JavaScript CLI and standalone executables for Windows, Linux and macOS.
 
 Enhancements::
   * We now provide native standalone executables for Windows, Linux and macOS using a Node to binary packager ({uri-issue}259[#259], {uri-issue}308[#308])
@@ -18,6 +20,22 @@ Enhancements::
 
 Bug Fixes::
   * Added compatibility shim to Font Awesome 5 to fix brand icons rendering and more ({uri-issue}304[#304], {uri-issue}305[#305])
+
+=== Release meta
+
+* Released on: 2020-01-18
+* Released by: Olivier Bilodeau
+* Release beer: Lupulus, Microbrasserie Charlevoix
+
+{uri-repo}/releases/tag/v3.1.0[git tag] |
+{uri-repo}/compare/v3.0.0...v3.1.0[full diff] |
+{uri-repo}/milestone/9[milestone]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+Guillaume Grossetie and Olivier Bilodeau
 
 
 == 3.0.0 (2020-01-07)
