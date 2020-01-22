@@ -7,5 +7,4 @@ end
 
 require 'asciidoctor/doctest'
 require 'minitest/autorun'
-require 'minitest/rg'
 require 'tilt'
