@@ -1,0 +1,499 @@
+<!-- .source-highlightjs-languages -->
+<div class="slides">
+  <section class="title" data-state="title">
+    <h1>Scilab Code with Highlight.js</h1>
+    <h2>using additional languages</h2>
+  </section>
+  <section id="_use_the_source">
+    <h2>Use the Source</h2>
+    <div class="listingblock">
+      <div class="content">
+        <pre class="highlightjs highlight"><code class="language-scilab hljs" data-lang="scilab" data-noescape="true">function B=gauss_filter_3_3(A)
+   x=size(A,2);
+   y=size(A,1);
+   B = zeros(y, x);
+   for j = 2:y-1
+       for i= 2:x-1
+           val= 4*A(j,i)+2*(A(j,i-1)+A(j,i+1)+A(j+1,i)+A(j-1,i))+A(j+1,i+1)+A(j-1,i+1)+A(j+1,i-1)+A(j-1,i-1);
+           B(j,i) = val/16;
+       end
+   end
+endfunction
+
+A = rand(10, 10) * 256;
+B = gauss_filter_3_3(A);</code></pre>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="reveal.js/js/reveal.js"></script><script>
+  Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
+    if (slide.getAttribute('data-background-color')) return;
+    // user needs to explicitly say he wants CSS color to override otherwise we might break custom css or theme (#226)
+    if (!(slide.classList.contains('canvas') || slide.classList.contains('background'))) return;
+    var bgColor = getComputedStyle(slide).backgroundColor;
+    if (bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
+      slide.setAttribute('data-background-color', bgColor);
+      slide.style.backgroundColor = 'transparent';
+    }
+  })
+
+  // More info about config & dependencies:
+  // - https://github.com/hakimel/reveal.js#configuration
+  // - https://github.com/hakimel/reveal.js#dependencies
+  Reveal.initialize({
+    // Display presentation control arrows
+    controls: true,
+    // Help the user learn the controls by providing hints, for example by
+    // bouncing the down arrow when they first encounter a vertical slide
+    controlsTutorial: true,
+    // Determines where controls appear, "edges" or "bottom-right"
+    controlsLayout: 'bottom-right',
+    // Visibility rule for backwards navigation arrows; "faded", "hidden"
+    // or "visible"
+    controlsBackArrows: 'faded',
+    // Display a presentation progress bar
+    progress: true,
+    // Display the page number of the current slide
+    slideNumber: false,
+    // Control which views the slide number displays on
+    showSlideNumber: 'all',
+    // Add the current slide number to the URL hash so that reloading the
+    // page/copying the URL will return you to the same slide
+    hash: false,
+    // Push each slide change to the browser history. Implies `hash: true`
+    history: false,
+    // Enable keyboard shortcuts for navigation
+    keyboard: true,
+    // Enable the slide overview mode
+    overview: true,
+    // Vertical centering of slides
+    center: true,
+    // Enables touch navigation on devices with touch input
+    touch: true,
+    // Loop the presentation
+    loop: false,
+    // Change the presentation direction to be RTL
+    rtl: false,
+    // See https://github.com/hakimel/reveal.js/#navigation-mode
+    navigationMode: 'default',
+    // Randomizes the order of slides each time the presentation loads
+    shuffle: false,
+    // Turns fragments on and off globally
+    fragments: true,
+    // Flags whether to include the current fragment in the URL,
+    // so that reloading brings you to the same fragment position
+    fragmentInURL: false,
+    // Flags if the presentation is running in an embedded mode,
+    // i.e. contained within a limited portion of the screen
+    embedded: false,
+    // Flags if we should show a help overlay when the questionmark
+    // key is pressed
+    help: true,
+    // Flags if speaker notes should be visible to all viewers
+    showNotes: false,
+    // Global override for autolaying embedded media (video/audio/iframe)
+    // - null: Media will only autoplay if data-autoplay is present
+    // - true: All media will autoplay, regardless of individual setting
+    // - false: No media will autoplay, regardless of individual setting
+    autoPlayMedia: null,
+    // Global override for preloading lazy-loaded iframes
+    // - null: Iframes with data-src AND data-preload will be loaded when within
+    //   the viewDistance, iframes with only data-src will be loaded when visible
+    // - true: All iframes with data-src will be loaded when within the viewDistance
+    // - false: All iframes with data-src will be loaded only when visible
+    preloadIframes: null,
+    // Number of milliseconds between automatically proceeding to the
+    // next slide, disabled when set to 0, this value can be overwritten
+    // by using a data-autoslide attribute on your slides
+    autoSlide: 0,
+    // Stop auto-sliding after user input
+    autoSlideStoppable: true,
+    // Use this method for navigation when auto-sliding
+    autoSlideMethod: Reveal.navigateNext,
+    // Specify the average time in seconds that you think you will spend
+    // presenting each slide. This is used to show a pacing timer in the
+    // speaker view
+    defaultTiming: 120,
+    // Specify the total time in seconds that is available to
+    // present.  If this is set to a nonzero value, the pacing
+    // timer will work out the time available for each slide,
+    // instead of using the defaultTiming value
+    totalTime: 0,
+    // Specify the minimum amount of time you want to allot to
+    // each slide, if using the totalTime calculation method.  If
+    // the automated time allocation causes slide pacing to fall
+    // below this threshold, then you will see an alert in the
+    // speaker notes window
+    minimumTimePerSlide: 0,
+    // Enable slide navigation via mouse wheel
+    mouseWheel: false,
+    // Hide cursor if inactive
+    hideInactiveCursor: true,
+    // Time before the cursor is hidden (in ms)
+    hideCursorTime: 5000,
+    // Hides the address bar on mobile devices
+    hideAddressBar: true,
+    // Opens links in an iframe preview overlay
+    // Add `data-preview-link` and `data-preview-link="false"` to customise each link
+    // individually
+    previewLinks: false,
+    // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+    transition: 'slide',
+    // Transition speed (e.g., default, fast, slow)
+    transitionSpeed: 'default',
+    // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+    backgroundTransition: 'fade',
+    // Number of slides away from the current that are visible
+    viewDistance: 3,
+    // Number of slides away from the current that are visible on mobile
+    // devices. It is advisable to set this to a lower number than
+    // viewDistance in order to save resources.
+    mobileViewDistance: 3,
+    // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+    parallaxBackgroundImage: '',
+    // Parallax background size in CSS syntax (e.g., "2100px 900px")
+    parallaxBackgroundSize: '',
+    // Number of pixels to move the parallax background per slide
+    // - Calculated automatically unless specified
+    // - Set to 0 to disable movement along an axis
+    parallaxBackgroundHorizontal: null,
+    parallaxBackgroundVertical: null,
+    // The display mode that will be used to show slides
+    display: 'block',
+
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 960,
+    height: 700,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.5,
+
+    // PDF Export Options
+    // Put each fragment on a separate page
+    pdfSeparateFragments: true,
+    // For slides that do not fit on a page, max number of pages
+    pdfMaxPagesPerSlide: 1,
+
+    // Optional libraries used to extend on reveal.js
+    dependencies: [
+        { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+        { src: 'reveal.js/plugin/notes/notes.js', async: true },
+
+
+
+    ],
+
+
+
+  });
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/yaml.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/scilab.min.js"></script><script>
+  /* highlightjs-line-numbers.js 2.6.0 | (C) 2018 Yauheni Pakala | MIT License | github.com/wcoder/highlightjs-line-numbers.js */
+  /* Edited by Hakim for reveal.js; removed async timeout */
+  !function(n,e){"use strict";function t(){var n=e.createElement("style");n.type="text/css",n.innerHTML=g(".{0}{border-collapse:collapse}.{0} td{padding:0}.{1}:before{content:attr({2})}",[v,L,b]),e.getElementsByTagName("head")[0].appendChild(n)}function r(t){"interactive"===e.readyState||"complete"===e.readyState?i(t):n.addEventListener("DOMContentLoaded",function(){i(t)})}function i(t){try{var r=e.querySelectorAll("code.hljs,code.nohighlight");for(var i in r)r.hasOwnProperty(i)&&l(r[i],t)}catch(o){n.console.error("LineNumbers error: ",o)}}function l(n,e){"object"==typeof n&&f(function(){n.innerHTML=s(n,e)})}function o(n,e){if("string"==typeof n){var t=document.createElement("code");return t.innerHTML=n,s(t,e)}}function s(n,e){e=e||{singleLine:!1};var t=e.singleLine?0:1;return c(n),a(n.innerHTML,t)}function a(n,e){var t=u(n);if(""===t[t.length-1].trim()&&t.pop(),t.length>e){for(var r="",i=0,l=t.length;i<l;i++)r+=g('<tr><td class="{0}"><div class="{1} {2}" {3}="{5}"></div></td><td class="{4}"><div class="{1}">{6}</div></td></tr>',[j,m,L,b,p,i+1,t[i].length>0?t[i]:" "]);return g('<table class="{0}">{1}</table>',[v,r])}return n}function c(n){var e=n.childNodes;for(var t in e)if(e.hasOwnProperty(t)){var r=e[t];h(r.textContent)>0&&(r.childNodes.length>0?c(r):d(r.parentNode))}}function d(n){var e=n.className;if(/hljs-/.test(e)){for(var t=u(n.innerHTML),r=0,i="";r<t.length;r++){var l=t[r].length>0?t[r]:" ";i+=g('<span class="{0}">{1}</span>\n',[e,l])}n.innerHTML=i.trim()}}function u(n){return 0===n.length?[]:n.split(y)}function h(n){return(n.trim().match(y)||[]).length}function f(e){e()}function g(n,e){return n.replace(/{(\d+)}/g,function(n,t){return e[t]?e[t]:n})}var v="hljs-ln",m="hljs-ln-line",p="hljs-ln-code",j="hljs-ln-numbers",L="hljs-ln-n",b="data-line-number",y=/\r\n|\r|\n/g;n.hljs?(n.hljs.initLineNumbersOnLoad=r,n.hljs.lineNumbersBlock=l,n.hljs.lineNumbersValue=o,t()):n.console.error("highlight.js not detected!")}(window,document);
+
+  /**
+   * This reveal.js plugin is wrapper around the highlight.js
+   * syntax highlighting library.
+   */
+  (function( root, factory ) {
+    if (typeof define === 'function' && define.amd) {
+      root.RevealHighlight = factory();
+    } else if( typeof exports === 'object' ) {
+      module.exports = factory();
+    } else {
+      // Browser globals (root is window)
+      root.RevealHighlight = factory();
+    }
+  }( this, function() {
+
+    // Function to perform a better "data-trim" on code snippets
+    // Will slice an indentation amount on each line of the snippet (amount based on the line having the lowest indentation length)
+    function betterTrim(snippetEl) {
+      // Helper functions
+      function trimLeft(val) {
+        // Adapted from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim#Polyfill
+        return val.replace(/^[\s\uFEFF\xA0]+/g, '');
+      }
+      function trimLineBreaks(input) {
+        var lines = input.split('\n');
+
+        // Trim line-breaks from the beginning
+        for (var i = 0; i < lines.length; i++) {
+          if (lines[i].trim() === '') {
+            lines.splice(i--, 1);
+          } else break;
+        }
+
+        // Trim line-breaks from the end
+        for (var i = lines.length-1; i >= 0; i--) {
+          if (lines[i].trim() === '') {
+            lines.splice(i, 1);
+          } else break;
+        }
+
+        return lines.join('\n');
+      }
+
+      // Main function for betterTrim()
+      return (function(snippetEl) {
+        var content = trimLineBreaks(snippetEl.innerHTML);
+        var lines = content.split('\n');
+        // Calculate the minimum amount to remove on each line start of the snippet (can be 0)
+        var pad = lines.reduce(function(acc, line) {
+          if (line.length > 0 && trimLeft(line).length > 0 && acc > line.length - trimLeft(line).length) {
+            return line.length - trimLeft(line).length;
+          }
+          return acc;
+        }, Number.POSITIVE_INFINITY);
+        // Slice each line with this amount
+        return lines.map(function(line, index) {
+          return line.slice(pad);
+        })
+          .join('\n');
+      })(snippetEl);
+    }
+
+    var RevealHighlight = {
+
+      HIGHLIGHT_STEP_DELIMITER: '|',
+      HIGHLIGHT_LINE_DELIMITER: ',',
+      HIGHLIGHT_LINE_RANGE_DELIMITER: '-',
+
+      init: function() {
+
+        // Read the plugin config options and provide fallbacks
+        var config = Reveal.getConfig().highlight || {};
+        config.highlightOnLoad = typeof config.highlightOnLoad === 'boolean' ? config.highlightOnLoad : true;
+        config.escapeHTML = typeof config.escapeHTML === 'boolean' ? config.escapeHTML : true;
+
+        [].slice.call( document.querySelectorAll( '.reveal pre code' ) ).forEach( function( block ) {
+
+          // Trim whitespace if the "data-trim" attribute is present
+          if( block.hasAttribute( 'data-trim' ) && typeof block.innerHTML.trim === 'function' ) {
+            block.innerHTML = betterTrim( block );
+          }
+
+          // Escape HTML tags unless the "data-noescape" attrbute is present
+          if( config.escapeHTML && !block.hasAttribute( 'data-noescape' )) {
+            block.innerHTML = block.innerHTML.replace( /</g,"&lt;").replace(/>/g, '&gt;' );
+          }
+
+          // Re-highlight when focus is lost (for contenteditable code)
+          block.addEventListener( 'focusout', function( event ) {
+            hljs.highlightBlock( event.currentTarget );
+          }, false );
+
+          if( config.highlightOnLoad ) {
+            RevealHighlight.highlightBlock( block );
+          }
+        } );
+
+      },
+
+      /**
+       * Highlights a code block. If the <code> node has the
+       * 'data-line-numbers' attribute we also generate slide
+       * numbers.
+       *
+       * If the block contains multiple line highlight steps,
+       * we clone the block and create a fragment for each step.
+       */
+      highlightBlock: function( block ) {
+
+        hljs.highlightBlock( block );
+
+        // Don't generate line numbers for empty code blocks
+        if( block.innerHTML.trim().length === 0 ) return;
+
+        if( block.hasAttribute( 'data-line-numbers' ) ) {
+          hljs.lineNumbersBlock( block, { singleLine: true } );
+
+          // If there is at least one highlight step, generate
+          // fragments
+          var highlightSteps = RevealHighlight.deserializeHighlightSteps( block.getAttribute( 'data-line-numbers' ) );
+          if( highlightSteps.length > 1 ) {
+
+            // If the original code block has a fragment-index,
+            // each clone should follow in an incremental sequence
+            var fragmentIndex = parseInt( block.getAttribute( 'data-fragment-index' ), 10 );
+            if( typeof fragmentIndex !== 'number' || isNaN( fragmentIndex ) ) {
+              fragmentIndex = null;
+            }
+
+            // Generate fragments for all steps except the original block
+            highlightSteps.slice(1).forEach( function( highlight ) {
+
+              var fragmentBlock = block.cloneNode( true );
+              fragmentBlock.setAttribute( 'data-line-numbers', RevealHighlight.serializeHighlightSteps( [ highlight ] ) );
+              fragmentBlock.classList.add( 'fragment' );
+              block.parentNode.appendChild( fragmentBlock );
+              RevealHighlight.highlightLines( fragmentBlock );
+
+              if( typeof fragmentIndex === 'number' ) {
+                fragmentBlock.setAttribute( 'data-fragment-index', fragmentIndex );
+                fragmentIndex += 1;
+              }
+              else {
+                fragmentBlock.removeAttribute( 'data-fragment-index' );
+              }
+
+            } );
+
+            block.removeAttribute( 'data-fragment-index' )
+            block.setAttribute( 'data-line-numbers', RevealHighlight.serializeHighlightSteps( [ highlightSteps[0] ] ) );
+
+          }
+
+          RevealHighlight.highlightLines( block );
+
+        }
+
+      },
+
+      /**
+       * Visually emphasize specific lines within a code block.
+       * This only works on blocks with line numbering turned on.
+       *
+       * @param {HTMLElement} block a <code> block
+       * @param {String} [linesToHighlight] The lines that should be
+       * highlighted in this format:
+       * "1" 		= highlights line 1
+       * "2,5"	= highlights lines 2 & 5
+       * "2,5-7"	= highlights lines 2, 5, 6 & 7
+       */
+      highlightLines: function( block, linesToHighlight ) {
+
+        var highlightSteps = RevealHighlight.deserializeHighlightSteps( linesToHighlight || block.getAttribute( 'data-line-numbers' ) );
+
+        if( highlightSteps.length ) {
+
+          highlightSteps[0].forEach( function( highlight ) {
+
+            var elementsToHighlight = [];
+
+            // Highlight a range
+            if( typeof highlight.end === 'number' ) {
+              elementsToHighlight = [].slice.call( block.querySelectorAll( 'table tr:nth-child(n+'+highlight.start+'):nth-child(-n+'+highlight.end+')' ) );
+            }
+            // Highlight a single line
+            else if( typeof highlight.start === 'number' ) {
+              elementsToHighlight = [].slice.call( block.querySelectorAll( 'table tr:nth-child('+highlight.start+')' ) );
+            }
+
+            if( elementsToHighlight.length ) {
+              elementsToHighlight.forEach( function( lineElement ) {
+                lineElement.classList.add( 'highlight-line' );
+              } );
+
+              block.classList.add( 'has-highlights' );
+            }
+
+          } );
+
+        }
+
+      },
+
+      /**
+       * Parses and formats a user-defined string of line
+       * numbers to highlight.
+       *
+       * @example
+       * RevealHighlight.deserializeHighlightSteps( '1,2|3,5-10' )
+       * // [
+       * //   [ { start: 1 }, { start: 2 } ],
+       * //   [ { start: 3 }, { start: 5, end: 10 } ]
+       * // ]
+       */
+      deserializeHighlightSteps: function( highlightSteps ) {
+
+        // Remove whitespace
+        highlightSteps = highlightSteps.replace( /\s/g, '' );
+
+        // Divide up our line number groups
+        highlightSteps = highlightSteps.split( RevealHighlight.HIGHLIGHT_STEP_DELIMITER );
+
+        return highlightSteps.map( function( highlights ) {
+
+          return highlights.split( RevealHighlight.HIGHLIGHT_LINE_DELIMITER ).map( function( highlight ) {
+
+            // Parse valid line numbers
+            if( /^[\d-]+$/.test( highlight ) ) {
+
+              highlight = highlight.split( RevealHighlight.HIGHLIGHT_LINE_RANGE_DELIMITER );
+
+              var lineStart = parseInt( highlight[0], 10 ),
+                lineEnd = parseInt( highlight[1], 10 );
+
+              if( isNaN( lineEnd ) ) {
+                return {
+                  start: lineStart
+                };
+              }
+              else {
+                return {
+                  start: lineStart,
+                  end: lineEnd
+                };
+              }
+
+            }
+            // If no line numbers are provided, no code will be highlighted
+            else {
+
+              return {};
+
+            }
+
+          } );
+
+        } );
+
+      },
+
+      /**
+       * Serializes parsed line number data into a string so
+       * that we can store it in the DOM.
+       */
+      serializeHighlightSteps: function( highlightSteps ) {
+
+        return highlightSteps.map( function( highlights ) {
+
+          return highlights.map( function( highlight ) {
+
+            // Line range
+            if( typeof highlight.end === 'number' ) {
+              return highlight.start + RevealHighlight.HIGHLIGHT_LINE_RANGE_DELIMITER + highlight.end;
+            }
+            // Single line
+            else if( typeof highlight.start === 'number' ) {
+              return highlight.start;
+            }
+            // All lines
+            else {
+              return '';
+            }
+
+          } ).join( RevealHighlight.HIGHLIGHT_LINE_DELIMITER );
+
+        } ).join( RevealHighlight.HIGHLIGHT_STEP_DELIMITER );
+
+      }
+
+    }
+
+    Reveal.registerPlugin( 'highlight', RevealHighlight );
+
+    return RevealHighlight;
+
+  }));
+
+  hljs.initHighlightingOnLoad();
+</script>

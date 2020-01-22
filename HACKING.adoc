@@ -307,6 +307,7 @@ Then run:
 == Release process
 
 
+. Make sure that the highlight plugin code embed in _lib/asciidoctor-revealjs/highlightjs.rb_ is up-to-date with the version of reveal.js
 . Do we need to do anything regarding our Opal dependency and Asciidoctor.js?
   See <<node-binary-compatibility,our section on the topic>>.
 . Update dependencies and test the package in both languages

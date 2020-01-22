@@ -2,7 +2,7 @@
 // Avoiding regressions with HTML source code inside source block
 // :include: //div[@class="slides"]
 // :header_footer:
-= HTML Source Code with Highlight.JS
+= HTML Source Code with Highlight.js
 :icons: font
 :source-highlighter: highlightjs
 
