@@ -6,6 +6,13 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
+
+== <master> (<unreleased)
+
+Compliance::
+  * Added support for the `sectnums` AsciiDoc attribute ({uri-issue}185[#185], {uri-issue}317[#317])
+
+
 == 3.1.0 (2020-01-18)
 
 Fixed a regression with Font-Awesome brand icons, added a JavaScript CLI and standalone executables for Windows, Linux and macOS.
