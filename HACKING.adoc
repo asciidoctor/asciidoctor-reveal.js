@@ -367,7 +367,7 @@ Then run:
 . Make binaries release
 ** Run `npm run package`. Binaries built will be in `dist/`. Upload them to the GitHub release page.
 . Publish previously saved GitHub release draft
-. Update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev') and commit
+. Update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev')
 ** Remove the "Slim compiled to Ruby" converter to the git tree (to avoid noise to the repo and `git status` noise)
 +
     git rm --cached lib/asciidoctor-revealjs/converter.rb
