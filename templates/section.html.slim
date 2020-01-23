@@ -56,7 +56,7 @@
       data-state=(attr 'state'))
 
       - unless hide_title
-        h2=title
+        h2=section_title
       - (blocks - vertical_slides).each do |block|
         =block.convert
     - vertical_slides.each do |subsection|
@@ -87,5 +87,5 @@
       data-state=(attr 'state'))
 
       - unless hide_title
-        h2=title
+        h2=section_title
       =content.chomp

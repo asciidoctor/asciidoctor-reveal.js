@@ -1,0 +1,24 @@
+// .sections
+// Demonstration of section numbers and their specific reveal.js integration.
+// :include: //div[@class="slides"]
+// :header_footer:
+= Sectnums
+:backend: revealjs
+:sectnums:
+:sectnumlevels: 2
+
+== First level
+
+First content
+
+== Vertical
+
+Vertical slides are using level 2 sections
+
+=== Level 2
+
+==== Level 3 does not have sectnum, sectnumlevels is 2
+
+== Horizontal slide
+
+=== Also supports levels
