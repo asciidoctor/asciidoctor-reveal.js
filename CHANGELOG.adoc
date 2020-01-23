@@ -9,6 +9,9 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 
 == <master> (<unreleased)
 
+Enhancements::
+  * Built-in slim templates can now be overridden with `--template-dir` or `-T` ({uri-issue}177[#177], {uri-issue}318[#318])
+
 Compliance::
   * Added support for the `sectnums` AsciiDoc attribute ({uri-issue}185[#185], {uri-issue}317[#317])
 
