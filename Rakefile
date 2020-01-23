@@ -4,6 +4,7 @@ require 'asciidoctor'
 require 'asciidoctor/doctest'
 require 'colorize'
 require 'tilt'
+require 'rake/testtask'
 
 CONVERTER_FILE = 'lib/asciidoctor-revealjs/converter.rb'
 JS_FILE = 'build/asciidoctor-reveal.js'
@@ -76,6 +77,7 @@ def build_converter(mode = :pretty)
         basebackend: 'html',
         outfilesuffix: '.html',
         filetype: 'html',
+        supports_templates: true
       },
       delegate_backend: 'html5',
       engine_opts: {
@@ -92,6 +94,11 @@ DocTest::RakeTasks.new do |t|
   t.input_examples :asciidoc, path: [ *DocTest.examples_path, 'examples' ]
   t.converter = DocTest::HTML::Converter
   t.converter_opts = { backend_name: 'revealjs' }
+end
+
+Rake::TestTask.new(:test) do |t|
+  t.test_files = FileList['test/asciidoctor-revealjs/*_test.rb']
+  t.warning = false
 end
 
 task 'prepare-converter' do
@@ -132,7 +139,8 @@ namespace :examples do
   end
 end
 
+task 'test' => 'doctest'
 task 'doctest:test' => 'prepare-converter'
 task 'doctest:generate' => 'prepare-converter'
 # When no task specified, run test.
-task :default => :doctest
+task :default => :test

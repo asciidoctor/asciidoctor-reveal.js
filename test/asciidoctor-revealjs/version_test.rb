@@ -1,6 +1,6 @@
-require 'test_helper'
+require_relative '../test_helper'
 
-class Asciidoctor::RevealjsTest < Minitest::Test
+class Asciidoctor::Revealjs::VersionTest < Minitest::Test
   def test_that_it_has_a_version_number
     refute_nil ::Asciidoctor::Revealjs::VERSION
   end

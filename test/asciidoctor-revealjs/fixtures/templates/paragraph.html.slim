@@ -1,0 +1,7 @@
+p.paragraph id=@id class=role
+  - if title?
+    span.title=title
+  - if has_role? 'small'
+    small=content
+  - else
+    =content
