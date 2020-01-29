@@ -31,7 +31,7 @@ module Asciidoctor
           if doc.attr? 'highlightjs-theme'
             theme_href = doc.attr 'highlightjs-theme'
           else
-            theme_href = "#{revealjsdir}/lib/css/zenburn.css"
+            theme_href = "#{revealjsdir}/lib/css/monokai.css"
           end
           %(<link rel="stylesheet" href="#{theme_href}"#{opts[:self_closing_tag_slash]}>)
         end
