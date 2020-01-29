@@ -18,8 +18,7 @@ end
 namespace :build do
   desc 'Compile Slim templates and generate converter.rb'
   task :converter => 'clean' do
-    # NOTE: using mode :fast by default due to a bug in ruby-beautify under Ruby 2.5
-    #       https://github.com/erniebrodeur/ruby-beautify/issues/45
+    # NOTE: use :pretty if you want to debug the generated code
     build_converter :fast
   end
 
