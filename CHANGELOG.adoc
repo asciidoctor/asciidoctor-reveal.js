@@ -11,9 +11,13 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 
 Enhancements::
   * Built-in slim templates can now be overridden with `--template-dir` or `-T` ({uri-issue}177[#177], {uri-issue}318[#318])
+  * Documentation improvements ({uri-issue}322[#322])
 
 Compliance::
   * Added support for the `sectnums` AsciiDoc attribute ({uri-issue}185[#185], {uri-issue}317[#317])
+
+Bug Fixes::
+  * Interactive debugging works again ({uri-issue}322[#322])
 
 
 == 3.1.0 (2020-01-18)
