@@ -30,9 +30,8 @@ Two complementary approaches can be used to explore the context offered by ascii
 
 [NOTE]
 --
-Starting with v1.1.0 the slim templates are compiled to Ruby in order to
-use the same templates from Asciidoctor.js (Javascript / Node.js ecosystem).
-Don't forget to recompile the templates if you make changes to them.
+Debugging is only supported via the Ruby ecosystem.
+You need to recompile the templates when you make changes to them.
 This can be done by running:
 
     bundle exec rake build
@@ -80,6 +79,10 @@ In order to be dropped into the debugger at a specific point in a template simpl
 - binding.pry
 ----
 
+Recompile the templates with:
+
+    bundle exec rake build
+
 Then run `asciidoctor-revealjs` from the command-line to generate your document and you'll be dropped in the debugger:
 
 ----
@@ -111,13 +114,11 @@ You can also query asciidoctor's documentation:
 If you install the `pry-byebug` gem you get additional debugging capabilities.
 See the gem's documentation for details.
 
-Since 1.1.0, templates are compiled. It is easier to inject the debug
-triggering statements and use the templates directly instead of debugging
-compiled templates. You can call the slim templates directly with:
+Since 1.1.0, templates are compiled.
+It is easier to inject the debug triggering statements and use the templates directly instead of debugging compiled templates.
+You can call the slim templates directly with:
 
-// TODO it's still not clear whether `-r slim-htag` is required right now (#153)
-
-    bundle exec asciidoctor --trace -T templates/ examples/customcss.adoc
+    bundle exec asciidoctor-revealjs --trace -T templates/ examples/customcss.adoc
 
 === References
 
