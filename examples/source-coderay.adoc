@@ -31,3 +31,18 @@ to your `Gemfile` and re-run:
 
 puts 'Hello, world!'
 ----
+
+== Highlight Lines
+
+// TODO linenums CSS negatively affects the output
+// TODO highlighting is invisible
+
+[source,ruby,highlight=2..5]
+----
+ORDERED_LIST_KEYWORDS = {
+  'loweralpha' => 'a',
+  'lowerroman' => 'i',
+  'upperalpha' => 'A',
+  'upperroman' => 'I',
+}
+----
