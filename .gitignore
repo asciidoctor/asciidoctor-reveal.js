@@ -3,6 +3,7 @@
 
 # test stuff
 /examples/*.html
+!/examples/docinfo*.html
 /examples/reveal.js/
 /examples/node_modules
 

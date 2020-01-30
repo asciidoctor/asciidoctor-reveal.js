@@ -1,0 +1,9 @@
+= Docinfo shared
+:docinfo: shared
+
+== Tweet
+
+// placeholder
+[#tweet]
+--
+--
