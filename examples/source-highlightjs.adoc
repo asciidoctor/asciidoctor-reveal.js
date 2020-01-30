@@ -28,7 +28,9 @@ fn main() {
 
 // This example was taken from Reveal.js README
 // https://github.com/hakimel/reveal.js/blob/master/README.md#code-syntax-highlighting
-[source, clojure]
+Using `<mark>` in source requires a `subs="none"` attribute to the source block.
+
+[source, clojure, subs="none"]
 ----
 (def lazy-fib
   (concat
