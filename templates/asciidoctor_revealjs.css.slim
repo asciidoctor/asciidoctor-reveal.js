@@ -57,3 +57,6 @@ css:
   pre .conum[data-value]{position:relative;top:-.125em}
   b.conum *{color:inherit!important}
   .conum:not([data-value]):empty{display:none}
+
+  /* Override Asciidoctor CSS that causes issues with reveal.js features */
+  .reveal .hljs table { border: 0; }
