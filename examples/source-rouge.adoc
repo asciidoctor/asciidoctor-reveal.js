@@ -43,10 +43,10 @@ fn main() {
 
 == Rouge Features
 
-// TODO docinfo not loaded
+// TODO missing `hll` class from styles provided Asciidoctor for rouge
 // TODO linenums feature affects listing size
 
-This is broken
+This is broken see `TODO` in this source
 
 [source,ruby,highlight=2..4]
 ----
