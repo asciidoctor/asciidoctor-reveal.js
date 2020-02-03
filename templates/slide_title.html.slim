@@ -1,0 +1,28 @@
+- bg_image = (attr? 'title-slide-background-image') ? (image_uri(attr 'title-slide-background-image')) : nil
+- bg_video = (attr? 'title-slide-background-video') ? (media_uri(attr 'title-slide-background-video')) : nil
+section.title(class = role
+  data-state='title'
+  data-transition=(attr 'title-slide-transition')
+  data-transition-speed=(attr 'title-slide-transition-speed')
+  data-background=(attr 'title-slide-background')
+  data-background-size=(attr 'title-slide-background-size')
+  data-background-image=bg_image
+  data-background-video=bg_video
+  data-background-video-loop=(attr 'title-slide-background-video-loop')
+  data-background-video-muted=(attr 'title-slide-background-video-muted')
+  data-background-opacity=(attr "background-opacity")
+  data-background-iframe=(attr 'title-slide-background-iframe')
+  data-background-color=(attr 'title-slide-background-color')
+  data-background-repeat=(attr 'title-slide-background-repeat')
+  data-background-position=(attr 'title-slide-background-position')
+  data-background-transition=(attr 'title-slide-background-transition'))
+  - if (_title_obj = doctitle partition: true, use_fallback: true).subtitle?
+    h1=slice_text _title_obj.title, (_slice = header.option? :slice)
+    h2=slice_text _title_obj.subtitle, _slice
+  - else
+    h1=@header.title
+  - preamble = @document.find_by context: :preamble
+  - unless preamble.nil? or preamble.length == 0
+    div.preamble=preamble.pop.content
+  - unless author.nil?
+    p.author: small=author

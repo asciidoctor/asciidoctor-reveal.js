@@ -1,0 +1,13 @@
+// .docinfo-shared
+// Demonstration of docinfo attribute and we provide only head and footer values
+// :include: //head/*[last()] | //div[@class="slides"]/*[last()]
+// :header_footer:
+= Docinfo shared
+:docinfo: shared
+
+== Tweet
+
+// placeholder
+[#tweet]
+--
+--
