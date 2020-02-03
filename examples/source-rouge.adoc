@@ -41,7 +41,7 @@ fn main() {
 }
 ----
 
-== Rouge Reatures
+== Rouge Features
 
 // TODO docinfo not loaded
 // TODO linenums feature affects listing size
