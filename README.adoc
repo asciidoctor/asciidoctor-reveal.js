@@ -820,7 +820,6 @@ They are applied in the link:templates/document.html.slim[document template].
 
 NOTE: Default settings are based on `reveal.js` default settings.
 
-// FIXME add new 3.8 options here
 [cols="1m,1,2"]
 |===
 |Attribute |Value(s) |Description
@@ -885,9 +884,13 @@ all:: show on all views (default)
 speaker:: only show slide numbers on speaker notes view
 print:: only show slide numbers when printing to PDF
 
+|:revealjs_hash:
+|true, *false*
+|Add the current slide number to the URL hash so that reloading the page/copying the URL will return you to the same slide
+
 |:revealjs_history:
 |true, *false*
-|Push each slide change to the browser history.
+|Push each slide change to the browser history. Implies `hash: true`
 
 |:revealjs_keyboard:
 |*true*, false
@@ -912,6 +915,14 @@ print:: only show slide numbers when printing to PDF
 |:revealjs_rtl:
 |true, *false*
 |Change the presentation direction to be RTL.
+
+|:revealjs_navigationMode:
+|*default*, linear, grid
+|See https://github.com/hakimel/reveal.js/#navigation-mode for details
+
+|:revealjs_shuffle:
+|true, *false*
+|Randomizes the order of slides each time the presentation loads
 
 |:revealjs_fragments:
 |*true*, false
@@ -941,6 +952,14 @@ null:: Media will only autoplay if data-autoplay is present
 true:: All media will autoplay, regardless of individual setting
 false:: No media will autoplay, regardless of individual setting
 
+|:revealjs_preloadIframes:
+|*null*, true, false
+a|Global override for preloading lazy-loaded iframes
+
+null:: Iframes with `data-src` AND `data-preload` will be loaded when within the `viewDistance`, iframes with only `data-src` will be loaded when visible
+true:: All iframes with `data-src` will be loaded when within the `viewDistance`
+false:: All iframes with `data-src` will be loaded only when visible
+
 |:revealjs_autoSlide:
 |<integer>
 |Delay in milliseconds between automatically proceeding to the next slide.
@@ -961,9 +980,30 @@ This value can be overwritten by using a `data-autoslide` attribute on your slid
 This is used to show a pacing timer in the speaker view.
 Defaults to *120*
 
+|:revealjs_totalTime:
+|<integer>
+|Specify the total time in seconds that is available to present.
+If this is set to a nonzero value, the pacing timer will work out the time available for each slide, instead of using the defaultTiming value.
+Defaults to *0*
+
+|:revealjs_minimumTimePerSlide:
+|<integer>
+|Specify the minimum amount of time you want to allot to each slide, if using the totalTime calculation method.
+If the automated time allocation causes slide pacing to fall below this threshold, then you will see an alert in the speaker notes window.
+Defaults to *0*.
+
 |:revealjs_mouseWheel:
 |true, *false*
 |Enable slide navigation via mouse wheel.
+
+|:revealjs_hideInactiveCursor:
+|*true*, false
+|Hide cursor if inactive
+
+|:revealjs_hideCursorTime:
+|<integer>
+|Time before the cursor is hidden (in ms).
+Defaults to *5000*.
 
 |:revealjs_hideAddressBar:
 |*true*, false
@@ -988,7 +1028,14 @@ Add the `preview=true` attribute on links or `link_preview=true` attribute on im
 
 |:revealjs_viewDistance:
 |<integer>
-|Number of slides away from the current that are visible. Default: 3
+|Number of slides away from the current that are visible.
+Default: *3*.
+
+|:revealjs_mobileViewDistance:
+|<integer>
+|Number of slides away from the current that are visible on mobile devices.
+It is advisable to set this to a lower number than viewDistance in order to save resources.
+Default *3*.
 
 |:revealjs_parallaxBackgroundImage:
 |<file\|URL>
