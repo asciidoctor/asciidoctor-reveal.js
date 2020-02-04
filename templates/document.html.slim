@@ -171,6 +171,17 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         // presenting each slide. This is used to show a pacing timer in the
         // speaker view
         defaultTiming: #{attr 'revealjs_defaulttiming', 120},
+        // Specify the total time in seconds that is available to
+        // present.  If this is set to a nonzero value, the pacing
+        // timer will work out the time available for each slide,
+        // instead of using the defaultTiming value
+        totalTime: #{attr 'revealjs_totaltime', 0},
+        // Specify the minimum amount of time you want to allot to
+        // each slide, if using the totalTime calculation method.  If
+        // the automated time allocation causes slide pacing to fall
+        // below this threshold, then you will see an alert in the
+        // speaker notes window
+        minimumTimePerSlide: #{attr 'revealjs_minimumtimeperslide', 0},
         // Enable slide navigation via mouse wheel
         mouseWheel: #{to_boolean(attr 'revealjs_mousewheel', false)},
         // Hide cursor if inactive
@@ -191,6 +202,10 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         backgroundTransition: '#{attr 'revealjs_backgroundtransition', 'fade'}',
         // Number of slides away from the current that are visible
         viewDistance: #{attr 'revealjs_viewdistance', 3},
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: #{attr 'revealjs_mobileviewdistance', 3},
         // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
         parallaxBackgroundImage: '#{attr 'revealjs_parallaxbackgroundimage', ''}',
         // Parallax background size in CSS syntax (e.g., "2100px 900px")
