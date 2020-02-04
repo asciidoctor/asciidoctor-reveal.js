@@ -1108,6 +1108,28 @@ If you need more details about our dependencies check out Asciidoctor dependenci
 * With Ruby / Bundler: https://github.com/asciidoctor/asciidoctor/tree/v2.0.10#requirements[Asciidoctor] 2.0.10
 * With JavaScript (Node.js) / NPM: https://github.com/asciidoctor/asciidoctor.js/blob/v2.0.3/packages/core/package.json[Asciidoctor.js] 2.0.3
 
+
+[[revealjs-compatibility-matrix]]
+== reveal.js Compatibility Matrix
+
+We try as much as possible to be compatible with a broad range of reveal.js versions.
+However, changes made by that project sometimes forces us to drop compatibility with older reveal.js releases.
+This table tracks this compatibility.
+
+|===
+|Asciidoctor reveal.js version |reveal.js version
+
+|4.x
+|3.9 - 3.8
+
+|3.x, 2.x, 1.x
+|3.7 - 3.0
+
+|Unversioned releases
+|2.x
+|===
+
+
 [[asciidoctorjs-compatibility-matrix]]
 == Asciidoctor.js Compatibility Matrix
 

@@ -10,6 +10,9 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 == <master> (<unreleased)
 
 Upgrade considerations::
+  * Due to an upstream change in reveal.js 3.8.0, this back-end no longer supports earlier reveal.js versions.
+    We added a compatibility matrix with reveal.js at the end of the README.
+    See {uri-issue}301[#301] for details.
   * Using the attribute `background-opacity` to alter the opacity of the title slide no longer works.
     When the opacity feature was introduced we forgot to align with the other title slide attributes.
     The feature was introduced in 3.0.0 and the bug stayed in 3.1.0.
@@ -25,6 +28,7 @@ Enhancements::
   * Documentation improvements ({uri-issue}322[#322])
 
 Compliance::
+  * New reveal.js 3.8.0 features supported: `previewLinks` (`data-preview-link`) ({uri-issue}301[#301])
   * Added support for the `sectnums` AsciiDoc attribute ({uri-issue}185[#185], {uri-issue}317[#317])
   * Aligned our `docinfo` support to Asciidoctor Bespoke ({uri-issue}198[#198], {uri-issue}324[#324])
   * `background-opacity` title slide attribute renamed to `title-slide-background-opacity` ({uri-issue}323[#323], {uri-issue}325[#325])
@@ -105,7 +109,6 @@ Use:
 Compliance::
   * Added support for table frame, grid, header and alignment options ({uri-issue}29[#29], {uri-issue}42[#42], {uri-issue}56[#56], {uri-issue}288[#288])
   * Source code callout style aligned with Asciidoctor's ({uri-issue}293[#293], {uri-issue}300[#300])
-  * New reveal.js 3.8.0 features supported: ...
   * Added support for Reveal.js data-background-opacity ({uri-issue}269[#269])
   * Added support for Reveal.js data-background-position ({uri-issue}273[#273], {uri-issue}274[#274])
   * Updated the process to include the generated converter in releases ({uri-issue}265[#265], {uri-issue}302[#302])
