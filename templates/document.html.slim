@@ -74,7 +74,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
           - unless (_docinfo = docinfo :header, '-revealjs.html').empty?
             = _docinfo
           - if header?
-            include slide_title.html.slim
+            include title_slide.html.slim
         = content
         - unless (_docinfo = docinfo :footer, '-revealjs.html').empty?
           = _docinfo

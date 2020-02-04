@@ -10,6 +10,11 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 == <master> (<unreleased)
 
 Upgrade considerations::
+  * Using the attribute `background-opacity` to alter the opacity of the title slide no longer works.
+    When the opacity feature was introduced we forgot to align with the other title slide attributes.
+    The feature was introduced in 3.0.0 and the bug stayed in 3.1.0.
+    Starting with 4.0.0 use `title-slide-background-opacity` instead.
+    See issue {uri-issue}323[#323] for details.
   * Our support of AsciiDoc `docinfo` attribute changed.
     We were previously injecting `docinfo-header.html` somewhere in the HTML `<head>`.
     Now, `docinfo-revealjs.html` goes last into the HTML `<head>`, `docinfo-header-revealjs.html` goes right before the first slide `<section>` and `docinfo-footer-revealjs.html` goes right after the last slide `<section>`.
@@ -22,6 +27,7 @@ Enhancements::
 Compliance::
   * Added support for the `sectnums` AsciiDoc attribute ({uri-issue}185[#185], {uri-issue}317[#317])
   * Aligned our `docinfo` support to Asciidoctor Bespoke ({uri-issue}198[#198], {uri-issue}324[#324])
+  * `background-opacity` title slide attribute renamed to `title-slide-background-opacity` ({uri-issue}323[#323], {uri-issue}325[#325])
 
 Bug Fixes::
   * Interactive debugging works again ({uri-issue}322[#322])
