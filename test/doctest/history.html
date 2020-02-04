@@ -22,7 +22,7 @@
     </div>
   </section>
 </div>
-<script src="reveal.js/lib/js/head.min.js"></script><script src="reveal.js/js/reveal.js"></script><script>
+<script src="reveal.js/js/reveal.js"></script><script>
   Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
     if (slide.getAttribute('data-background-color')) return;
     // user needs to explicitly say he wants CSS color to override otherwise we might break custom css or theme (#226)
@@ -34,7 +34,9 @@
     }
   })
   
-  // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+  // More info about config & dependencies:
+  // - https://github.com/hakimel/reveal.js#configuration
+  // - https://github.com/hakimel/reveal.js#dependencies
   Reveal.initialize({
     // Display presentation control arrows
     controls: true,
@@ -52,7 +54,10 @@
     slideNumber: false,
     // Control which views the slide number displays on
     showSlideNumber: 'all',
-    // Push each slide change to the browser history
+    // Add the current slide number to the URL hash so that reloading the
+    // page/copying the URL will return you to the same slide
+    hash: false,
+    // Push each slide change to the browser history. Implies `hash: true`
     history: true,
     // Enable keyboard shortcuts for navigation
     keyboard: true,
@@ -66,6 +71,8 @@
     loop: false,
     // Change the presentation direction to be RTL
     rtl: false,
+    // See https://github.com/hakimel/reveal.js/#navigation-mode
+    navigationMode: 'default',
     // Randomizes the order of slides each time the presentation loads
     shuffle: false,
     // Turns fragments on and off globally
@@ -86,6 +93,12 @@
     // - true: All media will autoplay, regardless of individual setting
     // - false: No media will autoplay, regardless of individual setting
     autoPlayMedia: null,
+    // Global override for preloading lazy-loaded iframes
+    // - null: Iframes with data-src AND data-preload will be loaded when within
+    //   the viewDistance, iframes with only data-src will be loaded when visible
+    // - true: All iframes with data-src will be loaded when within the viewDistance
+    // - false: All iframes with data-src will be loaded only when visible
+    preloadIframes: null,
     // Number of milliseconds between automatically proceeding to the
     // next slide, disabled when set to 0, this value can be overwritten
     // by using a data-autoslide attribute on your slides
@@ -98,8 +111,23 @@
     // presenting each slide. This is used to show a pacing timer in the
     // speaker view
     defaultTiming: 120,
+    // Specify the total time in seconds that is available to
+    // present.  If this is set to a nonzero value, the pacing
+    // timer will work out the time available for each slide,
+    // instead of using the defaultTiming value
+    totalTime: 0,
+    // Specify the minimum amount of time you want to allot to
+    // each slide, if using the totalTime calculation method.  If
+    // the automated time allocation causes slide pacing to fall
+    // below this threshold, then you will see an alert in the
+    // speaker notes window
+    minimumTimePerSlide: 0,
     // Enable slide navigation via mouse wheel
     mouseWheel: false,
+    // Hide cursor if inactive
+    hideInactiveCursor: true,
+    // Time before the cursor is hidden (in ms)
+    hideCursorTime: 5000,
     // Hides the address bar on mobile devices
     hideAddressBar: true,
     // Opens links in an iframe preview overlay
@@ -114,6 +142,10 @@
     backgroundTransition: 'fade',
     // Number of slides away from the current that are visible
     viewDistance: 3,
+    // Number of slides away from the current that are visible on mobile
+    // devices. It is advisable to set this to a lower number than
+    // viewDistance in order to save resources.
+    mobileViewDistance: 3,
     // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
     parallaxBackgroundImage: '',
     // Parallax background size in CSS syntax (e.g., "2100px 900px")
@@ -138,20 +170,18 @@
     // Bounds for smallest/largest possible scale to apply to content
     minScale: 0.2,
     maxScale: 1.5,
-
+  
     // PDF Export Options
     // Put each fragment on a separate page
     pdfSeparateFragments: true,
     // For slides that do not fit on a page, max number of pages
     pdfMaxPagesPerSlide: 1,
-
+  
     // Optional libraries used to extend on reveal.js
     dependencies: [
-        { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
   
         { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
         { src: 'reveal.js/plugin/notes/notes.js', async: true },
-  
   
   
   
