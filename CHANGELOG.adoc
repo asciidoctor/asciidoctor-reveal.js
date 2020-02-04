@@ -22,6 +22,7 @@ Upgrade considerations::
     We were previously injecting `docinfo-header.html` somewhere in the HTML `<head>`.
     Now, `docinfo-revealjs.html` goes last into the HTML `<head>`, `docinfo-header-revealjs.html` goes right before the first slide `<section>` and `docinfo-footer-revealjs.html` goes right after the last slide `<section>`.
     The new documentation is available https://github.com/asciidoctor/asciidoctor-reveal.js#supplemental-content-with-docinfo[here] and the related tickets are {uri-issue}198[#198] and {uri-issue}324[#324].
+  * Default highlight.js theme is monokai. This follows a reveal.js change.
 
 Enhancements::
   * Built-in slim templates can now be overridden with `--template-dir` or `-T` ({uri-issue}177[#177], {uri-issue}318[#318])

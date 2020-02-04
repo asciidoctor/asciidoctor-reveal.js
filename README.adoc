@@ -531,7 +531,7 @@ To override that behavior use the `width` and `height` named attributes.
 === Syntax highlighting
 
 Reveal.js is well integrated with https://highlightjs.org/[highlight.js] for syntax highlighting.
-Asciidoctor-reveal.js supports that.
+Asciidoctor reveal.js supports that.
 You can activate highlight.js syntax highlighting (disabled by default) by setting the `source-highlighter` document attribute as follows:
 
 [source, asciidoc]
@@ -595,7 +595,7 @@ Here is {uri-revealjs-gh}#markup[the relevant reveal.js
 documentation] on that topic.
 
 
-=== Asciidoctor-reveal.js specific roles
+=== Asciidoctor reveal.js specific roles
 
 Roles are usually applied with the following syntax where the `important-text` CSS class would be applied to the slide title in the generated HTML:
 

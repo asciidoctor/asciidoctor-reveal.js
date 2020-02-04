@@ -44,10 +44,34 @@ Using `<mark>` in source requires a `subs="none"` attribute to the source block.
 // This example was taken from Reveal.js README
 // https://github.com/hakimel/reveal.js/blob/master/README.md#line-numbers--highlights
 
-Highlights are using Asciidoctor syntax not reveal.js. Ex: `4..8,11` instead of
-`4-8,11`.
+Highlights are using Asciidoctor syntax not reveal.js.
+Ex: `4..8,11` instead of `4-8,11`.
 
 [source, javascript, highlight="4..8,11"]
+----
+import React, { useState } from 'react';
+
+function Example() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>
+        Click me
+      </button>
+    </div>
+  );
+}
+----
+
+== Step by Step Highlights
+
+// Requires reveal.js 3.9.0+
+Highlights are using Asciidoctor syntax not reveal.js.
+Ex: `1|2..3|4,6..10` instead of `1|2-3|4,6-10`.
+
+[source, javascript, highlight="1|2..3|4,6..10"]
 ----
 import React, { useState } from 'react';
 
