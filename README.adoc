@@ -630,6 +630,17 @@ Here is a list of supported roles:
 right:: Will apply a `float: right` style to the affected block
 
 
+=== Asciidoctor reveal.js specific attributes
+
+==== iFrame Preview Overlay
+
+The reveal.js feature activated by a global `previewLinks: true` configuration or by adding the `data-preview-link` HTML attribute to `<a>` tags can be activated by using special AsciiDoc attributes.
+
+On links use the `preview=true` attribute, on images use the `link_preview=true` attribute and globally you can set `:revealjs_previewlinks:` attribute.
+
+See <<examples/links.adoc#,links.adoc>> and <<examples/links-preview.adoc#,links-preview.adoc>> for examples.
+
+
 === Title slide customization
 
 The title slide is customized via Asciidoc attributes.
@@ -961,7 +972,7 @@ Defaults to *120*
 |:revealjs_previewLinks:
 |true, *false*
 |Opens links in an iframe preview overlay.
-Add `data-preview-link` and `data-preview-link="false"` to customise each link individually
+Add the `preview=true` attribute on links or `link_preview=true` attribute on images to customize each link individually.
 
 |:revealjs_transition:
 |none, fade, *slide*, convex, concave, zoom

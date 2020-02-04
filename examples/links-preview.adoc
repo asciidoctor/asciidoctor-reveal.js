@@ -1,0 +1,32 @@
+// .links-with-preview
+// Demonstration of reveal.js global data-preview-link feature
+// :include: //div[@class="slides"] | //body/*[last()]
+// :header_footer:
+= Links With Preview Tests
+:revealjs_previewlinks: True
+:imagesdir: images/
+
+== Set Globally
+
+https://en.wikipedia.org/wiki/February_4[Here's a link]
+
+== Disabled Locally
+
+https://en.wikipedia.org/wiki/February_4[Link One, preview=false]
+
+https://en.wikipedia.org/wiki/February_4[Link Two, preview=0]
+
+https://en.wikipedia.org/wiki/February_4[Link Three, preview=False]
+
+== Image block with a Link
+
+image::70s.jpg[link="https://montrehack.ca/"]
+
+== Image block with a Link Disabled Locally
+
+image::70s.jpg[link="https://montrehack.ca/", link_preview=false]
+
+== Inlined Images
+
+image:70s.jpg[link="https://montrehack.ca/", width=200px]
+image:70s.jpg[link="https://montrehack.ca/", width=200px, link_preview=false]

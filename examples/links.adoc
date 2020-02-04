@@ -1,0 +1,39 @@
+// .links
+// Demonstration of reveal.js and AsciiDoc links
+// :include: //div[@class="slides"]
+// :header_footer:
+= Links
+:imagesdir: images/
+
+== Regular
+
+https://en.wikipedia.org/wiki/February_4[Link]
+
+https://en.wikipedia.org/wiki/February_4[In new Window, window="_blank"]
+
+https://en.wikipedia.org/wiki/February_4[In new Window (alternate syntax)^]
+
+
+== With iFrame Preview Overlay
+
+https://en.wikipedia.org/wiki/February_4[Link One, preview=true]
+
+https://en.wikipedia.org/wiki/February_4[Link Two, preview=1]
+
+https://en.wikipedia.org/wiki/February_4[Link Three, preview=True]
+
+
+== Image Block with a Link
+
+image::70s.jpg[link="https://montrehack.ca/", window="_blank"]
+
+
+== Image Block with a Link With iFrame Preview
+
+image::70s.jpg[link="https://montrehack.ca/", link_preview=true]
+
+
+== Inlined Images
+
+image:70s.jpg[link="https://montrehack.ca/", width=200px]
+image:70s.jpg[link="https://montrehack.ca/", width=200px, link_preview=true]

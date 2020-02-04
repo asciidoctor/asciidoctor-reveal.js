@@ -13,7 +13,7 @@
   .imageblock(id=@id class=roles
       style=[("text-align: #{attr :align}" if attr? :align),("float: #{attr :float}" if attr? :float)].compact.join('; '))
     - if attr? :link
-      a.image href=(attr :link)
+      a.image href=(attr :link) target=(attr :window) data-preview-link=(bool_data_attr :link_preview)
         img src=image_uri(attr :target) alt=(attr :alt) width=(width) height=(height) style=((attr? :background) ? "background: #{attr :background}" : nil)
     - else
       img src=image_uri(attr :target) alt=(attr :alt) width=(width) height=(height) style=((attr? :background) ? "background: #{attr :background}" : nil)
