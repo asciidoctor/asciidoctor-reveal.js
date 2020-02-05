@@ -24,6 +24,8 @@ module Asciidoctor
             # Note for review: should the API be modified to give easier access to this?
             if node.attributes.key?("highlight")
               code['data-line-numbers'] = self._convert_linedef_to_revealjs(node.attributes["highlight"])
+            elsif node.attributes.key?("linenums")
+              code['data-line-numbers'] = ''
             end
           })
         end

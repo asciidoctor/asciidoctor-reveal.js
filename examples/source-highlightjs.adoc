@@ -15,6 +15,17 @@ fn main() {
 }
 ----
 
+== Numbered lines
+
+With standard `linenums` attribute
+
+[source, rust, linenums]
+----
+fn main() {
+    println!("Hello World!");
+}
+----
+
 == Stretch the Source
 
 [source, rust, role="stretch"]
