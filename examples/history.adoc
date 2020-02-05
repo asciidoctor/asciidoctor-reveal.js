@@ -1,5 +1,5 @@
 // .history
-// Enables Reveal.JS' browser history feature
+// Enables reveal.js' browser history feature
 // :include: //body/script | //div[@class="slides"]
 // :header_footer:
 = History
@@ -8,12 +8,12 @@
 
 == First slide
 
-Uno
+This
 
 == Second slide
 
-Dos
+Pushes
 
 == Third slide
 
-Tres
+To Browser History Stack
