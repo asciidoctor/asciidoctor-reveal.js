@@ -1,0 +1,18 @@
+@import 'https://fonts.googleapis.com/css?family=Baloo+Bhai';
+
+section[data-fragment="2"] p {
+    font-family: 'Baloo Bhai', cursive;
+}
+
+section[data-fragment="3"] p {
+  color: black;
+  flex: 1;
+  font-size: 2em;
+  line-height: 1.2;
+  text-decoration: none;
+  background-image: linear-gradient(to right, yellow 0, yellow 100%);
+  background-position: 0 -0.1em;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  transition: background .5s;
+}

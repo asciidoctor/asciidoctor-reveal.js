@@ -1,0 +1,32 @@
+// .revealjs-features
+// This example tests some of reveal.js' fragments features
+// :include: //body/script | //div[@class="slides"]
+// :header_footer:
+= Fragments
+:revealjs_history: true
+:revealjs_fragmentInURL: true
+:customcss: fragments.css
+
+== Fragments
+
+[%step]
+* Fragments
+* Are a reveal.js feature
+* Very familiar to Powerpoint users
+
+== Fragments in URL
+
+[%step]
+* With reveal.js 3.6
+* Fragments
+* Can now be displayed in URLs
+
+== Using data-fragment
+
+[%step]
+* You can now
+* Do
+* Fancy
+* CSS Things
+* With Fragments
+* See `fragments.css`
