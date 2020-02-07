@@ -11,19 +11,24 @@ module Asciidoctor
           @name = @pre_class = 'highlightjs'
         end
 
-        # Convert between slide notation formats
-        # Asciidoctor uses 1..3,6,8 whereas reveal.js expects 1-3,6,8
-        def _convert_linedef_to_revealjs highlight_lines
-          return highlight_lines.gsub("..", "-")
+        # Convert between highlight notation formats
+        # In addition to Asciidoctor's linenum converter leveraging core's resolve_lines_to_highlight,
+        # we also support reveal.js step-by-step highlights.
+        # The steps are split using the | character
+        # For example, this method makes "1..3|6,7" into "1,2,3|6,7"
+        def _convert_highlight_to_revealjs node
+          return node.attributes["highlight"].split("|").collect { |linenums|
+            node.resolve_lines_to_highlight(node.content, linenums).join(",")
+          }.join("|")
         end
 
         def format node, lang, opts
           super node, lang, (opts.merge transform: proc { |_, code|
             code['class'] = %(language-#{lang || 'none'} hljs)
             code['data-noescape'] = true
-            # Note for review: should the API be modified to give easier access to this?
+
             if node.attributes.key?("highlight")
-              code['data-line-numbers'] = self._convert_linedef_to_revealjs(node.attributes["highlight"])
+              code['data-line-numbers'] = self._convert_highlight_to_revealjs(node)
             elsif node.attributes.key?("linenums")
               code['data-line-numbers'] = ''
             end
