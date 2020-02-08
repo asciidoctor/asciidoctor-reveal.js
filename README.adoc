@@ -108,7 +108,7 @@ NOTE: For some reason, when you use the system Ruby on Fedora, you also have to 
 . Optional: Copy or clone reveal.js presentation framework.
   Allows you to modify themes or view slides offline.
 
-  $ git clone -b 3.7.0 --depth 1 https://github.com/hakimel/reveal.js.git
+  $ git clone -b 3.9.2 --depth 1 https://github.com/hakimel/reveal.js.git
 
 
 === Rendering the AsciiDoc into slides
@@ -231,7 +231,7 @@ The executables are built using the <<Node / JavaScript Setup,Node / JavaScript>
 * Copy or clone the reveal.js presentation framework in the directory where you will build your slidedeck.
   Here we do a shallow clone of the repo:
 
-  $ git clone -b 3.7.0 --depth 1 https://github.com/hakimel/reveal.js.git
+  $ git clone -b 3.9.2 --depth 1 https://github.com/hakimel/reveal.js.git
 
 === Convert AsciiDoc into slides
 
