@@ -29,7 +29,7 @@ Enhancements::
   * Documentation improvements ({uri-issue}322[#322])
 
 Compliance::
-  * New reveal.js 3.8.0 and 3.9.0 features supported
+  * New reveal.js 3.8.0 and 3.9.0 features supported ({uri-issue}301[#301])
   ** Line numbers on source code blocks using Asciidoctor's `linenums` attribute
   ** Specific lines and step-by-step code highlights using Asciidoctor's `highlight` attribute
   ** reveal.js `data-preview` on links and images with link can be activated by using the `preview` and `link_preview` Asciidoctor attributes respectively
