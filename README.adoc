@@ -531,7 +531,7 @@ To override that behavior use the `width` and `height` named attributes.
 === Syntax highlighting
 
 Reveal.js is well integrated with https://highlightjs.org/[highlight.js] for syntax highlighting.
-Asciidoctor-reveal.js supports that.
+Asciidoctor reveal.js supports that.
 You can activate highlight.js syntax highlighting (disabled by default) by setting the `source-highlighter` document attribute as follows:
 
 [source, asciidoc]
@@ -595,7 +595,7 @@ Here is {uri-revealjs-gh}#markup[the relevant reveal.js
 documentation] on that topic.
 
 
-=== Asciidoctor-reveal.js specific roles
+=== Asciidoctor reveal.js specific roles
 
 Roles are usually applied with the following syntax where the `important-text` CSS class would be applied to the slide title in the generated HTML:
 
@@ -628,6 +628,17 @@ See <<examples/images.adoc#,images.adoc>> for examples.
 Here is a list of supported roles:
 
 right:: Will apply a `float: right` style to the affected block
+
+
+=== Asciidoctor reveal.js specific attributes
+
+==== iFrame Preview Overlay
+
+The reveal.js feature activated by a global `previewLinks: true` configuration or by adding the `data-preview-link` HTML attribute to `<a>` tags can be activated by using special AsciiDoc attributes.
+
+On links use the `preview=true` attribute, on images use the `link_preview=true` attribute and globally you can set `:revealjs_previewlinks:` attribute.
+
+See <<examples/links.adoc#,links.adoc>> and <<examples/links-preview.adoc#,links-preview.adoc>> for examples.
 
 
 === Title slide customization
@@ -873,9 +884,13 @@ all:: show on all views (default)
 speaker:: only show slide numbers on speaker notes view
 print:: only show slide numbers when printing to PDF
 
+|:revealjs_hash:
+|true, *false*
+|Add the current slide number to the URL hash so that reloading the page/copying the URL will return you to the same slide
+
 |:revealjs_history:
 |true, *false*
-|Push each slide change to the browser history.
+|Push each slide change to the browser history. Implies `hash: true`
 
 |:revealjs_keyboard:
 |*true*, false
@@ -900,6 +915,14 @@ print:: only show slide numbers when printing to PDF
 |:revealjs_rtl:
 |true, *false*
 |Change the presentation direction to be RTL.
+
+|:revealjs_navigationMode:
+|*default*, linear, grid
+|See https://github.com/hakimel/reveal.js/#navigation-mode for details
+
+|:revealjs_shuffle:
+|true, *false*
+|Randomizes the order of slides each time the presentation loads
 
 |:revealjs_fragments:
 |*true*, false
@@ -929,6 +952,14 @@ null:: Media will only autoplay if data-autoplay is present
 true:: All media will autoplay, regardless of individual setting
 false:: No media will autoplay, regardless of individual setting
 
+|:revealjs_preloadIframes:
+|*null*, true, false
+a|Global override for preloading lazy-loaded iframes
+
+null:: Iframes with `data-src` AND `data-preload` will be loaded when within the `viewDistance`, iframes with only `data-src` will be loaded when visible
+true:: All iframes with `data-src` will be loaded when within the `viewDistance`
+false:: All iframes with `data-src` will be loaded only when visible
+
 |:revealjs_autoSlide:
 |<integer>
 |Delay in milliseconds between automatically proceeding to the next slide.
@@ -949,9 +980,30 @@ This value can be overwritten by using a `data-autoslide` attribute on your slid
 This is used to show a pacing timer in the speaker view.
 Defaults to *120*
 
+|:revealjs_totalTime:
+|<integer>
+|Specify the total time in seconds that is available to present.
+If this is set to a nonzero value, the pacing timer will work out the time available for each slide, instead of using the defaultTiming value.
+Defaults to *0*
+
+|:revealjs_minimumTimePerSlide:
+|<integer>
+|Specify the minimum amount of time you want to allot to each slide, if using the totalTime calculation method.
+If the automated time allocation causes slide pacing to fall below this threshold, then you will see an alert in the speaker notes window.
+Defaults to *0*.
+
 |:revealjs_mouseWheel:
 |true, *false*
 |Enable slide navigation via mouse wheel.
+
+|:revealjs_hideInactiveCursor:
+|*true*, false
+|Hide cursor if inactive
+
+|:revealjs_hideCursorTime:
+|<integer>
+|Time before the cursor is hidden (in ms).
+Defaults to *5000*.
 
 |:revealjs_hideAddressBar:
 |*true*, false
@@ -960,7 +1012,7 @@ Defaults to *120*
 |:revealjs_previewLinks:
 |true, *false*
 |Opens links in an iframe preview overlay.
-Add `data-preview-link` and `data-preview-link="false"` to customise each link individually
+Add the `preview=true` attribute on links or `link_preview=true` attribute on images to customize each link individually.
 
 |:revealjs_transition:
 |none, fade, *slide*, convex, concave, zoom
@@ -976,7 +1028,14 @@ Add `data-preview-link` and `data-preview-link="false"` to customise each link i
 
 |:revealjs_viewDistance:
 |<integer>
-|Number of slides away from the current that are visible. Default: 3
+|Number of slides away from the current that are visible.
+Default: *3*.
+
+|:revealjs_mobileViewDistance:
+|<integer>
+|Number of slides away from the current that are visible on mobile devices.
+It is advisable to set this to a lower number than viewDistance in order to save resources.
+Default *3*.
 
 |:revealjs_parallaxBackgroundImage:
 |<file\|URL>
@@ -1095,6 +1154,28 @@ If you need more details about our dependencies check out Asciidoctor dependenci
 
 * With Ruby / Bundler: https://github.com/asciidoctor/asciidoctor/tree/v2.0.10#requirements[Asciidoctor] 2.0.10
 * With JavaScript (Node.js) / NPM: https://github.com/asciidoctor/asciidoctor.js/blob/v2.0.3/packages/core/package.json[Asciidoctor.js] 2.0.3
+
+
+[[revealjs-compatibility-matrix]]
+== reveal.js Compatibility Matrix
+
+We try as much as possible to be compatible with a broad range of reveal.js versions.
+However, changes made by that project sometimes forces us to drop compatibility with older reveal.js releases.
+This table tracks this compatibility.
+
+|===
+|Asciidoctor reveal.js version |reveal.js version
+
+|4.x
+|3.9 - 3.8
+
+|3.x, 2.x, 1.x
+|3.7 - 3.0
+
+|Unversioned releases
+|2.x
+|===
+
 
 [[asciidoctorjs-compatibility-matrix]]
 == Asciidoctor.js Compatibility Matrix

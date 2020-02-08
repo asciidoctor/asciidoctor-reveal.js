@@ -24,6 +24,23 @@ module Slim::Helpers
     val && val != 'false' && val.to_s != '0' || false
   end
 
+  # bool_data_attr
+  # If the AsciiDoc attribute doesn't exist, no HTML attribute is added
+  # If the AsciiDoc attribute exist and is a true value, HTML attribute is enabled (bool)
+  # If the AsciiDoc attribute exist and is a false value, HTML attribute is a false string
+  # Ex: a feature is enabled globally but can be disabled using a data- attribute on individual items
+  # :revealjs_previewlinks: True
+  # then link::example.com[Link text, preview=false]
+  # Here the template must have data-preview-link="false" not just no data-preview-link attribute
+  def bool_data_attr val
+    return false if !attr?(val)
+    if attr(val).downcase == 'false' || attr(val) == '0'
+      return 'false'
+    else
+      return true
+    end
+  end
+
   # false needs to be verbatim everything else is a string.
   # Calling side isn't responsible for quoting so we are doing it here
   def to_valid_slidenumber val

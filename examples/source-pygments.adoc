@@ -30,3 +30,15 @@ fn main() {
     println!("Hello World!");
 }
 ----
+
+== Pygments Features
+
+[source,ruby,highlight="1..2,4..5"]
+----
+ORDERED_LIST_KEYWORDS = {
+  'loweralpha' => 'a',
+  'lowerroman' => 'i',
+  'upperalpha' => 'A',
+  'upperroman' => 'I',
+}
+----

@@ -2,6 +2,10 @@ doctype 5
 html lang=(attr :lang, 'en' unless attr? :nolang)
   head
     meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"
+
+    title=(doctitle sanitize: true, use_fallback: true)
+
     - if RUBY_ENGINE == 'opal' && JAVASCRIPT_PLATFORM == 'node'
       - revealjsdir = (attr :revealjsdir, 'node_modules/reveal.js')
     - else
@@ -13,11 +17,9 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       - if attr? key
         meta name=key content=(attr key)
     - linkcss = (attr? 'linkcss')
-    title=(doctitle sanitize: true, use_fallback: true)
-    meta content="yes" name="apple-mobile-web-app-capable"
-    meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"
-    meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui" name="viewport"
-    link href="#{revealjsdir}/css/reveal.css" rel="stylesheet"
+    link rel="stylesheet" href="#{revealjsdir}/css/reset.css"
+    link rel="stylesheet" href="#{revealjsdir}/css/reveal.css"
+
     / Default theme required even when using custom theme
     - if attr? :revealjs_customtheme
       link rel='stylesheet' href=(attr :revealjs_customtheme) id='theme'
@@ -53,15 +55,15 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     - syntax_hl = self.syntax_highlighter
     - if syntax_hl && (syntax_hl.docinfo? :head)
       =syntax_hl.docinfo :head, self, cdn_base_url: cdn_base, linkcss: linkcss, self_closing_tag_slash: '/'
-    / If the query includes 'print-pdf', use the PDF print sheet
+
+    /! Printing and PDF exports
     javascript:
       var link = document.createElement( 'link' );
       link.rel = 'stylesheet';
       link.type = 'text/css';
       link.href = window.location.search.match( /print-pdf/gi ) ? "#{revealjsdir}/css/print/pdf.css" : "#{revealjsdir}/css/print/paper.css";
       document.getElementsByTagName( 'head' )[0].appendChild( link );
-    /[if lt IE 9]
-      <script src="#{revealjsdir}/lib/js/html5shiv.js"></script>
+
     - if attr? :customcss
       link rel='stylesheet' href=((customcss = attr :customcss).empty? ? 'asciidoctor-revealjs.css' : customcss)
     - unless (_docinfo = docinfo :head, '-revealjs.html').empty?
@@ -78,8 +80,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         = content
         - unless (_docinfo = docinfo :footer, '-revealjs.html').empty?
           = _docinfo
-    script src="#{revealjsdir}/lib/js/head.min.js"
     script src="#{revealjsdir}/js/reveal.js"
+    / Supports easy AsciiDoc syntax for background color
     javascript:
       Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
         if (slide.getAttribute('data-background-color')) return;
@@ -92,7 +94,9 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         }
       })
 
-      // See https://github.com/hakimel/reveal.js#configuration for a full list of configuration options
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
       Reveal.initialize({
         // Display presentation control arrows
         controls: #{to_boolean(attr 'revealjs_controls', true)},
@@ -110,7 +114,10 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         slideNumber: #{to_valid_slidenumber(attr 'revealjs_slidenumber', false)},
         // Control which views the slide number displays on
         showSlideNumber: '#{attr 'revealjs_showslidenumber', 'all'}',
-        // Push each slide change to the browser history
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: #{to_boolean(attr 'revealjs_hash', false)},
+        // Push each slide change to the browser history. Implies `hash: true`
         history: #{to_boolean(attr 'revealjs_history', false)},
         // Enable keyboard shortcuts for navigation
         keyboard: #{to_boolean(attr 'revealjs_keyboard', true)},
@@ -124,6 +131,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         loop: #{to_boolean(attr 'revealjs_loop', false)},
         // Change the presentation direction to be RTL
         rtl: #{to_boolean(attr 'revealjs_rtl', false)},
+        // See https://github.com/hakimel/reveal.js/#navigation-mode
+        navigationMode: '#{attr 'revealjs_navigationmode', 'default'}',
         // Randomizes the order of slides each time the presentation loads
         shuffle: #{to_boolean(attr 'revealjs_shuffle', false)},
         // Turns fragments on and off globally
@@ -144,6 +153,12 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         // - true: All media will autoplay, regardless of individual setting
         // - false: No media will autoplay, regardless of individual setting
         autoPlayMedia: #{attr 'revealjs_autoplaymedia', 'null'},
+        // Global override for preloading lazy-loaded iframes
+        // - null: Iframes with data-src AND data-preload will be loaded when within
+        //   the viewDistance, iframes with only data-src will be loaded when visible
+        // - true: All iframes with data-src will be loaded when within the viewDistance
+        // - false: All iframes with data-src will be loaded only when visible
+        preloadIframes: #{attr 'revealjs_preloadiframes', 'null'},
         // Number of milliseconds between automatically proceeding to the
         // next slide, disabled when set to 0, this value can be overwritten
         // by using a data-autoslide attribute on your slides
@@ -156,8 +171,23 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         // presenting each slide. This is used to show a pacing timer in the
         // speaker view
         defaultTiming: #{attr 'revealjs_defaulttiming', 120},
+        // Specify the total time in seconds that is available to
+        // present.  If this is set to a nonzero value, the pacing
+        // timer will work out the time available for each slide,
+        // instead of using the defaultTiming value
+        totalTime: #{attr 'revealjs_totaltime', 0},
+        // Specify the minimum amount of time you want to allot to
+        // each slide, if using the totalTime calculation method.  If
+        // the automated time allocation causes slide pacing to fall
+        // below this threshold, then you will see an alert in the
+        // speaker notes window
+        minimumTimePerSlide: #{attr 'revealjs_minimumtimeperslide', 0},
         // Enable slide navigation via mouse wheel
         mouseWheel: #{to_boolean(attr 'revealjs_mousewheel', false)},
+        // Hide cursor if inactive
+        hideInactiveCursor: #{to_boolean(attr 'revealjs_hideinactivecursor', true)},
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: #{attr 'revealjs_hidecursortime', 5000},
         // Hides the address bar on mobile devices
         hideAddressBar: #{to_boolean(attr 'revealjs_hideaddressbar', true)},
         // Opens links in an iframe preview overlay
@@ -172,6 +202,10 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         backgroundTransition: '#{attr 'revealjs_backgroundtransition', 'fade'}',
         // Number of slides away from the current that are visible
         viewDistance: #{attr 'revealjs_viewdistance', 3},
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: #{attr 'revealjs_mobileviewdistance', 3},
         // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
         parallaxBackgroundImage: '#{attr 'revealjs_parallaxbackgroundimage', ''}',
         // Parallax background size in CSS syntax (e.g., "2100px 900px")
@@ -205,13 +239,11 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
 
         // Optional libraries used to extend on reveal.js
         dependencies: [
-            { src: '#{revealjsdir}/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-            #{(document.attr? 'source-highlighter', 'highlightjs') ? "{ src: '#{revealjsdir}/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }," : nil}
+            #{(document.attr? 'source-highlighter', 'highlightjs') ? "{ src: '#{revealjsdir}/plugin/highlight/highlight.js', async: true }," : nil}
             #{(attr? 'revealjs_plugin_zoom', 'disabled') ? "" :  "{ src: '#{revealjsdir}/plugin/zoom-js/zoom.js', async: true }," }
             #{(attr? 'revealjs_plugin_notes', 'disabled') ? "" :  "{ src: '#{revealjsdir}/plugin/notes/notes.js', async: true }," }
-            #{(attr? 'revealjs_plugin_marked', 'enabled') ? "{ src: '#{revealjsdir}/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } }," : "" }
-            #{(attr? 'revealjs_plugin_markdown', 'enabled') ? "{ src: '#{revealjsdir}/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } }," : "" }
-            #{(attr? 'revealjs_plugin_pdf', 'enabled') ? "{ src: '#{revealjsdir}/plugin/print-pdf/print-pdf.js', async: true }," :  "" }
+            #{(attr? 'revealjs_plugin_marked', 'enabled') ? "{ src: '#{revealjsdir}/plugin/markdown/marked.js' }," : "" }
+            #{(attr? 'revealjs_plugin_markdown', 'enabled') ? "{ src: '#{revealjsdir}/plugin/markdown/markdown.js' }," : "" }
             #{(attr? 'revealjs_plugins') ? File.read(attr('revealjs_plugins', '')) : ""}
         ],
 

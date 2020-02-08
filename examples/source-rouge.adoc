@@ -6,6 +6,7 @@
 :icons: font
 :source-highlighter: rouge
 :rouge-style: monokai
+:docinfo: private
 
 == Requirements
 
@@ -37,5 +38,22 @@ fn main() {
 ----
 fn main() {
     println!("Hello stretched World!");
+}
+----
+
+== Rouge Features
+
+// TODO missing `hll` class from styles provided Asciidoctor for rouge
+// TODO linenums feature affects listing size
+
+This is broken see `TODO` in this source
+
+[source,ruby,highlight=2..4]
+----
+ORDERED_LIST_KEYWORDS = {
+  'loweralpha' => 'a',
+  'lowerroman' => 'i',
+  'upperalpha' => 'A',
+  'upperroman' => 'I',
 }
 ----

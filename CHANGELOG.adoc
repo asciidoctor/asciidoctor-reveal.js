@@ -10,6 +10,9 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 == <master> (<unreleased)
 
 Upgrade considerations::
+  * Due to an upstream change in reveal.js 3.8.0, this back-end no longer supports earlier reveal.js versions.
+    We added a compatibility matrix with reveal.js at the end of the README.
+    See {uri-issue}301[#301] for details.
   * Using the attribute `background-opacity` to alter the opacity of the title slide no longer works.
     When the opacity feature was introduced we forgot to align with the other title slide attributes.
     The feature was introduced in 3.0.0 and the bug stayed in 3.1.0.
@@ -19,12 +22,18 @@ Upgrade considerations::
     We were previously injecting `docinfo-header.html` somewhere in the HTML `<head>`.
     Now, `docinfo-revealjs.html` goes last into the HTML `<head>`, `docinfo-header-revealjs.html` goes right before the first slide `<section>` and `docinfo-footer-revealjs.html` goes right after the last slide `<section>`.
     The new documentation is available https://github.com/asciidoctor/asciidoctor-reveal.js#supplemental-content-with-docinfo[here] and the related tickets are {uri-issue}198[#198] and {uri-issue}324[#324].
+  * Default highlight.js theme is monokai. This follows a reveal.js change.
 
 Enhancements::
   * Built-in slim templates can now be overridden with `--template-dir` or `-T` ({uri-issue}177[#177], {uri-issue}318[#318])
   * Documentation improvements ({uri-issue}322[#322])
 
 Compliance::
+  * New reveal.js 3.8.0 and 3.9.0 features supported
+  ** Line numbers on source code blocks using Asciidoctor's `linenums` attribute
+  ** Specific lines and step-by-step code highlights using Asciidoctor's `highlight` attribute
+  ** reveal.js `data-preview` on links and images with link can be activated by using the `preview` and `link_preview` Asciidoctor attributes respectively
+  ** New configuration options: `hash`, `navigationMode`, `shuffle`, `preloadIframes`, `totalTime`, `minimumTimePerSlide`, `hideInactiveCursor`, `hideCursorTime`, `previewLinks` (`data-preview-link`) and `mobileViewDistance` ({uri-issue}301[#301])
   * Added support for the `sectnums` AsciiDoc attribute ({uri-issue}185[#185], {uri-issue}317[#317])
   * Aligned our `docinfo` support to Asciidoctor Bespoke ({uri-issue}198[#198], {uri-issue}324[#324])
   * `background-opacity` title slide attribute renamed to `title-slide-background-opacity` ({uri-issue}323[#323], {uri-issue}325[#325])

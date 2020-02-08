@@ -1,56 +1,41 @@
-// .source-highlightjs
-// Demonstration of source highlighting with highlightjs
+// .source-emphasis
+// Demonstration of highlighting portions of source
 // :include: //div[@class="slides"]
 // :header_footer:
-= Source Code with Highlight.JS
+= Source Code Emphasis
 :icons: font
 :source-highlighter: highlightjs
 
-== Use the Source
+== Using Asciidoctor features
 
-[source, rust]
+Using bold markers and `subs="+quotes,+macros"` attribute
+
+[source,java,subs="+quotes,+macros"]
+----
+protected void configure(HttpSecurity http) throws Exception {
+    http
+        .authorizeRequests()
+            **.antMatchers("/resources/$$**$$").permitAll()**
+            .anyRequest().authenticated()
+            .and()
+        .formLogin()
+            .loginPage("/login")
+            .permitAll();
+----
+
+== Using reveal.js <mark> tags
+
+Needs `subs="none"` attribute
+
+[source, rust, subs="none"]
 ----
 fn main() {
-    println!("Hello World!");
+    <mark>println!</mark>("Hello marked World!");
 }
 ----
 
-== Numbered lines
 
-With standard `linenums` attribute
-
-[source, rust, linenums]
-----
-fn main() {
-    println!("Hello World!");
-}
-----
-
-== Stretch the Source
-
-[source, rust, role="stretch"]
-----
-fn main() {
-    println!("Hello stretched World!");
-}
-----
-
-== Marked Source
-
-// This example was taken from Reveal.js README
-// https://github.com/hakimel/reveal.js/blob/master/README.md#code-syntax-highlighting
-Using `<mark>` in source requires a `subs="none"` attribute to the source block.
-
-[source, clojure, subs="none"]
-----
-(def lazy-fib
-  (concat
-   [0 1]
-   <mark>((fn rfib [a b]</mark>
-        (lazy-cons (+ a b) (rfib b (+ a b)))) 0 1)))
-----
-
-== Highlight Lines in Source
+== Using reveal.js data-line-numbers
 
 // This example was taken from Reveal.js README
 // https://github.com/hakimel/reveal.js/blob/master/README.md#line-numbers--highlights
@@ -76,7 +61,7 @@ function Example() {
 }
 ----
 
-== Step by Step Highlights
+== Step by Step with data-line-numbers
 
 // Requires reveal.js 3.9.0+
 Highlights are using Asciidoctor syntax not reveal.js.

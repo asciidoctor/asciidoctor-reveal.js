@@ -11,7 +11,7 @@
 node_modules/
 npm-debug.log
 build/
-/dist/main.js
+/dist/
 /asciidoctor-reveal.js-*.tgz
 
 # ruby stuff
