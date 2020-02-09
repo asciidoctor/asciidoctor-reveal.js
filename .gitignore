@@ -20,3 +20,11 @@ build/
 
 # the compiled slim template, committed only on releases to avoid noise
 /lib/asciidoctor-revealjs/converter.rb
+
+# ignored tests
+# - coderay is unsupported on JRuby
+test/doctest/source-coderay.html
+# - pygments is unsupported on JRuby
+test/doctest/source-pygments.html
+# - contains invalid content
+test/doctest/with-docinfo-shared.html
