@@ -119,7 +119,7 @@ NOTE: For some reason, when you use the system Ruby on Fedora, you also have to 
 . Generate HTML presentation from the AsciiDoc source
 
   $ bundle exec asciidoctor-revealjs \
-    -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0 CONTENT_FILE.adoc
+    -a revealjsdir=https://cdn.jsdelivr.net/npm/reveal.js@3.9.2 CONTENT_FILE.adoc
 
 . If you did the optional step of having a local reveal.js clone you can
   convert AsciiDoc source with
@@ -842,7 +842,7 @@ Default is built-in [path]_lib/css/zenburn.css_.
 |<file\|URL>
 |Overrides reveal.js directory.
 Example: ../reveal.js or
-https://cdnjs.com/libraries/reveal.js/3.7.0[https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0].
+https://cdn.jsdelivr.net/npm/reveal.js@3.9.2.
 Default is `reveal.js/` unless in a Node.js environment where it is `node_modules/reveal.js/`.
 
 |:revealjs_controls:
