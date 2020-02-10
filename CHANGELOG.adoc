@@ -35,6 +35,7 @@ Enhancements::
     It can also be loaded locally or from a CDN of your choice.
     See issues {uri-issue}21[#21], {uri-issue}319[#319] and {uri-issue}320[#320] for details.
   * Documentation improvements ({uri-issue}322[#322])
+  * Refactoring ({uri-issue}330[#330])
 
 Compliance::
   * New reveal.js 3.8.0 and 3.9.0 features supported ({uri-issue}301[#301])
