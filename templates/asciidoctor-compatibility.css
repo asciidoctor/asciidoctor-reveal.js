@@ -1,0 +1,50 @@
+.reveal div.right{float:right}
+
+/* listing block */
+.reveal .listingblock.stretch>.content{height: 100%}
+.reveal .listingblock.stretch>.content>pre{height: 100%}
+.reveal .listingblock.stretch>.content>pre>code{height:100%;max-height:100%}
+
+/* tables */
+table{border-collapse:collapse;border-spacing:0}
+table{margin-bottom:1.25em;border:solid 1px #dedede}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+td.tableblock>.content{margin-bottom:1.25em}
+td.tableblock>.content>:last-child{margin-bottom:-1.25em}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px}
+table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0}
+table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot,table.frame-ends{border-width:1px 0}
+.reveal table th.halign-left,.reveal table td.halign-left{text-align:left}
+.reveal table th.halign-right,.reveal table td.halign-right{text-align:right}
+.reveal table th.halign-center,.reveal table td.halign-center{text-align:center}
+.reveal table th.valign-top,.reveal table td.valign-top{vertical-align:top}
+.reveal table th.valign-bottom,.reveal table td.valign-bottom{vertical-align:bottom}
+.reveal table th.valign-middle,.reveal table td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{font-weight:bold}
+thead{display:table-header-group}
+
+.reveal table.grid-none th,.reveal table.grid-none td{border-bottom:0!important}
+
+/* callouts */
+.conum[data-value] {display:inline-block;color:#fff!important;rgba(0,0,0,.8);-webkit-border-radius:50%;border-radius:50%;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]:after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+
+/* Override Asciidoctor CSS that causes issues with reveal.js features */
+.reveal .hljs table{border: 0}
