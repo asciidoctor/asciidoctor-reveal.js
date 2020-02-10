@@ -1,0 +1,100 @@
+= Grid Layout
+:docinfo: private
+:source-highlighter: highlight.js
+:highlightjs-languages: clojure,scala
+
+[.columns]
+== 2 columns
+
+[.column]
+--
+* **Edgar Allen Poe**
+* Sheri S. Tepper
+* Bill Bryson
+--
+
+[.column]
+--
+Edgar Allan Poe (/poʊ/; born Edgar Poe; January 19, 1809 – October 7, 1849) was an American writer, editor, and literary critic.
+--
+
+[.columns.wrap]
+== Multi-columns with wrap
+
+[.column]
+--
+.Kotlin
+[source,kotlin]
+----
+fun main() {
+    println("Hello, World!")
+}
+----
+--
+
+[.column]
+--
+.Clojure
+[source,clojure]
+----
+(defn -main [& args]
+  (println "Hello, World!"))
+----
+--
+
+[.column]
+--
+.Scala
+[source,scala]
+----
+object HelloWorld {
+  def main(args: Array[String]): Unit = {
+    println("Hello, world!")
+  }
+}
+----
+--
+
+[.columns]
+== Columns with size
+
+[.column.is-one-third]
+--
+* **Kotlin**
+* Java
+* Scala
+--
+
+[.column]
+--
+Programming language for Android, mobile cross-platform
+and web development, server-side, native,
+and data science. Open source forever Github.
+--
+
+[.columns]
+== 3 columns
+
+[.column]
+* Java
+* **Kotlin**
+
+[.column]
+* Node
+* **Deno**
+
+[.column]
+* Ruby
+* **Crystal**
+
+
+[.columns.is-half.green.left]
+== !
+
+[.column.is-half]
+* Java
+* **Kotlin**
+
+[.column.is-half]
+* Ruby
+* **Crystal**

@@ -21,7 +21,7 @@ endif::[]
 :uri-revealjs-home: http://lab.hakim.se/reveal-js/
 :uri-revealjs-gh: https://github.com/hakimel/reveal.js
 :uri-nodejs-download: https://nodejs.org/en/download/
-:showcasedir: showcase 
+:showcasedir: showcase
 
 ifdef::env-github[]
 image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
@@ -614,6 +614,83 @@ Slide Six.One will be rendered vertically below Slide Six.
 Here is {uri-revealjs-gh}#markup[the relevant reveal.js
 documentation] on that topic.
 
+=== Columns layout
+
+Inspired by https://bulma.io/[Bulma], Asciidoctor reveal.js supports columns layout out-of-the-box:
+
+[source, asciidoc]
+....
+[.columns]
+== 2 columns
+
+[.column]
+--
+* **Edgar Allen Poe**
+* Sheri S. Tepper
+* Bill Bryson
+--
+
+[.column]
+--
+Edgar Allan Poe (/poʊ/; born Edgar Poe; January 19, 1809 – October 7, 1849) was an American writer, editor, and literary critic.
+--
+....
+
+If you do not specify a size, each column will have an equal width, no matter the number of columns.
+
+[source, asciidoc]
+....
+[.columns]
+== 3 columns
+
+[.column]
+* Java
+* **Kotlin**
+
+[.column]
+* Node
+* **Deno**
+
+[.column]
+* Ruby
+* **Crystal**
+....
+
+If you want to change the size of a single column, you can use one of the following classes:
+
+* `is-three-quarters`
+* `is-two-thirds`
+* `is-half`
+* `is-one-third`
+* `is-one-quarter`
+* `is-full`
+
+The other columns will fill up the remaining space automatically. +
+You can use the following multiples of 20% as well:
+
+* `is-four-fifths`
+* `is-three-fifths`
+* `is-two-fifths`
+* `is-one-fifth`
+
+[source, asciidoc]
+....
+== Columns with size
+
+[.column.is-one-third]
+--
+* **Kotlin**
+* Java
+* Scala
+--
+
+[.column]
+--
+Programming language for Android, mobile cross-platform
+and web development, server-side, native,
+and data science. Open source forever Github.
+--
+....
 
 === Asciidoctor reveal.js specific roles
 

@@ -54,11 +54,12 @@
     data-state=(attr 'state'))
     - unless hide_title
       h2=section_title
-    - if parent_section_with_vertical_slides
-      - (blocks - vertical_slides).each do |block|
-        =block.convert
-    - else
-      =content.chomp
+    div.slide-content
+      - if parent_section_with_vertical_slides
+        - (blocks - vertical_slides).each do |block|
+          =block.convert
+      - else
+        =content.chomp
 
 / RENDERING
 / render parent section of vertical slides set
