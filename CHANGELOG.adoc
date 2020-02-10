@@ -47,6 +47,7 @@ Compliance::
   * Aligned our `docinfo` support to Asciidoctor Bespoke ({uri-issue}198[#198], {uri-issue}324[#324])
   * Support the `highlightjs-languages` attribute from Asciidocotor ({uri-issue}319[#319], {uri-issue}320[#320])
   * `background-opacity` title slide attribute renamed to `title-slide-background-opacity` ({uri-issue}323[#323], {uri-issue}325[#325])
+  * Added support for the `kdb` macro to represent keyboard shortcuts ({uri-issue}276[#276], {uri-issue}329[#329])
 
 Bug Fixes::
   * Interactive debugging works again ({uri-issue}322[#322])
