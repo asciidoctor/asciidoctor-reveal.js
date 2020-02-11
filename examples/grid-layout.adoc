@@ -2,6 +2,7 @@
 :docinfo: private
 :source-highlighter: highlight.js
 :highlightjs-languages: clojure,scala
+:revealjs_hash: true
 
 [.columns]
 == 2 columns
@@ -98,3 +99,40 @@ and data science. Open source forever Github.
 [.column.is-half]
 * Ruby
 * **Crystal**
+
+== Languages
+
+We will go over languages
+
+[.columns]
+=== Kotlin
+
+[.column]
+[source,kotlin]
+----
+fun main() {
+    println("Hello, World!")
+}
+----
+
+[.column]
+--
+* Nice and compact
+* Works well on Android
+--
+
+[.columns]
+=== Clojure
+
+[.column]
+[source,clojure]
+----
+(defn -main [& args]
+  (println "Hello, World!"))
+----
+
+[.column]
+--
+* Lisp-like
+* Few simple concepts
+--
