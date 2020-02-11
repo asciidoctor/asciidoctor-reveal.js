@@ -241,11 +241,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
 
         // Optional libraries used to extend on reveal.js
         dependencies: [
-            #{(attr? 'revealjs_plugin_zoom', 'disabled') ? "" :  "{ src: '#{revealjsdir}/plugin/zoom-js/zoom.js', async: true }," }
-            #{(attr? 'revealjs_plugin_notes', 'disabled') ? "" :  "{ src: '#{revealjsdir}/plugin/notes/notes.js', async: true }," }
-            #{(attr? 'revealjs_plugin_marked', 'enabled') ? "{ src: '#{revealjsdir}/plugin/markdown/marked.js' }," : "" }
-            #{(attr? 'revealjs_plugin_markdown', 'enabled') ? "{ src: '#{revealjsdir}/plugin/markdown/markdown.js' }," : "" }
-            #{(attr? 'revealjs_plugins') ? File.read(attr('revealjs_plugins', '')) : ""}
+            #{revealjs_dependencies(document, self, revealjsdir)}
         ],
 
         #{(attr? 'revealjs_plugins_configuration') ? File.read(attr('revealjs_plugins_configuration', '')) : ""}
