@@ -118,6 +118,20 @@ module Slim::Helpers
     end
   end
 
+  def revealjs_dependencies(document, node, revealjsdir)
+    dependencies = []
+    dependencies << "{ src: '#{revealjsdir}/plugin/zoom-js/zoom.js', async: true }" unless (node.attr? 'revealjs_plugin_zoom', 'disabled')
+    dependencies << "{ src: '#{revealjsdir}/plugin/notes/notes.js', async: true }" unless (node.attr? 'revealjs_plugin_notes', 'disabled')
+    dependencies << "{ src: '#{revealjsdir}/plugin/markdown/marked.js', async: true }" if (node.attr? 'revealjs_plugin_marked', 'enabled')
+    dependencies << "{ src: '#{revealjsdir}/plugin/markdown/markdown.js', async: true }" if (node.attr? 'revealjs_plugin_markdown', 'enabled')
+    if (node.attr? 'revealjs_plugins') &&
+        !(revealjs_plugins_file = (node.attr 'revealjs_plugins', '').strip).empty? &&
+        !(revealjs_plugins_content = (File.read revealjs_plugins_file).strip).empty?
+      dependencies << revealjs_plugins_content
+    end
+    dependencies.join(",\n      ")
+  end
+
 
   # Between delimiters (--) is code taken from asciidoctor-bespoke 1.0.0.alpha.1
   # Licensed under MIT, Copyright (C) 2015-2016 Dan Allen and the Asciidoctor Project
