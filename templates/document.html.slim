@@ -94,7 +94,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
           slide.setAttribute('data-background-color', bgColor);
           slide.style.backgroundColor = 'transparent';
         }
-      })
+      });
 
       // More info about config & dependencies:
       // - https://github.com/hakimel/reveal.js#configuration
@@ -247,6 +247,10 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         #{(attr? 'revealjs_plugins_configuration') ? File.read(attr('revealjs_plugins_configuration', '')) : ""}
 
       });
+    / Workaround the "Only direct descendants of a slide section can be stretched" limitation in reveal.js
+    / https://github.com/hakimel/reveal.js/issues/2584
+    include stretch_nested_elements.js.slim
+
     - if syntax_hl && (syntax_hl.docinfo? :footer)
       =syntax_hl.docinfo :footer, self, cdn_base_url: cdn_base, linkcss: linkcss, self_closing_tag_slash: '/'
 
