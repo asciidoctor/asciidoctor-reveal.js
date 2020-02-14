@@ -106,4 +106,57 @@ function Example() {
       </div>
     </div>
   </section>
+  <section id="_asm_from_compiler">
+    <h2>ASM from Compiler</h2>
+    <div class="listingblock col2">
+      <div class="content">
+        <pre class="highlightjs highlight"><code class="language-x86asm hljs" data-lang="x86asm" data-line-numbers="3,4,5,6|7,8,9|10|11,12" data-noescape="true">main        proc near
+var_10      = dword ptr -10h
+            push ebp                      <i class="conum" data-value="1"></i><b>(1)</b>
+            mov ebp, esp
+            and esp, 0FFFFFFF0h
+            sub esp, 10h
+            mov eax, offset aHelloWorld   <i class="conum" data-value="2"></i><b>(2)</b>
+            mov [esp+10h+var_10], eax
+            call _printf
+            mov eax, 0                    <i class="conum" data-value="3"></i><b>(3)</b>
+            leave                         <i class="conum" data-value="4"></i><b>(4)</b>
+            retn
+main        endp</code></pre>
+      </div>
+    </div>
+    <div class="openblock col2">
+      <div class="content">
+        <div class="colist arabic">
+          <table>
+            <tr>
+              <td>
+                <i class="conum" data-value="1"></i><b>1</b>
+              </td>
+              <td>Function prologue</td>
+            </tr>
+            <tr>
+              <td>
+                <i class="conum" data-value="2"></i><b>2</b>
+              </td>
+              <td>Preparing arguments and calling <code>printf</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <i class="conum" data-value="3"></i><b>3</b>
+              </td>
+              <td>Clean-up registers</td>
+            </tr>
+            <tr>
+              <td>
+                <i class="conum" data-value="4"></i><b>4</b>
+              </td>
+              <td>Function epilogue</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

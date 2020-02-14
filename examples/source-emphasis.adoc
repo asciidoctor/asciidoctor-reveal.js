@@ -5,6 +5,11 @@
 = Source Code Emphasis
 :icons: font
 :source-highlighter: highlightjs
+:highlightjs-languages: x86asm
+:customcss: source-emphasis.css
+:revealjs_hash: yes
+:revealjs_height: 1080
+:revealjs_width: 1920
 
 == Using Asciidoctor features
 
@@ -95,3 +100,30 @@ function Example() {
   );
 }
 ----
+
+== ASM from Compiler
+
+[source.col2,x86asm,highlight="3..6|7..9|10|11,12"]
+----
+main        proc near
+var_10      = dword ptr -10h
+            push ebp                      <1>
+            mov ebp, esp
+            and esp, 0FFFFFFF0h
+            sub esp, 10h
+            mov eax, offset aHelloWorld   <2>
+            mov [esp+10h+var_10], eax
+            call _printf
+            mov eax, 0                    <3>
+            leave                         <4>
+            retn
+main        endp
+----
+
+[.col2]
+--
+<1> Function prologue
+<2> Preparing arguments and calling `printf`
+<3> Clean-up registers
+<4> Function epilogue
+--
