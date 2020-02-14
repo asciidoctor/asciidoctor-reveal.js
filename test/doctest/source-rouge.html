@@ -5,9 +5,11 @@
   </section>
   <section id="_use_the_source">
     <h2>Use the Source</h2>
-    <pre class="prettyprint rust language-rust listingblock"><code>fn main() {
-    println!("Hello World!");
-}</code></pre>
+    <div class="slide-content">
+      <pre class="prettyprint rust language-rust listingblock"><code>fn main() {
+      println!("Hello World!");
+  }</code></pre>
+    </div>
   </section>
 </div>
 
@@ -18,64 +20,72 @@
   </section>
   <section id="_requirements">
     <h2>Requirements</h2>
-    <div class="admonitionblock warning">
-      <table>
-        <tr>
-          <td class="icon"><i class="fa fa-warning" title="Warning"></i></td>
-          <td class="content">This will not work from Asciidoctor.js</td>
-        </tr>
-      </table>
-    </div>
-    <div class="admonitionblock note">
-      <table>
-        <tr>
-          <td class="icon"><i class="fa fa-info-circle" title="Note"></i></td>
-          <td class="content">
-            <div class="paragraph">
-              <p>For this to work. You need to add:</p>
-            </div>
-            <div class="literalblock">
-              <div class="content">
-                <pre>gem 'rouge'</pre>
+    <div class="slide-content">
+      <div class="admonitionblock warning">
+        <table>
+          <tr>
+            <td class="icon"><i class="fa fa-warning" title="Warning"></i></td>
+            <td class="content">This will not work from Asciidoctor.js</td>
+          </tr>
+        </table>
+      </div>
+      <div class="admonitionblock note">
+        <table>
+          <tr>
+            <td class="icon"><i class="fa fa-info-circle" title="Note"></i></td>
+            <td class="content">
+              <div class="paragraph">
+                <p>For this to work. You need to add:</p>
               </div>
-            </div>
-            <div class="paragraph">
-              <p>to your <code>Gemfile</code> and re-run:</p>
-            </div>
-            <div class="literalblock">
-              <div class="content">
-                <pre>bundle install</pre>
+              <div class="literalblock">
+                <div class="content">
+                  <pre>gem 'rouge'</pre>
+                </div>
               </div>
-            </div>
-          </td>
-        </tr>
-      </table>
+              <div class="paragraph">
+                <p>to your <code>Gemfile</code> and re-run:</p>
+              </div>
+              <div class="literalblock">
+                <div class="content">
+                  <pre>bundle install</pre>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
   </section>
   <section id="_use_the_source">
     <h2>Use the Source</h2>
-    <div class="listingblock">
-      <div class="content">
-        <pre class="rouge highlight"><code data-lang="rust"><span class="k">fn</span><span class="nf">main</span><span class="p">()</span><span class="p">{</span><span class="nd">println!</span><span class="p">(</span><span class="s">"Hello World!"</span><span class="p">);</span><span class="p">}</span></code></pre>
+    <div class="slide-content">
+      <div class="listingblock">
+        <div class="content">
+          <pre class="rouge highlight"><code data-lang="rust"><span class="k">fn</span><span class="nf">main</span><span class="p">()</span><span class="p">{</span><span class="nd">println!</span><span class="p">(</span><span class="s">"Hello World!"</span><span class="p">);</span><span class="p">}</span></code></pre>
+        </div>
       </div>
     </div>
   </section>
   <section id="_stretch_the_source">
     <h2>Stretch the Source</h2>
-    <div class="listingblock stretch">
-      <div class="content">
-        <pre class="rouge highlight"><code data-lang="rust"><span class="k">fn</span><span class="nf">main</span><span class="p">()</span><span class="p">{</span><span class="nd">println!</span><span class="p">(</span><span class="s">"Hello stretched World!"</span><span class="p">);</span><span class="p">}</span></code></pre>
+    <div class="slide-content">
+      <div class="listingblock stretch">
+        <div class="content">
+          <pre class="rouge highlight"><code data-lang="rust"><span class="k">fn</span><span class="nf">main</span><span class="p">()</span><span class="p">{</span><span class="nd">println!</span><span class="p">(</span><span class="s">"Hello stretched World!"</span><span class="p">);</span><span class="p">}</span></code></pre>
+        </div>
       </div>
     </div>
   </section>
   <section id="_rouge_features">
     <h2>Rouge Features</h2>
-    <div class="paragraph">
-      <p>This is broken see <code>TODO</code> in this source</p>
-    </div>
-    <div class="listingblock">
-      <div class="content">
-        <pre class="rouge highlight"><code data-lang="ruby"><span class="no">ORDERED_LIST_KEYWORDS</span><span class="o">=</span><span class="p">{</span><span class="hll"><span class="s1">'loweralpha'</span><span class="o">=&gt;</span><span class="s1">'a'</span><span class="p">,</span></span><span class="hll"><span class="s1">'lowerroman'</span><span class="o">=&gt;</span><span class="s1">'i'</span><span class="p">,</span></span><span class="hll"><span class="s1">'upperalpha'</span><span class="o">=&gt;</span><span class="s1">'A'</span><span class="p">,</span></span><span class="s1">'upperroman'</span><span class="o">=&gt;</span><span class="s1">'I'</span><span class="p">,</span><span class="p">}</span></code></pre>
+    <div class="slide-content">
+      <div class="paragraph">
+        <p>This is broken see <code>TODO</code> in this source</p>
+      </div>
+      <div class="listingblock">
+        <div class="content">
+          <pre class="rouge highlight"><code data-lang="ruby"><span class="no">ORDERED_LIST_KEYWORDS</span><span class="o">=</span><span class="p">{</span><span class="hll"><span class="s1">'loweralpha'</span><span class="o">=&gt;</span><span class="s1">'a'</span><span class="p">,</span></span><span class="hll"><span class="s1">'lowerroman'</span><span class="o">=&gt;</span><span class="s1">'i'</span><span class="p">,</span></span><span class="hll"><span class="s1">'upperalpha'</span><span class="o">=&gt;</span><span class="s1">'A'</span><span class="p">,</span></span><span class="s1">'upperroman'</span><span class="o">=&gt;</span><span class="s1">'I'</span><span class="p">,</span><span class="p">}</span></code></pre>
+        </div>
       </div>
     </div>
   </section>

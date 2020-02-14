@@ -12,21 +12,23 @@
   </section>
   <section id="_actually_they_are">
     <h2>Actually, they are…​</h2>
-    <div class="ulist">
-      <ul>
-        <li>
-          <p>hacking games</p>
-        </li>
-        <li>
-          <p>hacking puzzles</p>
-        </li>
-        <li>
-          <p>computer science puzzle</p>
-        </li>
-        <li>
-          <p>nerd puzzles</p>
-        </li>
-      </ul>
+    <div class="slide-content">
+      <div class="ulist">
+        <ul>
+          <li>
+            <p>hacking games</p>
+          </li>
+          <li>
+            <p>hacking puzzles</p>
+          </li>
+          <li>
+            <p>computer science puzzle</p>
+          </li>
+          <li>
+            <p>nerd puzzles</p>
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 </div>
@@ -40,7 +42,7 @@
       slide.setAttribute('data-background-color', bgColor);
       slide.style.backgroundColor = 'transparent';
     }
-  })
+  });
 
   // More info about config & dependencies:
   // - https://github.com/hakimel/reveal.js#configuration
@@ -193,5 +195,71 @@
 
 
 
+  });
+  </script>
+<script>
+  var dom = {};
+  dom.slides = document.querySelector('.reveal .slides');
+
+  function getRemainingHeight(element, slideElement, height) {
+    height = height || 0;
+    if (element) {
+      var newHeight, oldHeight = element.style.height;
+      // Change the .stretch element height to 0 in order find the height of all
+      // the other elements
+      element.style.height = '0px';
+      // In Overview mode, the parent (.slide) height is set of 700px.
+      // Restore it temporarily to its natural height.
+      slideElement.style.height = 'auto';
+      newHeight = height - slideElement.offsetHeight;
+      // Restore the old height, just in case
+      element.style.height = oldHeight + 'px';
+      // Clear the parent (.slide) height. .removeProperty works in IE9+
+      slideElement.style.removeProperty('height');
+      return newHeight;
+    }
+    return height;
+  }
+
+  function layoutSlideContents(width, height) {
+    // Handle sizing of elements with the 'stretch' class
+    toArray(dom.slides.querySelectorAll('section .stretch')).forEach(function (element) {
+      // Determine how much vertical space we can use
+      var limit = 5; // hard limit
+      var parent = element.parentNode;
+      while (parent.nodeName !== 'SECTION' && limit > 0) {
+        parent = parent.parentNode;
+        limit--;
+      }
+      if (limit === 0) {
+        // unable to find parent, aborting!
+        return;
+      }
+      var remainingHeight = getRemainingHeight(element, parent, height);
+      // Consider the aspect ratio of media elements
+      if (/(img|video)/gi.test(element.nodeName)) {
+        var nw = element.naturalWidth || element.videoWidth, nh = element.naturalHeight || element.videoHeight;
+        var es = Math.min(width / nw, remainingHeight / nh);
+        element.style.width = (nw * es) + 'px';
+        element.style.height = (nh * es) + 'px';
+      } else {
+        element.style.width = width + 'px';
+        element.style.height = remainingHeight + 'px';
+      }
+    });
+  }
+
+  function toArray(o) {
+    return Array.prototype.slice.call(o);
+  }
+
+  Reveal.addEventListener('slidechanged', function () {
+    layoutSlideContents(1280, 720)
+  });
+  Reveal.addEventListener('ready', function () {
+    layoutSlideContents(1280, 720)
+  });
+  Reveal.addEventListener('resize', function () {
+    layoutSlideContents(1280, 720)
   });
 </script>

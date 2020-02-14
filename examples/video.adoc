@@ -15,6 +15,11 @@ video::kZH9JtPBq7k[youtube, start=34, options=autoplay]
 
 video::kZH9JtPBq7k[youtube, start=34, options=autoplay]
 
+[.notes]
+--
+This video is auto-sized!
+--
+
 == Remote Video File Auto-sized
 
 video::https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm[]
