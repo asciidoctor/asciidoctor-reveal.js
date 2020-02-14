@@ -48,8 +48,10 @@ Compliance::
   * Support the `highlightjs-languages` attribute from Asciidocotor ({uri-issue}319[#319], {uri-issue}320[#320])
   * `background-opacity` title slide attribute renamed to `title-slide-background-opacity` ({uri-issue}323[#323], {uri-issue}325[#325])
   * Added support for the `kdb` macro to represent keyboard shortcuts ({uri-issue}276[#276], {uri-issue}329[#329])
+  * Cosmetic improvements to callout lists ({uri-issue}335[#335])
 
 Bug Fixes::
+  * Line height CSS fix with code listing with line numbers ({uri-issue}331[#331], {uri-issue}334[#334])
   * Interactive debugging works again ({uri-issue}322[#322])
 
 
