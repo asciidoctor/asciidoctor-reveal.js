@@ -50,17 +50,21 @@ kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-bl
 pre .conum[data-value]{position:relative;top:-.125em}
 b.conum *{color:inherit!important}
 .conum:not([data-value]):empty{display:none}
-/* callout lists */
+/* Callout list */
 .hdlist>table,.colist>table{border:0;background:none}
 .hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
 td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
 td.hdlist1{font-weight:bold;padding-bottom:1.25em}
-/* .literalblock+.colist,.listingblock+.colist{margin-top:-.5em} */
+/* Disabled from Asciidoctor CSS because it caused callout list to go under the
+ * source listing when .stretch is applied (see #335)
+ * .literalblock+.colist,.listingblock+.colist{margin-top:-.5em} */
 .colist td:not([class]):first-child{padding:.4em .75em 0;line-height:1;vertical-align:top}
 .colist td:not([class]):first-child img{max-width:none}
 .colist td:not([class]):last-child{padding:.25em 0}
 
 /* Override Asciidoctor CSS that causes issues with reveal.js features */
 .reveal .hljs table{border: 0}
+/* Callout list rows would have a bottom border with some reveal.js themes (see #335) */
 .reveal .colist>table th, .reveal .colist>table td {border-bottom:0}
+/* Fixes line height with Highlight.js source listing when linenums enabled (see #331) */
 .reveal .hljs table thead tr th, .reveal .hljs table tfoot tr th, .reveal .hljs table tbody tr td, .reveal .hljs table tr td, .reveal .hljs table tfoot tr td{line-height:inherit}
