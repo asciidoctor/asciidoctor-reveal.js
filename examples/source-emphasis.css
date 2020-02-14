@@ -1,9 +1,0 @@
-/* WARNING: this will likely be replaced by something else soon */
-.col2 {
-  width:48% !important;
-  margin: 0 1% !important;
-  float:left;
-}
-.reveal .col2 ol, .reveal .col2  dl, .reveal .col2  ul {
-    display:table;
-}

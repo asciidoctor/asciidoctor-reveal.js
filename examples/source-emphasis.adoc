@@ -6,7 +6,6 @@
 :icons: font
 :source-highlighter: highlightjs
 :highlightjs-languages: x86asm
-:customcss: source-emphasis.css
 :revealjs_hash: yes
 :revealjs_height: 1080
 :revealjs_width: 1920
@@ -49,7 +48,6 @@ fn main() {
     <mark>println!</mark>("Hello marked World!");
 }
 ----
-
 
 == Using reveal.js data-line-numbers
 
@@ -101,9 +99,10 @@ function Example() {
 }
 ----
 
+[.columns]
 == ASM from Compiler
 
-[source.col2,x86asm,highlight="3..6|7..9|10|11,12"]
+[source.column,x86asm,highlight="3..6|7..9|10|11,12"]
 ----
 main        proc near
 var_10      = dword ptr -10h
@@ -120,7 +119,7 @@ var_10      = dword ptr -10h
 main        endp
 ----
 
-[.col2]
+[.column]
 --
 <1> Function prologue
 <2> Preparing arguments and calling `printf`
