@@ -13,7 +13,7 @@
 
 == Using Asciidoctor features
 
-Using bold markers and `subs="+quotes,+macros"` attribute
+=== Bold markers and `subs="+quotes,+macros"` attribute
 
 [source,java,subs="+quotes,+macros"]
 ----
@@ -27,6 +27,17 @@ protected void configure(HttpSecurity http) throws Exception {
             .loginPage("/login")
             .permitAll();
 ----
+
+=== Callouts
+
+[source, rust]
+----
+fn main() {
+    println!("Hello World!"); // <1>
+}
+----
+<1> `println!` is a macro.
+
 
 == Using reveal.js <mark> tags
 
