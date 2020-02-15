@@ -40,6 +40,9 @@ Enhancements::
     You can add other languages not supported in the core set by using the `highlightjs-languages` attribute.
     It can also be loaded locally or from a CDN of your choice.
     See issues {uri-issue}21[#21], {uri-issue}319[#319] and {uri-issue}320[#320] for details.
+  * We now support the Java / JVM ecosystem.
+    This packaging happens in a separate project: https://github.com/asciidoctor/asciidoctorj-reveal.js[AsciidoctorJ reveal.js].
+    See issue {uri-issue}271[#217] and PR {uri-issue}337[#337] for details.
   * Documentation improvements ({uri-issue}322[#322])
   * Refactoring ({uri-issue}327[#327], {uri-issue}330[#330], {uri-issue}333[#333])
 
