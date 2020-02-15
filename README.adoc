@@ -34,11 +34,12 @@ endif::[]
 
 TIP: Want to see some example presentations, see <<Showcase Presentations>>
 
-There are three main technology stacks that can transform AsciiDoc into HTML5 / reveal.js:
+There are four main technology stacks that can convert AsciiDoc into HTML5 / reveal.js:
 
 * Asciidoctor / Ruby / Bundler (See <<Ruby Setup>>)
 * Asciidoctor.js / JavaScript (Node.js) / npm (See <<Node / JavaScript Setup>>)
 * Standalone Executable (See <<Standalone Executable>>)
+* AsciidoctorJ / JVM / Maven (See https://github.com/asciidoctor/asciidoctorj-reveal.js[this project])
 
 ifeval::['{branch}' == 'master']
 NOTE: You're viewing the documentation for an upcoming release.
