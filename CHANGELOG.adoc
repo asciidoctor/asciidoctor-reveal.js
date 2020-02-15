@@ -18,6 +18,9 @@ Upgrade considerations::
     The feature was introduced in 3.0.0 and the bug stayed in 3.1.0.
     Starting with 4.0.0 use `title-slide-background-opacity` instead.
     See issue {uri-issue}323[#323] for details.
+  * The new _Columns layout_ feature required a new `<div>` that wraps all slide content (everything except the slide title).
+    This might impact custom CSS with strict child relationships.
+    See issue {uri-issue}326[#326] and PR {uri-issue}332[#332] for details.
   * We bundle Highlight.js instead of relying on reveal.js.
     We reduced the core set of supported languages and added the `highlightjs-languages` attribute to add specific languages on demand.
     Depending on what type of code you were highlighting, you might need to add your language using that attribute.
@@ -29,6 +32,9 @@ Upgrade considerations::
   * Default highlight.js theme is monokai. This follows a reveal.js change.
 
 Enhancements::
+  * New _Columns layout_ feature which provides easy to use roles to create multiple columns in slides.
+    See the feature's documentation for usage details.
+    See issue {uri-issue}326[#326] and PR {uri-issue}332[#332] for details.
   * Built-in slim templates can now be overridden with `--template-dir` or `-T` ({uri-issue}177[#177], {uri-issue}318[#318])
   * Highlight.js is now bundled by us instead of reveal.js.
     You can add other languages not supported in the core set by using the `highlightjs-languages` attribute.
