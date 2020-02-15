@@ -377,7 +377,7 @@ Then run:
 ** commit msg: Begin development on next release
 . Submit a PR upstream to sync the documentation on asciidoctor.org
 ** Modify this page: https://github.com/asciidoctor/asciidoctor.org/edit/master/docs/asciidoctor-revealjs.adoc
-. Submit a PR upstream to update Asciidoctor reveal.js version inside docker-asciidoctor
+. Submit a PR downstream to update Asciidoctor reveal.js version inside docker-asciidoctor
 ** Modify the `Dockerfile`, `Makefile` and `README.adoc` of: https://github.com/asciidoctor/docker-asciidoctor
 . Submit a PR downstream to update AsciidoctorJ reveal.js version
 ** Modify `gradle.properties`, `asciidoctorj-revealjs/gradle.properties` and `asciidoctorj-revealjs/build.gradle` in: https://github.com/asciidoctor/asciidoctorj-reveal.js
