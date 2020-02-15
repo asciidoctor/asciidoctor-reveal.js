@@ -1,6 +1,6 @@
 // .links-with-preview
 // Demonstration of reveal.js global data-preview-link feature
-// :include: //div[@class="slides"] | //body/*[last()]
+// :include: //div[@class="slides"] | //body/*[last()-1]
 // :header_footer:
 = Links With Preview Tests
 :revealjs_previewlinks: True

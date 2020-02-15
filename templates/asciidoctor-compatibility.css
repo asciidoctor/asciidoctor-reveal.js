@@ -68,3 +68,70 @@ td.hdlist1{font-weight:bold;padding-bottom:1.25em}
 .reveal .colist>table th, .reveal .colist>table td {border-bottom:0}
 /* Fixes line height with Highlight.js source listing when linenums enabled (see #331) */
 .reveal .hljs table thead tr th, .reveal .hljs table tfoot tr th, .reveal .hljs table tbody tr td, .reveal .hljs table tr td, .reveal .hljs table tfoot tr td{line-height:inherit}
+
+/* Columns layout */
+.columns .slide-content {
+  display: flex;
+}
+
+.columns.wrap .slide-content {
+  flex-wrap: wrap;
+}
+
+.columns .slide-content > .column {
+  display: block;
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding: .75rem;
+}
+
+.columns .slide-content > .column.is-full {
+  flex: none;
+  width: 100%;
+}
+
+.columns .slide-content > .column.is-four-fifths {
+  flex: none;
+  width: 80%;
+}
+
+.columns .slide-content > .column.is-three-quarters {
+  flex: none;
+  width: 75%;
+}
+
+.columns .slide-content > .column.is-two-thirds {
+  flex: none;
+  width: 66.6666%;
+}
+
+.columns .slide-content > .column.is-three-fifths {
+  flex: none;
+  width: 60%;
+}
+
+.columns .slide-content > .column.is-half {
+  flex: none;
+  width: 50%;
+}
+
+.columns .slide-content > .column.is-two-fifths {
+  flex: none;
+  width: 40%;
+}
+
+.columns .slide-content > .column.is-one-third {
+  flex: none;
+  width: 33.3333%;
+}
+
+.columns .slide-content > .column.is-one-quarter {
+  flex: none;
+  width: 25%;
+}
+
+.columns .slide-content > .column.is-one-fifth {
+  flex: none;
+  width: 20%;
+}

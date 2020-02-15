@@ -3,16 +3,26 @@
 // :include: //div[@class="slides"]
 // :header_footer:
 = Video tests
+:revealjs_hash: true
 
-== Auto-sized
+== YouTube Auto-sized
 
 video::kZH9JtPBq7k[youtube, start=34, options=autoplay]
 //video::kZH9JtPBq7k[youtube, start=34, height=600, width=800, options=autoplay]
 
 [%notitle]
-== Auto-sized notitle
+== YouTube Auto-sized notitle
 
 video::kZH9JtPBq7k[youtube, start=34, options=autoplay]
+
+[.notes]
+--
+This video is auto-sized!
+--
+
+== Remote Video File Auto-sized
+
+video::https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm[]
 
 [%notitle,background-iframe="https://www.youtube.com/embed/LaApqL4QjH8?rel=0&start=3&enablejsapi=1&autoplay=1&loop=1&controls=0&modestbranding=1"]
 == background
@@ -22,7 +32,6 @@ video::kZH9JtPBq7k[youtube, start=34, options=autoplay]
 
 [background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm",options="loop,muted,notitle"]
 == video file, options
-
 
 == vimeo autostart
 
