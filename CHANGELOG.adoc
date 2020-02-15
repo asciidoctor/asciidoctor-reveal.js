@@ -33,7 +33,7 @@ Upgrade considerations::
 
 Enhancements::
   * New _Columns layout_ feature which provides easy to use roles to create multiple columns in slides.
-    See the feature's documentation for usage details.
+    See the https://github.com/asciidoctor/asciidoctor-reveal.js#columns-layout[feature's documentation] for usage details.
     See issue {uri-issue}326[#326] and PR {uri-issue}332[#332] for details.
   * Built-in slim templates can now be overridden with `--template-dir` or `-T` ({uri-issue}177[#177], {uri-issue}318[#318])
   * Highlight.js is now bundled by us instead of reveal.js.
