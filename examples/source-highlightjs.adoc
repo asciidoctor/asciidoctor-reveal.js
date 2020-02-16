@@ -99,3 +99,11 @@ function Example() {
   );
 }
 ----
+
+== Regression test for issue 338
+
+----
+fn main() {
+    println!("Hello World!");
+}
+----
