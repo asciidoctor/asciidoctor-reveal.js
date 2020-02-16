@@ -5,6 +5,7 @@
 = Source Code with Highlight.js
 :icons: font
 :source-highlighter: highlightjs
+:highlightjs-languages: clojure
 
 == Use the Source
 
