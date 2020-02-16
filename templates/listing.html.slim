@@ -1,6 +1,6 @@
 - nowrap = (option? 'nowrap') || !(document.attr? 'prewrap')
-- syntax_hl = document.syntax_highlighter
 - if @style == 'source'
+  - syntax_hl = document.syntax_highlighter
   - lang = attr :language
   - if syntax_hl
     - doc_attrs = document.attributes
