@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker&display=swap');
+section.white.background {
+  background-color: white;
+}
+
+section.important h2 {
+    font-family: 'Permanent Marker', cursive;
+    text-transform: none;
+    font-size: 3em;
+}
+
+div.red > p > span.icon {
+  color: red;
+}
+
+/* theme overrides */
+.reveal pre code {
+  max-height: none;
+}
+.reveal section img {
+  background: none;
+  border: none;
+}
