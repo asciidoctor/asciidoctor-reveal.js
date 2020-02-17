@@ -4,6 +4,7 @@
 // :header_footer:
 = Font Awesome Tests
 :icons: font
+:customcss: font-awesome.css
 
 == !
 
@@ -16,7 +17,7 @@ icon:heart[size=5x]
 == !
 
 // TODO
-[red]
+[.red]
 icon:heart[size=5x]
 
 == !
