@@ -1,3 +1,7 @@
+// .grid-layout
+// Testing our columns roles
+// :include: //div[@class="slides"]
+// :header_footer:
 = Grid Layout
 :docinfo: private
 :source-highlighter: highlight.js
@@ -135,4 +139,36 @@ fun main() {
 --
 * Lisp-like
 * Few simple concepts
+--
+
+[.columns.is-vcentered]
+== Vertically Centered Columns
+
+[.column]
+* Java
+* **Kotlin**
+
+[.column]
+* Node
+* **Deno**
+
+[.column.is-half]
+--
+.Source
+[source,asciidoc]
+....
+[.columns.is-vcentered]
+== Vertically Aligned Columns
+
+[.column]
+* Java
+* **Kotlin**
+
+[.column]
+* Node
+* **Deno**
+
+[.column.is-half]
+[...]
+....
 --
