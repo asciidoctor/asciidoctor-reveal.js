@@ -78,6 +78,10 @@ td.hdlist1{font-weight:bold;padding-bottom:1.25em}
   flex-wrap: wrap;
 }
 
+.columns.is-vcentered .slide-content {
+  align-items: center;
+}
+
 .columns .slide-content > .column {
   display: block;
   flex-basis: 0;
