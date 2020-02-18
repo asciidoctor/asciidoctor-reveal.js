@@ -6,8 +6,7 @@
 // reveal.js config
 :customcss: release-4.0.css
 :revealjs_hash: true
-:revealjs_width: 1920
-:revealjs_height: 1080
+:revealjs_width: 1080
 
 == Supports all of reveal.js 3.9.2 features
 
@@ -105,12 +104,12 @@ Powered by Asciidoctor
 * Easy
 
 [.column]
-* and Flexible
+* Flexible
 
 [.column]
-* Grid Layout
+Grid Layout
 
-[.column]
+[.column.is-one-third]
 --
 [source,asciidoc]
 .Source
@@ -122,10 +121,14 @@ Powered by Asciidoctor
 * Easy
 
 [.column]
-* and Flexible
+* Flexible
 
 [.column]
-* Grid Layout
+Grid Layout
+
+[.column.is-one-third]
+[source,asciidoc]
+[...]
 ....
 --
 
@@ -134,8 +137,8 @@ Powered by Asciidoctor
 
 [.column.is-one-third]
 --
-Expressive icon:palette[] Icons icon:icons[] at your Fingertips
-icon:hand-holding-heart[]
+Expressive icon:palette[] Icons icon:icons[]
+at your Fingertips icon:hand-holding-heart[]
 
 [.red]
 icon:heart[size=3x]
@@ -146,7 +149,9 @@ icon:heart[size=3x]
 [source,asciidoc]
 .Source
 ....
-Expressive icon:palette[] Icons icon:icons[] at your Fingertips
+Expressive icon:palette[]
+Icons icon:icons[]
+at your Fingertips
 icon:hand-holding-heart[]
 
 [.red]
