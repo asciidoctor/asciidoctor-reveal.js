@@ -40,7 +40,8 @@ namespace :build do
     mkdir_p [File.dirname(JS_FILE), File.dirname(DIST_FILE)]
     File.open(JS_FILE, 'w') do |file|
       template = File.read('src/asciidoctor-revealjs.tmpl.js')
-      file << template.sub('//OPAL-GENERATED-CODE//', builder.to_s)
+      template['//OPAL-GENERATED-CODE//'] = builder.to_s
+      file << template
     end
     File.binwrite "#{JS_FILE}.map", builder.source_map
 
