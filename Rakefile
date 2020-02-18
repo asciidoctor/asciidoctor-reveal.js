@@ -10,6 +10,7 @@ CONVERTER_FILE = 'lib/asciidoctor-revealjs/converter.rb'
 JS_FILE = 'build/asciidoctor-reveal.js'
 DIST_FILE = 'dist/main.js'
 TEMPLATES_DIR = 'templates'
+PUBLIC_DIR = 'public'
 
 file CONVERTER_FILE => FileList["#{TEMPLATES_DIR}/*"] do
   build_converter :fast
@@ -53,6 +54,7 @@ task :build => 'build:converter'
 
 task :clean do
   rm_rf CONVERTER_FILE
+  rm_rf PUBLIC_DIR
 end
 
 def build_converter(mode = :pretty)
@@ -136,6 +138,16 @@ namespace :examples do
     Dir.chdir('examples') do
       `ruby -run -e httpd . -p 5000 -b 127.0.0.1`
     end
+  end
+
+  task :publish do
+    Dir.mkdir PUBLIC_DIR
+    Dir.mkdir "#{PUBLIC_DIR}/reveal.js"
+    FileUtils.cp 'src/index.html', "#{PUBLIC_DIR}/index.html"
+    FileUtils.cp_r 'node_modules/reveal.js/', "#{PUBLIC_DIR}"
+    FileUtils.cp_r 'examples/images/', "#{PUBLIC_DIR}"
+    FileUtils.cp 'examples/release-4.0.html', "#{PUBLIC_DIR}/release-4.0.html"
+    FileUtils.cp 'examples/release-4.0.css', "#{PUBLIC_DIR}/release-4.0.css"
   end
 end
 
