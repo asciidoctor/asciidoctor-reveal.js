@@ -1,0 +1,190 @@
+= Asciidoctor reveal.js 4.0.0
+:source-highlighter: highlight.js
+:highlightjs-languages: x86asm,asciidoc
+:icons: font
+:imagesdir: images/
+// reveal.js config
+:customcss: release-4.0.css
+:revealjs_hash: true
+:revealjs_width: 1920
+:revealjs_height: 1080
+
+== Supports all of reveal.js 3.9.2 features
+
+
+[background-video="synthwave.mp4",background-opacity=0.7]
+=== Background videos
+// Video not hosted in git due to size
+// Available here: https://pixabay.com/videos/synthwave-retro-sunset-retrowave-29225/
+// Pixabay Free License (No Attribution Required)
+
+=== Automatic Source Code Highlighting!
+
+icon:exclamation-circle[] Including step-by-step line highlights
+
+[.columns.is-vcentered]
+=== Assembly from a Compiler
+
+[.column]
+[source,x86asm,highlight="3..6|7..9|10|11,12"]
+----
+main        proc near
+var_10      = dword ptr -10h
+            push ebp
+            mov ebp, esp
+            and esp, 0FFFFFFF0h
+            sub esp, 10h
+            mov eax, offset aHelloWorld
+            mov [esp+10h+var_10], eax
+            call _printf
+            mov eax, 0
+            leave
+            retn
+main        endp
+----
+
+[.column.is-one-third]
+--
+* Backed by Highlight.js
+* Many languages supported
+* Ability to focus on specific lines
+--
+
+=== With very simple source!
+
+[source,asciidoc]
+....
+[source,x86asm,highlight="3..6|7..9|10|11,12"]
+----
+main        proc near
+var_10      = dword ptr -10h
+            push ebp
+            mov ebp, esp
+            and esp, 0FFFFFFF0h
+            sub esp, 10h
+            mov eax, offset aHelloWorld
+            mov [esp+10h+var_10], eax
+            call _printf
+            mov eax, 0
+            leave
+            retn
+main        endp
+----
+....
+
+=== And More!
+
+* Background images (and gif!)
+* Speaker notes
+* Embedded videos
+* Embedded and interactive iframes
+* etc.
+
+
+[.columns.is-vcentered]
+== Plus AsciiDoc Features
+
+[.column]
+--
+image::asciidoctor-logo.svg[]
+
+Powered by Asciidoctor
+--
+
+[.column]
+.Available toolchains
+* Ruby / Bundler
+* JavaScript / NPM
+* Standalone executables
+* icon:exclamation-circle[] JVM / Maven
+
+[.columns.is-vcentered]
+=== Easy Grid Layout
+
+[.column]
+* Easy
+
+[.column]
+* and Flexible
+
+[.column]
+* Grid Layout
+
+[.column]
+--
+[source,asciidoc]
+.Source
+....
+[.columns]
+=== Easy Grid Layout
+
+[.column]
+* Easy
+
+[.column]
+* and Flexible
+
+[.column]
+* Grid Layout
+....
+--
+
+[.columns.is-vcentered]
+=== FontAwesome Integration
+
+[.column.is-one-third]
+--
+Expressive icon:palette[] Icons icon:icons[] at your Fingertips
+icon:hand-holding-heart[]
+
+[.red]
+icon:heart[size=3x]
+--
+
+[.column]
+--
+[source,asciidoc]
+.Source
+....
+Expressive icon:palette[] Icons icon:icons[] at your Fingertips
+icon:hand-holding-heart[]
+
+[.red]
+icon:heart[size=3x]
+....
+--
+
+[.columns]
+=== Includes
+
+[.column]
+You can include content from other files.
+Including source code!
+
+[.column]
+--
+[source,asciidoc]
+.Example Source
+....
+[source,python]
+----
+\include::demo.py[]
+----
+....
+--
+
+=== For Great Technical Presentations!
+
+
+[.important.white.background,transition="zoom"]
+== Can you do that PowerPoint?
+
+
+[transition=fade,transition-speed=slow]
+== Learn More!
+
+* https://github.com/asciidoctor/asciidoctor-reveal.js/[Asciidoctor reveal.js]
+* https://revealjs.com[reveal.js]
+* https://github.com/asciidoctor/asciidoctor/[Asciidoctor]
+* https://asciidoctor.org/docs/what-is-asciidoc/[What is AsciiDoc?]
+* https://github.com/asciidoctor/asciidoctor-reveal.js/raw/master/examples/release-4.0.adoc[This slide deck's AsciiDoc source]
