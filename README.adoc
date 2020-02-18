@@ -676,6 +676,7 @@ You can use the following multiples of 20% as well:
 
 [source, asciidoc]
 ....
+[.columns]
 == Columns with size
 
 [.column.is-one-third]
