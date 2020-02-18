@@ -693,6 +693,26 @@ and data science. Open source forever Github.
 --
 ....
 
+The vertical alignment of columns defaults to top aligned.
+Content can be centered by adding the `is-vcentered` class to the slide.
+
+[source, asciidoc]
+....
+[.columns.is-vcentered]
+== Columns Vertically Centered
+
+[.column]
+--
+* Few
+* Bullets
+* Here
+--
+
+[.column]
+image::large-image.png[]
+....
+
+
 === Asciidoctor reveal.js specific roles
 
 Roles are usually applied with the following syntax where the `important-text` CSS class would be applied to the slide title in the generated HTML:
