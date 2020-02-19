@@ -1216,6 +1216,13 @@ look at the
 theme documentation] and use the `revealjs_customtheme` AsciiDoc attribute to
 activate it.
 
+
+=== PDF Export
+
+Follow https://github.com/hakimel/reveal.js#pdf-export[reveal.js' documentation] for PDF export.
+We would add that we have successfully used PDF export without the requirement of a Web server.
+
+
 === Default plugins
 
 By default, generated presentations will have the following reveal.js plugins enabled:
@@ -1233,17 +1240,6 @@ For example, to disable all the default plugins set the following document attri
 :revealjs_plugin_zoom: disabled
 :revealjs_plugin_notes: disabled
 ----
-
-reveal.js ships with a plugin that allows to create a PDF from a slide deck.
-To enable this plugin, set the `revealjs_plugin_pdf` attribute.
-
-----
-:revealjs_plugin_pdf: enabled
-----
-
-When the plugin is enabled and you run your presentation in a browser with `?print-pdf` at the end of the URL, you can then use the default print function to print the slide deck into a PDF document.
-
-TIP: To work properly, this plugin requires a Chrome-based browser.
 
 
 === Additional plugins
