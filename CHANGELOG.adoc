@@ -6,8 +6,22 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
+== 4.0.1 (2020-02-18)
+
+Repackage for NPM.
+
 
 == 4.0.0 (2020-02-18)
+
+A major release with a ton of improvements!
+All of reveal.js 3.8.0-3.9.2 new features are supported.
+Added a new set of column layout options for quick slides design.
+Highlight.js support improved.
+Easier templates customizations.
+New Java / JVM toolchain via [AsciidoctorJ-reveal.js](https://github.com/asciidoctor/asciidoctorj-reveal.js).
+Support was added for Asciidoctor `docinfo` and `sectnums` attributes, `kbd` macro and callout styles were fixed.
+
+See the *upgrade considerations* section for the list of potentially breaking changes.
 
 Upgrade considerations::
   * Due to an upstream change in reveal.js 3.8.0, this back-end no longer supports earlier reveal.js versions.
