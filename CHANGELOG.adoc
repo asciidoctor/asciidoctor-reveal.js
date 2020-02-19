@@ -63,6 +63,7 @@ Compliance::
 Bug Fixes::
   * Line height CSS fix with code listing with line numbers ({uri-issue}331[#331], {uri-issue}334[#334])
   * Interactive debugging works again ({uri-issue}322[#322])
+  * Fixed _Uncaught ReferenceError: require is not defined_ by dropping outdated documentation ({uri-issue}344[#344])
 
 
 == 3.1.0 (2020-01-18)
