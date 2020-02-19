@@ -7,7 +7,7 @@ This document provides a high-level view of the changes introduced in {project-n
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
 
-== <master> (<unreleased)
+== 4.0.0 (2020-02-18)
 
 Upgrade considerations::
   * Due to an upstream change in reveal.js 3.8.0, this back-end no longer supports earlier reveal.js versions.
@@ -64,6 +64,22 @@ Bug Fixes::
   * Line height CSS fix with code listing with line numbers ({uri-issue}331[#331], {uri-issue}334[#334])
   * Interactive debugging works again ({uri-issue}322[#322])
   * Fixed _Uncaught ReferenceError: require is not defined_ by dropping outdated documentation ({uri-issue}344[#344])
+
+=== Release meta
+
+* Released on: 2020-02-18
+* Released by: Olivier Bilodeau
+* Release drink: https://defi.leclub28.com/en/p/47E2C422178348F[Lime Flavored Sparkling Water]
+
+{uri-repo}/releases/tag/v4.0.0[git tag] |
+{uri-repo}/compare/v3.1.0...v4.0.0[full diff] |
+{uri-repo}/milestone/8[milestone]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+Guillaume Grossetie, thomas and Olivier Bilodeau
 
 
 == 3.1.0 (2020-01-18)

@@ -314,7 +314,7 @@ Then run:
 +
     bundle update
     bundle exec rake build
-    bundle exec rake doctest
+    bundle exec rake test
     bundle exec rake examples:convert
     npm update --no-save
     bundle exec rake build:js
