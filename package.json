@@ -1,6 +1,6 @@
 {
   "name": "@asciidoctor/reveal.js",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "A reveal.js converter for Asciidoctor.js. Write your slides in AsciiDoc!",
   "main": "dist/main.js",
   "engines": {
@@ -49,7 +49,7 @@
     "reveal.js": "3.9.2"
   },
   "devDependencies": {
-    "@asciidoctor/core": "^2.0.3",
+    "@asciidoctor/core": "^2.1.1",
     "bestikk-log": "0.1.0",
     "expect.js": "0.3.1",
     "pkg": "^4.4.2"
