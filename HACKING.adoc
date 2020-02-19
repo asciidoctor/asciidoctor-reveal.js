@@ -316,6 +316,7 @@ Then run:
     bundle exec rake build
     bundle exec rake test
     bundle exec rake examples:convert
+    npm install
     npm update --no-save
     bundle exec rake build:js
     npm test
