@@ -54,13 +54,7 @@ endif::[]
 
 == Ruby Setup
 
-NOTE: asciidoctor-reveal.js is now a Ruby Gem.
-To ensure repeatability, we recommend that you manage your presentation projects using bundler.
-
-For a quick start clone our https://github.com/obilodeau/presentation-revealjs-starter[starter repository] and follow instructions there.
-
-For more complete instructions, read on.
-
+NOTE: To ensure repeatability, we recommend that you manage your presentation projects using http://bundler.io/[bundler].
 
 === Prerequisites
 
