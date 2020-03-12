@@ -54,13 +54,7 @@ endif::[]
 
 == Ruby Setup
 
-NOTE: asciidoctor-reveal.js is now a Ruby Gem.
-To ensure repeatability, we recommend that you manage your presentation projects using bundler.
-
-For a quick start clone our https://github.com/obilodeau/presentation-revealjs-starter[starter repository] and follow instructions there.
-
-For more complete instructions, read on.
-
+NOTE: To ensure repeatability, we recommend that you manage your presentation projects using http://bundler.io/[bundler].
 
 === Prerequisites
 
@@ -124,6 +118,29 @@ NOTE: For some reason, when you use the system Ruby on Fedora, you also have to 
   $ bundle exec asciidoctor-revealjs CONTENT_FILE.adoc
 
 TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
+
+=== Features Unique to the Ruby CLI
+
+Starting with 4.0.0 you can specify a set of custom templates to use instead of the ones provided by this project.
+This can help you achieve even more concise AsciiDoc syntax and integration with reveal.js at the cost of more maintenance.
+
+To use it, add the following dependencies to your `Gemfile`:
+
+  gem 'tilt', '~>2.0'
+  gem 'slim', '~>4.0'
+
+Then install the dependencies with:
+
+  $ bundle install
+
+The feature is activated with the `--template-dir` or `-T` option:
+
+  $ bundle exec asciidoctor-revealjs -T templates/ CONTENT_FILE.adoc
+
+Any individual template file not provided in the directory specified on the command-line will fall back to the template provided by your version of Asciidoctor reveal.js.
+Refer to our https://github.com/asciidoctor/asciidoctor-reveal.js/tree/master/templates[templates] for inspiration.
+
+This feature hasn't been ported to the JavaScript CLI (and API) or the standalone executables.
 
 
 == Node / JavaScript Setup
