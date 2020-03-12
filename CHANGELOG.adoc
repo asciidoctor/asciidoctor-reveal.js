@@ -6,6 +6,12 @@
 This document provides a high-level view of the changes introduced in {project-name} by release.
 For a detailed view of what has changed, refer to the {uri-repo}/commits/master[commit history] on GitHub.
 
+== <master> (<unreleased>)
+
+Enhancements::
+  * Documentation improvements ({uri-issue}349[#349], {uri-issue}351[#351])
+
+
 == 4.0.1 (2020-02-18)
 
 Repackage for NPM.
