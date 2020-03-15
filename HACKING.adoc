@@ -414,7 +414,9 @@ Resulting slides are kept in `test/doctest/`.
 
 == Netlify Integration
 
-We integrate with https://www.netlify.com[Netlify] in order to automatically convert examples into slides.
+On every commit or PR, the https://www.netlify.com[Netlify] service will convert some examples into slides and host the resulting pages on its platform where it will be visible by anyone.
+It hosts the converted HTML files, reveal.js framework and static content like images and CSS.
+This integration will allow us to easily preview PRs and demo features to users (source and converted result).
 See the `publish` rake task in `Rakefile` and the `netlify.toml` configuration file.
 
 === Sensitive Data Accidentally Pushed Out
