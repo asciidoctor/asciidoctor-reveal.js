@@ -11,11 +11,8 @@
 == Supports all of reveal.js 3.9.2 features
 
 
-[background-video="synthwave.mp4",background-opacity=0.7]
+[background-video="https://github.com/obilodeau/asciidoctor-assets/raw/master/videos/synthwave.mp4",background-opacity=0.7]
 === Background videos
-// Video not hosted in git due to size
-// Available here: https://pixabay.com/videos/synthwave-retro-sunset-retrowave-29225/
-// Pixabay Free License (No Attribution Required)
 
 === Automatic Source Code Highlighting!
 
