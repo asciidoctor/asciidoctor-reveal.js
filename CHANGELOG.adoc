@@ -11,6 +11,9 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 Enhancements::
   * Documentation improvements ({uri-issue}349[#349], {uri-issue}351[#351])
 
+Infrastructure::
+  * Added an integration with https://www.netlify.com/[Netlify] to host specific slide deck examples ({uri-issue}336[#336], {uri-issue}346[#346])
+
 
 == 4.0.1 (2020-02-18)
 
