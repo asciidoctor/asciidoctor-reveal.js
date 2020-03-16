@@ -1,5 +1,5 @@
-// .links
-// Demonstration of reveal.js and Mathjax integration
+// .mathjax
+// Demonstration of our Mathjax integration
 // :include: //div[@class="slides"]
 // :header_footer:
 = MathJax
