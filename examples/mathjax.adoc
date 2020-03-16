@@ -1,0 +1,20 @@
+// .mathjax
+// Demonstration of our Mathjax integration
+// :include: //div[@class="slides"]
+// :header_footer:
+= MathJax
+:stem:
+:revealjsdir: https://cdn.jsdelivr.net/npm/reveal.js@3.9.2
+
+== Math Equation
+
+Using standard latexmath:[\LaTeX] syntax:
+
+[stem]
+++++
+\sqrt{37} = \sqrt{\frac{73^2-1}{12^2}} \approx \frac{73}{12} (1 - \frac{1}{2\cdot73^2})
+++++
+
+Another one:
+
+stem:[\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}]
