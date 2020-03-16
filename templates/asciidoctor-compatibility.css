@@ -139,3 +139,15 @@ td.hdlist1{font-weight:bold;padding-bottom:1.25em}
   flex: none;
   width: 20%;
 }
+
+.columns .slide-content > .column.has-text-left {
+  text-align: left;
+}
+
+.columns .slide-content > .column.has-text-justified {
+  text-align: justify;
+}
+
+.columns .slide-content > .column.has-text-right {
+  text-align: right;
+}
