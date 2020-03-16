@@ -172,3 +172,23 @@ fun main() {
 [...]
 ....
 --
+
+[.columns]
+== Column Text Alignment
+
+[.column.has-text-left]
+--
+Something Short
+
+Something So Long That We Need It Aligned
+--
+
+[.column.has-text-justified]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+[.column.has-text-right]
+--
+Something Short
+
+Something So Long That We Need It Aligned
+--
