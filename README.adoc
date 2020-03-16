@@ -726,6 +726,32 @@ Content can be centered by adding the `is-vcentered` class to the slide.
 image::large-image.png[]
 ....
 
+Text alignment of columns is also supported.
+Text content on individual columns can be aligned with `has-text-left`, `has-text-right` and `has-text-justified` CSS classes.
+
+[source, asciidoc]
+....
+[.columns]
+== Column Text Alignment
+
+[.column.has-text-left]
+--
+Something Short
+
+Something So Long That We Need It Aligned
+--
+
+[.column.has-text-justified]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+[.column.has-text-right]
+--
+Something Short
+
+Something So Long That We Need It Aligned
+--
+....
+
 
 === Asciidoctor reveal.js specific roles
 
