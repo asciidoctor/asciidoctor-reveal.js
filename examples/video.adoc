@@ -34,7 +34,6 @@ video::https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-e
 [background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm",options="loop,muted,notitle"]
 == background video at URL with options
 
-// FIXME doesn't load
 // Download this file and put in examples/images/ for this to be visible
 // https://github.com/obilodeau/asciidoctor-assets/blob/master/videos/synthwave.mp4
 [%notitle,background-video="synthwave.mp4",background-video-loop=true,background-video-muted=true]
