@@ -4,6 +4,7 @@
 // :header_footer:
 = Video tests
 :revealjs_hash: true
+:imagesdir: images/
 
 == YouTube Auto-sized
 
@@ -25,13 +26,26 @@ This video is auto-sized!
 video::https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm[]
 
 [%notitle,background-iframe="https://www.youtube.com/embed/LaApqL4QjH8?rel=0&start=3&enablejsapi=1&autoplay=1&loop=1&controls=0&modestbranding=1"]
-== background
+== background video at URL
 
 [%notitle,background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm",background-video-loop=true,background-video-muted=true]
-== video file, named attributes
+== background video at URL with named attributes
 
 [background-video="https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.mp4,https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-editor.webm",options="loop,muted,notitle"]
+== background video at URL with options
+
+// FIXME doesn't load
+// Download this file and put in examples/images/ for this to be visible
+// https://github.com/obilodeau/asciidoctor-assets/blob/master/videos/synthwave.mp4
+[%notitle,background-video="synthwave.mp4",background-video-loop=true,background-video-muted=true]
+== background video file with named attributes
+
+// Download this file and put in examples/images/ for this to be visible
+// https://github.com/obilodeau/asciidoctor-assets/blob/master/videos/synthwave.mp4
 == video file, options
+
+video::synthwave.mp4[options="autoplay,loop"]
+
 
 == vimeo autostart
 
