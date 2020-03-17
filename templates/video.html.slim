@@ -12,9 +12,10 @@
     - unless (asset_uri_scheme = (attr :asset_uri_scheme, 'https')).empty?
       -  asset_uri_scheme = %(#{asset_uri_scheme}:)
     - start_anchor = (attr? :start) ? "#at=#{attr :start}" : nil
-    - delimiter = '?'
-    - loop_param = (option? 'loop') ? "#{delimiter}loop=1" : nil
-    - src = %(#{asset_uri_scheme}//player.vimeo.com/video/#{attr :target}#{start_anchor}#{loop_param})
+    - delimiter = ['?']
+    - loop_param = (option? 'loop') ? %(#{delimiter.pop || '&amp;'}loop=1) : ''
+    - muted_param = (option? 'muted') ? %(#{delimiter.pop || '&amp;'}muted=1) : ''
+    - src = %(#{asset_uri_scheme}//player.vimeo.com/video/#{attr :target}#{loop_param}#{muted_param}#{start_anchor})
     iframe(width=(width) height=(height) src=src frameborder=0
       webkitAllowFullScreen=true mozallowfullscreen=true allowFullScreen=true
       data-autoplay=(option? 'autoplay'))
@@ -27,6 +28,7 @@
     - params << "start=#{attr :start}" if attr? :start
     - params << "end=#{attr :end}" if attr? :end
     - params << "loop=1" if option? 'loop'
+    - params << "mute=1" if option? 'muted'
     - params << "controls=0" if option? 'nocontrols'
     - src = %(#{asset_uri_scheme}//www.youtube.com/embed/#{attr :target}?#{params * '&amp;'})
     iframe(width=(width) height=(height) src=src
