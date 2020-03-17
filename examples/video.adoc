@@ -4,11 +4,15 @@
 // :header_footer:
 = Video tests
 :revealjs_hash: true
+:imagesdir: images/
 
 == YouTube Auto-sized
 
+video::kZH9JtPBq7k[youtube, start=34]
+
+== YouTube Auto-sized Auto-starts
+
 video::kZH9JtPBq7k[youtube, start=34, options=autoplay]
-//video::kZH9JtPBq7k[youtube, start=34, height=600, width=800, options=autoplay]
 
 [%notitle]
 == YouTube Auto-sized notitle
@@ -36,6 +40,3 @@ video::https://s3.amazonaws.com/static.slid.es/site/homepage/v1/homepage-video-e
 == vimeo autostart
 
 video::44878206[vimeo, options=autoplay]
-
-// data-autoplay is not supported on vimeo videos
-// upstream: https://github.com/hakimel/reveal.js/issues/388
