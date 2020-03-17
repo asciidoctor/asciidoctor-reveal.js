@@ -29,7 +29,6 @@
     - params << "end=#{attr :end}" if attr? :end
     - params << "loop=1" if option? 'loop'
     - params << "controls=0" if option? 'nocontrols'
-    /- params << "autoplay=1" if option? 'autoplay'
     - src = %(#{asset_uri_scheme}//www.youtube.com/embed/#{attr :target}?#{params * '&amp;'})
     / We need to delegate autoplay into the iframe starting with Chrome 62 (and other browsers too)
     / See https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#iframe
