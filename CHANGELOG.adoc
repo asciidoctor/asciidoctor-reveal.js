@@ -15,6 +15,9 @@ Enhancements::
   * Added new examples: MathJax, MathJax-CDN ({uri-issue}350[#350], {uri-issue}359[#359])
   * Documentation improvements ({uri-issue}349[#349], {uri-issue}351[#351])
 
+Compliance::
+  * Implemented the `muted` option for the video macro for YouTube and Vimeo ({uri-issue}358[#358])
+
 Bug Fixes::
   * `autoplay` option fixed for YouTube and Vimeo videos ({uri-issue}357[#357])
 
