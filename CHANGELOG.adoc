@@ -15,6 +15,9 @@ Enhancements::
   * Added new examples: MathJax, MathJax-CDN ({uri-issue}350[#350], {uri-issue}359[#359])
   * Documentation improvements ({uri-issue}349[#349], {uri-issue}351[#351])
 
+Bug Fixes::
+  * `autoplay` option fixed for YouTube and Vimeo videos ({uri-issue}357[#357])
+
 Infrastructure::
   * Added an integration with https://www.netlify.com/[Netlify] to host specific slide deck examples ({uri-issue}336[#336], {uri-issue}346[#346])
 
