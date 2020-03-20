@@ -1,6 +1,6 @@
 // .mathjax-cdn
 // Demonstration of the Mathjax :mathjaxdir: attribute in action
-// :include: //div[@class="slides"]
+// :include: //head/link | //div[@class="slides"]
 // :header_footer:
 = MathJax
 :stem:
