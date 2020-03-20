@@ -8,6 +8,12 @@ For a detailed view of what has changed, refer to the {uri-repo}/commits/master[
 
 == <master> (<unreleased>)
 
+Upgrade considerations::
+  * When a `background-video` attribute points to a file, that file is now looked up relative to the `imagesdir` document attribute.
+    This new behavior aligns with what images and video macros already did.
+    Existing slide decks using both `imagesdir` and `background-video` will need to move some files around.
+    See {uri-issue}356[#356] for details.
+
 Enhancements::
   * Added text alignment options to our _columns layout_ feature: `has-text-left`, `has-text-right` and `has-text-justified`.
     See PR {uri-issue}354[#354] for details.
@@ -17,6 +23,7 @@ Enhancements::
 
 Compliance::
   * Implemented the `muted` option for the video macro for YouTube and Vimeo ({uri-issue}358[#358])
+  * `background-video` paths are now resolved using `media_uri` ({uri-issue}356[#356])
 
 Bug Fixes::
   * `autoplay` option fixed for YouTube and Vimeo videos ({uri-issue}357[#357])
