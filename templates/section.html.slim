@@ -30,6 +30,9 @@
 - if attr? 'background-image'
   - data_background_image = image_uri(attr 'background-image')
 
+- if attr? 'background-video'
+  - data_background_video = media_uri(attr 'background-video')
+
 - if attr? 'background-color'
   - data_background_color = attr 'background-color'
 
@@ -47,7 +50,7 @@
     data-background-transition=(data_background_transition || attr('background-transition'))
     data-background-position=(data_background_position || attr('background-position'))
     data-background-iframe=(attr "background-iframe")
-    data-background-video=(attr "background-video")
+    data-background-video=data_background_video
     data-background-video-loop=((attr? 'background-video-loop') || (option? 'loop'))
     data-background-video-muted=((attr? 'background-video-muted') || (option? 'muted'))
     data-background-opacity=(attr "background-opacity")
