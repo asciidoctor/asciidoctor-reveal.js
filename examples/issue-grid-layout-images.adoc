@@ -1,0 +1,25 @@
+// .issue-grid-layout-images
+// Images would get shrunk before we added a flex-basis auto exception when columns wrap
+// :include: //div[@class="slides"]
+// :header_footer:
+= Grid Wrapping Tests
+:imagesdir: images/
+// reveal.js config
+:revealjs_hash: true
+:revealjs_center: false
+:revealjs_height: 1080
+:revealjs_width: 1920
+
+[.columns.wrap]
+== Should Wrap But Doesn't
+
+[.column]
+* Things here should wrap
+* But instead images shrink
+* But now it's good
+
+[.column]
+image::cover.jpg[width=900px]
+
+[.column]
+image::70s.jpg[width=900px]
