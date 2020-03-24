@@ -27,6 +27,7 @@ Compliance::
 
 Bug Fixes::
   * `autoplay` option fixed for YouTube and Vimeo videos ({uri-issue}357[#357])
+  * Removed image resizing behavior when columns are wrapped in _columns layout_ feature ({uri-issue}353[#353], {uri-issue}360[#360])
 
 Infrastructure::
   * Added an integration with https://www.netlify.com/[Netlify] to host specific slide deck examples ({uri-issue}336[#336], {uri-issue}346[#346])
