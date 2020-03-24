@@ -90,6 +90,11 @@ td.hdlist1{font-weight:bold;padding-bottom:1.25em}
   padding: .75rem;
 }
 
+/* See #353 */
+.columns.wrap .slide-content > .column {
+  flex-basis: auto;
+}
+
 .columns .slide-content > .column.is-full {
   flex: none;
   width: 100%;
