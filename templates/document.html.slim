@@ -123,7 +123,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         // Push each slide change to the browser history. Implies `hash: true`
         history: #{to_boolean(attr 'revealjs_history', false)},
         // Enable keyboard shortcuts for navigation
-        keyboard: #{to_boolean(attr 'revealjs_keyboard', true)},
+        // Seehttps://github.com/hakimel/reveal.js/#keyboard-bindings
+        keyboard: #{attr 'revealjs_keyboard', 'true'},
         // Enable the slide overview mode
         overview: #{to_boolean(attr 'revealjs_overview', true)},
         // Vertical centering of slides
