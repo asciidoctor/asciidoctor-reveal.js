@@ -1,0 +1,22 @@
+= Autoslide!
+// automatically proceed to the next slide after 5 seconds
+:revealjs_autoSlide: 5000
+
+== Slide 0
+
+I can do it in 5 seconds!
+
+// on this slide we need 10 seconds
+[autoslide=10000]
+== Slide 1
+
+All things considered, let's try again in 10 seconds.
+
+[autoslide=1000]
+== Slide 2
+
+Don't blink or you'll miss me :)
+
+== Slide 3
+
+(:
