@@ -39,7 +39,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       - eqnums_val = (attr 'eqnums', 'none')
       - eqnums_val = 'AMS' if eqnums_val == ''
       - eqnums_opt = %( equationNumbers: { autoNumber: "#{eqnums_val}" } )
-      - mathjaxdir = (attr 'mathjaxdir', "#{cdn_base}/mathjax/2.4.0")
+      - mathjaxdir = (attr 'mathjaxdir', "#{cdn_base}/mathjax/2.7.6")
       script type='text/x-mathjax-config'
         | MathJax.Hub.Config({
           tex2jax: {
