@@ -22,6 +22,7 @@ Enhancements::
   * Documentation improvements ({uri-issue}349[#349], {uri-issue}351[#351])
 
 Compliance::
+  * `autoslide` attribute is now supported at the slide level ({uri-issue}367[#367], {uri-issue}368[#368])
   * Implemented the `muted` option for the video macro for YouTube and Vimeo ({uri-issue}358[#358])
   * `background-video` paths are now resolved using `media_uri` ({uri-issue}356[#356])
 
