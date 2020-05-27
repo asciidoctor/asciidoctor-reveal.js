@@ -18,6 +18,7 @@ Enhancements::
   * Added text alignment options to our _columns layout_ feature: `has-text-left`, `has-text-right` and `has-text-justified`.
     See PR {uri-issue}354[#354] for details.
   * Added a `mathjaxdir` attribute to control where MathJax is loaded from ({uri-issue}350[#350])
+  * MathJax updated to version 2.7.6 ({uri-issue}355[#355], {uri-issue}361[#361])
   * Added new examples: MathJax, MathJax-CDN ({uri-issue}350[#350], {uri-issue}359[#359])
   * Documentation improvements ({uri-issue}349[#349], {uri-issue}351[#351])
 
