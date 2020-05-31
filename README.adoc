@@ -556,7 +556,7 @@ You can activate Highlight.js syntax highlighting (disabled by default) by setti
 ----
 
 [NOTE]
-----
+====
 By default, we are using a prebuilt version of Highlight.js with 34 commonly used languages hosted on https://cdnjs.com/[cdnjs].
 You can load additionnal languages using the `:highlightjs-languages:` attribute:
 
@@ -572,7 +572,7 @@ You can also load Highlight.js from a custom base directory (or remote URL) usin
 :highlightjsdir: highlight
 // load from jsdelivr CDN
 //:highlightjsdir: https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build
-----
+====
 
 Once enabled, you can write code blocks as usual:
 
