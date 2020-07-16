@@ -20,7 +20,7 @@ Enhancements::
   * Added a `mathjaxdir` attribute to control where MathJax is loaded from ({uri-issue}350[#350])
   * MathJax updated to version 2.7.6 ({uri-issue}355[#355], {uri-issue}361[#361])
   * Added new examples: MathJax, MathJax-CDN ({uri-issue}350[#350], {uri-issue}359[#359])
-  * Documentation improvements ({uri-issue}349[#349], {uri-issue}351[#351])
+  * Documentation improvements ({uri-issue}349[#349], {uri-issue}351[#351], {uri-issue}371[#371], {uri-issue}374[#374])
 
 Compliance::
   * `autoslide` attribute is now supported at the slide level ({uri-issue}367[#367], {uri-issue}368[#368])
