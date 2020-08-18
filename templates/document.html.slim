@@ -73,6 +73,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       =_docinfo
   body
     .reveal
+      - unless (_docinfo = docinfo :top, '-revealjs.html').empty?
+        = _docinfo
       / Any section element inside of this container is displayed as a slide
       .slides
         - unless noheader

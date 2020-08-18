@@ -944,12 +944,14 @@ This core feature of AsciiDoc has been adapted to work with the reveal.js conver
 Currently, there are three insertion locations for docinfo content in a reveal.js document:
 
 head:: content is inserted after the last child of the `<head>` element
+top:: content is inserted as the first child after the `<div class="reveal">` element
 header:: content is inserted before the first child of the `<div class="slides">` element (before the slides)
 footer:: content is inserted after the last child of the `<div class="slides">` element (after the slides)
 
 The content you want to insert goes into a sibling file of the slide deck document with the following filename patterns:
 
 head:: `docinfo-revealjs.html`
+top:: `docinfo-top-revealjs.html`
 header:: `docinfo-header-revealjs.html`
 footer:: `docinfo-footer-revealjs.html`
 
