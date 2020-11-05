@@ -72,7 +72,6 @@ module Slim::Helpers
   # @yield The block of Slim/HTML code within the tag (optional).
   # @return [String] a rendered HTML element.
   #
-
   def html_tag(name, attributes = {}, content = nil)
     attrs = attributes.inject([]) do |attrs, (k, v)|
       next attrs if !v || v.nil_or_empty?
@@ -88,6 +87,17 @@ module Slim::Helpers
       content ||= yield if block_given?
       %(<#{name}#{attrs_str}>#{content}</#{name}>)
     end
+  end
+
+
+  #
+  # Extracts data- attributes from the attributes.
+  # @param attributes [Hash] (default: {})
+  # @return [Hash] a Hash that contains only data- attributes
+  #
+  def data_attrs(attributes)
+    # key can be an Integer (for positional attributes)
+    attributes.select { |key, _| key.to_s.start_with?('data-') }
   end
 
 

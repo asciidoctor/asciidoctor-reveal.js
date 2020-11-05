@@ -1,4 +1,4 @@
-.paragraph id=@id class=role
+= html_tag('div', { :id => @id, :class => ['paragraph', role] }.merge(data_attrs(@attributes)))
   - if title?
     .title=title
   - if has_role? 'small'

@@ -1,0 +1,29 @@
+// :include: //div[@class="slides"]
+// :header_footer:
+= Data attributes
+:backend: revealjs
+:icons: font
+
+== Reference
+
+https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
+
+// .paragraphs
+== Paragraphs
+
+[.fragment.highlight-red,data-fragment-index=1]
+text1
+
+[.fragment.highlight-red,data-fragment-index=0]
+text2
+
+[.fragment.highlight-red,data-fragment-index=1]
+text3
+
+// .inline-images
+== Inline images
+:imagesdir: images
+
+image:cute-cat-1.jpg[cute-cat-laying,role="fragment fade-in",data-fragment-index=3]
+image:cute-cat-2.jpg[cute-cat-yawning,role="fragment fade-in",data-fragment-index=1]
+image:cute-cat-3.jpg[cute-cat-melting,role="fragment fade-in",data-fragment-index=2]
