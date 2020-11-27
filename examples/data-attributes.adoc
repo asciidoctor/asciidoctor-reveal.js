@@ -3,6 +3,7 @@
 = Data attributes
 :backend: revealjs
 :icons: font
+:source-highlighter: highlight.js
 
 == Reference
 
@@ -44,3 +45,18 @@ Watch out for...
 ====
 Don't forget...
 ====
+
+== Callout numbers
+
+[source,js]
+----
+console.log('Hello'); // <1>
+
+console.log('Bonjour'); // <2>
+
+console.log('Bye'); // <3>
+----
+[role="fragment fade-in",data-state="explanation"]
+<1> Display `Hello`
+<2> Display `Bonjour`
+<3> Display `Bye`
