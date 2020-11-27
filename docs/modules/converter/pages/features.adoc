@@ -26,7 +26,7 @@ A Great Story
 --
 ----
 
-In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js`' default behavior) with {uri-revealjs-doc}#speaker-notes[speaker notes].
+In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js`' default behavior) with link:{uri-revealjs-doc}#speaker-notes[speaker notes].
 Other syntax exists to create speaker notes, see `examples/speaker-notes.adoc`.
 
 Starting with Reveal.js 3.5 speaker notes supports configurable layouts:

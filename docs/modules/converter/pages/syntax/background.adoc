@@ -44,7 +44,7 @@ NOTE: The `canvas` keyword can be used instead of `background` for the same effe
 Is very yellow
 ----
 
-Slide Three applies the attribute {uri-revealjs-doc}#slide-backgrounds[data-background-color] to the `reveal.js` <section> tag.
+Slide Three applies the attribute link:{uri-revealjs-doc}#slide-backgrounds[data-background-color] to the `reveal.js` <section> tag.
 Anything accepted by CSS color formats works.
 
 
@@ -61,7 +61,7 @@ image::cover.jpg[background, size=cover]
 This will put `cover.jpg` as the slide's background image.
 It sets reveal.js`' `data-background-image` attribute.
 The `size` attribute is also supported.
-See the {uri-revealjs-doc}#image-backgrounds[relevant reveal.js documentation] for details.
+See the link:{uri-revealjs-doc}#image-backgrounds[relevant reveal.js documentation] for details.
 
 NOTE: Background images file names are now relative to the `:imagesdir:` attribute if set.
 
@@ -99,7 +99,7 @@ For example:
 == Nice background!
 ----
 
-See {uri-revealjs-doc}#video-backgrounds[the relevant reveal.js documentation] for details.
+See link:{uri-revealjs-doc}#video-backgrounds[the relevant reveal.js documentation] for details.
 Note that the `data-` prefix is not required in asciidoc files.
 
 
@@ -113,4 +113,4 @@ The background can be replaced with anything a browser can render in an iframe u
 == a youtube video
 ----
 
-See {uri-revealjs-doc}#iframe-backgrounds[the relevant reveal.js documentation] for details.
+See link:{uri-revealjs-doc}#iframe-backgrounds[the relevant reveal.js documentation] for details.

@@ -7,9 +7,9 @@ title that look like this: `:name: value`.
 This converter supports changing the color, image, video, iframe and
 transitions of the title slide.
 
-Read {uri-revealjs-doc}#slide-backgrounds[the relevant reveal.js documentation] to understand what attributes need to be set.
+Read link:{uri-revealjs-doc}#slide-backgrounds[the relevant reveal.js documentation] to understand what attributes need to be set.
 Keep in mind that for title slides you must replace `data-` with `title-slide-`.
 
-See {uri-project-examples}/title-slide-image.adoc[title-slide-image.adoc].
+See link:{uri-project-examples}/title-slide-image.adoc[title-slide-image.adoc].
 
 The title slide is also added a `title` CSS class to help with template customization.

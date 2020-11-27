@@ -13,4 +13,4 @@ This slide will override the presentation transition and zoom!
 Choose from three transition speeds: default, fast or slow!
 ----
 
-See {uri-revealjs-doc}#slide-transitions[the relevant reveal.js documentation] for details.
+See link:{uri-revealjs-doc}#slide-transitions[the relevant reveal.js documentation] for details.

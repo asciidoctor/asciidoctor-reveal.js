@@ -7,7 +7,7 @@ TIP: Want to see some example presentations, see xref:showcase.adoc[].
 
 There are four main technology stacks that can convert AsciiDoc into HTML5 / reveal.js:
 
-* xref:setup::ruby-setup.adoc[Asciidoctor / Ruby / Bundler]
-* xref:setup::node-js-setup.adoc[Asciidoctor.js / JavaScript (Node.js) / npm]
-* xref:setup::standalone-executable.adoc[Standalone Executable]
+* xref:setup:ruby-setup.adoc[Asciidoctor / Ruby / Bundler]
+* xref:setup:node-js-setup.adoc[Asciidoctor.js / JavaScript (Node.js) / npm]
+* xref:setup:standalone-executable.adoc[Standalone Executable]
 * https://github.com/asciidoctor/asciidoctorj-reveal.js[AsciidoctorJ / JVM / Maven^]

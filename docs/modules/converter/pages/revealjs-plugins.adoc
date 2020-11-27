@@ -29,6 +29,6 @@ Additional reveal.js plugins can be installed and activated using AsciiDoc attri
 
 Looking at the example provided in the repository will provide guidance: link:{uri-project-examples}/revealjs-plugins.adoc[AsciiDoc source], link:{uri-project-examples}/revealjs-plugins.js[Plugin Loader], link:{uri-project-examples}/revealjs-plugins-conf.js[Plugin Configuration].
 
-Read {uri-revealjs-doc}#dependencies[the relevant reveal.js documentation] to understand more about reveal.js plugins.
+Read link:{uri-revealjs-doc}#dependencies[the relevant reveal.js documentation] to understand more about reveal.js plugins.
 A {uri-revealjs-gh}/wiki/Plugins,-Tools-and-Hardware[list of existing reveal.js plugins] is also maintained upstream.
 

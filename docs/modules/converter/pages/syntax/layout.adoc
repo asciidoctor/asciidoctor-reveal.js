@@ -11,7 +11,7 @@ To apply that class to block simply use asciidoctor's class assignment:
 
     [.stretch]
 
-See {uri-revealjs-doc}#stretching-elements[reveal.js documentation on stretching elements].
+See link:{uri-revealjs-doc}#stretching-elements[reveal.js documentation on stretching elements].
 
 == Vertical slides
 
@@ -28,7 +28,7 @@ This is a vertical sub-slide
 
 Slide Six uses the vertical slide feature of `reveal.js`.
 Slide Six.One will be rendered vertically below Slide Six.
-Here is {uri-revealjs-doc}#markup[the relevant reveal.js
+Here is link:{uri-revealjs-doc}#markup[the relevant reveal.js
 documentation] on that topic.
 
 == Columns layout

@@ -12,7 +12,7 @@ NOTE: Default settings are based on `reveal.js` default settings.
 
 |:revealjs_theme:
 |beige, *black*, league, night, serif, simple, sky, solarized, white
-|Chooses one of reveal.js`' {uri-revealjs-doc}#theming[built-in themes].
+|Chooses one of reveal.js`' link:{uri-revealjs-doc}#theming[built-in themes].
 
 |:revealjs_customtheme:
 |<file\|URL>
@@ -104,7 +104,7 @@ print:: only show slide numbers when printing to PDF
 
 |:revealjs_navigationMode:
 |*default*, linear, grid
-|See {uri-revealjs-doc}#navigation-mode for details
+|See link:{uri-revealjs-doc}#navigation-mode[] for details
 
 |:revealjs_shuffle:
 |true, *false*

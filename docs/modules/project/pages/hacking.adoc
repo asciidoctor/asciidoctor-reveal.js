@@ -268,8 +268,8 @@ Asciidoctor.js maintainer told us that he is going to consider binary package in
 
 We will track and maintain the README on the major version supported and recommended:
 
-* In the xref:setup::node-js-setup.adoc[version range to install by default] for a given release (and on master)
-* In the xref:compatibility-matrix.adoc#asciidoctorjs-compatibility-matrix[compatibility matrix]
+* In the xref:setup:node-js-setup.adoc[version range to install by default] for a given release (and on master)
+* In the xref:converter:compatibility-matrix.adoc#asciidoctorjs-compatibility-matrix[compatibility matrix]
 
 See https://github.com/asciidoctor/asciidoctor-reveal.js/issues/187#issuecomment-570771473[this issue] for background details on that topic.
 
