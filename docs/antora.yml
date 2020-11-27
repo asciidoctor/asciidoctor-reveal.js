@@ -1,0 +1,18 @@
+name: asciidoctor-reveal.js
+title: Asciidoctor reveal.js
+version: '4.0'
+nav:
+  - modules/setup/nav.adoc
+  - modules/converter/nav.adoc
+  - modules/ROOT/nav.adoc
+  - modules/project/nav.adoc
+asciidoc:
+  attributes:
+    uri-project-repo: 'https://github.com/asciidoctor/asciidoctor-reveal.js'
+    uri-project-examples: 'https://github.com/asciidoctor/asciidoctor-reveal.js/blob/master/examples'
+    uri-asciidoctor: 'https://github.com/asciidoctor/asciidoctor'
+    uri-asciidoctorjs: 'https://github.com/asciidoctor/asciidoctor.js'
+    uri-revealjs-home: 'https://revealjs.com'
+    uri-revealjs-gh: 'https://github.com/hakimel/reveal.js/blob/v3.9'
+    uri-revealjs-doc: '{uri-revealjs-gh}/README.md'
+    uri-nodejs-download: 'https://nodejs.org/en/download/'

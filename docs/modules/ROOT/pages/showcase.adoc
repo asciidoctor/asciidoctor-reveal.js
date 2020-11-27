@@ -1,0 +1,15 @@
+= Showcase Presentations
+
+== Power Catchup -- Everything Practical and Important in Java 9 to 13
+
+A smooth presentation, featuring video backgrounds, slide transitions, code and callout examples and the use of notes.
+
+https://bentolor.github.io/java9to13/[Presentation] and https://github.com/bentolor/java9to13[source]
+
+=== Screenshots
+
+image:java9to13_4.png[width=200]
+image:java9to13_1.jpg[width=200]
+
+image:java9to13_2.jpg[width=200]
+image:java9to13_3.png[width=200]

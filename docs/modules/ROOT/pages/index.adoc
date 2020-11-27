@@ -1,0 +1,13 @@
+= Reveal.js converter for Asciidoctor
+:showcasedir: showcase
+
+{uri-project-repo}[Asciidoctor reveal.js] is a converter for {uri-asciidoctor}[Asciidoctor] and {uri-asciidoctorjs}[Asciidoctor.js] that transforms an AsciiDoc document into an HTML5 presentation designed to be executed by the {uri-revealjs-home}[reveal.js] presentation framework.
+
+TIP: Want to see some example presentations, see xref:showcase.adoc[].
+
+There are four main technology stacks that can convert AsciiDoc into HTML5 / reveal.js:
+
+* xref:setup::ruby-setup.adoc[Asciidoctor / Ruby / Bundler]
+* xref:setup::node-js-setup.adoc[Asciidoctor.js / JavaScript (Node.js) / npm]
+* xref:setup::standalone-executable.adoc[Standalone Executable]
+* https://github.com/asciidoctor/asciidoctorj-reveal.js[AsciidoctorJ / JVM / Maven^]

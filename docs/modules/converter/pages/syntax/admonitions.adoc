@@ -1,0 +1,20 @@
+= Admonitions
+
+Asciidoctor font-based http://asciidoctor.org/docs/user-manual/#admonition[admonitions] are supported.
+Make sure to add the following attribute to your document:
+
+[source, asciidoc]
+----
+:icons: font
+----
+
+Here is an example slide:
+
+[source, asciidoc]
+----
+== But first
+
+WARNING: This presentation is dangerous!
+----
+
+Here are details about Asciidoctor's http://asciidoctor.org/docs/user-manual/#admonition-icons[Admonition icons] support.

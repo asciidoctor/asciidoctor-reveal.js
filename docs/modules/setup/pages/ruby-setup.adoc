@@ -1,0 +1,88 @@
+= Ruby Setup
+
+NOTE: To ensure repeatability, we recommend that you manage your presentation projects using http://bundler.io/[bundler].
+
+== Prerequisites
+
+. Install http://bundler.io/[bundler] (if not already installed)  using your system's package manager or with:
+
+  $ gem install bundler
+
+. If you're using RVM, make sure you switch away from any gemset:
+
+  $ rvm use default
++
+or
++
+  $ rvm use system
+
+
+== Install
+
+NOTE: These instructions should be repeated for every presentation project.
+
+. Create project directory
+
+  $ mkdir my-awesome-presentation
+  $ cd my-awesome-presentation
+
+. Create a file named `Gemfile` with the following content:
++
+[source,ruby]
+----
+source 'https://rubygems.org'
+
+gem 'asciidoctor-revealjs' # latest released version
+----
++
+NOTE: For some reason, when you use the system Ruby on Fedora, you also have to add the json gem to the Gemfile.
++
+. Install the gems into the project
+
+  $ bundle config --local github.https true
+  $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
+
+. Optional: Copy or clone reveal.js presentation framework.
+Allows you to modify themes or view slides offline.
+
+  $ git clone -b 3.9.2 --depth 1 https://github.com/hakimel/reveal.js.git
+
+== Rendering the AsciiDoc into slides
+
+. Create content in a file (*.adoc, *.ad, etc.).
+See examples in <<Syntax Examples>> section to get started.
+
+. Generate HTML presentation from the AsciiDoc source
+
+  $ bundle exec asciidoctor-revealjs \
+    -a revealjsdir=https://cdn.jsdelivr.net/npm/reveal.js@3.9.2 CONTENT_FILE.adoc
+
+. If you did the optional step of having a local reveal.js clone you can
+convert AsciiDoc source with
+
+  $ bundle exec asciidoctor-revealjs CONTENT_FILE.adoc
+
+TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
+
+== Features Unique to the Ruby CLI
+
+Starting with 4.0.0 you can specify a set of custom templates to use instead of the ones provided by this project.
+This can help you achieve even more concise AsciiDoc syntax and integration with reveal.js at the cost of more maintenance.
+
+To use it, add the following dependencies to your `Gemfile`:
+
+  gem 'tilt', '~>2.0'
+  gem 'slim', '~>4.0'
+
+Then install the dependencies with:
+
+  $ bundle install
+
+The feature is activated with the `--template-dir` or `-T` option:
+
+  $ bundle exec asciidoctor-revealjs -T templates/ CONTENT_FILE.adoc
+
+Any individual template file not provided in the directory specified on the command-line will fall back to the template provided by your version of Asciidoctor reveal.js.
+Refer to our https://github.com/asciidoctor/asciidoctor-reveal.js/tree/master/templates[templates] for inspiration.
+
+This feature hasn't been ported to the JavaScript CLI (and API) or the standalone executables.

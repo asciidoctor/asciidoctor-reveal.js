@@ -1,0 +1,34 @@
+= Supplemental content with docinfo
+// Originally from https://github.com/asciidoctor/asciidoctor-bespoke#supplemental-content
+
+It's possible to inject supplemental content into the output document using http://asciidoctor.org/docs/user-manual/#docinfo-file[docinfo files].
+This core feature of AsciiDoc has been adapted to work with the reveal.js converter.
+
+Currently, there are three insertion locations for docinfo content in a reveal.js document:
+
+head:: content is inserted after the last child of the `<head>` element
+header:: content is inserted before the first child of the `<div class="slides">` element (before the slides)
+footer:: content is inserted after the last child of the `<div class="slides">` element (after the slides)
+
+The content you want to insert goes into a sibling file of the slide deck document with the following filename patterns:
+
+head:: `docinfo-revealjs.html`
+header:: `docinfo-header-revealjs.html`
+footer:: `docinfo-footer-revealjs.html`
+
+For example, let's say you want to embed a tweet into your slide deck.
+You might inject the shared embedding JavaScript using a footer docinfo file:
+
+.src/docinfo-footer-revealjs.html
+[source,html]
+----
+<script src="https://platform.twitter.com/widgets.js"></script>
+----
+
+You then need to set the following document attribute in the AsciiDoc header:
+
+----
+:docinfo: shared
+----
+
+When this attribute is defined, the converter will automatically read the docinfo file(s) and insert the contents into the specified location in the output document.
