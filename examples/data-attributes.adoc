@@ -60,3 +60,23 @@ console.log('Bye'); // <3>
 <1> Display `Hello`
 <2> Display `Bonjour`
 <3> Display `Bye`
+
+== Description list
+
+[qanda,data-count="3"]
+What's the deal with this converter?::
+This is the official reveal.js converter for Asciidoctor.
+Is it safe to put my credit card number into a presentation?::
+Probably not.
+I need all the Powerpoint features::
+No you don’t.
+
+[horizontal,data-style="horizontal"]
+Hard drive:: Permanent storage for operating system and/or user files.
+RAM:: Temporarily stores information the CPU uses during operation.
+
+[.operating-systems,data-id="1234"]
+Operating Systems::
+* Linux
+* macOS
+* Windows
