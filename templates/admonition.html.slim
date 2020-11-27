@@ -1,7 +1,7 @@
 - if (has_role? 'aside') or (has_role? 'speaker') or (has_role? 'notes')
   include notes.html.slim
 - else
-  .admonitionblock id=@id class=[(attr :name),role]
+  = html_tag('div', { :id => @id, :class => ['admonitionblock', (attr :name), role] }.merge(data_attrs(@attributes)))
     table: tr
       td.icon
         - if @document.attr? :icons, 'font'

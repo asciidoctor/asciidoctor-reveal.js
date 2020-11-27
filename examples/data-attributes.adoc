@@ -27,3 +27,20 @@ text3
 image:cute-cat-1.jpg[cute-cat-laying,role="fragment fade-in",data-fragment-index=3]
 image:cute-cat-2.jpg[cute-cat-yawning,role="fragment fade-in",data-fragment-index=1]
 image:cute-cat-3.jpg[cute-cat-melting,role="fragment fade-in",data-fragment-index=2]
+
+== Admonitions
+
+[TIP,role="fragment fade-in",data-fragment-index=3]
+====
+Pro tip...
+====
+
+[WARNING,role="fragment fade-in",data-fragment-index=1]
+====
+Watch out for...
+====
+
+[IMPORTANT,role="fragment fade-in",data-fragment-index=2]
+====
+Don't forget...
+====
