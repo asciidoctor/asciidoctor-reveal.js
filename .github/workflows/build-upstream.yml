@@ -1,0 +1,38 @@
+name: Build Upstream
+
+on: repository_dispatch
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - name: Configure Nokogiri installation
+        run: |
+          bundle config --local build__nokogiri --use-system-libraries
+          sudo apt-get install libxslt1-dev
+      - name: Install Ruby dependencies
+        run: bundle --jobs 3 --retry 3
+      - name: Build Ruby
+        run: bundle exec rake build
+      - name: Run tests
+        run: bundle exec rake test
+      - name: Run examples:convert
+        run: bundle exec rake examples:convert
+      - name: Install JavaScript dependencies
+        run: npm ci
+      - name: Build JavaScript
+        run: bundle exec rake build:js
+      - name: Run examples and tests
+        run: |
+          npm run examples
+          npm test
