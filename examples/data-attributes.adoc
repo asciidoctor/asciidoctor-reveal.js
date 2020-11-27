@@ -61,19 +61,23 @@ console.log('Bye'); // <3>
 <2> Display `Bonjour`
 <3> Display `Bye`
 
-== Description list
+== FAQ
 
 [qanda,data-count="3"]
 What's the deal with this converter?::
 This is the official reveal.js converter for Asciidoctor.
-Is it safe to put my credit card number into a presentation?::
+Is it safe to put my credit card number into this presentation?::
 Probably not.
 I need all the Powerpoint features::
 No you don’t.
 
+== Horizontal list
+
 [horizontal,data-style="horizontal"]
 Hard drive:: Permanent storage for operating system and/or user files.
 RAM:: Temporarily stores information the CPU uses during operation.
+
+== Description list
 
 [.operating-systems,data-id="1234"]
 Operating Systems::
@@ -93,8 +97,8 @@ incididunt ut labore et dolore magna aliqua.
 
 :imagesdir: images
 
-image::cute-cat-1.jpg[cute-cat-laying,role="fragment fade-in",data-fragment-index=3]
+image::cute-cat-1.jpg[cute-cat-laying,height="100px",role="fragment fade-in",data-fragment-index=3]
 
-image::cute-cat-2.jpg[cute-cat-yawning,role="fragment fade-in",data-fragment-index=1]
+image::cute-cat-2.jpg[cute-cat-yawning,height="100px",role="fragment fade-in",data-fragment-index=1]
 
-image::cute-cat-3.jpg[cute-cat-melting,role="fragment fade-in",data-fragment-index=2]
+image::cute-cat-3.jpg[cute-cat-melting,height="100px",role="fragment fade-in",data-fragment-index=2]
