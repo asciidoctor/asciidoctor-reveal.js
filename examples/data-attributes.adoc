@@ -12,14 +12,14 @@ https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
 // .paragraphs
 == Paragraphs
 
-[.fragment.highlight-red,data-fragment-index=1]
-text1
+[.fragment.highlight-blue,data-fragment-index=0]
+blue
+
+[.fragment,data-fragment-index=1]
+white
 
 [.fragment.highlight-red,data-fragment-index=0]
-text2
-
-[.fragment.highlight-red,data-fragment-index=1]
-text3
+red
 
 // .inline-images
 == Inline images
