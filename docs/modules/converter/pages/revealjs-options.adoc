@@ -1,4 +1,4 @@
-= Reveal.js options
+= Reveal.js Configuration Options
 
 Some attributes can be set at the top of the document that are specific to the `reveal.js` converter.
 They use the same name as in the `reveal.js` project except that they are prepended by `revealjs_` and case doesn't matter.

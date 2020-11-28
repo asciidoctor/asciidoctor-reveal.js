@@ -1,6 +1,4 @@
-= HACKING asciidoctor-reveal.js
-:toc: preamble
-:toclevels: 2
+= Hacking
 
 Short instructions that aim to help potential contributors.
 

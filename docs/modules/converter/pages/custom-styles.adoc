@@ -1,7 +1,7 @@
-= Custom styles
+= Custom Styles
 
 [[customcss]]
-== CSS override
+== CSS Override
 
 If you use the `:customcss:` document attribute, a CSS file of the name given in the attribute is added to the list of CSS resources loaded by the rendered HTML.
 Doing so, you can then easily override specific elements of your theme per presentation.

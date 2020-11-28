@@ -8,8 +8,8 @@ https://bentolor.github.io/java9to13/[Presentation] and https://github.com/bento
 
 === Screenshots
 
-image:java9to13_4.png[width=200]
-image:java9to13_1.jpg[width=200]
+image:java9to13_4.png[width=300]
+image:java9to13_1.jpg[width=300]
 
-image:java9to13_2.jpg[width=200]
-image:java9to13_3.png[width=200]
+image:java9to13_2.jpg[width=300]
+image:java9to13_3.png[width=300]

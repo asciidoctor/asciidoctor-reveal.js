@@ -64,7 +64,7 @@ convert AsciiDoc source with
 
 TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
 
-== Features Unique to the Ruby CLI
+== Features unique to the Ruby CLI
 
 Starting with 4.0.0 you can specify a set of custom templates to use instead of the ones provided by this project.
 This can help you achieve even more concise AsciiDoc syntax and integration with reveal.js at the cost of more maintenance.

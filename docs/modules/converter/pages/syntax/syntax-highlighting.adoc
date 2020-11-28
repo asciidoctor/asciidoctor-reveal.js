@@ -1,4 +1,4 @@
-= Syntax highlighting
+= Syntax Highlighting
 
 reveal.js is well integrated with https://highlightjs.org/[Highlight.js] for syntax highlighting.
 Asciidoctor reveal.js supports that.

@@ -1,4 +1,4 @@
-= Reveal.js plugins
+= Reveal.js Plugins
 
 == Default plugins
 

@@ -1,4 +1,4 @@
-= Features
+= Write Your Presentation
 
 Let's see some examples of `revealjs` backend features.
 Additional examples can be found in the AsciiDoc files (.adoc) in `examples/`.

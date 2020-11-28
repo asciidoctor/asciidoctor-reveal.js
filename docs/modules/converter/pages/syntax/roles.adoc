@@ -1,4 +1,4 @@
-= Specific roles
+= Specific Roles
 
 Roles are usually applied with the following syntax where the `important-text` CSS class would be applied to the slide title in the generated HTML:
 

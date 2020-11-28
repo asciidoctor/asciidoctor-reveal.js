@@ -1,12 +1,12 @@
 = Background
 
-== Background Colors
+== Background colors
 
 Background colors for slides can be specified by two means: a classic one and one using AsciiDoc roles.
 See {uri-project-repo}/blob/master/examples/background-color.adoc[background-color.adoc] for more examples.
 
 
-=== Using AsciiDoc Roles
+=== Using AsciiDoc roles
 
 Using roles respects the AsciiDoc philosophy of separation of content and presentation.
 Colors are to be defined by CSS and the xref:custom-styles.adoc[`:customcss:` attribute] need to be used to specify the CSS file to load.
