@@ -23,6 +23,8 @@ jobs:
             ruby: '2.7'
           - os: ubuntu-latest
             ruby: '2.7'
+          - os: windows-latest
+            ruby: '2.7'
     runs-on: ${{ matrix.os }}
     env:
       JRUBY_OPTS: '-J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-Xss2m -Xcompile.invokedynamic=false'
@@ -59,6 +61,8 @@ jobs:
         node-version: ['12.x', '14.x', '15.x']
         include:
           - os: macos-latest
+            node-version: '14.x'
+          - os: windows-latest
             node-version: '14.x'
     runs-on: ${{ matrix.os }}
     steps:
