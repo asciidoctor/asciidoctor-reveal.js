@@ -4,6 +4,7 @@
 :backend: revealjs
 :icons: font
 :source-highlighter: highlight.js
+:revealjs_hash: true
 
 == Reference
 
@@ -71,6 +72,7 @@ Probably not.
 I need all the Powerpoint features::
 No you don’t.
 
+[[horizontal-list]]
 == Horizontal list
 
 [horizontal,data-style="horizontal"]
@@ -93,6 +95,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 incididunt ut labore et dolore magna aliqua.
 ====
 
+[[images]]
 == Images
 
 :imagesdir: images
@@ -102,3 +105,9 @@ image::cute-cat-1.jpg[cute-cat-laying,height="100px",role="fragment fade-in",dat
 image::cute-cat-2.jpg[cute-cat-yawning,height="100px",role="fragment fade-in",data-fragment-index=1]
 
 image::cute-cat-3.jpg[cute-cat-melting,height="100px",role="fragment fade-in",data-fragment-index=2]
+
+== Inline links
+
+Learn how to use xref:images[images,role=fragment,data-fragment-index=1],
+xref:horizontal-list[horizontal lists,role=fragment,data-fragment-index=2]
+and link:https://duckduckgo.com/[duckduckgo.com,role=fragment,data-fragment-index=3].

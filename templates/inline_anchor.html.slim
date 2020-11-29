@@ -1,12 +1,13 @@
 - case @type
 - when :xref
   - refid = (attr :refid) || @target
-  a href=@target =(@text || @document.references[:ids].fetch(refid, "[#{refid}]")).tr_s("\n", ' ')
+  = html_tag('a', { :href => @target, :class => roles }.merge(data_attrs(@attributes)))
+    =(@text || @document.references[:ids].fetch(refid, "[#{refid}]")).tr_s("\n", ' ')
 - when :ref
-  a id=@target
+  = html_tag('a', { :id => @target }.merge(data_attrs(@attributes)))
 - when :bibref
-  a id=@target
+  = html_tag('a', { :id => @target }.merge(data_attrs(@attributes)))
   |[#{@target}]
 - else
-  a href=@target class=role target=(attr :window) data-preview-link=(bool_data_attr :preview)
+  = html_tag('a', { :href => @target, :class => roles, :target => (attr :window), 'data-preview-link' => (bool_data_attr :preview) }.merge(data_attrs(@attributes)))
     =@text

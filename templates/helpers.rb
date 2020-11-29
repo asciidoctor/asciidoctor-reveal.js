@@ -33,11 +33,11 @@ module Slim::Helpers
   # then link::example.com[Link text, preview=false]
   # Here the template must have data-preview-link="false" not just no data-preview-link attribute
   def bool_data_attr val
-    return false if !attr?(val)
+    return false unless attr?(val)
     if attr(val).downcase == 'false' || attr(val) == '0'
-      return 'false'
+      'false'
     else
-      return true
+      true
     end
   end
 
@@ -74,7 +74,7 @@ module Slim::Helpers
   #
   def html_tag(name, attributes = {}, content = nil)
     attrs = attributes.inject([]) do |attrs, (k, v)|
-      next attrs if !v || v.nil_or_empty?
+      next attrs unless v && (v == true || !v.nil_or_empty?)
       v = v.compact.join(' ') if v.is_a? Array
       attrs << (v == true ? k : %(#{k}="#{v}"))
     end
