@@ -1,0 +1,50 @@
+:revealjs_transition: none
+:icons: font
+:revealjs_theme: white
+:revealjs_slideNumber: true
+:revealjs_center: false
+//:customcss: customcss.css
+:revealjs_width: 1680
+:revealjs_height: 1050
+:revealjs_hash: true
+
+[.columns.wrap]
+== Different Colors
+
+[.column.is-one-third]
+[.fragment]
+.Title
+--
+.Blue
+image::https://upload.wikimedia.org/wikipedia/commons/f/ff/Solid_blue.svg[width=40%]
+--
+[.column.is-one-third]
+[.fragment]
+--
+.Solid green but with longer caption
+image::https://upload.wikimedia.org/wikipedia/commons/2/29/Solid_green.svg[width=40%]
+--
+[.column.is-one-third]
+[.fragment]
+--
+.Solid red
+image::https://upload.wikimedia.org/wikipedia/commons/2/25/Red.svg[width=40%]
+--
+[.column.is-one-third]
+[.fragment]
+--
+.Solid blue
+image::https://upload.wikimedia.org/wikipedia/commons/f/ff/Solid_blue.svg[width=40%]
+--
+[.column.is-one-third]
+[.fragment]
+--
+.Blue
+image::https://upload.wikimedia.org/wikipedia/commons/f/ff/Solid_blue.svg[width=40%]
+--
+[.column.is-one-third]
+[.fragment]
+--
+.Solid green but with longer caption
+image::https://upload.wikimedia.org/wikipedia/commons/2/29/Solid_green.svg[width=40%]
+--

@@ -93,7 +93,7 @@ and data science. Open source forever Github.
 * **Crystal**
 
 
-[.columns.is-half.green.left]
+[.columns.is-half.sunrise.left]
 == !
 
 [.column.is-half]
