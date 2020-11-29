@@ -67,6 +67,11 @@
       - unless (_content = content.chomp).empty?
         div.slide-content
           =_content
+          - if document.footnotes? && !(parent.attr? 'nofootnotes') && !slide_footnotes.empty?
+            .footnotes
+              - slide_footnotes.each do |footnote|
+                .footnote
+                  = "#{footnote.index}. #{footnote.text}"
 
 / RENDERING
 / render parent section of vertical slides set
@@ -84,3 +89,5 @@
     =content.chomp
   - else
     - yield_content :section
+
+- clear_slide_footnotes
