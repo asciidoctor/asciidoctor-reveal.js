@@ -4,7 +4,7 @@
 - width = (attr? :width) ? (attr :width) : "100%"
 - height = (attr? :height) ? (attr :height) : "100%"
 / we apply revealjs stretch class to the videoblock take all the place we can
-.videoblock id=@id class=[@style,role,(no_stretch ? nil : "stretch")]
+= html_tag('div', { :id => @id, :class => ['videoblock', @style, role, (no_stretch ? nil : 'stretch')] }.merge(data_attrs(@attributes)))
   - if title?
     .title=captioned_title
   - case attr :poster
