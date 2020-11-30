@@ -170,3 +170,9 @@ image::data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0
 [abstract,data-block-type=abstract]
 .Abstract
 Documentation is a distillation of many long, squiggly adventures.
+
+== Quote
+
+[data-context=civil-rights,data-event=speech,data-date=28/08/1963]
+> I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin, but by the content of their character. I have a dream today!
+> -- Martin Luther King Jr. delivering the speech at the 1963 Washington D.C. Civil Rights March.
