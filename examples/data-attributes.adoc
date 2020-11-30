@@ -209,3 +209,10 @@ The Lumineers,Ho Hey,Folk Rock
 - [ ] Dig
 - [x] Plant
 - [ ] Hose
+
+== Seagulls
+
+// Title: Flock Seagulls
+// License: Attribution CC 3.0
+// Recorded by Daniel Simion
+audio::flock-of-seagulls_daniel-simion.mp3[options="autoplay,loop",data-license="cc-3.0"]
