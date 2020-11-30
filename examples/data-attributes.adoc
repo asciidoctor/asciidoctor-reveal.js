@@ -216,3 +216,9 @@ The Lumineers,Ho Hey,Folk Rock
 // License: Attribution CC 3.0
 // Recorded by Daniel Simion
 audio::flock-of-seagulls_daniel-simion.mp3[options="autoplay,loop",data-license="cc-3.0"]
+
+== Verse
+
+[verse, Carl Sandburg, two lines from the poem Fog, data-verse-type=poem]
+The fog comes
+on little cat feet.
