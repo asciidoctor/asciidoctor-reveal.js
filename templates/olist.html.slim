@@ -1,4 +1,4 @@
-.olist id=@id class=[@style,role]
+= html_tag('div', { :id => @id, :class => ['olist', @style, role] }.merge(data_attrs(@attributes)))
   - if title?
     .title=title
   ol class=@style start=(attr :start) type=list_marker_keyword

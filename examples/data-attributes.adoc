@@ -115,18 +115,6 @@ and link:https://duckduckgo.com/[duckduckgo.com,role=fragment,data-fragment-inde
 
 == Source blocks
 
-[source,javascript,role=fragment,data-fragment-index=2,data-lang=javascript]
-----
-console.log('Hello world')
-----
-
-[source,kotlin,role=fragment,data-fragment-index=1,data-lang=kotlin]
-----
-println("Hello world")
-----
-
-== Source blocks
-
 [source,javascript,role=fragment,data-fragment-index=2,data-lang-family=interpreted]
 ----
 console.log('Hello world')
@@ -150,3 +138,14 @@ error: The requested operation returned error: 1954 Forbidden search for defensi
 absolutely fatal: operation initiation lost in the dodecahedron of doom
 would you like to die again? y/n
 ....
+
+== Atom podium
+
+[role=fragment,,data-fragment-index=2,data-medal=gold]
+. Protons
+
+[start=2,role=fragment,,data-fragment-index=1,data-medal=silver]
+. Electrons
+
+[start=3,role=fragment,,data-fragment-index=0,data-medal=bronze]
+. Neutrons
