@@ -183,3 +183,22 @@ Documentation is a distillation of many long, squiggly adventures.
 ++++
 \sqrt{37} = \sqrt{\frac{73^2-1}{12^2}} \approx \frac{73}{12} (1 - \frac{1}{2\cdot73^2})
 ++++
+
+== Tables
+
+[cols="1,1",options=header,role=fragment,data-fragment-index=1]
+.App
+|===
+|Name
+|Category
+
+|Firefox
+|Browser
+|===
+
+[%header,format=csv,role=fragment,data-fragment-index=0]
+.Music
+|===
+Artist,Track,Genre
+The Lumineers,Ho Hey,Folk Rock
+|===
