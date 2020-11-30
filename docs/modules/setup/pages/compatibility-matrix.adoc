@@ -43,5 +43,5 @@ This table tracks this compatibility.
 |===
 
 Be aware that it is always possible to recompile the converter into JavaScript from source so compatibility can be created by anyone if needed.
-More details on that topic can be found xref:hacking.adoc#node-binary-compatibility[in the development guide].
+More details on that topic can be found xref:project:hacking.adoc#node-binary-compatibility[in the development guide].
 
