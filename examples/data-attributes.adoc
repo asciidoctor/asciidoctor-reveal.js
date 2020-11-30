@@ -141,11 +141,32 @@ would you like to die again? y/n
 
 == Atom podium
 
-[role=fragment,,data-fragment-index=2,data-medal=gold]
+[role=fragment,data-fragment-index=2,data-medal=gold]
 . Protons
 
-[start=2,role=fragment,,data-fragment-index=1,data-medal=silver]
+[start=2,role=fragment,data-fragment-index=1,data-medal=silver]
 . Electrons
 
-[start=3,role=fragment,,data-fragment-index=0,data-medal=bronze]
+[start=3,role=fragment,data-fragment-index=0,data-medal=bronze]
 . Neutrons
+
+[.columns.wrap]
+== Colors
+
+[.column.fragment,data-fragment-index=1]
+--
+image::data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle fill='blue' cx='50' cy='50' r='50'/%3E%3C/svg%3E[width=40%]
+
+image::data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle fill='yellow' cx='50' cy='50' r='50'/%3E%3C/svg%3E[width=40%]
+--
+
+[.column.fragment.fade-in-out,data-fragment-index=0]
+--
+image::data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle fill='green' cx='50' cy='50' r='50'/%3E%3C/svg%3E[width=40%]
+--
+
+== Abstract
+
+[abstract,data-block-type=abstract]
+.Abstract
+Documentation is a distillation of many long, squiggly adventures.
