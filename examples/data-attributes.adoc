@@ -136,3 +136,17 @@ console.log('Hello world')
 ----
 println("Hello world")
 ----
+
+== Literal
+
+Open a terminal and type:
+
+[data-program-type=bash,data-program-version=1.2.3]
+ ./forgotten-realms.sh
+
+[data-output-type=error,data-prompt=y/n]
+....
+error: The requested operation returned error: 1954 Forbidden search for defensive operations manual
+absolutely fatal: operation initiation lost in the dodecahedron of doom
+would you like to die again? y/n
+....
