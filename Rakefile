@@ -114,7 +114,7 @@ end
 namespace :examples do
   desc 'Converts all the test slides into fully working examples that you can look in a browser'
   # converted slides will be put in examples/ directory
-  task :convert do
+  task :convert => 'build:converter' do
     require 'slim-htag'
     require_relative 'lib/asciidoctor-revealjs'
     Dir.glob('examples/*.adoc') do |_file|
@@ -122,8 +122,7 @@ namespace :examples do
       out = Asciidoctor.convert_file _file,
         :safe => 'safe',
         :backend => 'revealjs',
-        :base_dir => 'examples',
-        :template_dir => 'templates'
+        :base_dir => 'examples'
       if out.instance_of? Asciidoctor::Document
         puts "✔️".green
       else
