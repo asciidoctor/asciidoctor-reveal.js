@@ -1,7 +1,7 @@
 // :include: //div[@class="slides"]
 // :header_footer:
 = Data attributes
-:backend: revealjs
+:stem:
 :icons: font
 :source-highlighter: highlight.js
 :revealjs_hash: true
@@ -176,3 +176,10 @@ Documentation is a distillation of many long, squiggly adventures.
 [data-context=civil-rights,data-event=speech,data-date=28/08/1963]
 > I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin, but by the content of their character. I have a dream today!
 > -- Martin Luther King Jr. delivering the speech at the 1963 Washington D.C. Civil Rights March.
+
+== Math!
+
+[stem,data-algebra-concept=square-root]
+++++
+\sqrt{37} = \sqrt{\frac{73^2-1}{12^2}} \approx \frac{73}{12} (1 - \frac{1}{2\cdot73^2})
+++++
