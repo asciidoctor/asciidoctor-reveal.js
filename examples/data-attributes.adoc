@@ -236,3 +236,10 @@ Type the word [.userinput]#asciidoc# into the search bar.
 Word with an [#bookmark-a]#explicit# id.
 
 Let's put some [#bookmark-b.concept.word]_emphasis_.
+
+== Sidebar
+
+[data-visiblity=visible,data-position=left]
+****
+Sidebars are used to visually separate auxiliary bits of content that supplement the main text.
+****
