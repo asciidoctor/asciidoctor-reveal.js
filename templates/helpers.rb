@@ -101,6 +101,23 @@ module Slim::Helpers
   end
 
 
+  #
+  # Wrap an inline text in a <span> element if the node contains a role, an id or data- attributes.
+  # @param content [#to_s] the content; +nil+ to call the block. (default: nil).
+  # @return [String] the content or the content wrapped in a <span> element as string
+  #
+  def inline_text_container(content = nil)
+    data_attrs = data_attrs(@attributes)
+    if role? || !data_attrs.empty? || !@id.nil?
+      html_tag('span', { :id => @id, :class => roles }.merge(data_attrs)) do
+        content || yield if block_given?
+      end
+    else
+      content || yield if block_given?
+    end
+  end
+
+
   ##
   # Returns corrected section level.
   #

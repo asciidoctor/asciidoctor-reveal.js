@@ -226,3 +226,13 @@ on little cat feet.
 == Video
 
 video::kZH9JtPBq7k[youtube,start=34,data-video-id=kZH9JtPBq7k]
+
+== Inline quoted
+
+I can't believe it, we *won*!
+
+Type the word [.userinput]#asciidoc# into the search bar.
+
+Word with an [#bookmark-a]#explicit# id.
+
+Let's put some [#bookmark-b.concept.word]_emphasis_.
