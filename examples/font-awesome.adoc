@@ -16,14 +16,18 @@ icon:heart[size=5x]
 
 == !
 
-// TODO
 [.red]
 icon:heart[size=5x]
 
 == !
 
-icon:stackpath[size=5x]
+// this is a brand icon, we need to use the "fab" class and not the (default) "fa" class
+icon:stackpath[size=5x,role=fab]
 
 == !
 
 icon:twitter[size=5x]
+
+== Added in 5.15.0
+
+icon:vest[size=2x]

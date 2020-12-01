@@ -1,0 +1,10 @@
+// .revealjs-custom-theme
+// :include: //head//link[@rel="stylesheet"]
+// :header_footer:
+= Use a Custom reveal.js Theme
+// please note that in this specific case it would be better to use :revealjs_theme: beige
+:revealjs_customtheme: reveal.js/css/theme/beige.css
+
+== Beige is the New Black
+
+Some text.
