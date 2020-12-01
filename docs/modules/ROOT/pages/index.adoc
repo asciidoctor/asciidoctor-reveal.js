@@ -1,5 +1,5 @@
 = reveal.js Converter for Asciidoctor
-:showcasedir: showcase
+:navtitle: Introduction
 
 {url-project-repo}[Asciidoctor reveal.js] is a converter for {url-asciidoctor}[Asciidoctor] and {url-asciidoctorjs}[Asciidoctor.js] that transforms an AsciiDoc document into an HTML5 presentation designed to be executed by the {url-revealjs-home}[reveal.js] presentation framework.
 
