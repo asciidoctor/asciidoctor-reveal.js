@@ -26,14 +26,14 @@ A Great Story
 --
 ----
 
-In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js`' default behavior) with link:{uri-revealjs-doc}#speaker-notes[speaker notes].
+In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js`' default behavior) with link:{url-revealjs-doc}#speaker-notes[speaker notes].
 Other syntax exists to create speaker notes, see `examples/speaker-notes.adoc`.
 
-Starting with Reveal.js 3.5 speaker notes supports configurable layouts:
+Starting with reveal.js 3.5 speaker notes supports configurable layouts:
 image:https://cloud.githubusercontent.com/assets/629429/21808439/b941eb52-d743-11e6-9936-44ef80c60580.gif[]
 
 Speaker notes are opened by pressing `s`.
-With Reveal.js 3.5 they require a webserver to work.
+With reveal.js 3.5 they require a webserver to work.
 This limitation is not present in 3.6.
 You can get a Web server running quickly with:
 
@@ -49,7 +49,7 @@ There are a few ways to have no titles on slides.
 * Adding the `notitle` option to your slide
 * Adding the `conceal` option to your slide
 
-See {uri-project-repo}/blob/master/examples/concealed-slide-titles.adoc[concealed-slide-titles.adoc].
+See {url-project-repo}/blob/master/examples/concealed-slide-titles.adoc[concealed-slide-titles.adoc].
 
 NOTE: `conceal` and `notitle` have the advantage that the slide still has an id so it can be linked to.
 

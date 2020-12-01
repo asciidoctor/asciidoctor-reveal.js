@@ -1,4 +1,5 @@
 = Specific Roles
+:navtitle: Roles
 
 Roles are usually applied with the following syntax where the `important-text` CSS class would be applied to the slide title in the generated HTML:
 
@@ -26,7 +27,7 @@ See https://asciidoctor.org/docs/user-manual/#role[Asciidoctor's documentation] 
 
 .Image specific note
 In addition to the https://asciidoctor.org/docs/user-manual/\#positioning-attributes[existing attributes] to position images, roles can be used as well. However, the shorthand syntax (.) doesn't work in the image macro arguments but must be used above with the angle bracket syntax.
-See {uri-project-examples}/images.adoc[images.adoc] for examples.
+See {url-project-examples}/images.adoc[images.adoc] for examples.
 
 Here is a list of supported roles:
 

@@ -1,1 +1,1 @@
-* xref:showcase.adoc[Showcase]
+* xref:showcase.adoc[]

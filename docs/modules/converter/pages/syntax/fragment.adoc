@@ -12,8 +12,8 @@
 ----
 
 Slide Four has bullets that are revealed one after the other.
-This is what `reveal.js` calls {uri-revealjs-home}/fragments[fragments].
+This is what `reveal.js` calls {url-revealjs-home}/fragments[fragments].
 Applying the step option or role on a list (`[%step]` or `[.step]`) will do the trick.
-Here is link:{uri-revealjs-doc}#fragments[the relevant reveal.js
+Here is link:{url-revealjs-doc}#fragments[the relevant reveal.js
 documentation] on the topic.
 Note that only `fade-in` is supported for lists at the moment.

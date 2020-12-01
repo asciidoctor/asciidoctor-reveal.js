@@ -8,11 +8,11 @@ nav:
   - modules/project/nav.adoc
 asciidoc:
   attributes:
-    uri-project-repo: 'https://github.com/asciidoctor/asciidoctor-reveal.js'
-    uri-project-examples: 'https://github.com/asciidoctor/asciidoctor-reveal.js/blob/master/examples'
-    uri-asciidoctor: 'https://github.com/asciidoctor/asciidoctor'
-    uri-asciidoctorjs: 'https://github.com/asciidoctor/asciidoctor.js'
-    uri-revealjs-home: 'https://revealjs.com'
-    uri-revealjs-gh: 'https://github.com/hakimel/reveal.js/blob/v3.9'
-    uri-revealjs-doc: '{uri-revealjs-gh}/README.md'
-    uri-nodejs-download: 'https://nodejs.org/en/download/'
+    url-project-repo: 'https://github.com/asciidoctor/asciidoctor-reveal.js'
+    url-project-examples: 'https://github.com/asciidoctor/asciidoctor-reveal.js/blob/master/examples'
+    url-asciidoctor: 'https://github.com/asciidoctor/asciidoctor'
+    url-asciidoctorjs: 'https://github.com/asciidoctor/asciidoctor.js'
+    url-revealjs-home: 'https://revealjs.com'
+    url-revealjs-gh: 'https://github.com/hakimel/reveal.js/blob/v3.9'
+    url-revealjs-doc: 'https://github.com/hakimel/reveal.js/blob/v3.9/README.md'
+    url-nodejs-download: 'https://nodejs.org/en/download/'

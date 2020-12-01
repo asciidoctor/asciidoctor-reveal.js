@@ -1,4 +1,5 @@
 = Ruby Setup
+:navtitle: Ruby
 
 NOTE: To ensure repeatability, we recommend that you manage your presentation projects using http://bundler.io/[bundler].
 

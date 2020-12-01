@@ -1,8 +1,9 @@
-= Reveal.js Configuration Options
+= reveal.js Configuration Options
+:navtitle: Config Options
 
 Some attributes can be set at the top of the document that are specific to the `reveal.js` converter.
 They use the same name as in the `reveal.js` project except that they are prepended by `revealjs_` and case doesn't matter.
-They are applied in the {uri-project-repo}/blob/master/templates/document.html.slim[document template].
+They are applied in the {url-project-repo}/blob/master/templates/document.html.slim[document template].
 
 NOTE: Default settings are based on `reveal.js` default settings.
 
@@ -12,7 +13,7 @@ NOTE: Default settings are based on `reveal.js` default settings.
 
 |:revealjs_theme:
 |beige, *black*, league, night, serif, simple, sky, solarized, white
-|Chooses one of reveal.js`' link:{uri-revealjs-doc}#theming[built-in themes].
+|Chooses one of reveal.js`' link:{url-revealjs-doc}#theming[built-in themes].
 
 |:revealjs_customtheme:
 |<file\|URL>
@@ -104,7 +105,7 @@ print:: only show slide numbers when printing to PDF
 
 |:revealjs_navigationMode:
 |*default*, linear, grid
-|See link:{uri-revealjs-doc}#navigation-mode[] for details
+|See link:{url-revealjs-doc}#navigation-mode[] for details
 
 |:revealjs_shuffle:
 |true, *false*
@@ -279,7 +280,7 @@ Defaults to *1*
 
 If you want to build a custom theme or customize an existing one you should
 look at the
-{uri-revealjs-gh}/css/theme/README.md[reveal.js
+{url-revealjs-gh}/css/theme/README.md[reveal.js
 theme documentation] and use the `revealjs_customtheme` AsciiDoc attribute to
 activate it.
 

@@ -1,4 +1,5 @@
-= Supplemental content with docinfo
+= Supplemental Content with Docinfo
+:navtitle: Docinfo
 // Originally from https://github.com/asciidoctor/asciidoctor-bespoke#supplemental-content
 
 It's possible to inject supplemental content into the output document using http://asciidoctor.org/docs/user-manual/#docinfo-file[docinfo files].

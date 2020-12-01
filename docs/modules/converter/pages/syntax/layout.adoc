@@ -2,7 +2,7 @@
 
 == Stretch class attribute
 
-Reveal.js supports a special class that will give all available screen space to an HTML node.
+reveal.js supports a special class that will give all available screen space to an HTML node.
 This class element is named `stretch`.
 
 Sometimes it's desirable to have an element, like an image or video, stretch to consume as much space as possible within a given slide.
@@ -11,7 +11,7 @@ To apply that class to block simply use asciidoctor's class assignment:
 
     [.stretch]
 
-See link:{uri-revealjs-doc}#stretching-elements[reveal.js documentation on stretching elements].
+See link:{url-revealjs-doc}#stretching-elements[reveal.js documentation on stretching elements].
 
 == Vertical slides
 
@@ -28,7 +28,7 @@ This is a vertical sub-slide
 
 Slide Six uses the vertical slide feature of `reveal.js`.
 Slide Six.One will be rendered vertically below Slide Six.
-Here is link:{uri-revealjs-doc}#markup[the relevant reveal.js
+Here is link:{url-revealjs-doc}#markup[the relevant reveal.js
 documentation] on that topic.
 
 == Columns layout
