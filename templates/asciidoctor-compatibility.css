@@ -87,6 +87,9 @@ td.hdlist1{font-weight:bold;padding-bottom:1.25em}
   flex-basis: 0;
   flex-grow: 1;
   flex-shrink: 1;
+}
+
+.columns .slide-content > .column > * {
   padding: .75rem;
 }
 
