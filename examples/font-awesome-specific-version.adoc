@@ -1,33 +1,12 @@
-// .font-awesome
+// .font-awesome-specific-version
 // Testing font-awesome icons
 // :include:  //head//link[@rel="stylesheet"] | //div[@class="slides"]
 // :header_footer:
 = Font Awesome Tests
 :icons: font
-:customcss: font-awesome.css
+:font-awesome-version: 5.14.0
 
-== !
-
-icon:heart[2x]
-
-== !
-
-icon:heart[size=5x]
-
-== !
-
-[.red]
-icon:heart[size=5x]
-
-== !
+== Updated in Version 5.14.0
 
 // FIXME: won't work as this is a brand icon and the converter needs to use the "fab" class and not the (default) "fa" class
-icon:stackpath[size=5x]
-
-== !
-
-icon:twitter[size=5x]
-
-== Added in 5.15.0
-
-icon:vest[size=2x]
+icon:rust[2x]
