@@ -8,4 +8,5 @@
 
 == Updated in Version 5.14.0
 
-icon:rust[2x,role=fab]
+// FIXME: won't work as this is a brand icon and the converter needs to use the "fab" class and not the (default) "fa" class
+icon:rust[2x]

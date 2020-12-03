@@ -21,8 +21,8 @@ icon:heart[size=5x]
 
 == !
 
-// this is a brand icon, we need to use the "fab" class and not the (default) "fa" class
-icon:stackpath[size=5x,role=fab]
+// FIXME: won't work as this is a brand icon and the converter needs to use the "fab" class and not the (default) "fa" class
+icon:stackpath[size=5x]
 
 == !
 
