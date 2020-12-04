@@ -1,4 +1,4 @@
-name: asciidoctor-reveal.js
+name: reveal.js-converter
 title: Asciidoctor reveal.js
 version: '4.0'
 nav:
