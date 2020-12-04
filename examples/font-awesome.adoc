@@ -21,8 +21,7 @@ icon:heart[size=5x]
 
 == !
 
-// FIXME: won't work as this is a brand icon and the converter needs to use the "fab" class and not the (default) "fa" class
-icon:stackpath[size=5x]
+icon:stackpath[size=5x,set=fab]
 
 == !
 
@@ -31,3 +30,14 @@ icon:twitter[size=5x]
 == Added in 5.15.0
 
 icon:vest[size=2x]
+
+== Sets
+
+.Brand
+icon:creative-commons[size=2x,set=fab]
+
+.Regular
+icon:address-book[size=2x,set=far]
+
+.Solid
+icon:address-book[size=2x,set=fas]
