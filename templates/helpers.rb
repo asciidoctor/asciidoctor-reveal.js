@@ -33,11 +33,11 @@ module Slim::Helpers
   # then link::example.com[Link text, preview=false]
   # Here the template must have data-preview-link="false" not just no data-preview-link attribute
   def bool_data_attr val
-    return false if !attr?(val)
+    return false unless attr?(val)
     if attr(val).downcase == 'false' || attr(val) == '0'
-      return 'false'
+      'false'
     else
-      return true
+      true
     end
   end
 
@@ -72,10 +72,9 @@ module Slim::Helpers
   # @yield The block of Slim/HTML code within the tag (optional).
   # @return [String] a rendered HTML element.
   #
-
   def html_tag(name, attributes = {}, content = nil)
     attrs = attributes.inject([]) do |attrs, (k, v)|
-      next attrs if !v || v.nil_or_empty?
+      next attrs unless v && (v == true || !v.nil_or_empty?)
       v = v.compact.join(' ') if v.is_a? Array
       attrs << (v == true ? k : %(#{k}="#{v}"))
     end
@@ -87,6 +86,34 @@ module Slim::Helpers
     else
       content ||= yield if block_given?
       %(<#{name}#{attrs_str}>#{content}</#{name}>)
+    end
+  end
+
+
+  #
+  # Extracts data- attributes from the attributes.
+  # @param attributes [Hash] (default: {})
+  # @return [Hash] a Hash that contains only data- attributes
+  #
+  def data_attrs(attributes)
+    # key can be an Integer (for positional attributes)
+    attributes.select { |key, _| key.to_s.start_with?('data-') }
+  end
+
+
+  #
+  # Wrap an inline text in a <span> element if the node contains a role, an id or data- attributes.
+  # @param content [#to_s] the content; +nil+ to call the block. (default: nil).
+  # @return [String] the content or the content wrapped in a <span> element as string
+  #
+  def inline_text_container(content = nil)
+    data_attrs = data_attrs(@attributes)
+    if role? || !data_attrs.empty? || !@id.nil?
+      html_tag('span', { :id => @id, :class => roles }.merge(data_attrs)) do
+        content || yield if block_given?
+      end
+    else
+      content || yield if block_given?
     end
   end
 

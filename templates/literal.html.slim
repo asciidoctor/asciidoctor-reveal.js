@@ -1,4 +1,4 @@
-.literalblock id=@id class=role
+= html_tag('div', { :id => id, :class => ['literalblock', role] }.merge(data_attrs(@attributes)))
   - if title?
     .title=title
   .content: pre class=(!(@document.attr? :prewrap) || (option? 'nowrap') ? 'nowrap' : nil) =content

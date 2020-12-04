@@ -1,15 +1,16 @@
 - menu = attr 'menu'
 - menuitem = attr 'menuitem'
 - if !(submenus = attr 'submenus').empty?
-  span.menuseq
+  = html_tag('span', { :class => ['menuseq'] }.merge(data_attrs(@attributes)))
     span.menu=menu
     |&#160;&#9656;&#32;
     =submenus.map {|submenu| %(<span class="submenu">#{submenu}</span>&#160;&#9656;&#32;) }.join
     span.menuitem=menuitem
 - elsif !menuitem.nil?
-  span.menuseq
+  = html_tag('span', { :class => ['menuseq'] }.merge(data_attrs(@attributes)))
     span.menu=menu
     |&#160;&#9656;&#32;
     span.menuitem=menuitem
 - else
-  span.menu=menu
+  = html_tag('span', { :class => ['menu'] }.merge(data_attrs(@attributes)))
+    = menu

@@ -1,0 +1,245 @@
+// :include: //div[@class="slides"]
+// :header_footer:
+= Data attributes
+:stem:
+:icons: font
+:source-highlighter: highlight.js
+:revealjs_hash: true
+:experimental:
+
+== Reference
+
+https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
+
+// .paragraphs
+== Paragraphs
+
+[.fragment.highlight-blue,data-fragment-index=0]
+blue
+
+[.fragment,data-fragment-index=1]
+white
+
+[.fragment.highlight-red,data-fragment-index=0]
+red
+
+// .inline-images
+== Inline images
+:imagesdir: images
+
+image:cute-cat-1.jpg[cute-cat-laying,role="fragment fade-in",data-fragment-index=3]
+image:cute-cat-2.jpg[cute-cat-yawning,role="fragment fade-in",data-fragment-index=1]
+image:cute-cat-3.jpg[cute-cat-melting,role="fragment fade-in",data-fragment-index=2]
+
+== Admonitions
+
+[TIP,role="fragment fade-in",data-fragment-index=3]
+====
+Pro tip...
+====
+
+[WARNING,role="fragment fade-in",data-fragment-index=1]
+====
+Watch out for...
+====
+
+[IMPORTANT,role="fragment fade-in",data-fragment-index=2]
+====
+Don't forget...
+====
+
+== Callout numbers
+
+[source,js]
+----
+console.log('Hello'); // <1>
+
+console.log('Bonjour'); // <2>
+
+console.log('Bye'); // <3>
+----
+[role="fragment fade-in",data-state="explanation"]
+<1> Display `Hello`
+<2> Display `Bonjour`
+<3> Display `Bye`
+
+== FAQ
+
+[qanda,data-count="3"]
+What's the deal with this converter?::
+This is the official reveal.js converter for Asciidoctor.
+Is it safe to put my credit card number into this presentation?::
+Probably not.
+I need all the Powerpoint features::
+No you don’t.
+
+[[horizontal-list]]
+== Horizontal list
+
+[horizontal,data-style="horizontal"]
+Hard drive:: Permanent storage for operating system and/or user files.
+RAM:: Temporarily stores information the CPU uses during operation.
+
+== Description list
+
+[.operating-systems,data-id="1234"]
+Operating Systems::
+* Linux
+* macOS
+* Windows
+
+== Example
+
+[#lorem.ipsum,data-style="lorem ipsum"]
+====
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua.
+====
+
+[[images]]
+== Images
+
+:imagesdir: images
+
+image::cute-cat-1.jpg[cute-cat-laying,height="100px",role="fragment fade-in",data-fragment-index=3]
+
+image::cute-cat-2.jpg[cute-cat-yawning,height="100px",role="fragment fade-in",data-fragment-index=1]
+
+image::cute-cat-3.jpg[cute-cat-melting,height="100px",role="fragment fade-in",data-fragment-index=2]
+
+== Inline links
+
+Learn how to use xref:images[images,role=fragment,data-fragment-index=1],
+xref:horizontal-list[horizontal lists,role=fragment,data-fragment-index=2]
+and link:https://duckduckgo.com/[duckduckgo.com,role=fragment,data-fragment-index=3].
+
+== Source blocks
+
+[source,javascript,role=fragment,data-fragment-index=2,data-lang-family=interpreted]
+----
+console.log('Hello world')
+----
+
+[source,kotlin,role=fragment,data-fragment-index=1,data-lang-family=compiled]
+----
+println("Hello world")
+----
+
+== Literal
+
+Open a terminal and type:
+
+[data-program-type=bash,data-program-version=1.2.3]
+ ./forgotten-realms.sh
+
+[data-output-type=error,data-prompt=y/n]
+....
+error: The requested operation returned error: 1954 Forbidden search for defensive operations manual
+absolutely fatal: operation initiation lost in the dodecahedron of doom
+would you like to die again? y/n
+....
+
+== Atom podium
+
+[role=fragment,data-fragment-index=2,data-medal=gold]
+. Protons
+
+[start=2,role=fragment,data-fragment-index=1,data-medal=silver]
+. Electrons
+
+[start=3,role=fragment,data-fragment-index=0,data-medal=bronze]
+. Neutrons
+
+[.columns.wrap]
+== Colors
+
+[.column.fragment,data-fragment-index=1]
+--
+image::data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle fill='blue' cx='50' cy='50' r='50'/%3E%3C/svg%3E[width=40%]
+
+image::data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle fill='yellow' cx='50' cy='50' r='50'/%3E%3C/svg%3E[width=40%]
+--
+
+[.column.fragment.fade-in-out,data-fragment-index=0]
+--
+image::data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle fill='green' cx='50' cy='50' r='50'/%3E%3C/svg%3E[width=40%]
+--
+
+== Abstract
+
+[abstract,data-block-type=abstract]
+.Abstract
+Documentation is a distillation of many long, squiggly adventures.
+
+== Quote
+
+[data-context=civil-rights,data-event=speech,data-date=28/08/1963]
+> I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin, but by the content of their character. I have a dream today!
+> -- Martin Luther King Jr. delivering the speech at the 1963 Washington D.C. Civil Rights March.
+
+== Math!
+
+[stem,data-algebra-concept=square-root]
+++++
+\sqrt{37} = \sqrt{\frac{73^2-1}{12^2}} \approx \frac{73}{12} (1 - \frac{1}{2\cdot73^2})
+++++
+
+== Tables
+
+[cols="1,1",options=header,role=fragment,data-fragment-index=1]
+.App
+|===
+|Name
+|Category
+
+|Firefox
+|Browser
+|===
+
+[%header,format=csv,role=fragment,data-fragment-index=0]
+.Music
+|===
+Artist,Track,Genre
+The Lumineers,Ho Hey,Folk Rock
+|===
+
+== TODO
+
+[%interactive,data-state=in-progress]
+- [ ] Dig
+- [x] Plant
+- [ ] Hose
+
+== Seagulls
+
+// Title: Flock Seagulls
+// License: Attribution CC 3.0
+// Recorded by Daniel Simion
+audio::flock-of-seagulls_daniel-simion.mp3[options="autoplay,loop",data-license="cc-3.0"]
+
+== Verse
+
+[verse, Carl Sandburg, two lines from the poem Fog, data-verse-type=poem]
+The fog comes
+on little cat feet.
+
+== Video
+
+video::kZH9JtPBq7k[youtube,start=34,data-video-id=kZH9JtPBq7k]
+
+== Inline quoted
+
+I can't believe it, we *won*!
+
+Type the word [.userinput]#asciidoc# into the search bar.
+
+Word with an [#bookmark-a]#explicit# id.
+
+Let's put some [#bookmark-b.concept.word]_emphasis_.
+
+== Sidebar
+
+[data-visiblity=visible,data-position=left]
+****
+Sidebars are used to visually separate auxiliary bits of content that supplement the main text.
+****

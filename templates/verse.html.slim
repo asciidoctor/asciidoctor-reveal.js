@@ -1,4 +1,4 @@
-.verseblock id=@id class=role
+= html_tag('div', { :id => @id, :class => ['verseblock', role] }.merge(data_attrs(@attributes)))
   - if title?
     .title=title
   pre.content=content

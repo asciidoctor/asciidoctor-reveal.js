@@ -1,7 +1,8 @@
 - if (keys = attr 'keys').size == 1
-  kbd=keys.first
+  = html_tag('kbd', data_attrs(@attributes))
+    = keys.first
 - else
-  span.keyseq
+  = html_tag('span', { :class => ['keyseq'] }.merge(data_attrs(@attributes)))
     - keys.each_with_index do |key, idx|
       - unless idx.zero?
         |+

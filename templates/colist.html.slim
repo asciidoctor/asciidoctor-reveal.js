@@ -1,4 +1,4 @@
-.colist id=@id class=[@style,role]
+= html_tag('div', { :id => @id, :class => ['colist', @style, role] }.merge(data_attrs(@attributes)))
   - if title?
     .title=title
   - if @document.attr? :icons

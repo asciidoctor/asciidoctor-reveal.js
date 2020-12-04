@@ -1,6 +1,6 @@
 - case @style
 - when 'qanda'
-  .qlist id=@id class=['qanda',role]
+  = html_tag('div', { :id => @id, :class => ['qlist', @style, role] }.merge(data_attrs(@attributes)))
     - if title?
       .title=title
     ol
@@ -14,7 +14,7 @@
             - if answer.blocks?
               =answer.content
 - when 'horizontal'
-  .hdlist id=@id class=role
+  = html_tag('div', { :id => @id, :class => ['hdlist', role] }.merge(data_attrs(@attributes)))
     - if title?
       .title=title
     table
@@ -38,7 +38,7 @@
               - if dd.blocks?
                 =dd.content
 - else
-  .dlist id=@id class=[@style,role]
+  = html_tag('div', { :id => @id, :class => ['dlist', @style, role] }.merge(data_attrs(@attributes)))
     - if title?
       .title=title
     dl

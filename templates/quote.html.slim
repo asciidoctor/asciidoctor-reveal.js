@@ -1,4 +1,4 @@
-.quoteblock id=@id class=role
+= html_tag('div', { :id => @id, :class => ['quoteblock', role] }.merge(data_attrs(@attributes)))
   - if title?
     .title=title
   blockquote=content

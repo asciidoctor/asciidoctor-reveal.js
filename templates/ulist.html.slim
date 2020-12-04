@@ -6,11 +6,11 @@
     - if @document.attr? :icons, 'font'
       - marker_checked = '<i class="icon-check"></i>'
       - marker_unchecked = '<i class="icon-check-empty"></i>'
-    - else 
+    - else
       / could use &#9745 (checked ballot) and &#9744 (ballot) w/o font instead
       - marker_checked = '<input type="checkbox" data-item-complete="1" checked disabled>'
       - marker_unchecked = '<input type="checkbox" data-item-complete="0" disabled>'
-.ulist id=@id class=[checklist,@style,role]
+= html_tag('div', { :id => @id, :class => ['ulist', checklist, @style, role] }.merge(data_attrs(@attributes)))
   - if title?
     .title=title
   ul class=(checklist || @style)

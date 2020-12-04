@@ -1,6 +1,6 @@
 - if @type == :xref
-  span.footnoteref
+  = html_tag('span', { :class => ['footnoteref'] }.merge(data_attrs(@attributes)))
     | [<a class="footnote" href="#_footnote_#{attr :index}" title="View footnote.">#{attr :index}</a>]
 - else
-  span.footnote id=("_footnote_#{@id}" if @id)
+  = html_tag('span', { :id => ("_footnote_#{@id}" if @id), :class => ['footnote'] }.merge(data_attrs(@attributes)))
     | [<a id="_footnoteref_#{attr :index}" class="footnote" href="#_footnote_#{attr :index}" title="View footnote.">#{attr :index}</a>]

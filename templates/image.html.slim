@@ -10,8 +10,8 @@
   - height = "100%"
 
 - unless attributes[1] == 'background' || attributes[1] == 'canvas'
-  .imageblock(id=@id class=roles
-      style=[("text-align: #{attr :align}" if attr? :align),("float: #{attr :float}" if attr? :float)].compact.join('; '))
+  - inline_style = [("text-align: #{attr :align}" if attr? :align),("float: #{attr :float}" if attr? :float)].compact.join('; ')
+  = html_tag('div', { :id => @id, :class => ['imageblock', role], :style => inline_style }.merge(data_attrs(@attributes)))
     - if attr? :link
       a.image href=(attr :link) target=(attr :window) data-preview-link=(bool_data_attr :link_preview)
         img src=image_uri(attr :target) alt=(attr :alt) width=(width) height=(height) style=((attr? :background) ? "background: #{attr :background}" : nil)
