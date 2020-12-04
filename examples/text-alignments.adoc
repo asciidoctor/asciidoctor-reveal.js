@@ -1,0 +1,44 @@
+= Text Alignments
+
+== Default
+
+This is the default (boring) alignment!
+
+== Center
+
+[.text-center]
+This text is centered.
+
+== Left
+
+[.text-left]
+This text is left-aligned.
+
+== Right
+
+[.text-right]
+This text is right-aligned.
+
+== Justified
+
+[.text-justify]
+This text is justified.
+
+[.text-right]
+== Title is Right-Aligned
+
+Content too!
+
+== Back to Normal!
+
+Content too!
+
+[.text-left]
+== Title is Left-Aligned
+
+Content too!
+
+[.text-center]
+== Title is Centered
+
+Content too!
