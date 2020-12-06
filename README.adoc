@@ -19,6 +19,10 @@ endif::[]
 :uri-asciidoctor: https://github.com/asciidoctor/asciidoctor
 :uri-asciidoctorjs: https://github.com/asciidoctor/asciidoctor.js
 :uri-revealjs-home: https://revealjs.com
+:uri-revealjs-gh: https://github.com/hakimel/reveal.js/blob/v3.9
+:uri-revealjs-doc: {uri-revealjs-gh}/README.md
+:uri-nodejs-download: https://nodejs.org/en/download/
+:showcasedir: showcase
 
 ifdef::env-github[]
 image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
@@ -29,19 +33,1356 @@ endif::[]
 // IMPORTANT: Changes made to this description should be sync'ed with the readme field in package.json.
 {uri-project-repo}[Asciidoctor reveal.js] is a converter for {uri-asciidoctor}[Asciidoctor] and {uri-asciidoctorjs}[Asciidoctor.js] that transforms an AsciiDoc document into an HTML5 presentation designed to be executed by the {uri-revealjs-home}[reveal.js] presentation framework.
 
-== Documentation
+TIP: Want to see some example presentations, see <<Showcase Presentations>>
 
-If you want to learn more about Asciidoctor reveal.js, please read the https://asciidoctor-docs.netlify.app/asciidoctor-reveal.js/current/[documentation].
+There are four main technology stacks that can convert AsciiDoc into HTML5 / reveal.js:
+
+* Asciidoctor / Ruby / Bundler (See <<Ruby Setup>>)
+* Asciidoctor.js / JavaScript (Node.js) / npm (See <<Node / JavaScript Setup>>)
+* Standalone Executable (See <<Standalone Executable>>)
+* AsciidoctorJ / JVM / Maven (See https://github.com/asciidoctor/asciidoctorj-reveal.js[this project])
+
+ifeval::['{branch}' == 'master']
+NOTE: You're viewing the documentation for an upcoming release.
+If you're looking for the documentation for the current release or an older one, please click on the appropriate link below: +
+{uri-project-repo}/tree/v4.0.0#readme[4.0.1] (latest from 4.x series)
+&hybull;
+{uri-project-repo}/tree/v3.1.0#readme[3.1.0] (latest from 3.x series)
+&hybull;
+{uri-project-repo}/tree/reveal.js-2.x#readme[Unversioned pre-release] (compatible with reveal.js 2.x)
+endif::[]
+
+
+== Ruby Setup
+
+NOTE: To ensure repeatability, we recommend that you manage your presentation projects using http://bundler.io/[bundler].
+
+=== Prerequisites
+
+. Install http://bundler.io/[bundler] (if not already installed)  using your system's package manager or with:
+
+  $ gem install bundler
+
+. If you're using RVM, make sure you switch away from any gemset:
+
+  $ rvm use default
++
+or
++
+  $ rvm use system
+
+
+=== Install
+
+NOTE: These instructions should be repeated for every presentation project.
+
+. Create project directory
+
+  $ mkdir my-awesome-presentation
+  $ cd my-awesome-presentation
+
+. Create a file named `Gemfile` with the following content:
++
+[source,ruby]
+----
+source 'https://rubygems.org'
+
+gem 'asciidoctor-revealjs' # latest released version
+----
++
+NOTE: For some reason, when you use the system Ruby on Fedora, you also have to add the json gem to the Gemfile.
++
+. Install the gems into the project
+
+  $ bundle config --local github.https true
+  $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
+
+. Optional: Copy or clone reveal.js presentation framework.
+  Allows you to modify themes or view slides offline.
+
+  $ git clone -b 3.9.2 --depth 1 https://github.com/hakimel/reveal.js.git
+
+
+=== Rendering the AsciiDoc into slides
+
+. Create content in a file (*.adoc, *.ad, etc.).
+  See examples in <<Syntax Examples>> section to get started.
+
+. Generate HTML presentation from the AsciiDoc source
+
+  $ bundle exec asciidoctor-revealjs \
+    -a revealjsdir=https://cdn.jsdelivr.net/npm/reveal.js@3.9.2 CONTENT_FILE.adoc
+
+. If you did the optional step of having a local reveal.js clone you can
+  convert AsciiDoc source with
+
+  $ bundle exec asciidoctor-revealjs CONTENT_FILE.adoc
+
+TIP: If you are using https://pages.github.com/[GitHub Pages], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
+
+=== Features Unique to the Ruby CLI
+
+Starting with 4.0.0 you can specify a set of custom templates to use instead of the ones provided by this project.
+This can help you achieve even more concise AsciiDoc syntax and integration with reveal.js at the cost of more maintenance.
+
+To use it, add the following dependencies to your `Gemfile`:
+
+  gem 'tilt', '~>2.0'
+  gem 'slim', '~>4.0'
+
+Then install the dependencies with:
+
+  $ bundle install
+
+The feature is activated with the `--template-dir` or `-T` option:
+
+  $ bundle exec asciidoctor-revealjs -T templates/ CONTENT_FILE.adoc
+
+Any individual template file not provided in the directory specified on the command-line will fall back to the template provided by your version of Asciidoctor reveal.js.
+Refer to our https://github.com/asciidoctor/asciidoctor-reveal.js/tree/master/templates[templates] for inspiration.
+
+This feature hasn't been ported to the JavaScript CLI (and API) or the standalone executables.
+
+
+== Node / JavaScript Setup
+
+=== Prerequisites
+
+First you must install and configure {uri-nodejs-download}[Node] on your machine.
+
+[[node-install]]
+=== Install
+
+We recommend to install the dependencies in a project directory, such as the directory where your AsciiDoc presentations are stored.
+If you don't have a `package.json` file in your project directory, you can create one to eliminate warnings during the installation using:
+
+ $ npm init -y
+
+You can now install the dependencies:
+
+ $ npm i --save asciidoctor@^2.0 @asciidoctor/reveal.js
+
+=== Convert AsciiDoc into slides
+
+Once the dependencies are installed, verify that the `asciidoctor-revealjs` command is available.
+On Linux and macOS, open a terminal and type:
+
+ $ npx asciidoctor-revealjs --version
+
+On Windows, open PowerShell and type:
+
+ $ .\node_modules\.bin\asciidoctor-revealjs.cmd --version
+
+The command should report the Asciidoctor CLI version in the terminal:
+
+[source,console]
+----
+Asciidoctor.js 2.0.3 (Asciidoctor 2.0.9) [https://asciidoctor.org]
+Runtime Environment (node v10.15.1 on linux)
+CLI version 2.0.1
+----
+
+If you don't have an existing presentation, you can create a sample presentation named [.path]_presentation.adoc_:
+
+.presentation.adoc
+[source,asciidoc]
+----
+= Title Slide
+
+== Slide One
+
+* Foo
+* Bar
+* World
+
+----
+
+To convert the sample presentation into slides, open a terminal and type:
+
+ $ npx asciidoctor-revealjs presentation.adoc
+
+On windows, open PowerShell and type:
+
+ $ .\node_modules\.bin\asciidoctor-revealjs.cmd presentation.adoc
+
+The above command will generate a file named [.path]_presentation.html_.
+You can open this file in a browser.
+
+==== Using the JavaScript API
+
+Alternatively, you can use the JavaScript API to register the converter and convert a document:
+
+.convert-slides.js
+[source,javascript]
+----
+// Load Asciidoctor.js and the reveal.js converter
+var asciidoctor = require('@asciidoctor/core')()
+var asciidoctorRevealjs = require('@asciidoctor/reveal.js')
+asciidoctorRevealjs.register()
+
+// Convert the document 'presentation.adoc' using the reveal.js converter
+var options = { safe: 'safe', backend: 'revealjs' }
+asciidoctor.convertFile('presentation.adoc', options) // <1>
+----
+<1> Creates a file named `presentation.html` (in the directory where command is run)
+
+To execute the script, open a terminal and type:
+
+ $ node convert-slides.js
+
+You can open the `presentation.html` file in your browser and enjoy!
+
+
+== Standalone Executable
+
+Pre-built binary packages can be downloaded from our {uri-project-repo}/releases[GitHub release page].
+We provide them for Windows 64-bit, Linux 64-bit and macOS 64-bit.
+Open an issue if your platform isn't supported.
+The executables are built using the <<Node / JavaScript Setup,Node / JavaScript>> toolchain.
+
+=== Install
+
+* {uri-project-repo}/releases[Download the executable] for your platform and make it executable with `chmod` or using the files properties' user interface.
+* Copy or clone the reveal.js presentation framework in the directory where you will build your slidedeck.
+  Here we do a shallow clone of the repo:
+
+  $ git clone -b 3.9.2 --depth 1 https://github.com/hakimel/reveal.js.git
+
+=== Convert AsciiDoc into slides
+
+Open a terminal where the executable is and type:
+
+ $ ./asciidoctor-revealjs --version
+
+The command should report the Asciidoctor reveal.js and Asciidoctor CLI version in the terminal:
+
+[source,console]
+----
+Asciidoctor reveal.js 3.0.1 using Asciidoctor.js 2.0.3 (Asciidoctor 2.0.9) [https://asciidoctor.org]
+Runtime Environment (node v12.13.1 on linux)
+CLI version 3.1.0
+----
+
+If you don't have an existing presentation, you can create a sample presentation named [.path]_presentation.adoc_:
+
+.presentation.adoc
+[source,asciidoc]
+----
+= Title Slide
+:revealjsdir: reveal.js
+
+== Slide One
+
+* Foo
+* Bar
+* World
+
+----
+
+To convert the sample presentation into slides, open a terminal and type:
+
+ $ ./asciidoctor-revealjs presentation.adoc
+
+The above command will generate a file named [.path]_presentation.html_.
+You can open this file in a browser.
+
+
+== Syntax Examples
+
+Let's see some examples of `revealjs` backend features.
+Additional examples can be found in the AsciiDoc files (.adoc) in `examples/`.
+
+=== Basic presentation with speaker notes
+
+[source, asciidoc]
+----
+= Title Slide
+
+== Slide One
+
+* Foo
+* Bar
+* World
+
+== Slide Two
+
+A Great Story
+
+[.notes]
+--
+* tell anecdote
+* make a point
+--
+----
+
+In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js`' default behavior) with {uri-revealjs-doc}#speaker-notes[speaker notes].
+Other syntax exists to create speaker notes, see `examples/speaker-notes.adoc`.
+
+Starting with Reveal.js 3.5 speaker notes supports configurable layouts:
+image:https://cloud.githubusercontent.com/assets/629429/21808439/b941eb52-d743-11e6-9936-44ef80c60580.gif[]
+
+Speaker notes are opened by pressing `s`.
+With Reveal.js 3.5 they require a webserver to work.
+This limitation is not present in 3.6.
+You can get a Web server running quickly with:
+
+    ruby -run -e httpd . -p 5000 -b 127.0.0.1
+
+Then use your browser to navigate to the URL \http://localhost:5000.
+
+=== Slides without titles
+
+There are a few ways to have no titles on slides.
+
+* Setting your title to `!`
+* Adding the `notitle` option to your slide
+* Adding the `conceal` option to your slide
+
+ifeval::[{safe-mode-level} >= 20]
+See <<examples/concealed-slide-titles.adoc#,concealed-slide-titles.adoc>>.
+endif::[]
+ifeval::[{safe-mode-level} < 20]
+Here is an example of the three techniques in action:
+
+.concealed-slide-titles.adoc
+[source,asciidoc]
+....
+include::examples/concealed-slide-titles.adoc[lines=5..-1]
+....
+endif::[]
+
+NOTE: `conceal` and `notitle` have the advantage that the slide still has an id so it can be linked to.
+
+IMPORTANT: Like the first page of an AsciiDoc document, the first slide is handled differently.
+           To hide the whole slide use the `:notitle:` http://asciidoctor.org/docs/user-manual/#header-summary[document attribute].
+           To achieve the effect of hiding only the first slide's title, combine the `:notitle:` attribute on the first slide and use `[%notitle]` on the second slide which will, in effect, be your first slide now.
+
+
+=== Background Colors
+
+Background colors for slides can be specified by two means: a classic one and one using AsciiDoc roles.
+See <<examples/background-color.adoc#,background-color.adoc>> for more examples.
+
+==== Using AsciiDoc Roles
+
+Using roles respects the AsciiDoc philosophy of separation of content and presentation.
+Colors are to be defined by CSS and the <<customcss,`:customcss:` attribute>> need to be used to specify the CSS file to load.
+To avoid clashing with existing reveal.js themes or CSS, a specific CSS class called `background` is expected to be present.
+Here is an example:
+
+
+[source, asciidoc]
+----
+= Title
+:customcss: my-css.css
+
+[.red.background]
+== Slide One
+
+Is very red
+----
+
+.my-css.css
+[source, css]
+----
+section.red.background {
+  background-color: red;
+}
+----
+
+NOTE: The `canvas` keyword can be used instead of `background` for the same effect.
+
+==== Classic
+
+[source, asciidoc]
+----
+[background-color="yellow"]
+== Slide Three
+
+Is very yellow
+----
+
+Slide Three applies the attribute {uri-revealjs-doc}#slide-backgrounds[data-background-color] to the `reveal.js` <section> tag.
+Anything accepted by CSS color formats works.
+
+
+=== Background images
+
+[source, asciidoc]
+----
+[%notitle]
+== Grand Announcement
+
+image::cover.jpg[background, size=cover]
+----
+
+This will put `cover.jpg` as the slide's background image.
+It sets reveal.js`' `data-background-image` attribute.
+The `size` attribute is also supported.
+See the {uri-revealjs-doc}#image-backgrounds[relevant reveal.js documentation] for details.
+
+NOTE: Background images file names are now relative to the `:imagesdir:` attribute if set.
+
+NOTE: The `canvas` keyword can be used instead of `background` for the same effect.
+
+[source, asciidoc]
+----
+[%notitle]
+== The Great Goat
+
+image::https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg[canvas,size=contain]
+----
+
+As you can see, you can use a URL to specify your image resource too.
+
+
+[#background_videos]
+=== Background videos
+
+A background video for a slide can be specified using the `background-video` element attribute.
+
+[source, asciidoc]
+----
+[background-video="https://my.video/file.mp4",background-video-loop=true,background-video-muted=true]
+== Nice background!
+----
+
+For convenience `background-video-loop` and `background-video-muted` attributes are mapped to `loop` and `muted` options which can be specified with `options="loop,muted"`.
+
+For example:
+
+[source, asciidoc]
+----
+[background-video="https://my.video/file.mp4",options="loop,muted"]
+== Nice background!
+----
+
+See {uri-revealjs-doc}#video-backgrounds[the relevant reveal.js documentation] for details.
+Note that the `data-` prefix is not required in asciidoc files.
+
+
+=== Background iframes
+
+The background can be replaced with anything a browser can render in an iframe using the `background-iframe` reveal.js feature.
+
+[source, asciidoc]
+----
+[%notitle,background-iframe="https://www.youtube.com/embed/LaApqL4QjH8?rel=0&start=3&enablejsapi=1&autoplay=1&loop=1&controls=0&modestbranding=1"]
+== a youtube video
+----
+
+See {uri-revealjs-doc}#iframe-backgrounds[the relevant reveal.js documentation] for details.
+
+
+=== Slide Transitions
+
+[source, asciidoc]
+----
+[transition=zoom, %notitle]
+== Zoom zoom
+
+This slide will override the presentation transition and zoom!
+
+[transition-speed=fast, %notitle]
+== Speed
+
+Choose from three transition speeds: default, fast or slow!
+----
+
+See {uri-revealjs-doc}#slide-transitions[the relevant reveal.js documentation] for details.
+
+
+=== Fragments
+
+[source, asciidoc]
+----
+== Slide Four
+
+[%step]
+* this
+* is
+* revealed
+* gradually
+----
+
+Slide Four has bullets that are revealed one after the other.
+This is what `reveal.js` calls {uri-revealjs-home}/fragments[fragments].
+Applying the step option or role on a list (`[%step]` or `[.step]`) will do the trick.
+Here is {uri-revealjs-doc}#fragments[the relevant reveal.js
+documentation] on the topic.
+Note that only `fade-in` is supported for lists at the moment.
+
+
+=== Stretch class attribute
+
+Reveal.js supports a special class that will give all available screen space to an HTML node.
+This class element is named `stretch`.
+
+Sometimes it's desirable to have an element, like an image or video, stretch to consume as much space as possible within a given slide.
+
+To apply that class to block simply use asciidoctor's class assignment:
+
+    [.stretch]
+
+See {uri-revealjs-doc}#stretching-elements[reveal.js documentation on stretching elements].
+
+
+=== Videos
+
+In addition to <<Background videos,background videos>>, videos can be inserted directly into slides.
+The syntax is the standard http://asciidoctor.org/docs/user-manual/#video[asciidoc video block macro] syntax.
+
+[source, asciidoc]
+----
+== Trains, we love trains!
+
+video::kZH9JtPBq7k[youtube, start=34, options=autoplay]
+----
+
+By default videos are given as much space as possible.
+To override that behavior use the `width` and `height` named attributes.
+
+
+=== Syntax highlighting
+
+reveal.js is well integrated with https://highlightjs.org/[Highlight.js] for syntax highlighting.
+Asciidoctor reveal.js supports that.
+You can activate Highlight.js syntax highlighting (disabled by default) by setting the `source-highlighter` document attribute as follows:
+
+[source, asciidoc]
+----
+= Presentation Title
+// [...] other document attributes
+:source-highlighter: highlightjs
+----
+
+[NOTE]
+====
+By default, we are using a prebuilt version of Highlight.js with 34 commonly used languages hosted on https://cdnjs.com/[cdnjs].
+You can load additionnal languages using the `:highlightjs-languages:` attribute:
+
+```
+// load yaml and scilab languages
+:highlightjs-languages: yaml, scilab
+```
+
+You can also load Highlight.js from a custom base directory (or remote URL) using the `:highlightjsdir:` attribute:
+
+```
+// load from a local path
+:highlightjsdir: highlight
+// load from jsdelivr CDN
+//:highlightjsdir: https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build
+====
+
+Once enabled, you can write code blocks as usual:
+
+[source, asciidoc]
+....
+== Slide Five
+
+Uses highlighted code
+
+[source, python]
+----
+print "Hello World"
+----
+....
+
+By default `[source]` blocks and blocks delimited by `----` will be highlighted.
+An explicit `[listing]` block will not be highlighted.
+`highlight.js` does language auto-detection but using the `language="..."` attribute will hint the highlighter.
+For example this will highlight this source code as Perl:
+
+[source, asciidoc]
+....
+== Slide Five
+
+[source,perl]
+----
+print "$0: hello world\n"
+----
+....
+
+[NOTE]
+Alternatively, you can use http://rouge.jneen.net/[Rouge], http://coderay.rubychan.de[Coderay] or http://pygments.org[Pygments] as syntax highlighters,
+if you are using the Asciidoctor/Ruby/Bundler toolchain (not Asciidoctor.js/JavaScript/npm).
+Check the `examples/` directory for examples and notes about what needs to be done for them to work.
+They are considered unsupported by the asciidoctor-reveal.js project.
+
+
+=== Vertical slides
+
+[source, asciidoc]
+....
+== Slide Six
+
+Top slide
+
+=== Slide Six.One
+
+This is a vertical subslide
+....
+
+Slide Six uses the vertical slide feature of `reveal.js`.
+Slide Six.One will be rendered vertically below Slide Six.
+Here is {uri-revealjs-doc}#markup[the relevant reveal.js
+documentation] on that topic.
+
+=== Columns layout
+
+Inspired by https://bulma.io/[Bulma], Asciidoctor reveal.js supports columns layout out-of-the-box:
+
+[source, asciidoc]
+....
+[.columns]
+== 2 columns
+
+[.column]
+--
+* **Edgar Allen Poe**
+* Sheri S. Tepper
+* Bill Bryson
+--
+
+[.column]
+--
+Edgar Allan Poe (/poʊ/; born Edgar Poe; January 19, 1809 – October 7, 1849) was an American writer, editor, and literary critic.
+--
+....
+
+If you do not specify a size, each column will have an equal width, no matter the number of columns.
+
+[source, asciidoc]
+....
+[.columns]
+== 3 columns
+
+[.column]
+* Java
+* **Kotlin**
+
+[.column]
+* Node
+* **Deno**
+
+[.column]
+* Ruby
+* **Crystal**
+....
+
+If you want to change the size of a single column, you can use one of the following classes:
+
+* `is-three-quarters`
+* `is-two-thirds`
+* `is-half`
+* `is-one-third`
+* `is-one-quarter`
+* `is-full`
+
+The other columns will fill up the remaining space automatically. +
+You can use the following multiples of 20% as well:
+
+* `is-four-fifths`
+* `is-three-fifths`
+* `is-two-fifths`
+* `is-one-fifth`
+
+[source, asciidoc]
+....
+[.columns]
+== Columns with size
+
+[.column.is-one-third]
+--
+* **Kotlin**
+* Java
+* Scala
+--
+
+[.column]
+--
+Programming language for Android, mobile cross-platform
+and web development, server-side, native,
+and data science. Open source forever Github.
+--
+....
+
+The vertical alignment of columns defaults to top aligned.
+Content can be centered by adding the `is-vcentered` class to the slide.
+
+[source, asciidoc]
+....
+[.columns.is-vcentered]
+== Columns Vertically Centered
+
+[.column]
+--
+* Few
+* Bullets
+* Here
+--
+
+[.column]
+image::large-image.png[]
+....
+
+Text alignment of columns is also supported.
+Text content on individual columns can be aligned with `has-text-left`, `has-text-right` and `has-text-justified` CSS classes.
+
+[source, asciidoc]
+....
+[.columns]
+== Column Text Alignment
+
+[.column.has-text-left]
+--
+Something Short
+
+Something So Long That We Need It Aligned
+--
+
+[.column.has-text-justified]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+[.column.has-text-right]
+--
+Something Short
+
+Something So Long That We Need It Aligned
+--
+....
+
+
+=== Asciidoctor reveal.js specific roles
+
+Roles are usually applied with the following syntax where the `important-text` CSS class would be applied to the slide title in the generated HTML:
+
+[source, asciidoc]
+....
+[.important-text]
+== Slide Title
+
+* Some
+* Information
+....
+
+Or
+
+[source, asciidoc]
+....
+[role="important-text"]
+== Slide Title
+
+* Some
+* Information
+....
+
+See https://asciidoctor.org/docs/user-manual/#role[Asciidoctor's documentation] for more details.
+
+.Image specific note
+In addition to the https://asciidoctor.org/docs/user-manual/\#positioning-attributes[existing attributes] to position images, roles can be used as well. However, the shorthand syntax (.) doesn't work in the image macro arguments but must be used above with the angle bracket syntax.
+See <<examples/images.adoc#,images.adoc>> for examples.
+
+Here is a list of supported roles:
+
+right:: Will apply a `float: right` style to the affected block
+
+
+=== Asciidoctor reveal.js specific attributes
+
+==== iFrame Preview Overlay
+
+The reveal.js feature activated by a global `previewLinks: true` configuration or by adding the `data-preview-link` HTML attribute to `<a>` tags can be activated by using special AsciiDoc attributes.
+
+On links use the `preview=true` attribute, on images use the `link_preview=true` attribute and globally you can set `:revealjs_previewlinks:` attribute.
+
+See <<examples/links.adoc#,links.adoc>> and <<examples/links-preview.adoc#,links-preview.adoc>> for examples.
+
+
+=== Title slide customization
+
+The title slide is customized via Asciidoc attributes.
+These are the global variable assigned at the top of a document under the lead
+title that look like this: `:name: value`.
+
+This converter supports changing the color, image, video, iframe and
+transitions of the title slide.
+
+Read {uri-revealjs-doc}#slide-backgrounds[the relevant reveal.js documentation] to understand what attributes need to be set.
+Keep in mind that for title slides you must replace `data-` with `title-slide-`.
+
+ifeval::[{safe-mode-level} >= 20]
+See <<examples/title-slide-image.adoc#,title-slide-image.adoc>>.
+endif::[]
+ifeval::[{safe-mode-level} < 20]
+Here is an example:
+
+.title-slide-image.adoc
+[source,asciidoc]
+....
+include::examples/title-slide-image.adoc[lines=5..-1]
+....
+endif::[]
+
+The title slide is also added a `title` CSS class to help with template customization.
+
+=== Content meant for multiple converters
+
+Some content can be created with both slides and book in mind.
+
+To mark slides split points you can use preprocessor conditionals combined
+with a backend declaration.
+Breaking points are set using slides with no title `=== !` wrapped in a
+conditional: `ifdef::backend-revealjs[=== !]`.
+In the end, the whole document has to be compiled with the backend option:
+`-b revealjs`
+
+For example:
+
+[source, asciidoc]
+----
+== Main section
+
+=== Sub Section
+
+Small +
+Multiline +
+intro
+
+. very
+. long
+. list
+. of
+. items
+
+\ifdef::backend-revealjs[=== !]
+
+Some overview diagram
+
+\ifdef::backend-revealjs[=== !]
+
+Detailed view diagram
+----
+
+
+[[customcss]]
+=== CSS override
+
+If you use the `:customcss:` document attribute, a CSS file of the name given in the attribute is added to the list of CSS resources loaded by the rendered HTML.
+Doing so, you can then easily override specific elements of your theme per presentation.
+
+For example, to do proper position-independent text placement of a title slide with a specific background you can use:
+
+[source, css]
+----
+.reveal section.title h1 {
+    margin-top: 2.3em;
+}
+
+.reveal section.title small {
+    margin-top: 15.3em;
+    font-weight: bold;
+    color: white;
+}
+----
+
+If the `:customcss:` attribute value is empty then `asciidoctor-revealjs.css` is the CSS resource that the presentation is linked to.
+
+
+=== Slide state
+
+Reveal.js supports a {uri-revealjs-doc}#slide-states[data-state] tag that can be added on slides which gets rendered into `<section>` tags.
+In AsciiDoc the `data-state` can be applied to a slide by adding a state attribute to a section like this:
+
+[source, asciidoc]
+----
+[state=topic]
+== Epic Topic
+----
+
+That state can be queried from JavaScript or used in CSS to apply further customization to your slide deck.
+For example, by combining this feature with the <<CSS override>> one, you can alter fonts for specific pages with this CSS:
+
+[source, css]
+----
+@import 'https://fonts.googleapis.com/css?family=Baloo+Bhai';
+
+section[data-state="topic"] h2 {
+    font-family: 'Baloo Bhai', cursive;
+    font-size: 4em;
+}
+----
+
+=== Admonitions
+
+Asciidoctor font-based http://asciidoctor.org/docs/user-manual/#admonition[admonitions] are supported.
+Make sure to add the following attribute to your document:
+
+[source, asciidoc]
+----
+:icons: font
+----
+
+Here is an example slide:
+
+[source, asciidoc]
+----
+== But first
+
+WARNING: This presentation is dangerous!
+----
+
+Here are details about Asciidoctor's http://asciidoctor.org/docs/user-manual/#admonition-icons[Admonition icons] support.
+
+=== Supplemental Content with Docinfo
+// Originally from https://github.com/asciidoctor/asciidoctor-bespoke#supplemental-content
+
+It's possible to inject supplemental content into the output document using http://asciidoctor.org/docs/user-manual/#docinfo-file[docinfo files].
+This core feature of AsciiDoc has been adapted to work with the reveal.js converter.
+
+Currently, there are three insertion locations for docinfo content in a reveal.js document:
+
+head:: content is inserted after the last child of the `<head>` element
+header:: content is inserted before the first child of the `<div class="slides">` element (before the slides)
+footer:: content is inserted after the last child of the `<div class="slides">` element (after the slides)
+
+The content you want to insert goes into a sibling file of the slide deck document with the following filename patterns:
+
+head:: `docinfo-revealjs.html`
+header:: `docinfo-header-revealjs.html`
+footer:: `docinfo-footer-revealjs.html`
+
+For example, let's say you want to embed a tweet into your slide deck.
+You might inject the shared embedding JavaScript using a footer docinfo file:
+
+.src/docinfo-footer-revealjs.html
+[source,html]
+----
+<script src="https://platform.twitter.com/widgets.js"></script>
+----
+
+You then need to set the following document attribute in the AsciiDoc header:
+
+----
+:docinfo: shared
+----
+
+When this attribute is defined, the converter will automatically read the docinfo file(s) and insert the contents into the specified location in the output document.
+
+
+== Reveal.js Options
+
+Some attributes can be set at the top of the document that are specific to the `reveal.js` converter.
+They use the same name as in the `reveal.js` project except that they are prepended by `revealjs_` and case doesn't matter.
+They are applied in the link:templates/document.html.slim[document template].
+
+NOTE: Default settings are based on `reveal.js` default settings.
+
+[cols="1m,1,2"]
+|===
+|Attribute |Value(s) |Description
+
+|:revealjs_theme:
+|beige, *black*, league, night, serif, simple, sky, solarized, white
+|Chooses one of reveal.js`' {uri-revealjs-doc}#theming[built-in themes].
+
+|:revealjs_customtheme:
+|<file\|URL>
+|Overrides CSS with given file or URL.
+Default is disabled.
+
+|:highlightjs-theme:
+|<file\|URL>
+|Overrides https://highlightjs.org[highlight.js] CSS style with given file or URL.
+Default is built-in [path]_lib/css/zenburn.css_.
+
+|:revealjsdir:
+|<file\|URL>
+|Overrides reveal.js directory.
+Example: ../reveal.js or
+https://cdn.jsdelivr.net/npm/reveal.js@3.9.2.
+Default is `reveal.js/` unless in a Node.js environment where it is `node_modules/reveal.js/`.
+
+|:revealjs_controls:
+|*true*, false
+|Display presentation control arrows
+
+|:revealjs_controlsTutorial:
+|*true*, false
+|Help the user learn the controls by providing hints, for example by bouncing the down arrow when they first encounter a vertical slide
+
+|:revealjs_controlsLayout:
+|edges, *bottom-right*
+|Determines where controls appear, "edges" or "bottom-right"
+
+|:revealjs_controlsBackArrows:
+|*faded*, hidden, visible
+|Visibility rule for backwards navigation arrows; "faded", "hidden" or "visible"
+
+|:revealjs_progress:
+|*true*, false
+|Display a presentation progress bar.
+
+|:revealjs_slideNumber:
+|true, *false*, h.v, h/v, c, c/t
+a|Display the page number of the current slide.
+*true* will display the slide number with default formatting.
+Additional formatting is available:
+
+h.v:: horizontal . vertical slide number (default)
+h/v:: horizontal / vertical slide number
+c:: flattened slide number
+c/t:: flattened slide number / total slides
+
+|:revealjs_showSlideNumber:
+|*all*, speaker, print
+a|Control which views the slide number displays on using the "showSlideNumber" value:
+
+all:: show on all views (default)
+speaker:: only show slide numbers on speaker notes view
+print:: only show slide numbers when printing to PDF
+
+|:revealjs_hash:
+|true, *false*
+|Add the current slide number to the URL hash so that reloading the page/copying the URL will return you to the same slide
+
+|:revealjs_history:
+|true, *false*
+|Push each slide change to the browser history. Implies `hash: true`
+
+|:revealjs_keyboard:
+|*true*, false
+|Enable keyboard shortcuts for navigation.
+
+|:revealjs_overview:
+|*true*, false
+|Enable the slide overview mode.
+
+|:revealjs_touch:
+|*true*, false
+|Enables touch navigation on devices with touch input.
+
+|:revealjs_center:
+|*true*, false
+|Vertical centering of slides.
+
+|:revealjs_loop:
+|true, *false*
+|Loop the presentation.
+
+|:revealjs_rtl:
+|true, *false*
+|Change the presentation direction to be RTL.
+
+|:revealjs_navigationMode:
+|*default*, linear, grid
+|See {uri-revealjs-doc}#navigation-mode for details
+
+|:revealjs_shuffle:
+|true, *false*
+|Randomizes the order of slides each time the presentation loads
+
+|:revealjs_fragments:
+|*true*, false
+|Turns fragments on and off globally.
+
+|:revealjs_fragmentInURL:
+|true, *false*
+|Flags whether to include the current fragment in the URL, so that reloading brings you to the same fragment position
+
+|:revealjs_embedded:
+|true, *false*
+|Flags if the presentation is running in an embedded mode (i.e., contained within a limited portion of the screen).
+
+|:revealjs_help:
+|*true*, false
+|Flags if we should show a help overlay when the questionmark key is pressed
+
+|:revealjs_showNotes:
+|*true*, false
+|Flags if speaker notes should be visible to all viewers
+
+|:revealjs_autoPlayMedia:
+|*null*, true, false
+a|Global override for autolaying embedded media (video/audio/iframe)
+
+null:: Media will only autoplay if data-autoplay is present
+true:: All media will autoplay, regardless of individual setting
+false:: No media will autoplay, regardless of individual setting
+
+|:revealjs_preloadIframes:
+|*null*, true, false
+a|Global override for preloading lazy-loaded iframes
+
+null:: Iframes with `data-src` AND `data-preload` will be loaded when within the `viewDistance`, iframes with only `data-src` will be loaded when visible
+true:: All iframes with `data-src` will be loaded when within the `viewDistance`
+false:: All iframes with `data-src` will be loaded only when visible
+
+|:revealjs_autoSlide:
+|<integer>
+|Delay in milliseconds between automatically proceeding to the next slide.
+Disabled when set to *0* (the default).
+This value can be overwritten by using a `data-autoslide` attribute on your slides.
+
+|:revealjs_autoSlideStoppable:
+|*true*, false
+|Stop auto-sliding after user input.
+
+|:revealjs_autoSlideMethod:
+|*Reveal.navigateNext*
+|Use this method for navigation when auto-sliding
+
+|:revealjs_defaultTiming:
+|<integer>
+|Specify the average time in seconds that you think you will spend presenting each slide.
+This is used to show a pacing timer in the speaker view.
+Defaults to *120*
+
+|:revealjs_totalTime:
+|<integer>
+|Specify the total time in seconds that is available to present.
+If this is set to a nonzero value, the pacing timer will work out the time available for each slide, instead of using the defaultTiming value.
+Defaults to *0*
+
+|:revealjs_minimumTimePerSlide:
+|<integer>
+|Specify the minimum amount of time you want to allot to each slide, if using the totalTime calculation method.
+If the automated time allocation causes slide pacing to fall below this threshold, then you will see an alert in the speaker notes window.
+Defaults to *0*.
+
+|:revealjs_mouseWheel:
+|true, *false*
+|Enable slide navigation via mouse wheel.
+
+|:revealjs_hideInactiveCursor:
+|*true*, false
+|Hide cursor if inactive
+
+|:revealjs_hideCursorTime:
+|<integer>
+|Time before the cursor is hidden (in ms).
+Defaults to *5000*.
+
+|:revealjs_hideAddressBar:
+|*true*, false
+|Hides the address bar on mobile devices.
+
+|:revealjs_previewLinks:
+|true, *false*
+|Opens links in an iframe preview overlay.
+Add the `preview=true` attribute on links or `link_preview=true` attribute on images to customize each link individually.
+
+|:revealjs_transition:
+|none, fade, *slide*, convex, concave, zoom
+|Transition style.
+
+|:revealjs_transitionSpeed:
+|*default*, fast, slow
+|Transition speed.
+
+|:revealjs_backgroundTransition:
+|none, *fade*, slide, convex, concave, zoom
+|Transition style for full page slide backgrounds.
+
+|:revealjs_viewDistance:
+|<integer>
+|Number of slides away from the current that are visible.
+Default: *3*.
+
+|:revealjs_mobileViewDistance:
+|<integer>
+|Number of slides away from the current that are visible on mobile devices.
+It is advisable to set this to a lower number than viewDistance in order to save resources.
+Default *3*.
+
+|:revealjs_parallaxBackgroundImage:
+|<file\|URL>
+|Parallax background image.
+Defaults to none
+
+|:revealjs_parallaxBackgroundSize:
+|<CSS size syntax>
+|Parallax background size (accepts any CSS syntax).
+Defaults to none
+
+|:revealjs_parallaxBackgroundHorizontal:
+|<Number of pixels>
+a|Number of pixels to move the parallax background per slide
+
+- Calculated automatically unless specified
+- Set to 0 to disable movement along an axis
+
+|:revealjs_parallaxBackgroundVertical:
+|<Number of pixels>
+a|Number of pixels to move the parallax background per slide
+
+- Calculated automatically unless specified
+- Set to 0 to disable movement along an axis
+
+|:revealjs_display:
+|<a valid CSS display mode>
+|The display mode that will be used to show slides.
+Defaults to *block*
+
+|:revealjs_width:
+|<pixels\|percentage unit>
+| Independent from the values, the aspect ratio will be preserved
+	when scaled to fit different resolutions. Defaults to *960*
+
+|:revealjs_height:
+|<pixels\|percentage unit>
+| See `:revealjs_width:`. Defaults to *700*
+
+|:revealjs_margin:
+|<percentage value>
+| Factor of the display size that should remain empty around the content. Defaults to *0.1*
+
+|:revealjs_pdfseparatefragments:
+|*true*, false
+|In PDF export, put each fragment on a separate page.
+Defaults to *true*
+
+|:revealjs_pdfmaxpagesperslide:
+|<integer>
+|In PDF export, when a slide does not fit on a single page, maximum number of pages.
+Defaults to *1*
+
+|===
+
+If you want to build a custom theme or customize an existing one you should
+look at the
+{uri-revealjs-gh}/css/theme/README.md[reveal.js
+theme documentation] and use the `revealjs_customtheme` AsciiDoc attribute to
+activate it.
+
+
+=== PDF Export
+
+Follow {uri-revealjs-doc}#pdf-export[reveal.js' documentation] for PDF export.
+We would add that we have successfully used PDF export without the requirement of a Web server.
+
+
+=== Default plugins
+
+By default, generated presentations will have the following reveal.js plugins enabled:
+
+* plugin/zoom-js/zoom.js
+* plugin/notes/notes.js
+
+All these plugins are part of the reveal.js distribution.
+
+To enable or disable a built-in plugin, it is possible to set the `revealjs_plugin_[plugin name]` attribute to `enable` or `disable`.
+
+For example, to disable all the default plugins set the following document attributes:
+
+----
+:revealjs_plugin_zoom: disabled
+:revealjs_plugin_notes: disabled
+----
+
+
+=== Additional plugins
+
+Additional reveal.js plugins can be installed and activated using AsciiDoc attributes and external javascript files.
+
+. Extract the plugin files in a directory
+. Create a JavaScript file that will contain the JavaScript statements to load the plugin (only one required even if you are using several plugins)
+. Add a `:revealjs_plugins:` attribute to point to that JavaScript file
+. (Optional) Add a `:revealjs_plugins_configuration:` attribute to point to a JavaScript file that configures the plugins you use
+
+Looking at the example provided in the repository will provide guidance: link:examples/revealjs-plugins.adoc[AsciiDoc source], link:examples/revealjs-plugins.js[Plugin Loader], link:examples/revealjs-plugins-conf.js[Plugin Configuration].
+
+Read {uri-revealjs-doc}#dependencies[the relevant reveal.js documentation] to understand more about reveal.js plugins.
+A {uri-revealjs-gh}/wiki/Plugins,-Tools-and-Hardware[list of existing reveal.js plugins] is also maintained upstream.
+
+
+== Minimum Requirements
+
+Our requirements are expressed in our packages and by our dependencies.
+Basically, all you need is the package manager of the flavor of Asciidoctor reveal.js you are interested to run:
+
+* With Ruby / Bundler: A https://www.ruby-lang.org/en/downloads/[recent Ruby] and https://bundler.io/[Bundler]
+* With JavaScript (Node.js) / npm: a https://nodejs.org/en/download/[recent Node.js] environment
+
+If you need more details about our dependencies check out Asciidoctor dependencies:
+
+* With Ruby / Bundler: https://github.com/asciidoctor/asciidoctor/tree/v2.0.10#requirements[Asciidoctor] 2.0.10
+* With JavaScript (Node.js) / NPM: https://github.com/asciidoctor/asciidoctor.js/blob/v2.0.3/packages/core/package.json[Asciidoctor.js] 2.0.3
+
+
+[[revealjs-compatibility-matrix]]
+== reveal.js Compatibility Matrix
+
+We try as much as possible to be compatible with a broad range of reveal.js versions.
+However, changes made by that project sometimes forces us to drop compatibility with older reveal.js releases.
+This table tracks this compatibility.
+
+|===
+|Asciidoctor reveal.js version |reveal.js version
+
+|4.x
+|3.9 - 3.8
+
+|3.x, 2.x, 1.x
+|3.7 - 3.0
+
+|Unversioned releases
+|2.x
+|===
+
+
+[[asciidoctorjs-compatibility-matrix]]
+== Asciidoctor.js Compatibility Matrix
+
+NOTE: This section is intended only for more advanced users who combine extensions or maintain slide decks over many releases and need to update their dependencies.
+
+Due to our Ruby to JavaScript conversion process, published npm packages have strict requirements with which version of Asciidoctor.js they are compatible with.
+This table tracks this compatibility.
+
+|===
+|Asciidoctor-reveal.js version |Asciidoctor.js version
+
+|3.x
+|2.x
+
+|2.x
+|1.5.9
+
+|1.1.x
+|1.5.6-preview.4
+|===
+
+Be aware that it is always possible to recompile the converter into JavaScript from source so compatibility can be created by anyone if needed.
+More details on that topic can be found link:HACKING.adoc#node-binary-compatibility[in the development guide].
+
+
+== Showcase Presentations
+
+=== Power Catchup -- Everything Practical and Important in Java 9 to 13
+
+A smooth presentation, featuring video backgrounds, slide transitions, code and callout examples and the use of notes.
+
+https://bentolor.github.io/java9to13/[Presentation] and https://github.com/bentolor/java9to13[source]
+
+==== Screenshots
+
+image:{showcasedir}/java9to13_4.png[width=200,link=./{showcasedir}/java9to13_4.png] image:{showcasedir}/java9to13_1.jpg[width=200,link={showcasedir}/java9to13_1.jpg]
+
+image:{showcasedir}/java9to13_2.jpg[width=200,link={showcasedir}/java9to13_2.jpg]
+image:{showcasedir}/java9to13_3.png[width=200,link={showcasedir}/java9to13_3.png]
+
 
 == Contributing
 
 Interested in contributing?
 We are interested!
-Developer-focused documentation is https://asciidoctor-docs.netlify.app/asciidoctor-reveal.js/current/project/hacking[over here].
+Developer-focused documentation is link:HACKING.adoc[over here].
+
 
 == Copyright and Licensing
 
 Copyright (C) 2012-2020 {authors} and the Asciidoctor Project.
 Free use of this software is granted under the terms of the MIT License.
 
-See the xref:LICENSE.adoc[LICENSE] file for details.
+ifdef::env-github,env-browser[See the <<LICENSE#,LICENSE>> file for details.]
