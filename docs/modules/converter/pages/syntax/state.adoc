@@ -1,0 +1,23 @@
+= Slide State
+
+reveal.js supports a link:{url-revealjs-doc}#slide-states[data-state] tag that can be added on slides which gets rendered into `<section>` tags.
+In AsciiDoc the `data-state` can be applied to a slide by adding a state attribute to a section like this:
+
+[source, asciidoc]
+----
+[state=topic]
+== Epic Topic
+----
+
+That state can be queried from JavaScript or used in CSS to apply further customization to your slide deck.
+For example, by combining this feature with the xref:custom-styles.adoc#customcss[CSS override] one, you can alter fonts for specific pages with this CSS:
+
+[source, css]
+----
+@import 'https://fonts.googleapis.com/css?family=Baloo+Bhai';
+
+section[data-state="topic"] h2 {
+    font-family: 'Baloo Bhai', cursive;
+    font-size: 4em;
+}
+----

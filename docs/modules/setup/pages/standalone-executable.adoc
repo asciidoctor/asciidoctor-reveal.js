@@ -1,0 +1,51 @@
+= Standalone Executable
+
+Pre-built binary packages can be downloaded from our {url-project-repo}/releases[GitHub release page].
+We provide them for Windows 64-bit, Linux 64-bit and macOS 64-bit (x86-64).
+Open an issue if your platform isn't supported.
+The executables are built using the xref:node-js-setup.adoc[Node / JavaScript] toolchain.
+
+== Install
+
+* {url-project-repo}/releases[Download the executable] for your platform and make it executable with `chmod` or using the files properties' user interface.
+* Copy or clone the reveal.js presentation framework in the directory where you will build your slidedeck.
+Here we do a shallow clone of the repo:
+
+  $ git clone -b 3.9.2 --depth 1 https://github.com/hakimel/reveal.js.git
+
+== Convert AsciiDoc into slides
+
+Open a terminal where the executable is and type:
+
+ $ ./asciidoctor-revealjs --version
+
+The command should report the Asciidoctor reveal.js and Asciidoctor CLI version in the terminal:
+
+[source,console]
+----
+Asciidoctor reveal.js 3.0.1 using Asciidoctor.js 2.0.3 (Asciidoctor 2.0.9) [https://asciidoctor.org]
+Runtime Environment (node v12.13.1 on linux)
+CLI version 3.1.0
+----
+
+If you don't have an existing presentation, you can create a sample presentation named [.path]_presentation.adoc_:
+
+.presentation.adoc
+[source,asciidoc]
+----
+= Title Slide
+:revealjsdir: reveal.js
+
+== Slide One
+
+* Foo
+* Bar
+* World
+----
+
+To convert the sample presentation into slides, open a terminal and type:
+
+ $ ./asciidoctor-revealjs presentation.adoc
+
+The above command will generate a file named [.path]_presentation.html_.
+You can open this file in a browser.

@@ -1,0 +1,4 @@
+= PDF Export
+
+Follow link:{url-revealjs-doc}#pdf-export[reveal.js' documentation] for PDF export.
+We would add that we have successfully used PDF export without the requirement of a Web server.

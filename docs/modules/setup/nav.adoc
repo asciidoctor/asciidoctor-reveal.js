@@ -1,0 +1,6 @@
+* Setup
+** xref:ruby-setup.adoc[]
+** xref:node-js-setup.adoc[]
+** xref:standalone-executable.adoc[]
+** xref:minimum-requirements.adoc[]
+** xref:compatibility-matrix.adoc[]

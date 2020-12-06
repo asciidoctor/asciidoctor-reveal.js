@@ -1,0 +1,116 @@
+= Background
+
+== Background colors
+
+Background colors for slides can be specified by two means: a classic one and one using AsciiDoc roles.
+See {url-project-repo}/blob/master/examples/background-color.adoc[background-color.adoc] for more examples.
+
+
+=== Using AsciiDoc roles
+
+Using roles respects the AsciiDoc philosophy of separation of content and presentation.
+Colors are to be defined by CSS and the xref:custom-styles.adoc[`:customcss:` attribute] need to be used to specify the CSS file to load.
+To avoid clashing with existing reveal.js themes or CSS, a specific CSS class called `background` is expected to be present.
+Here is an example:
+
+[source, asciidoc]
+----
+= Title
+:customcss: my-css.css
+
+[.red.background]
+== Slide One
+
+Is very red
+----
+
+.my-css.css
+[source, css]
+----
+section.red.background {
+  background-color: red;
+}
+----
+
+NOTE: The `canvas` keyword can be used instead of `background` for the same effect.
+
+=== Classic
+
+[source, asciidoc]
+----
+[background-color="yellow"]
+== Slide Three
+
+Is very yellow
+----
+
+Slide Three applies the attribute link:{url-revealjs-doc}#slide-backgrounds[data-background-color] to the `reveal.js` <section> tag.
+Anything accepted by CSS color formats works.
+
+
+== Background images
+
+[source,asciidoc]
+----
+[%notitle]
+== Grand Announcement
+
+image::cover.jpg[background, size=cover]
+----
+
+This will put `cover.jpg` as the slide's background image.
+It sets reveal.js`' `data-background-image` attribute.
+The `size` attribute is also supported.
+See the link:{url-revealjs-doc}#image-backgrounds[relevant reveal.js documentation] for details.
+
+NOTE: Background images file names are now relative to the `:imagesdir:` attribute if set.
+
+NOTE: The `canvas` keyword can be used instead of `background` for the same effect.
+
+[source, asciidoc]
+----
+[%notitle]
+== The Great Goat
+
+image::https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg[canvas,size=contain]
+----
+
+As you can see, you can use a URL to specify your image resource too.
+
+
+[#background_videos]
+== Background videos
+
+A background video for a slide can be specified using the `background-video` element attribute.
+
+[source, asciidoc]
+----
+[background-video="https://my.video/file.mp4",background-video-loop=true,background-video-muted=true]
+== Nice background!
+----
+
+For convenience `background-video-loop` and `background-video-muted` attributes are mapped to `loop` and `muted` options which can be specified with `options="loop,muted"`.
+
+For example:
+
+[source, asciidoc]
+----
+[background-video="https://my.video/file.mp4",options="loop,muted"]
+== Nice background!
+----
+
+See link:{url-revealjs-doc}#video-backgrounds[the relevant reveal.js documentation] for details.
+Note that the `data-` prefix is not required in asciidoc files.
+
+
+== Background iframes
+
+The background can be replaced with anything a browser can render in an iframe using the `background-iframe` reveal.js feature.
+
+[source, asciidoc]
+----
+[%notitle,background-iframe="https://www.youtube.com/embed/LaApqL4QjH8?rel=0&start=3&enablejsapi=1&autoplay=1&loop=1&controls=0&modestbranding=1"]
+== a youtube video
+----
+
+See link:{url-revealjs-doc}#iframe-backgrounds[the relevant reveal.js documentation] for details.

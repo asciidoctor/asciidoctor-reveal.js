@@ -1,0 +1,156 @@
+= Layout
+
+== Stretch class attribute
+
+reveal.js supports a special class that will give all available screen space to an HTML node.
+This class element is named `stretch`.
+
+Sometimes it's desirable to have an element, like an image or video, stretch to consume as much space as possible within a given slide.
+
+To apply that class to block simply use asciidoctor's class assignment:
+
+    [.stretch]
+
+See link:{url-revealjs-doc}#stretching-elements[reveal.js documentation on stretching elements].
+
+== Vertical slides
+
+[source,asciidoc]
+....
+== Slide Six
+
+Top slide
+
+=== Slide Six.One
+
+This is a vertical sub-slide
+....
+
+Slide Six uses the vertical slide feature of `reveal.js`.
+Slide Six.One will be rendered vertically below Slide Six.
+Here is link:{url-revealjs-doc}#markup[the relevant reveal.js
+documentation] on that topic.
+
+== Columns layout
+
+Inspired by https://bulma.io/[Bulma], Asciidoctor reveal.js supports columns layout out-of-the-box:
+
+[source,asciidoc]
+....
+[.columns]
+== 2 columns
+
+[.column]
+--
+* **Edgar Allen Poe**
+* Sheri S. Tepper
+* Bill Bryson
+--
+
+[.column]
+--
+Edgar Allan Poe (/poʊ/; born Edgar Poe; January 19, 1809 – October 7, 1849) was an American writer, editor, and literary critic.
+--
+....
+
+If you do not specify a size, each column will have an equal width, no matter the number of columns.
+
+[source,asciidoc]
+....
+[.columns]
+== 3 columns
+
+[.column]
+* Java
+* **Kotlin**
+
+[.column]
+* Node
+* **Deno**
+
+[.column]
+* Ruby
+* **Crystal**
+....
+
+If you want to change the size of a single column, you can use one of the following classes:
+
+* `is-three-quarters`
+* `is-two-thirds`
+* `is-half`
+* `is-one-third`
+* `is-one-quarter`
+* `is-full`
+
+The other columns will fill up the remaining space automatically. +
+You can use the following multiples of 20% as well:
+
+* `is-four-fifths`
+* `is-three-fifths`
+* `is-two-fifths`
+* `is-one-fifth`
+
+[source,asciidoc]
+....
+[.columns]
+== Columns with size
+
+[.column.is-one-third]
+--
+* **Kotlin**
+* Java
+* Scala
+--
+
+[.column]
+--
+Programming language for Android, mobile cross-platform
+and web development, server-side, native,
+and data science. Open source forever Github.
+--
+....
+
+The vertical alignment of columns defaults to top aligned.
+Content can be centered by adding the `is-vcentered` class to the slide.
+
+[source,asciidoc]
+....
+[.columns.is-vcentered]
+== Columns Vertically Centered
+
+[.column]
+--
+* Few
+* Bullets
+* Here
+--
+
+[.column]
+image::large-image.png[]
+....
+
+Text alignment of columns is also supported.
+Text content on individual columns can be aligned with `has-text-left`, `has-text-right` and `has-text-justified` CSS classes.
+
+[source,asciidoc]
+....
+[.columns]
+== Column Text Alignment
+
+[.column.has-text-left]
+--
+Something Short
+
+Something So Long That We Need It Aligned
+--
+
+[.column.has-text-justified]
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+[.column.has-text-right]
+--
+Something Short
+
+Something So Long That We Need It Aligned
+--
+....

@@ -1,0 +1,35 @@
+= reveal.js Plugins
+:navtitle: Plugins
+
+== Default plugins
+
+By default, generated presentations will have the following reveal.js plugins enabled:
+
+* plugin/zoom-js/zoom.js
+* plugin/notes/notes.js
+
+All these plugins are part of the reveal.js distribution.
+
+To enable or disable a built-in plugin, it is possible to set the `revealjs_plugin_[plugin name]` attribute to `enable` or `disable`.
+
+For example, to disable all the default plugins set the following document attributes:
+
+----
+:revealjs_plugin_zoom: disabled
+:revealjs_plugin_notes: disabled
+----
+
+== Additional plugins
+
+Additional reveal.js plugins can be installed and activated using AsciiDoc attributes and external javascript files.
+
+. Extract the plugin files in a directory
+. Create a JavaScript file that will contain the JavaScript statements to load the plugin (only one required even if you are using several plugins)
+. Add a `:revealjs_plugins:` attribute to point to that JavaScript file
+. (Optional) Add a `:revealjs_plugins_configuration:` attribute to point to a JavaScript file that configures the plugins you use
+
+Looking at the example provided in the repository will provide guidance: link:{url-project-examples}/revealjs-plugins.adoc[AsciiDoc source], link:{url-project-examples}/revealjs-plugins.js[Plugin Loader], link:{url-project-examples}/revealjs-plugins-conf.js[Plugin Configuration].
+
+Read link:{url-revealjs-doc}#dependencies[the relevant reveal.js documentation] to understand more about reveal.js plugins.
+A {url-revealjs-gh}/wiki/Plugins,-Tools-and-Hardware[list of existing reveal.js plugins] is also maintained upstream.
+

@@ -1,0 +1,69 @@
+= Syntax Highlighting
+
+reveal.js is well integrated with https://highlightjs.org/[Highlight.js] for syntax highlighting.
+Asciidoctor reveal.js supports that.
+You can activate Highlight.js syntax highlighting (disabled by default) by setting the `source-highlighter` document attribute as follows:
+
+[source,asciidoc]
+----
+= Presentation Title
+// [...] other document attributes
+:source-highlighter: highlightjs
+----
+
+[NOTE]
+====
+By default, we are using a prebuilt version of Highlight.js with 34 commonly used languages hosted on https://cdnjs.com/[cdnjs].
+You can load additional languages using the `:highlightjs-languages:` attribute:
+
+[source,asciidoc]
+----
+// load yaml and scilab languages
+:highlightjs-languages: yaml, scilab
+----
+
+You can also load Highlight.js from a custom base directory (or remote URL) using the `:highlightjsdir:` attribute:
+
+[source,asciidoc]
+----
+// load from a local path
+:highlightjsdir: highlight
+// load from jsdelivr CDN
+//:highlightjsdir: https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.0/build
+----
+====
+
+Once enabled, you can write code blocks as usual:
+
+[source,asciidoc]
+-----
+== Slide Five
+
+Uses highlighted code
+
+[source, python]
+----
+print "Hello World"
+----
+-----
+
+By default `[source]` blocks and blocks delimited by `----` will be highlighted.
+An explicit `[listing]` block will not be highlighted.
+`highlight.js` does language auto-detection but using the `language="..."` attribute will hint the highlighter.
+For example this will highlight this source code as Perl:
+
+[source, asciidoc]
+-----
+== Slide Five
+
+[source,perl]
+----
+print "$0: hello world\n"
+----
+-----
+
+[NOTE]
+Alternatively, you can use http://rouge.jneen.net/[Rouge], http://coderay.rubychan.de[Coderay] or http://pygments.org[Pygments] as syntax highlighters,
+if you are using the Asciidoctor/Ruby/Bundler toolchain (not Asciidoctor.js/JavaScript/npm).
+Check the `examples/` directory for examples and notes about what needs to be done for them to work.
+They are considered unsupported by the asciidoctor-reveal.js project.

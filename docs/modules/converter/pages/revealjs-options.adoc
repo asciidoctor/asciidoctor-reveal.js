@@ -1,0 +1,286 @@
+= reveal.js Configuration Options
+:navtitle: Config Options
+
+Some attributes can be set at the top of the document that are specific to the `reveal.js` converter.
+They use the same name as in the `reveal.js` project except that they are prepended by `revealjs_` and case doesn't matter.
+They are applied in the {url-project-repo}/blob/master/templates/document.html.slim[document template].
+
+NOTE: Default settings are based on `reveal.js` default settings.
+
+[cols="1m,1,2"]
+|===
+|Attribute |Value(s) |Description
+
+|:revealjs_theme:
+|beige, *black*, league, night, serif, simple, sky, solarized, white
+|Chooses one of reveal.js`' link:{url-revealjs-doc}#theming[built-in themes].
+
+|:revealjs_customtheme:
+|<file\|URL>
+|Overrides CSS with given file or URL.
+Default is disabled.
+
+|:highlightjs-theme:
+|<file\|URL>
+|Overrides https://highlightjs.org[highlight.js] CSS style with given file or URL.
+Default is built-in [path]_lib/css/zenburn.css_.
+
+|:revealjsdir:
+|<file\|URL>
+|Overrides reveal.js directory.
+Example: ../reveal.js or
+https://cdn.jsdelivr.net/npm/reveal.js@3.9.2.
+Default is `reveal.js/` unless in a Node.js environment where it is `node_modules/reveal.js/`.
+
+|:revealjs_controls:
+|*true*, false
+|Display presentation control arrows
+
+|:revealjs_controlsTutorial:
+|*true*, false
+|Help the user learn the controls by providing hints, for example by bouncing the down arrow when they first encounter a vertical slide
+
+|:revealjs_controlsLayout:
+|edges, *bottom-right*
+|Determines where controls appear, "edges" or "bottom-right"
+
+|:revealjs_controlsBackArrows:
+|*faded*, hidden, visible
+|Visibility rule for backwards navigation arrows; "faded", "hidden" or "visible"
+
+|:revealjs_progress:
+|*true*, false
+|Display a presentation progress bar.
+
+|:revealjs_slideNumber:
+|true, *false*, h.v, h/v, c, c/t
+a|Display the page number of the current slide.
+*true* will display the slide number with default formatting.
+Additional formatting is available:
+
+h.v:: horizontal . vertical slide number (default)
+h/v:: horizontal / vertical slide number
+c:: flattened slide number
+c/t:: flattened slide number / total slides
+
+|:revealjs_showSlideNumber:
+|*all*, speaker, print
+a|Control which views the slide number displays on using the "showSlideNumber" value:
+
+all:: show on all views (default)
+speaker:: only show slide numbers on speaker notes view
+print:: only show slide numbers when printing to PDF
+
+|:revealjs_hash:
+|true, *false*
+|Add the current slide number to the URL hash so that reloading the page/copying the URL will return you to the same slide
+
+|:revealjs_history:
+|true, *false*
+|Push each slide change to the browser history. Implies `hash: true`
+
+|:revealjs_keyboard:
+|*true*, false
+|Enable keyboard shortcuts for navigation.
+
+|:revealjs_overview:
+|*true*, false
+|Enable the slide overview mode.
+
+|:revealjs_touch:
+|*true*, false
+|Enables touch navigation on devices with touch input.
+
+|:revealjs_center:
+|*true*, false
+|Vertical centering of slides.
+
+|:revealjs_loop:
+|true, *false*
+|Loop the presentation.
+
+|:revealjs_rtl:
+|true, *false*
+|Change the presentation direction to be RTL.
+
+|:revealjs_navigationMode:
+|*default*, linear, grid
+|See link:{url-revealjs-doc}#navigation-mode[] for details
+
+|:revealjs_shuffle:
+|true, *false*
+|Randomizes the order of slides each time the presentation loads
+
+|:revealjs_fragments:
+|*true*, false
+|Turns fragments on and off globally.
+
+|:revealjs_fragmentInURL:
+|true, *false*
+|Flags whether to include the current fragment in the URL, so that reloading brings you to the same fragment position
+
+|:revealjs_embedded:
+|true, *false*
+|Flags if the presentation is running in an embedded mode (i.e., contained within a limited portion of the screen).
+
+|:revealjs_help:
+|*true*, false
+|Flags if we should show a help overlay when the questionmark key is pressed
+
+|:revealjs_showNotes:
+|*true*, false
+|Flags if speaker notes should be visible to all viewers
+
+|:revealjs_autoPlayMedia:
+|*null*, true, false
+a|Global override for autolaying embedded media (video/audio/iframe)
+
+null:: Media will only autoplay if data-autoplay is present
+true:: All media will autoplay, regardless of individual setting
+false:: No media will autoplay, regardless of individual setting
+
+|:revealjs_preloadIframes:
+|*null*, true, false
+a|Global override for preloading lazy-loaded iframes
+
+null:: Iframes with `data-src` AND `data-preload` will be loaded when within the `viewDistance`, iframes with only `data-src` will be loaded when visible
+true:: All iframes with `data-src` will be loaded when within the `viewDistance`
+false:: All iframes with `data-src` will be loaded only when visible
+
+|:revealjs_autoSlide:
+|<integer>
+|Delay in milliseconds between automatically proceeding to the next slide.
+Disabled when set to *0* (the default).
+This value can be overwritten by using a `data-autoslide` attribute on your slides.
+
+|:revealjs_autoSlideStoppable:
+|*true*, false
+|Stop auto-sliding after user input.
+
+|:revealjs_autoSlideMethod:
+|*Reveal.navigateNext*
+|Use this method for navigation when auto-sliding
+
+|:revealjs_defaultTiming:
+|<integer>
+|Specify the average time in seconds that you think you will spend presenting each slide.
+This is used to show a pacing timer in the speaker view.
+Defaults to *120*
+
+|:revealjs_totalTime:
+|<integer>
+|Specify the total time in seconds that is available to present.
+If this is set to a nonzero value, the pacing timer will work out the time available for each slide, instead of using the defaultTiming value.
+Defaults to *0*
+
+|:revealjs_minimumTimePerSlide:
+|<integer>
+|Specify the minimum amount of time you want to allot to each slide, if using the totalTime calculation method.
+If the automated time allocation causes slide pacing to fall below this threshold, then you will see an alert in the speaker notes window.
+Defaults to *0*.
+
+|:revealjs_mouseWheel:
+|true, *false*
+|Enable slide navigation via mouse wheel.
+
+|:revealjs_hideInactiveCursor:
+|*true*, false
+|Hide cursor if inactive
+
+|:revealjs_hideCursorTime:
+|<integer>
+|Time before the cursor is hidden (in ms).
+Defaults to *5000*.
+
+|:revealjs_hideAddressBar:
+|*true*, false
+|Hides the address bar on mobile devices.
+
+|:revealjs_previewLinks:
+|true, *false*
+|Opens links in an iframe preview overlay.
+Add the `preview=true` attribute on links or `link_preview=true` attribute on images to customize each link individually.
+
+|:revealjs_transition:
+|none, fade, *slide*, convex, concave, zoom
+|Transition style.
+
+|:revealjs_transitionSpeed:
+|*default*, fast, slow
+|Transition speed.
+
+|:revealjs_backgroundTransition:
+|none, *fade*, slide, convex, concave, zoom
+|Transition style for full page slide backgrounds.
+
+|:revealjs_viewDistance:
+|<integer>
+|Number of slides away from the current that are visible.
+Default: *3*.
+
+|:revealjs_mobileViewDistance:
+|<integer>
+|Number of slides away from the current that are visible on mobile devices.
+It is advisable to set this to a lower number than viewDistance in order to save resources.
+Default *3*.
+
+|:revealjs_parallaxBackgroundImage:
+|<file\|URL>
+|Parallax background image.
+Defaults to none
+
+|:revealjs_parallaxBackgroundSize:
+|<CSS size syntax>
+|Parallax background size (accepts any CSS syntax).
+Defaults to none
+
+|:revealjs_parallaxBackgroundHorizontal:
+|<Number of pixels>
+a|Number of pixels to move the parallax background per slide
+
+- Calculated automatically unless specified
+- Set to 0 to disable movement along an axis
+
+|:revealjs_parallaxBackgroundVertical:
+|<Number of pixels>
+a|Number of pixels to move the parallax background per slide
+
+- Calculated automatically unless specified
+- Set to 0 to disable movement along an axis
+
+|:revealjs_display:
+|<a valid CSS display mode>
+|The display mode that will be used to show slides.
+Defaults to *block*
+
+|:revealjs_width:
+|<pixels\|percentage unit>
+| Independent from the values, the aspect ratio will be preserved
+when scaled to fit different resolutions. Defaults to *960*
+
+|:revealjs_height:
+|<pixels\|percentage unit>
+| See `:revealjs_width:`. Defaults to *700*
+
+|:revealjs_margin:
+|<percentage value>
+| Factor of the display size that should remain empty around the content. Defaults to *0.1*
+
+|:revealjs_pdfseparatefragments:
+|*true*, false
+|In PDF export, put each fragment on a separate page.
+Defaults to *true*
+
+|:revealjs_pdfmaxpagesperslide:
+|<integer>
+|In PDF export, when a slide does not fit on a single page, maximum number of pages.
+Defaults to *1*
+
+|===
+
+If you want to build a custom theme or customize an existing one you should
+look at the
+{url-revealjs-gh}/css/theme/README.md[reveal.js
+theme documentation] and use the `revealjs_customtheme` AsciiDoc attribute to
+activate it.
+
