@@ -1,51 +1,13 @@
-<!-- .links-with-preview -->
+<!-- .custom-layout -->
 <div class="slides">
-  <section class="title" data-state="title">
-    <h1>Links With Preview Tests</h1>
-  </section>
-  <section id="_set_globally">
-    <h2>Set Globally</h2>
+  <section class="title" data-state="title"><h1>Custom Layout</h1></section>
+  <section id="_layout_disabled"><h2>Layout Disabled!</h2>
     <div class="slide-content">
-      <div class="paragraph">
-        <p><a href="https://en.wikipedia.org/wiki/February_4">Here’s a link</a></p>
-      </div>
-    </div>
-  </section>
-  <section id="_disabled_locally">
-    <h2>Disabled Locally</h2>
-    <div class="slide-content">
-      <div class="paragraph">
-        <p><a data-preview-link="false" href="https://en.wikipedia.org/wiki/February_4">Link One</a></p>
-      </div>
-      <div class="paragraph">
-        <p><a data-preview-link="false" href="https://en.wikipedia.org/wiki/February_4">Link Two</a></p>
-      </div>
-      <div class="paragraph">
-        <p><a data-preview-link="false" href="https://en.wikipedia.org/wiki/February_4">Link Three</a></p>
-      </div>
-    </div>
-  </section>
-  <section id="_image_block_with_a_link">
-    <h2>Image block with a Link</h2>
-    <div class="slide-content">
-      <div class="imageblock"><a class="image" href="https://montrehack.ca/"><img alt="70s" src="images/70s.jpg"></a></div>
-    </div>
-  </section>
-  <section id="_image_block_with_a_link_disabled_locally">
-    <h2>Image block with a Link Disabled Locally</h2>
-    <div class="slide-content">
-      <div class="imageblock"><a class="image" data-preview-link="false" href="https://montrehack.ca/"><img alt="70s" src="images/70s.jpg"></a></div>
-    </div>
-  </section>
-  <section id="_inlined_images">
-    <h2>Inlined Images</h2>
-    <div class="slide-content">
-      <div class="paragraph">
-        <p><span class="image"><a class="image" href="https://montrehack.ca/"><img alt="70s" src="images/70s.jpg" width="200px"></a></span><span class="image"><a class="image" data-preview-link="false" href="https://montrehack.ca/"><img alt="70s" src="images/70s.jpg" width="200px"></a></span></p>
-      </div>
+      <div class="paragraph"><p>Hello 👋</p></div>
     </div>
   </section>
 </div>
+<script src="reveal.js/js/reveal.js"></script>
 <script>
   Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
     if (slide.getAttribute('data-background-color')) return;
@@ -88,7 +50,7 @@
     // Enable the slide overview mode
     overview: true,
     // Disables the default reveal.js slide layout so that you can use custom CSS layout
-    disableLayout: false,
+    disableLayout: true,
     // Vertical centering of slides
     center: true,
     // Enables touch navigation on devices with touch input
@@ -159,7 +121,7 @@
     // Opens links in an iframe preview overlay
     // Add `data-preview-link` and `data-preview-link="false"` to customise each link
     // individually
-    previewLinks: true,
+    previewLinks: false,
     // Transition style (e.g., none, fade, slide, convex, concave, zoom)
     transition: 'slide',
     // Transition speed (e.g., default, fast, slow)
@@ -211,5 +173,71 @@
 
 
 
+  });
+</script>
+<script>
+  var dom = {};
+  dom.slides = document.querySelector('.reveal .slides');
+
+  function getRemainingHeight(element, slideElement, height) {
+    height = height || 0;
+    if (element) {
+      var newHeight, oldHeight = element.style.height;
+      // Change the .stretch element height to 0 in order find the height of all
+      // the other elements
+      element.style.height = '0px';
+      // In Overview mode, the parent (.slide) height is set of 700px.
+      // Restore it temporarily to its natural height.
+      slideElement.style.height = 'auto';
+      newHeight = height - slideElement.offsetHeight;
+      // Restore the old height, just in case
+      element.style.height = oldHeight + 'px';
+      // Clear the parent (.slide) height. .removeProperty works in IE9+
+      slideElement.style.removeProperty('height');
+      return newHeight;
+    }
+    return height;
+  }
+
+  function layoutSlideContents(width, height) {
+    // Handle sizing of elements with the 'stretch' class
+    toArray(dom.slides.querySelectorAll('section .stretch')).forEach(function (element) {
+      // Determine how much vertical space we can use
+      var limit = 5; // hard limit
+      var parent = element.parentNode;
+      while (parent.nodeName !== 'SECTION' && limit > 0) {
+        parent = parent.parentNode;
+        limit--;
+      }
+      if (limit === 0) {
+        // unable to find parent, aborting!
+        return;
+      }
+      var remainingHeight = getRemainingHeight(element, parent, height);
+      // Consider the aspect ratio of media elements
+      if (/(img|video)/gi.test(element.nodeName)) {
+        var nw = element.naturalWidth || element.videoWidth, nh = element.naturalHeight || element.videoHeight;
+        var es = Math.min(width / nw, remainingHeight / nh);
+        element.style.width = (nw * es) + 'px';
+        element.style.height = (nh * es) + 'px';
+      } else {
+        element.style.width = width + 'px';
+        element.style.height = remainingHeight + 'px';
+      }
+    });
+  }
+
+  function toArray(o) {
+    return Array.prototype.slice.call(o);
+  }
+
+  Reveal.addEventListener('slidechanged', function () {
+    layoutSlideContents(960, 700)
+  });
+  Reveal.addEventListener('ready', function () {
+    layoutSlideContents(960, 700)
+  });
+  Reveal.addEventListener('resize', function () {
+    layoutSlideContents(960, 700)
   });
 </script>

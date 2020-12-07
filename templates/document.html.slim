@@ -128,6 +128,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         keyboard: #{to_boolean(attr 'revealjs_keyboard', true)},
         // Enable the slide overview mode
         overview: #{to_boolean(attr 'revealjs_overview', true)},
+        // Disables the default reveal.js slide layout so that you can use custom CSS layout
+        disableLayout: #{to_boolean(attr 'revealjs_disablelayout', false)},
         // Vertical centering of slides
         center: #{to_boolean(attr 'revealjs_center', true)},
         // Enables touch navigation on devices with touch input
