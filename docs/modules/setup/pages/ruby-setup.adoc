@@ -51,7 +51,7 @@ Allows you to modify themes or view slides offline.
 == Rendering the AsciiDoc into slides
 
 . Create content in a file (*.adoc, *.ad, etc.).
-See examples on the xref:converter:features.adoc [Features page] to get started.
+See examples on the xref:ROOT:features.adoc[Features page] to get started.
 
 . Generate HTML presentation from the AsciiDoc source
 
