@@ -1,8 +1,24 @@
-= Fragments
+= Steps
+
+Steps are used to highlight or incrementally reveal individual elements on a slide. +
+This is what _reveal.js_ calls {url-revealjs-home}/fragments[fragments].
+Every element with the role `fragment` will be stepped through before moving on to the next slide.
+
+[IMPORTANT]
+====
+While you can use the role _fragment_ on any elements,
+we recommend to use the _step_ option to declare a fragment (see below). +
+It will ensure better portability and avoid CSS conflicts when using another converter.
+====
+
+== Step option
+
+Let's assume you have an unordered list on one of your slides and you want to reveal the items one-by-one.
+Declare the `step` option on the list as follows:
 
 [source, asciidoc]
 ----
-== Slide Four
+== Topic
 
 [%step]
 * this
@@ -11,9 +27,168 @@
 * gradually
 ----
 
-Slide Four has bullets that are revealed one after the other.
-This is what `reveal.js` calls {url-revealjs-home}/fragments[fragments].
-Applying the step option or role on a list (`[%step]` or `[.step]`) will do the trick.
-Here is link:{url-revealjs-doc}#fragments[the relevant reveal.js
-documentation] on the topic.
-Note that only `fade-in` is supported for lists at the moment.
+NOTE: At the moment, only `fade-in` style is supported for lists.
+
+=== Step style
+
+The default step style is to start out invisible and fade in.
+This style can be changed by using a different role on the block or inline element.
+
+[source, asciidoc]
+----
+== Topic
+
+[.highlight-blue%step]
+blue
+
+[%step]
+white
+
+[.highlight-red%step]
+red
+----
+
+Here's the complete list of the built-in styles:
+
+[cols="2,3",opts=header]
+|====
+|Name
+|Effect
+
+|fade-out
+|Start visible, fade out
+
+|fade-up
+|Slide up while fading in
+
+|fade-down
+|Slide down while fading in
+
+|fade-left
+|Slide left while fading in
+
+|fade-right
+|Slide right while fading in
+
+|fade-in-then-out
+|Fades in, then out on the next step
+
+|fade-in-then-semi-out
+|Fades in, then to 50% on the next step
+
+|grow
+|Scale up
+
+|shrink
+|Scale down
+
+|strike
+|Strike through
+
+|highlight-red
+|Turn text red
+
+|highlight-green
+|Turn text green
+
+|highlight-blue
+|Turn text blue
+
+|highlight-current-red
+|Turn text red, then back to original on next step
+
+|highlight-current-green
+|Turn text green, then back to original on next step
+
+|highlight-current-blue
+|Turn text blue, then back to original on next step
+|====
+
+=== Step order
+
+By default fragments will be stepped through in the order that they appear in the document.
+This display order can be changed using the `step` attribute.
+
+[source, asciidoc]
+----
+== Topic
+
+[TIP,step=3]
+Finally, a pro tip...
+
+[WARNING,step=1]
+First, watch out for...
+
+[IMPORTANT.fade-up,step=2]
+Second, don't forget...
+----
+
+NOTE: Multiple elements can appear at the same index.
+
+== Limitations and workarounds
+
+=== Description lists
+
+Currently, the `%step` option and the `step` attribute are not supported on description lists.
+The following will _not_ work:
+
+[source, asciidoc]
+----
+== Topic
+
+[%step]
+Hard drive:: Permanent storage for operating system and/or user files.
+RAM:: Temporarily stores information the CPU uses during operation.
+----
+
+=== Show list items all at once
+
+If you want to reveal list items all at once (i.e., you don't want to reveal the list items one-by-one),
+you can wrap a list block in an open block:
+
+[source, asciidoc]
+----
+== Topic
+
+[%step]
+--
+.Greek Alphabet
+* α
+* β
+* γ
+--
+----
+
+In the above example, the title "Greek Alphabet" and all the list items will be revealed at once.
+
+And here's a another example where we apply the _step_ option on different elements:
+
+[source, asciidoc]
+----
+== Topic
+
+[%step]
+--
+.First
+* a
+* b
+* c
+--
+
+[%step]
+--
+.Second
+[%step]
+* d
+* e
+* f
+--
+----
+
+Here's what will happen step by step:
+
+. the title "First" and all the list items will be revealed at once
+. The title "Second" will be revealed
+. The list items on the "Second" list will be revealed one-by-one
+
+image::steps-lists.gif[]

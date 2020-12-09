@@ -1,4 +1,4 @@
-= html_tag('div', { :id => @id, :class => ['verseblock', role] }.merge(data_attrs(@attributes)))
+= html_tag('div', { :id => @id, :class => ['verseblock', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes)))
   - if title?
     .title=title
   pre.content=content

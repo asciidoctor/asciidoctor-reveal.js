@@ -30,3 +30,15 @@
 * CSS Things
 * With Fragments
 * See `fragments.css`
+
+== Fragments on paragraphs
+
+[%step]
+This is step one!
+
+[%step]
+--
+This is step two:
+
+ $ echo 'hello world'
+--

@@ -1,4 +1,4 @@
-- classes = ['tableblock', "frame-#{attr :frame, 'all'}", "grid-#{attr :grid, 'all'}", role]
+- classes = ['tableblock', "frame-#{attr :frame, 'all'}", "grid-#{attr :grid, 'all'}", role, ('fragment' if (option? :step) || (attr? 'step'))]
 - styles = [("width:#{attr :tablepcwidth}%" unless option? 'autowidth'), ("float:#{attr :float}" if attr? :float)].compact.join('; ')
 = html_tag('table', { :id => @id, :class => classes, :style => styles }.merge(data_attrs(@attributes)))
   - if title?

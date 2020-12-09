@@ -1,6 +1,6 @@
 - quote_tags = { emphasis: 'em', strong: 'strong', monospaced: 'code', superscript: 'sup', subscript: 'sup' }
 - if (quote_tag = quote_tags[@type])
-  = html_tag(quote_tag, { :id => @id, :class => roles }.merge(data_attrs(@attributes)))
+  = html_tag(quote_tag, { :id => @id, :class => [role, ('fragment' if (option? :step) || (attr? 'step'))].compact }.merge(data_attrs(@attributes)))
     = @text
 - else
   - case @type

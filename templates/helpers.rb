@@ -97,7 +97,9 @@ module Slim::Helpers
   #
   def data_attrs(attributes)
     # key can be an Integer (for positional attributes)
-    attributes.select { |key, _| key.to_s.start_with?('data-') }
+    attributes.map { |key, value| (key == 'step') ? ['data-fragment-index', value] : [key, value] }
+              .to_h
+              .select { |key, _| key.to_s.start_with?('data-') }
   end
 
 
@@ -109,7 +111,7 @@ module Slim::Helpers
   def inline_text_container(content = nil)
     data_attrs = data_attrs(@attributes)
     if role? || !data_attrs.empty? || !@id.nil?
-      html_tag('span', { :id => @id, :class => roles }.merge(data_attrs)) do
+      html_tag('span', { :id => @id, :class => [role, ('fragment' if (option? :step) || (attr? 'step'))].compact }.merge(data_attrs)) do
         content || yield if block_given?
       end
     else

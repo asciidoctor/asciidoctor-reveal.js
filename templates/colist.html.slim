@@ -1,4 +1,4 @@
-= html_tag('div', { :id => @id, :class => ['colist', @style, role] }.merge(data_attrs(@attributes)))
+= html_tag('div', { :id => @id, :class => ['colist', @style, role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes)))
   - if title?
     .title=title
   - if @document.attr? :icons

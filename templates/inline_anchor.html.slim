@@ -1,7 +1,7 @@
 - case @type
 - when :xref
   - refid = (attr :refid) || @target
-  = html_tag('a', { :href => @target, :class => roles }.merge(data_attrs(@attributes)))
+  = html_tag('a', { :href => @target, :class => [role, ('fragment' if (option? :step) || (attr? 'step'))].compact }.merge(data_attrs(@attributes)))
     =(@text || @document.references[:ids].fetch(refid, "[#{refid}]")).tr_s("\n", ' ')
 - when :ref
   = html_tag('a', { :id => @target }.merge(data_attrs(@attributes)))
@@ -9,5 +9,5 @@
   = html_tag('a', { :id => @target }.merge(data_attrs(@attributes)))
   |[#{@target}]
 - else
-  = html_tag('a', { :href => @target, :class => roles, :target => (attr :window), 'data-preview-link' => (bool_data_attr :preview) }.merge(data_attrs(@attributes)))
+  = html_tag('a', { :href => @target, :class => [role, ('fragment' if (option? :step) || (attr? 'step'))].compact, :target => (attr :window), 'data-preview-link' => (bool_data_attr :preview) }.merge(data_attrs(@attributes)))
     =@text
