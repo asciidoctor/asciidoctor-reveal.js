@@ -50,7 +50,7 @@ red
 
 Here's the complete list of the built-in styles:
 
-[cols="2,3",opts=header]
+[cols="2m,3",opts=header]
 |====
 |Name
 |Effect
@@ -124,6 +124,17 @@ Second, don't forget...
 ----
 
 NOTE: Multiple elements can appear at the same index.
+
+== Text and inline elements
+
+Since it's not possible to define attributes or options on text and inline elements, you can use the role _step_.
+
+[source, asciidoc]
+----
+The [.step.highlight-red]#greatest glory in living# lies not in never falling, but in [.step.highlight-red]#rising every time we fall#.
+----
+
+In the above example, we will highlight in red "greatest glory in living" and then "rising every time we fall".
 
 == Limitations and workarounds
 

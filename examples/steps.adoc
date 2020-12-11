@@ -1,3 +1,6 @@
+// .steps
+// :include: //div[@class="slides"]
+// :header_footer:
 = Steps
 :revealjs_hash: true
 :revealjs_autoSlide: 2000
@@ -71,3 +74,14 @@ image::cute-cat-3.jpg[cute-cat-melting,height="100px",step=]
 * e
 * f
 --
+
+== Inline Phrases
+
+The [.step.highlight-red]#greatest glory in living# lies not in never falling,
+but in [.step.highlight-red]#rising every time we fall#.
+
+== Inside a List
+
+. [.step]#Protons#
+. [.step]#Electrons#
+. [.step]#Neutrons#
