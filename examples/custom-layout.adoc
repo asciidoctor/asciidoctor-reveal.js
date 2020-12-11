@@ -1,0 +1,10 @@
+// .custom-layout
+// The three different ways to hide slide titles
+// :include: //body/script | //div[@class="slides"]
+// :header_footer:
+= Custom Layout
+:revealjs_disablelayout: true
+
+== Layout Disabled!
+
+Hello 👋
