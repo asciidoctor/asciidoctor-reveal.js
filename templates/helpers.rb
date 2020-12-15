@@ -128,6 +128,29 @@ module Slim::Helpers
     @_section_level ||= (sec.level == 0 && sec.special) ? 1 : sec.level
   end
 
+  ##
+  # Display footnotes per slide
+  #
+  @@slide_footnotes = {}
+
+  def slide_footnote(footnote)
+    initial_index = footnote.attr(:index)
+    # reset the footnote numbering to 1 on each slide
+    # make sure that if a footnote is used more than once it will use the same index/number
+    slide_index = (existing_footnote = @@slide_footnotes[initial_index]) ? existing_footnote.attr(:index) : @@slide_footnotes.length + 1
+    attributes = footnote.attributes.merge({ 'index' => slide_index })
+    slide_footnote = Asciidoctor::Inline.new(footnote.parent, footnote.context, footnote.text, :attributes => attributes)
+    @@slide_footnotes[initial_index] = slide_footnote
+    slide_footnote
+  end
+
+  def clear_slide_footnotes
+    @@slide_footnotes = {}
+  end
+
+  def slide_footnotes
+    @@slide_footnotes.map { |_, footnote| Asciidoctor::Document::Footnote.new(footnote.attr(:index), footnote.id, footnote.text) }
+  end
 
   ##
   # Returns the captioned section's title, optionally numbered.
