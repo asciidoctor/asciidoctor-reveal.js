@@ -1,0 +1,21 @@
+= Data Attributes
+
+You can declare custom data attributes on virtually any blocks using AsciiDoc attributes prefixed by `data-`.
+Here are a few examples:
+
+[source, asciidoc]
+-----
+include::example$data-attributes.adoc[tags=source-code]
+
+include::example$data-attributes.adoc[tags=checklist]
+
+include::example$data-attributes.adoc[tags=quote]
+
+include::example$data-attributes.adoc[tags=stem]
+
+include::example$data-attributes.adoc[tags=audio]
+
+include::example$data-attributes.adoc[tags=video]
+-----
+
+Data attributes can be combined with custom JavaScript code to create more dynamic presentations.

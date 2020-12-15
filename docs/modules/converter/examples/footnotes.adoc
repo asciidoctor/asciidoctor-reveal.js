@@ -1,0 +1,15 @@
+= Presentation
+
+== Press Release
+
+// tag::content[]
+The hail-and-rainbow protocol can be initiated at three levels:
+
+. doublefootnote:[The double hail-and-rainbow level makes my toes tingle.]
+. tertiary
+. apocalyptic
+
+A bold statement!footnote:disclaimer[Opinions are my own.]
+
+Another outrageous statement.footnote:disclaimer[]
+// end::content[]

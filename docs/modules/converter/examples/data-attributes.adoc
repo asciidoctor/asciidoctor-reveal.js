@@ -1,0 +1,48 @@
+= Presentation
+
+== Source Code
+
+// tag::source-code[]
+[source,kotlin,data-lang-family=compiled]
+----
+println("Hello world")
+----
+// end::source-code[]
+
+== Checklist
+
+// tag::checklist[]
+[%interactive,data-state=in-progress]
+- [ ] Dig
+- [x] Plant
+- [ ] Hose
+// end::checklist[]
+
+== Quote
+
+// tag::quote[]
+[data-context=civil-rights,data-event=speech,data-date=28/08/1963]
+> I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin, but by the content of their character. I have a dream today!
+> -- Martin Luther King Jr. delivering the speech at the 1963 Washington D.C. Civil Rights March.
+// end::quote[]
+
+== STEM
+
+// tag::stem[]
+[stem,data-algebra-concept=square-root]
+++++
+\sqrt{37} = \sqrt{\frac{73^2-1}{12^2}} \approx \frac{73}{12} (1 - \frac{1}{2\cdot73^2})
+++++
+// end::stem[]
+
+== Audio
+
+// tag::audio[]
+audio::flock-of-seagulls.mp3[data-license="cc-3.0"]
+// end::audio[]
+
+== Video
+
+// tag::video[]
+video::kZH9JtPBq7k[youtube,start=34,data-video-id=kZH9JtPBq7k]
+// end::video[]
