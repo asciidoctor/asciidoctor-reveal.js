@@ -132,24 +132,47 @@ module Slim::Helpers
   # Display footnotes per slide
   #
   @@slide_footnotes = {}
+  @@section_footnotes = {}
 
   def slide_footnote(footnote)
-    initial_index = footnote.attr(:index)
-    # reset the footnote numbering to 1 on each slide
-    # make sure that if a footnote is used more than once it will use the same index/number
-    slide_index = (existing_footnote = @@slide_footnotes[initial_index]) ? existing_footnote.attr(:index) : @@slide_footnotes.length + 1
-    attributes = footnote.attributes.merge({ 'index' => slide_index })
-    slide_footnote = Asciidoctor::Inline.new(footnote.parent, footnote.context, footnote.text, :attributes => attributes)
-    @@slide_footnotes[initial_index] = slide_footnote
-    slide_footnote
+    footnote_parent = footnote.parent
+    # footnotes declared on the section title are processed during the parsing/substitution.
+    # as a result, we need to store them to display them on the right slide/section
+    if footnote_parent.instance_of?(::Asciidoctor::Section)
+      footnote_parent_object_id = footnote_parent.object_id
+      section_footnotes = (@@section_footnotes[footnote_parent_object_id] || [])
+      footnote_index = section_footnotes.length + 1
+      attributes = footnote.attributes.merge({ 'index' => footnote_index })
+      inline_footnote = Asciidoctor::Inline.new(footnote_parent, footnote.context, footnote.text, :attributes => attributes)
+      section_footnotes << Asciidoctor::Document::Footnote.new(inline_footnote.attr(:index), inline_footnote.id, inline_footnote.text)
+      @@section_footnotes[footnote_parent_object_id] = section_footnotes
+      inline_footnote
+    else
+      parent = footnote.parent
+      until parent == nil || parent.instance_of?(::Asciidoctor::Section)
+        parent = parent.parent
+      end
+      # check if there is any footnote attached on the section title
+      section_footnotes = parent != nil ? @@section_footnotes[parent.object_id] || [] : []
+      initial_index = footnote.attr(:index)
+      # reset the footnote numbering to 1 on each slide
+      # make sure that if a footnote is used more than once it will use the same index/number
+      slide_index = (existing_footnote = @@slide_footnotes[initial_index]) ? existing_footnote.index : @@slide_footnotes.length + section_footnotes.length + 1
+      attributes = footnote.attributes.merge({ 'index' => slide_index })
+      inline_footnote = Asciidoctor::Inline.new(footnote_parent, footnote.context, footnote.text, :attributes => attributes)
+      @@slide_footnotes[initial_index] = Asciidoctor::Document::Footnote.new(inline_footnote.attr(:index), inline_footnote.id, inline_footnote.text)
+      inline_footnote
+    end
   end
 
   def clear_slide_footnotes
     @@slide_footnotes = {}
   end
 
-  def slide_footnotes
-    @@slide_footnotes.map { |_, footnote| Asciidoctor::Document::Footnote.new(footnote.attr(:index), footnote.id, footnote.text) }
+  def slide_footnotes(section)
+    section_object_id = section.object_id
+    section_footnotes = @@section_footnotes[section_object_id] || []
+    section_footnotes + @@slide_footnotes.values
   end
 
   ##

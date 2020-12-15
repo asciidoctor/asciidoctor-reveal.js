@@ -38,6 +38,14 @@
 
 - parent_section_with_vertical_slides = @level == 1 && !vertical_slides.empty?
 
+- content_for :footnotes
+  - slide_footnotes = slide_footnotes(self)
+  - if document.footnotes? && !(parent.attr? 'nofootnotes') && !slide_footnotes.empty?
+    .footnotes
+      - slide_footnotes.each do |footnote|
+        .footnote
+          = "#{footnote.index}. #{footnote.text}"
+
 - content_for :section
   section(id=(titleless ? nil : id)
     class=roles
@@ -63,15 +71,15 @@
         div.slide-content
           - _blocks.each do |block|
             =block.convert
+        - yield_content :footnotes
+
     - else
       - unless (_content = content.chomp).empty?
         div.slide-content
           =_content
-          - if document.footnotes? && !(parent.attr? 'nofootnotes') && !slide_footnotes.empty?
-            .footnotes
-              - slide_footnotes.each do |footnote|
-                .footnote
-                  = "#{footnote.index}. #{footnote.text}"
+        - yield_content :footnotes
+
+    - clear_slide_footnotes
 
 / RENDERING
 / render parent section of vertical slides set
@@ -89,5 +97,3 @@
     =content.chomp
   - else
     - yield_content :section
-
-- clear_slide_footnotes
