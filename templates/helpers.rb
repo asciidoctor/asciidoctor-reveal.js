@@ -80,11 +80,10 @@ module Slim::Helpers
     end
     attrs_str = attrs.empty? ? '' : ' ' + attrs.join(' ')
 
-
     if VOID_ELEMENTS.include? name.to_s
       %(<#{name}#{attrs_str}>)
     else
-      content ||= yield if block_given?
+      content ||= (yield if block_given?)
       %(<#{name}#{attrs_str}>#{content}</#{name}>)
     end
   end
@@ -97,7 +96,9 @@ module Slim::Helpers
   #
   def data_attrs(attributes)
     # key can be an Integer (for positional attributes)
-    attributes.select { |key, _| key.to_s.start_with?('data-') }
+    attributes.map { |key, value| (key == 'step') ? ['data-fragment-index', value] : [key, value] }
+              .to_h
+              .select { |key, _| key.to_s.start_with?('data-') }
   end
 
 
@@ -108,12 +109,11 @@ module Slim::Helpers
   #
   def inline_text_container(content = nil)
     data_attrs = data_attrs(@attributes)
-    if role? || !data_attrs.empty? || !@id.nil?
-      html_tag('span', { :id => @id, :class => roles }.merge(data_attrs)) do
-        content || yield if block_given?
-      end
+    classes = [role, ('fragment' if (option? :step) || (attr? 'step') || (roles.include? 'step'))].compact
+    if !roles.empty? || !data_attrs.empty? || !@id.nil?
+      html_tag('span', { :id => @id, :class => classes }.merge(data_attrs), (content || (yield if block_given?)))
     else
-      content || yield if block_given?
+      content || (yield if block_given?)
     end
   end
 

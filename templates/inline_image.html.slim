@@ -1,4 +1,4 @@
-= html_tag('span', { :class => [@type, role], :style => ("float: #{attr :float}" if attr? :float) }.merge(data_attrs(@attributes)))
+= html_tag('span', { :class => [@type, role, ('fragment' if (option? :step) || (attr? 'step'))], :style => ("float: #{attr :float}" if attr? :float) }.merge(data_attrs(@attributes)))
   - if @type == 'icon' && (@document.attr? :icons, 'font')
     - style_class = [(attr :set, 'fa'), "fa-#{@target}", ("fa-#{attr :size}" if attr? :size), ("fa-rotate-#{attr :rotate}" if attr? :rotate), ("fa-flip-#{attr :flip}" if attr? :flip)]
     - if attr? :link

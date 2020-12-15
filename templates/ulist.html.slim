@@ -15,7 +15,7 @@
     .title=title
   ul class=(checklist || @style)
     - items.each do |item|
-      li class=('fragment' if (option? :step) || (has_role? 'step'))
+      li class=('fragment' if (option? :step) || (has_role? 'step') || (attr? 'step'))
         p
           - if checklist && (item.attr? :checkbox)
             =%(#{(item.attr? :checked) ? marker_checked : marker_unchecked}#{item.text})

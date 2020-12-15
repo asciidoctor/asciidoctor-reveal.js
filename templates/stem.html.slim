@@ -4,7 +4,7 @@
   - equation = sub_specialcharacters equation
 - unless (equation.start_with? open) && (equation.end_with? close)
   - equation = %(#{open}#{equation}#{close})
-= html_tag('div', { :id => @id, :class => ['stemblock', role] }.merge(data_attrs(@attributes)))
+= html_tag('div', { :id => @id, :class => ['stemblock', role, ('fragment' if (option? :step) || (has_role? 'step') || (attr? 'step'))] }.merge(data_attrs(@attributes)))
   - if title?
     .title=title
   .content=equation

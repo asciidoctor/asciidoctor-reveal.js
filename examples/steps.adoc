@@ -1,0 +1,87 @@
+// .steps
+// :include: //div[@class="slides"]
+// :header_footer:
+= Steps
+:revealjs_hash: true
+:revealjs_autoSlide: 2000
+
+== Unordered List
+
+[%step]
+* Edgar Allan Poe
+* Sheri S. Tepper
+* Bill Bryson
+
+== Ordered List
+
+[%step]
+. Protons
+. Electrons
+. Neutrons
+
+== Paragraphs With Style
+
+[.highlight-blue%step]
+blue
+
+[%step]
+white
+
+[.highlight-red%step]
+red
+
+== Admonition Order
+
+[TIP,step=3]
+Finally, a pro tip...
+
+[WARNING,step=1]
+First, watch out for...
+
+[IMPORTANT.fade-up,step=2]
+Second, don't forget...
+
+== Inline Images
+:imagesdir: images
+
+image:cute-cat-1.jpg[cute-cat-laying,step=3]
+image:cute-cat-2.jpg[cute-cat-yawning,step=1]
+image:cute-cat-3.jpg[cute-cat-melting,step=2]
+
+== Image Blocks
+
+image::cute-cat-1.jpg[cute-cat-laying,height="100px",step=]
+
+image::cute-cat-2.jpg[cute-cat-yawning,height="100px",step=]
+
+image::cute-cat-3.jpg[cute-cat-melting,height="100px",step=]
+
+== Lists
+
+[%step]
+--
+.First
+* a
+* b
+* c
+--
+
+[%step]
+--
+.Second
+[%step]
+* d
+* e
+* f
+--
+
+== Inline Phrases
+
+The [.step.highlight-red]#greatest glory in living# lies not in never falling,
+but in [.step.highlight-red]#rising every time we fall#.
+
+== Inside a List
+
+. [.step]#Protons#
+. [.step]#Electrons#
+. [.step]#Neutrons#
