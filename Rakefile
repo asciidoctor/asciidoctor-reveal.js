@@ -140,6 +140,7 @@ namespace :examples do
   end
 
   task :publish do
+    FileUtils.rm_rf PUBLIC_DIR
     Dir.mkdir PUBLIC_DIR
     Dir.mkdir "#{PUBLIC_DIR}/reveal.js"
     FileUtils.cp 'src/index.html', "#{PUBLIC_DIR}/index.html"
@@ -147,6 +148,9 @@ namespace :examples do
     FileUtils.cp_r 'examples/images/', "#{PUBLIC_DIR}"
     FileUtils.cp 'examples/release-4.0.html', "#{PUBLIC_DIR}/release-4.0.html"
     FileUtils.cp 'examples/release-4.0.css', "#{PUBLIC_DIR}/release-4.0.css"
+    FileUtils.cp 'examples/release-4.1.html', "#{PUBLIC_DIR}/release-4.1.html"
+    FileUtils.cp 'examples/release-4.1.css', "#{PUBLIC_DIR}/release-4.1.css"
+    FileUtils.cp 'examples/a11y-dark.css', "#{PUBLIC_DIR}/a11y-dark.css"
   end
 end
 

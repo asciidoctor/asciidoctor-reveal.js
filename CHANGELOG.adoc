@@ -15,6 +15,14 @@ Upgrade considerations::
     See {uri-issue}356[#356] for details.
 
 Enhancements::
+  * Introduced a `step` attribute to control the display order of elements
+  * `%step` option can now be used on most blocks
+  * Added `revealjs_disablelayout` attribute to disable layout ({uri-issue}381[#381])
+  * Added support for Font Awesome icon sets using the `set`.
+    For instance: `icon:font-awesome-flag[set=fab]` ({uri-issue}393[#393])
+  * Upgraded Font Awesome to 5.15.1
+  * Introduced an attribute to configure Font Awesome version `font-awesome-version` ({uri-issue}392[#392])
+  * Added support for data attributes using AsciiDoc attributes prefixed by `data-` ({uri-issue}241[#241])
   * Added text alignment options to our _columns layout_ feature: `has-text-left`, `has-text-right` and `has-text-justified`.
     See PR {uri-issue}354[#354] for details.
   * Added a `mathjaxdir` attribute to control where MathJax is loaded from ({uri-issue}350[#350])
@@ -23,15 +31,22 @@ Enhancements::
   * Documentation improvements ({uri-issue}349[#349], {uri-issue}351[#351], {uri-issue}371[#371], {uri-issue}374[#374])
 
 Compliance::
+  * Added support for footnotes ({uri-issue}30[#30])
+  * Added support for built-in text alignments: `text-left`, `text-right`, `text-center` and `text-justify` {uri-issue}380[#380]
   * `autoslide` attribute is now supported at the slide level ({uri-issue}367[#367], {uri-issue}368[#368])
   * Implemented the `muted` option for the video macro for YouTube and Vimeo ({uri-issue}358[#358])
   * `background-video` paths are now resolved using `media_uri` ({uri-issue}356[#356])
 
 Bug Fixes::
+  * Fixed a padding issue in _columns layout_ ({uri-issue}372[#372])
   * `autoplay` option fixed for YouTube and Vimeo videos ({uri-issue}357[#357])
   * Removed image resizing behavior when columns are wrapped in _columns layout_ feature ({uri-issue}353[#353], {uri-issue}360[#360])
 
 Infrastructure::
+  * Migrated CI jobs to GitHub Actions
+  * Added Windows in CI build
+  * Upgraded `asciidoctor-doctest` to v2.0.0.beta.7
+  * Documentation migrated to Antora
   * Added an integration with https://www.netlify.com/[Netlify] to host specific slide deck examples ({uri-issue}336[#336], {uri-issue}346[#346])
 
 
