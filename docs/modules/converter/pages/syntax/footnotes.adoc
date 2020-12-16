@@ -1,0 +1,11 @@
+= Footnotes
+
+You can add footnotes to your presentation using the footnote macro (`+footnote:[]+`).
+If you plan to reference a footnote more than once, use the footnote macro with a target (`+footnote:id[]+`).
+
+[source#ex-footnote,asciidoc]
+----
+include::example$footnotes.adoc[tags=content]
+----
+
+The footnotes numbering will be reset to 1 on each slide.

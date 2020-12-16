@@ -9,6 +9,8 @@
 ** xref:syntax/syntax-highlighting.adoc[]
 ** xref:syntax/video.adoc[]
 ** xref:syntax/roles.adoc[]
+** xref:syntax/data-attributes.adoc[]
+** xref:syntax/footnotes.adoc[]
 ** xref:custom-styles.adoc[]
 ** xref:docinfo.adoc[]
 * Configure reveal.js
