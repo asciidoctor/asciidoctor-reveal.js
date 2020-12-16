@@ -7,9 +7,13 @@ Author Name
 :revealjs_transition: none
 :revealjs_hash: true
 
-== Introduction
+== Introductionfootnote:[A footnote on introduction?!]
 
 This is some text.footnote:[An example footnote.]
+
+== Footnotesfootnote:[A footnote on footnotes?!]footnote:[Another one!]
+
+A statement.footnote:[Some text.]
 
 == Press Release
 
@@ -26,3 +30,17 @@ The hail-and-rainbow protocol can be initiated at five levels:
 double, tertiary, supernumerary, supermassive, and apocalyptic party.{fn-hail-and-rainbow}
 A bold statement!{fn-disclaimer}
 Another outrageous statement.{fn-disclaimer}
+
+=== Nestedfootnote:[A footnote on nested?!]
+
+A statement.footnote:[No need to explain.]
+
+A statement.footnote:[Might need some clarification...]
+
+=== Another One
+
+A statement.footnote:[Do you even...?]
+
+== Next Topic
+
+A statement.footnote:[Still here?]
