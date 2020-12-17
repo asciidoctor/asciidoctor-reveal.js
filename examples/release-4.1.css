@@ -1,7 +1,7 @@
 .reveal .slides section .fragment.highlight-strong{
   opacity: 1;
   visibility: inherit;
-  background-image: linear-gradient(transparent calc(65% - 5px), #0352a7 5px);
+  background-image: linear-gradient(transparent 7px, #0352a7 0);
   background-size: 0;
   background-repeat: no-repeat;
   display: inline;
