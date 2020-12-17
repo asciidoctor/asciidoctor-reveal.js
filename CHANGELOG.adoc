@@ -1,5 +1,5 @@
-= {project-name} Changelog
-:project-name: asciidoctor-reveal.js
+= Changelog
+:project-name: Asciidoctor reveal.js
 :uri-repo: https://github.com/asciidoctor/asciidoctor-reveal.js
 :uri-issue: {uri-repo}/issues/
 
