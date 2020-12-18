@@ -304,6 +304,7 @@ Then run:
 
 == Release process
 
+=== Prepare the release
 
 . Make sure that the highlight plugin code embed in _lib/asciidoctor-revealjs/highlightjs.rb_ is up-to-date with the version of reveal.js
 . Do we need to do anything regarding our Opal dependency and Asciidoctor.js?
@@ -338,6 +339,25 @@ See <<node-binary-compatibility,our section on the topic>>.
 . Tag the release commit
 ** Annotated Tag msg: Version %version%
 . Push your changes (including the tag)
+
+=== Release
+
+The release process is automated and relies on GitHub Actions.
+We are using personal tokens to publish to rubygems.org and npmjs.com.
+
+The `RUBYGEMS_API_KEY` and `NPM_TOKEN` secrets are configured on GitHub.
+See the `.github/workflows/release.yml` file for details.
+
+Once the https://github.com/asciidoctor/asciidoctor-reveal.js/actions?query=workflow%3Arelease[release workflow]
+has been completed:
+
+[%interactive]
+* [ ] Check that the new version is available on https://rubygems.org/gems/asciidoctor-revealjs[rubygems.org]
+* [ ] Check that the new version is available on https://www.npmjs.com/package/@asciidoctor/reveal.js[npmjs.com]
+* [ ] Check that a https://github.com/asciidoctor/asciidoctor-reveal.js/releases[release has been created on GitHub].
+* [ ] Update the GitHub release (using the CHANGELOG.adoc and the previous release as a template)
+
+////
 . Make a release on github (from changelog and copy from previous releases)
 ** Useful vim regex for AsciiDoc to Markdown:
 +
@@ -353,8 +373,9 @@ See <<node-binary-compatibility,our section on the topic>>.
  $ bundle exec rake build
  $ gem build asciidoctor-revealjs.gemspec
  $ gem push asciidoctor-revealjs-X.Y.Z.gem
+////
 
-. Check that the new version is available on https://rubygems.org/gems/asciidoctor-revealjs[rubygems.org]
+////
 . Generate the javascript version of the Ruby converter
 +
  $ bundle exec rake build:js
@@ -363,19 +384,30 @@ See <<node-binary-compatibility,our section on the topic>>.
 +
  $ npm login # only required if not already authenticated
  $ npm publish
+////
 
-. Check that the new version is available on https://www.npmjs.com/package/@asciidoctor/reveal.js[npmjs.com]
+////
 . Make binaries release
 ** Run `npm run package`. Binaries built will be in `dist/`. Upload them to the GitHub release page.
 . Publish previously saved GitHub release draft
-. Update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev')
+////
+
+=== Prepare next version
+
+. If you just released a major or minor version, create and push a maintenance branch for the previous version.
+For instance, if the previous version was 4.3.2, create a branch named: `4.3.x`.
+** Modify the Antora playbook to add this branch: https://github.com/asciidoctor/docs.asciidoctor.org/edit/main/antora-playbook.yml
+
+. On the master branch, update version in `docs/antora.yml`
+. On the master branch, update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev')
 ** Remove the "Slim compiled to Ruby" converter to the git tree (to avoid noise to the repo and `git status` noise)
 +
     git rm --cached lib/asciidoctor-revealjs/converter.rb
 
 ** commit msg: Begin development on next release
-. Submit a PR upstream to sync the documentation on asciidoctor.org
-** Modify this page: https://github.com/asciidoctor/asciidoctor.org/edit/master/docs/asciidoctor-revealjs.adoc
+
+=== Downstream projects
+
 . Submit a PR downstream to update Asciidoctor reveal.js version inside docker-asciidoctor
 ** Modify the `Dockerfile`, `Makefile` and `README.adoc` of: https://github.com/asciidoctor/docker-asciidoctor
 . Submit a PR downstream to update AsciidoctorJ reveal.js version
