@@ -49,6 +49,24 @@ Infrastructure::
   * Documentation migrated to Antora
   * Added an integration with https://www.netlify.com/[Netlify] to host specific slide deck examples ({uri-issue}336[#336], {uri-issue}346[#346])
 
+=== Release meta
+
+* Released on: 2020-12-18
+* Released by: https://github.com/mogztter[Guillaume Grossetie]
+
+{uri-repo}/releases/tag/v4.1.0[git tag] |
+{uri-repo}/compare/v4.0.1...v4.1.0[full diff] |
+{uri-repo}/milestone/11[milestone]
+
+=== Credits
+
+Thanks to the following people who contributed to this release:
+
+https://github.com/akosma[Adrian Kosmaczewski],
+https://github.com/mojavelinux[Dan Allen],
+https://github.com/mogztter[Guillaume Grossetie],
+https://github.com/obilodeau[Olivier Bilodeau] and
+https://github.com/rquinio[Romain Quinio]
 
 == 4.0.1 (2020-02-18)
 
