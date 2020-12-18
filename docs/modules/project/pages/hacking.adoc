@@ -301,44 +301,47 @@ Then run:
 
   $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
+== Update dependencies
+
+Update dependencies and test the package in both languages:
+
+[source,console]
+----
+bundle update
+bundle exec rake build
+bundle exec rake test
+bundle exec rake examples:convert
+
+npm install
+npm update
+bundle exec rake build:js
+npm test
+npm run examples
+----
 
 == Release process
 
 === Prepare the release
 
+. Make sure that the changelog is up-to-date
++
+[TIP]
+====
+You can get the list of all contributors using `git` (don't forget to replace `%prev-version-tag%` with the previous tag name):
+
+ $ git log %prev-version-tag%.. --format="%aN" --reverse | perl -e 'my %dedupe; while (<STDIN>) { print unless $dedupe{$_}++}' | sort
+====
+
 . Make sure that the highlight plugin code embed in _lib/asciidoctor-revealjs/highlightjs.rb_ is up-to-date with the version of reveal.js
 . Do we need to do anything regarding our Opal dependency and Asciidoctor.js?
 See <<node-binary-compatibility,our section on the topic>>.
-. Update dependencies and test the package in both languages
-+
-    bundle update
-    bundle exec rake build
-    bundle exec rake test
-    bundle exec rake examples:convert
-    npm install
-    npm update
-    bundle exec rake build:js
-    npm test
-    npm run examples
+. Run the following command to prepare the release (don't forget to replace `%version%` with an actual version):
 
-. Commit the updated dependencies
-. Update the version in `lib/asciidoctor-revealjs/version.rb` and `package.json`
-. Update the changelog
-** Generate author list with:
-+
-    git log <prev-version-tag>.. --format="%aN" --reverse | perl -e 'my %dedupe; while (<STDIN>) { print unless $dedupe{$_}++}' | sort
+ $ npm run release:prepare %version%
 
-. Prepare release commit
-** Add the "Slim compiled to Ruby" converter to the git tree (otherwise ignored to avoid noise to the repo)
-+
-    bundle exec rake build
-    git add -f lib/asciidoctor-revealjs/converter.rb
+. Push your changes (including the tag):
 
-** commit msg: Prepare %version% release
-** release commit (--allow-empty) msg: Release %version%
-. Tag the release commit
-** Annotated Tag msg: Version %version%
-. Push your changes (including the tag)
+ $ git push origin master --tags
 
 === Release
 
