@@ -394,12 +394,7 @@ has been completed:
 
 === Prepare next version
 
-. If you just released a major or minor version, create and push a maintenance branch for the previous version.
-For instance, if the previous version was 4.3.2, create a branch named: `4.3.x`.
-** Modify the Antora playbook to add this branch: https://github.com/asciidoctor/docs.asciidoctor.org/edit/main/antora-playbook.yml
-
-. On the master branch, update version in `docs/antora.yml`
-. On the master branch, update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev')
+. Update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev')
 ** Remove the "Slim compiled to Ruby" converter to the git tree (to avoid noise to the repo and `git status` noise)
 +
     git rm --cached lib/asciidoctor-revealjs/converter.rb
