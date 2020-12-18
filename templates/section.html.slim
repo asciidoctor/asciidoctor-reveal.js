@@ -71,13 +71,13 @@
         div.slide-content
           - _blocks.each do |block|
             =block.convert
-        - yield_content :footnotes
+      - yield_content :footnotes
 
     - else
       - unless (_content = content.chomp).empty?
         div.slide-content
           =_content
-        - yield_content :footnotes
+      - yield_content :footnotes
 
     - clear_slide_footnotes
 

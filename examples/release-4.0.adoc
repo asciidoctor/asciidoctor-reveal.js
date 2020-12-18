@@ -1,4 +1,4 @@
-= Asciidoctor reveal.js 4.0.0
+= Asciidoctor reveal.js 4.0
 :source-highlighter: highlight.js
 :highlightjs-languages: x86asm,asciidoc
 :icons: font

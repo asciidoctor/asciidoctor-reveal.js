@@ -1,0 +1,50 @@
+.reveal .slides section .fragment.highlight-strong{
+  opacity: 1;
+  visibility: inherit;
+  background-image: linear-gradient(transparent 7px, #0352a7 0);
+  background-size: 0;
+  background-repeat: no-repeat;
+  display: inline;
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+}
+
+.reveal .slides section .fragment.highlight-strong.visible {
+  background-size: 100%;
+}
+
+.reveal .slides section :not(pre) > code {
+  padding: .2em .4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: #8787877a;
+  border-radius: 6px;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+}
+
+.reveal .slides .paragraph + .ulist {
+  padding-top: 2rem;
+}
+
+.reveal .slides .paragraph + .openblock {
+  padding-top: 2rem;
+}
+
+.reveal .slides .paragraph + .listingblock {
+  padding-top: 2rem;
+}
+
+.footnotes {
+  border-top: 1px solid #fff3;
+  color: #c3c3c3;
+}
+
+.reveal .slides section :not(pre) > code.text-align-attr {
+  padding: 0;
+  margin: 0;
+  font-size: 1.5rem;
+  background-color: transparent;
+  border-radius: 6px;
+  color: #f5ab35;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+}

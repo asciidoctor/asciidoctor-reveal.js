@@ -1,0 +1,133 @@
+= Asciidoctor reveal.js 4.1
+:source-highlighter: highlight.js
+:highlightjs-theme: a11y-dark.css
+:highlightjs-languages: asciidoc
+:icons: font
+:imagesdir: images/
+// reveal.js config
+:customcss: release-4.1.css
+:revealjs_hash: true
+:revealjs_width: 1080
+
+== New Features icon:rocket[set=fas]
+
+== Steps
+
+You can use steps to [.highlight-strong.step]#highlight# or [.highlight-strong.step]#incrementally reveal individual elements# on a slide!
+
+[%notitle]
+=== Cats!
+
+[.grow,step=1]
+Here's some cute cats!
+
+image:cute-cat-1.jpg[cute-cat-laying,step=4]
+image:cute-cat-2.jpg[cute-cat-yawning,step=2]
+image:cute-cat-3.jpg[cute-cat-melting,step=3]
+
+[%notitle]
+=== List
+
+You can declare the `%step` option on lists...
+
+[%step]
+* α
+* β
+* γ
+
+[%notitle]
+=== Blocks
+
+...or on virtually any block like code blocks, tables, images or paragraphs
+
+[%step]
+--
+[.highlight-blue%step]
+blue
+
+white
+
+[.highlight-red%step]
+red
+--
+
+== Footnotesfootnote:[Just a title, nothing more.]
+
+[%notitle]
+=== Press Release
+
+The hail-and-rainbow protocol can be initiated at three levels:
+
+. doublefootnote:[The double hail-and-rainbow level makes my toes tingle.]
+. tertiary
+. supermassive
+
+A bold statement!footnote:disclaimer[Opinions are my own.]
+
+Another outrageous statement.footnote:disclaimer[]
+
+== Data attributes
+
+You can declare custom data attributes on _virtually any blocks_ using AsciiDoc attributes prefixed by `data-`. +
+Here's an example:
+
+[source, asciidoc]
+----
+== Atom podium
+
+[data-medal=gold]
+. Protons
+
+[data-medal=silver]
+. Electrons
+
+[data-medal=bronze]
+. Neutrons
+----
+
+== Font Awesome icon:font-awesome-flag[set=fab]
+
+* Version 5.13.0
+* Support icon sets (using `set` attribute)
+** *Brand:* icon:firefox[set=fab]
+** *Solid*: icon:address-book[set=fas]
+** *Regular*: icon:address-book[set=far]
+* `font-awesome-version` attribute
+
+== MathJax
+
+* Version 2.7.6
+* `mathjaxdir` attributefootnote:[Configure MathJax location.]
+
+[.text-left]
+== Built-in text alignments
+
+[%notitle]
+=== Text Alignments
+
+[.text-left]
+--
+[.text-align-attr]`[.text-left]` +
+Let's go to the left!
+--
+
+[.text-center]
+--
+[.text-align-attr]`[.text-center]` +
+Right in the middle
+--
+
+[.text-right]
+--
+[.text-align-attr]`[.text-right]` +
+Now to the right!
+--
+
+[transition=fade,transition-speed=slow]
+== Learn More!
+
+* https://github.com/asciidoctor/asciidoctor-reveal.js/[Asciidoctor reveal.js]
+* https://revealjs.com[reveal.js]
+* https://github.com/asciidoctor/asciidoctor/[Asciidoctor]
+* https://asciidoctor.org/docs/what-is-asciidoc/[What is AsciiDoc?]
+* https://github.com/asciidoctor/asciidoctor-reveal.js/raw/master/examples/release-4.1.adoc[This slide deck's AsciiDoc source]
