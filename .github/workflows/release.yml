@@ -1,0 +1,125 @@
+name: Release Ruby
+
+on:
+  push:
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v2.1.3
+
+jobs:
+  build_ruby:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+      - name: Configure Nokogiri installation (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          bundle config --local build__nokogiri --use-system-libraries
+          sudo apt-get install libxslt1-dev
+      - name: Install dependencies
+        run: bundle --jobs 3 --retry 3
+      - name: Build
+        run: bundle exec rake build
+      - name: Run tests
+        run: bundle exec rake test
+      - name: Run examples:convert
+        run: bundle exec rake examples:convert
+  publish_ruby:
+    needs: build_ruby
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+      - name: Install and build
+        run: |
+          bundle --jobs 3 --retry 3
+          bundle exec rake build
+      - name: Configure credentials
+        run: |
+          mkdir -p $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "---\n:rubygems_api_key: ${RUBYGEMS_API_KEY}" > $HOME/.gem/credentials
+        env:
+          RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+      - name: Build gem
+        run: |
+          gem build asciidoctor-revealjs.gemspec
+      - name: Publish to rubygems.org
+        run: |
+          gem push asciidoctor-revealjs-${GITHUB_REF#refs/tags/ruby-v}.gem
+  publish_js:
+    needs: publish_ruby
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+      - name: Install and build
+        run: |
+          bundle --jobs 3 --retry 3
+          bundle exec rake build
+          bundle exec rake build:js
+      - name: Install dependencies
+        run: |
+          npm ci
+      - name: Test
+        run: |
+          npm t
+      - name: Package and publish
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          npm run package
+          npm publish
+      # create the GitHub release
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+          draft: false
+          prerelease: false
+      # upload binaries
+      - name: Upload Linux binary
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/reveal-linux
+          asset_name: asciidoctor-revealjs-linux
+          asset_content_type: application/octet-stream
+      - name: Upload macOS binary
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/reveal-macos
+          asset_name: asciidoctor-revealjs-macos
+          asset_content_type: application/octet-stream
+      - name: Upload Windows binary
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/reveal-win.exe
+          asset_name: asciidoctor-revealjs-win.exe
+          asset_content_type: application/octet-stream
+
