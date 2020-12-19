@@ -15,7 +15,7 @@ If you don't have a `package.json` file in your project directory, you can creat
 
 You can now install the dependencies:
 
- $ npm i --save asciidoctor@^2.0 @asciidoctor/reveal.js
+ $ npm i --save asciidoctor @asciidoctor/reveal.js
 
 == Convert AsciiDoc into slides
 
@@ -32,9 +32,9 @@ The command should report the Asciidoctor CLI version in the terminal:
 
 [source,console]
 ----
-Asciidoctor.js 2.0.3 (Asciidoctor 2.0.9) [https://asciidoctor.org]
-Runtime Environment (node v10.15.1 on linux)
-CLI version 2.0.1
+Asciidoctor reveal.js 4.1.0 using Asciidoctor.js 2.2.1 (Asciidoctor 2.0.12) [https://asciidoctor.org]
+Runtime Environment (node v14.11.0 on linux)
+CLI version 3.4.0
 ----
 
 If you don't have an existing presentation, you can create a sample presentation named [.path]_presentation.adoc_:
