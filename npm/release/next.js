@@ -49,6 +49,7 @@ const nextSemVer = {
   patch: currentSemVer.patch
 }
 const nextVersion = `${nextSemVer.major}.${nextSemVer.minor}.${nextSemVer.patch}-dev`
+
 // update version in package.json
 asciidoctorRevealPkg.version = nextVersion
 const pkgUpdated = JSON.stringify(asciidoctorRevealPkg, null, 2).concat('\n')
@@ -57,6 +58,7 @@ if (process.env.DRY_RUN) {
 } else {
   fs.writeFileSync(pkgPath, pkgUpdated)
 }
+
 // update version in lib/asciidoctor-revealjs/version.rb
 const versionRbPath =  path.join(projectRootDirectory, 'lib', 'asciidoctor-revealjs', 'version.rb')
 const versionRbContent = fs.readFileSync(versionRbPath, 'utf8')
@@ -66,6 +68,17 @@ if (process.env.DRY_RUN) {
 } else {
   fs.writeFileSync(versionRbPath, versionRbUpdated)
 }
+
+// update version in docs/antora.yml
+const antoraYmlPath =  path.join(projectRootDirectory, 'docs', 'antora.yml')
+const antoraYmlContent = fs.readFileSync(antoraYmlPath, 'utf8')
+const antoraYmlUpdated = antoraYmlContent.replace(/version: '([^']+)'/, `version: '${nextSemVer.major}.${nextSemVer.minor}'`)
+if (process.env.DRY_RUN) {
+  console.debug(`Dry run! ${antoraYmlPath} will be updated:\n${antoraYmlUpdated}`)
+} else {
+  fs.writeFileSync(antoraYmlPath, antoraYmlUpdated)
+}
+
 // remove the converter (generated from the Slim templates) from the git tree (to avoid noise to the repo and `git status` noise)
 execModule.execSync('git rm --cached lib/asciidoctor-revealjs/converter.rb', {cwd: projectRootDirectory})
 
