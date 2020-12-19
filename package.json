@@ -18,6 +18,7 @@
     "examples": "node npm/examples.js",
     "release:description": "node npm/release/description.js",
     "release:prepare": "node npm/release/prepare.js",
+    "release:next": "node npm/release/next.js",
     "package": "npm i @asciidoctor/core && pkg -t 'node12-linux-x64,node12-macos-x64,node12-win-x64' package.json --out-path dist/"
   },
   "repository": {
