@@ -83,8 +83,9 @@ jobs:
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm run package
           npm publish
+          sleep 10
+          npm run package
           npm run release:description ${GITHUB_REF#refs/tags/v}
       # create the GitHub release
       - name: Create release
