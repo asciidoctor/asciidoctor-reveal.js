@@ -51,9 +51,11 @@ jobs:
       - name: Build gem
         run: |
           gem build asciidoctor-revealjs.gemspec
+      # can't use "${GITHUB_REF#refs/tags/v}" because the actual RubyGem version can be slightly different on prerelease
+      # see: https://guides.rubygems.org/patterns/#prerelease-gems
       - name: Publish to rubygems.org
         run: |
-          gem push asciidoctor-revealjs-${GITHUB_REF#refs/tags/v}.gem
+          gem push asciidoctor-revealjs-*.gem
   publish_js:
     needs: publish_ruby
     runs-on: ubuntu-latest

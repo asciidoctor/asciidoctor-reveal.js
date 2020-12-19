@@ -4,6 +4,8 @@ const path = require('path')
 const fs = require('fs')
 const execModule = require('./exec.js')
 
+const PRERELEASE_VERSION_RX = /(?<version>[0-9]+\.[0-9]+\.[0-9]+)(?<preversion>-[a-z]+\.[0-9]+)?/
+
 const args = process.argv.slice(2)
 const releaseVersion = args[0]
 
@@ -42,7 +44,18 @@ if (process.env.DRY_RUN) {
 // update version in lib/asciidoctor-revealjs/version.rb
 const versionRbPath =  path.join(projectRootDirectory, 'lib', 'asciidoctor-revealjs', 'version.rb')
 const versionRbContent = fs.readFileSync(versionRbPath, 'utf8')
-const versionRbUpdated = versionRbContent.replace(/VERSION = '([^']+)'/, `VERSION = '${releaseVersion}'`)
+// RubyGems versions must use a slightly different pattern:
+// https://guides.rubygems.org/patterns/#prerelease-gems
+let rubyReleaseVersion = releaseVersion
+const prereleaseVersionFound = PRERELEASE_VERSION_RX.exec(releaseVersion)
+if (prereleaseVersionFound &&
+  prereleaseVersionFound.groups &&
+  prereleaseVersionFound.groups.preversion &&
+  prereleaseVersionFound.groups.version) {
+  const rubyPrereleaseVersion = prereleaseVersionFound.groups.preversion.replace('-', '').replace('.', '');
+  rubyReleaseVersion = `${prereleaseVersionFound.groups.version}.${rubyPrereleaseVersion}`
+}
+const versionRbUpdated = versionRbContent.replace(/VERSION = '([^']+)'/, `VERSION = '${rubyReleaseVersion}'`)
 if (process.env.DRY_RUN) {
   console.debug(`Dry run! ${versionRbPath} will be updated:\n${versionRbUpdated}`)
 } else {
