@@ -361,19 +361,9 @@ has been completed:
 
 === Prepare next version
 
-. Update version in `lib/asciidoctor-revealjs/version.rb` and `package.json` (+1 bugfix and append '-dev')
-** Remove the "Slim compiled to Ruby" converter to the git tree (to avoid noise to the repo and `git status` noise)
-+
-    git rm --cached lib/asciidoctor-revealjs/converter.rb
+. Run the following command and follow the instructions:
 
-** commit msg: Begin development on next release
-
-=== Downstream projects
-
-. Submit a PR downstream to update Asciidoctor reveal.js version inside docker-asciidoctor
-** Modify the `Dockerfile`, `Makefile` and `README.adoc` of: https://github.com/asciidoctor/docker-asciidoctor
-. Submit a PR downstream to update AsciidoctorJ reveal.js version
-** Modify `gradle.properties`, `asciidoctorj-revealjs/gradle.properties` and `asciidoctorj-revealjs/build.gradle` in: https://github.com/asciidoctor/asciidoctorj-reveal.js
+ $ npm run release:next
 
 == Ruby and asciidoctor-doctest tests
 
