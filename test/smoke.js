@@ -22,5 +22,18 @@ expect(result).to.contain('<script src="node_modules/reveal.js/js/reveal.js">')
 expect(result).to.contain('<li><p>Foo</p></li>')
 
 // verify version info
-var package_info = require('../package.json')
-expect(asciidoctorRevealjs.getVersion()).to.be(package_info.version)
+const pkg = require('../package.json')
+const version = asciidoctorRevealjs.getVersion()
+// RubyGems versions must use a slightly different pattern:
+// https://guides.rubygems.org/patterns/#prerelease-gems
+const RUBY_PRERELEASE_VERSION_RX = /(?<version>[0-9]+\.[0-9]+\.[0-9]+)(\.(?<preversionName>[a-z]+)(?<preversionNumber>[0-9]+))?/
+let semVer = version
+const prereleaseVersionFound = RUBY_PRERELEASE_VERSION_RX.exec(version)
+if (prereleaseVersionFound &&
+  prereleaseVersionFound.groups &&
+  prereleaseVersionFound.groups.preversionName &&
+  prereleaseVersionFound.groups.preversionNumber &&
+  prereleaseVersionFound.groups.version) {
+  semVer = `${prereleaseVersionFound.groups.version}-${prereleaseVersionFound.groups.preversionName}.${prereleaseVersionFound.groups.preversionNumber}`
+}
+expect(semVer).to.be(pkg.version)
