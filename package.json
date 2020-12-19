@@ -16,8 +16,9 @@
   "scripts": {
     "test": "node test/smoke.js",
     "examples": "node npm/examples.js",
-    "package": "npm i @asciidoctor/core && pkg -t 'node12-linux-x64,node12-macos-x64,node12-win-x64' package.json --out-path dist/",
-    "release:prepare": "node npm/release/prepare.js"
+    "release:description": "node npm/release/description.js",
+    "release:prepare": "node npm/release/prepare.js",
+    "package": "npm i @asciidoctor/core && pkg -t 'node12-linux-x64,node12-macos-x64,node12-win-x64' package.json --out-path dist/"
   },
   "repository": {
     "type": "git",
