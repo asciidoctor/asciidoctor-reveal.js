@@ -5,6 +5,9 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## master (unreleased)
 
+
+## 4.1.0 (2020-12-19)
+
 ### Upgrade considerations
 
   * When a `background-video` attribute points to a file, that file is now looked up relative to the `imagesdir` document attribute.
@@ -67,7 +70,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ### Release meta
 
-* Released on: 2020-12-18
+* Released on: 2020-12-19
 * Released by: [Guillaume Grossetie](https://github.com/mogztter)
 
 [git tag](https://github.com/asciidoctor/asciidoctor-reveal.js/releases/tag/v4.1.0) |
