@@ -9,7 +9,7 @@ const args = process.argv.slice(2)
 const releaseVersion = args[0]
 
 if (!releaseVersion) {
-  log.error('Release version is undefined, please specify a version `npm run release 1.0.0`')
+  log.error('Release version is undefined, please specify a version `npm run release:prepare 1.0.0`')
   process.exit(9)
 }
 console.log(`Release version: ${releaseVersion}`)
