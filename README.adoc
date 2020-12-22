@@ -1355,7 +1355,7 @@ This table tracks this compatibility.
 |===
 
 Be aware that it is always possible to recompile the converter into JavaScript from source so compatibility can be created by anyone if needed.
-More details on that topic can be found link:HACKING.adoc#node-binary-compatibility[in the development guide].
+More details on that topic can be found link:docs/modules/project/pages/hacking.adoc#node-binary-compatibility[in the development guide].
 
 
 == Showcase Presentations
@@ -1378,7 +1378,7 @@ image:{showcasedir}/java9to13_3.png[width=200,link={showcasedir}/java9to13_3.png
 
 Interested in contributing?
 We are interested!
-Developer-focused documentation is link:HACKING.adoc[over here].
+Developer-focused documentation is link:docs/modules/project/pages/hacking.adoc[over here].
 
 
 == Copyright and Licensing
