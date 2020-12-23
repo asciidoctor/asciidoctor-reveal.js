@@ -10,4 +10,4 @@ There are four main technology stacks that can convert AsciiDoc into HTML5 / rev
 * xref:setup:ruby-setup.adoc[Asciidoctor / Ruby / Bundler]
 * xref:setup:node-js-setup.adoc[Asciidoctor.js / JavaScript (Node.js) / npm]
 * xref:setup:standalone-executable.adoc[Standalone Executable]
-* https://github.com/asciidoctor/asciidoctorj-reveal.js[AsciidoctorJ / JVM / Maven^]
+* {url-asciidoctorj-revealjs}[AsciidoctorJ / JVM / Maven^]

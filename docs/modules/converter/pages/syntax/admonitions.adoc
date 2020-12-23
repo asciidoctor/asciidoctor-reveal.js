@@ -1,6 +1,6 @@
 = Admonitions
 
-Asciidoctor font-based http://asciidoctor.org/docs/user-manual/#admonition[admonitions] are supported.
+Asciidoctor font-based xref:asciidoc:blocks:admonitions.adoc[admonitions] are supported.
 Make sure to add the following attribute to your document:
 
 [source, asciidoc]
@@ -17,4 +17,4 @@ Here is an example slide:
 WARNING: This presentation is dangerous!
 ----
 
-Here are details about Asciidoctor's http://asciidoctor.org/docs/user-manual/#admonition-icons[Admonition icons] support.
+Here are details about Asciidoctor's xref:asciidoc:blocks:admonitions.adoc#enable-admonition-icons[Admonition icons] support.

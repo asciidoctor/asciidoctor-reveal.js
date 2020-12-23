@@ -54,7 +54,7 @@ See {url-project-repo}/blob/master/examples/concealed-slide-titles.adoc[conceale
 NOTE: `conceal` and `notitle` have the advantage that the slide still has an id so it can be linked to.
 
 IMPORTANT: Like the first page of an AsciiDoc document, the first slide is handled differently.
-To hide the whole slide use the `:notitle:` http://asciidoctor.org/docs/user-manual/#header-summary[document attribute].
+To hide the whole slide use the `:notitle:` xref:asciidoc:document:header-ref.adoc[document attribute].
 To achieve the effect of hiding only the first slide's title, combine the `:notitle:` attribute on the first slide and use `[%notitle]` on the second slide which will, in effect, be your first slide now.
 
 == Content meant for multiple converters
