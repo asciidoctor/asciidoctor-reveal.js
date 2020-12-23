@@ -4,7 +4,7 @@
 
 A smooth presentation, featuring video backgrounds, slide transitions, code and callout examples and the use of notes.
 
-https://bentolor.github.io/java9to13/[Presentation] and https://github.com/bentolor/java9to13[source]
+https://bentolor.github.io/java9to13/[Presentation^] and https://github.com/bentolor/java9to13[source^]
 
 === Screenshots
 

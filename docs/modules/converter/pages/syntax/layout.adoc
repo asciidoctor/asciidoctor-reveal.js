@@ -28,12 +28,11 @@ This is a vertical sub-slide
 
 Slide 6 uses the vertical slide feature of `reveal.js`.
 Slide 6.1 will be rendered vertically below Slide 6.
-Here is link:{url-revealjs-doc}#markup[the relevant reveal.js
-documentation] on that topic.
+Here is link:{url-revealjs-doc}#markup[the relevant reveal.js documentation^] on that topic.
 
 == Columns layout
 
-Inspired by https://bulma.io/[Bulma], Asciidoctor reveal.js supports columns layout out-of-the-box:
+Inspired by https://bulma.io/[Bulma^], Asciidoctor reveal.js supports columns layout out-of-the-box:
 
 [source,asciidoc]
 ....

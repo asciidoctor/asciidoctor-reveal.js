@@ -22,7 +22,7 @@ Default is disabled.
 
 |:highlightjs-theme:
 |<file\|URL>
-|Overrides https://highlightjs.org[highlight.js] CSS style with given file or URL.
+|Overrides https://highlightjs.org[highlight.js^] CSS style with given file or URL.
 Default is built-in [path]_lib/css/zenburn.css_.
 
 |:revealjsdir:

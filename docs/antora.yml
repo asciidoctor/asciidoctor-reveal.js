@@ -15,4 +15,5 @@ asciidoc:
     url-revealjs-home: 'https://revealjs.com'
     url-revealjs-gh: 'https://github.com/hakimel/reveal.js/blob/v3.9'
     url-revealjs-doc: 'https://github.com/hakimel/reveal.js/blob/v3.9/README.md'
-    url-nodejs-download: 'https://nodejs.org/en/download/'
+    url-nodejs-download: 'https://nodejs.org/en/download'
+    url-bundler: 'https://bundler.io'
