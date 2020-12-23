@@ -12,16 +12,15 @@ ignorecase: true
 nonword: false
 scope: text
 swap:
-#  netlify: Netlify
   '\s(asciidoctor)': Asciidoctor
   reveal.js: reveal.js
   asciidoctorj: AsciidoctorJ
-#  bundler: Bundler
   asciidoctor-reveal.js: Asciidoctor reveal.js
-#  Javascript: JavaScript
-#  javascript: JavaScript
-#  node: Node
-#  NPM: npm
-#  Npm: npm
-#  ruby: Ruby
-#  '[^\.](js)': JS
+  netlify: Netlify
+  bundler: Bundler
+  javascript: JavaScript
+  '[^:]node': Node
+  node.js: Node.js
+  npm: npm
+  '\s(ruby)': Ruby
+  '[^\.](js)': JS

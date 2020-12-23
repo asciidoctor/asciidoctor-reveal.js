@@ -19,7 +19,7 @@ The next section will provide further help on how to use `print` statements or a
 
 == Inspect the template system
 
-To understand what you have access to in templates you can inject some ruby.
+To understand what you have access to in templates you can inject some Ruby.
 With the slim templating system, this is done by prepending the lines with a dash (`-`) and inserting a ruby statement.
 Two complementary approaches can be used to explore the context offered by Asciidoctor through the template system:
 
@@ -45,7 +45,7 @@ For example to see which attributes are available, you can print them by adding 
 - puts @document.methods
 ----
 
-Other generally useful ruby specific introspection:
+Other generally useful Ruby specific introspection:
 
 ----
 - puts instance_variables
@@ -160,7 +160,8 @@ You can open the generated `.html` in `test/doctest/` in a Web browser.
 
 === Attribute inheritance
 
-The attr and attr? methods inherit by default. That means if they don't find the attribute defined on the node, they look on the document.
+The `attr` and `attr?` methods inherit by default.
+That means if they don't find the attribute defined on the Node, they look on the document.
 
 You only want to enable inheritance if you intend to allow an attribute of the same name to be controlled globally.
 That might be good for configuring transitions. For instance:
@@ -225,7 +226,7 @@ Makes triaging easier.
 
 === Test locally
 
-In order to test the Node package, you first need to build the converter into Javascript and create a tarball of the project.
+In order to test the Node package, you first need to build the converter into JavaScript and create a tarball of the project.
 
   $ bundle exec rake build:js
   $ npm pack
@@ -369,7 +370,7 @@ has been completed:
 
 === Running tests
 
-We recommend tests to be run with a fresh install of all dependencies in a local folder that won't affect your ruby install (a `.bundle/` in this directory):
+We recommend tests to be run with a fresh install of all dependencies in a local folder that won't affect your Ruby install (a `.bundle/` in this directory):
 
     bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
@@ -405,10 +406,10 @@ See the `publish` rake task in `Rakefile` and the `netlify.toml` configuration f
 
 Only content that is copied into the `public/` directory will be published on the Netlify site.
 If, by accident, something sensitive is copied over there, delete it, rewrite the git history to remove the sensitive information and force push the branch.
-Reach out to our netlify integration contact to make sure that deployed branches were rebuilt and no longer contain the sensitive information.
+Reach out to our Netlify integration contact to make sure that deployed branches were rebuilt and no longer contain the sensitive information.
 
 === Integration Contact
 
 Main Contact: https://github.com/Mogztter[@Mogztter]
 
-Also, in order to stay with a free plan, only the following people have control over our netlify integration: https://github.com/Mogztter[@Mogztter], https://github.com/mojavelinux[@mojavelinux] and https://github.com/graphitefriction[@graphitefriction].
+Also, in order to stay with a free plan, only the following people have control over our Netlify integration: https://github.com/Mogztter[@Mogztter], https://github.com/mojavelinux[@mojavelinux] and https://github.com/graphitefriction[@graphitefriction].

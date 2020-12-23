@@ -1,0 +1,12 @@
+---
+# Warning: asciidoctor.TitleCapitalization
+#
+# Checks the capitalization for the page title (i.e., doctitle).
+#
+# For a list of all options, see https://errata-ai.gitbook.io/vale/getting-started/styles
+extends: capitalization
+message: "'%s' should be in title case"
+level: error
+scope: heading.h1
+match: $title
+style: Chicago

@@ -9,5 +9,5 @@ Basically, all you need is the package manager of the flavor of Asciidoctor reve
 If you need more details about our dependencies check out Asciidoctor dependencies:
 
 * With Ruby / Bundler: https://github.com/asciidoctor/asciidoctor/tree/v2.0.10#requirements[Asciidoctor] 2.0.10
-* With JavaScript (Node.js) / NPM: https://github.com/asciidoctor/asciidoctor.js/blob/v2.0.3/packages/core/package.json[Asciidoctor.js] 2.0.3
+* With JavaScript (Node.js) / npm: https://github.com/asciidoctor/asciidoctor.js/blob/v2.0.3/packages/core/package.json[Asciidoctor.js] 2.0.3
 

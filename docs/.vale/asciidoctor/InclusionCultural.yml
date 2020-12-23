@@ -13,4 +13,3 @@ swap:
   whitelist(?:ed|ing|s)?: allowlist
   \smaster: primary, main
   slave: secondary
-

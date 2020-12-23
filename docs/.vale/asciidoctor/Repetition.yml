@@ -10,4 +10,3 @@ level: error
 alpha: true
 tokens:
   - '[^\s]+'
-

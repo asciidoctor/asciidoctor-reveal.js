@@ -2,7 +2,7 @@
 
 == Stretch class attribute
 
-reveal.js supports a special class that will give all available screen space to an HTML node.
+reveal.js supports a special class that will give all available screen space to an HTML element.
 This class element is named `stretch`.
 
 Sometimes it's desirable to have an element, like an image or video, stretch to consume as much space as possible within a given slide.

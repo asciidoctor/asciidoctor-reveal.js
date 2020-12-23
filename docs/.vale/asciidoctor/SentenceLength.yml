@@ -10,4 +10,3 @@ scope: sentence
 level: warning
 max: 25
 token: \b(\w+)\b
-

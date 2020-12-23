@@ -15,4 +15,3 @@ message: 'Spelling check: "%s"?'
 level: warning
 ignore:
   - asciidoctor/spelling-exceptions.txt
-
