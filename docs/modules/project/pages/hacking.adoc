@@ -4,7 +4,7 @@ Short instructions that aim to help potential contributors.
 
 == Getting Started
 
-* Setup the Asciidoctor-revealjs plugin in <<ruby-localversion,development mode>>
+* Setup the Asciidoctor-revealjs plugin in xref:ruby-localversion[development mode]
 * Modify the http://slim-lang.com/[slim templates] in `templates/`
 * Templates need to be compiled before being used, do so with:
 
@@ -126,7 +126,7 @@ You can call the slim templates directly with:
 
 == Manual Tests
 
-In order to help troubleshoot issues and test syntax improvements, some minimalist asciidoc test files are provided.
+In order to help troubleshoot issues and test syntax improvements, some minimalist AsciiDoc test files are provided.
 You can render the tests files and then load them in a browser and check if `asciidoctor-revealjs` behaves as expected.
 
 === Initial Setup
