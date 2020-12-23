@@ -66,4 +66,4 @@ print "$0: hello world\n"
 Alternatively, you can use http://rouge.jneen.net/[Rouge], http://coderay.rubychan.de[Coderay] or http://pygments.org[Pygments] as syntax highlighters,
 if you are using the Asciidoctor/Ruby/Bundler toolchain (not Asciidoctor.js/JavaScript/npm).
 Check the `examples/` directory for examples and notes about what needs to be done for them to work.
-They are considered unsupported by the asciidoctor-reveal.js project.
+They are considered unsupported by the Asciidoctor reveal.js project.

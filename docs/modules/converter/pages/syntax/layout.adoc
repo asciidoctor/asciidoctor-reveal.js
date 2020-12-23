@@ -7,7 +7,7 @@ This class element is named `stretch`.
 
 Sometimes it's desirable to have an element, like an image or video, stretch to consume as much space as possible within a given slide.
 
-To apply that class to block simply use asciidoctor's class assignment:
+To add this class to an HTML element, you can assign a role to a block using the shorthand dot (`.`) syntax:
 
     [.stretch]
 
@@ -17,17 +17,17 @@ See link:{url-revealjs-doc}#stretching-elements[reveal.js documentation on stret
 
 [source,asciidoc]
 ....
-== Slide Six
+== Slide 6
 
 Top slide
 
-=== Slide Six.One
+=== Slide 6.1
 
 This is a vertical sub-slide
 ....
 
-Slide Six uses the vertical slide feature of `reveal.js`.
-Slide Six.One will be rendered vertically below Slide Six.
+Slide 6 uses the vertical slide feature of `reveal.js`.
+Slide 6.1 will be rendered vertically below Slide 6.
 Here is link:{url-revealjs-doc}#markup[the relevant reveal.js
 documentation] on that topic.
 

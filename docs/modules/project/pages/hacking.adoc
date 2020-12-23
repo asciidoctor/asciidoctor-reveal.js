@@ -21,7 +21,7 @@ The next section will provide further help on how to use `print` statements or a
 
 To understand what you have access to in templates you can inject some ruby.
 With the slim templating system, this is done by prepending the lines with a dash (`-`) and inserting a ruby statement.
-Two complementary approaches can be used to explore the context offered by asciidoctor through the template system:
+Two complementary approaches can be used to explore the context offered by Asciidoctor through the template system:
 
 * logging on the command line via print-like statements
 * jump into the context through an interactive debugger
@@ -62,7 +62,7 @@ One might find `pp` to produce better output (and in some cases not):
 === Interactively debug a template
 
 Pry is a powerful debugger for ruby that features tab-completion.
-It is very useful to discover a complex object hierarchy like what asciidoctor offers.
+It is very useful to discover a complex object hierarchy like what Asciidoctor offers.
 
 ==== Initial Setup
 
@@ -101,11 +101,11 @@ From: /home/olivier/src/asciidoc/asciidoctor-reveal.js/templates/slim/section.ht
 [1] pry(#<Asciidoctor::Section>)>
 ----
 
-Then using commands like the following allows you to explore interactively asciidoctor's API and object model with syntax highlighting:
+Then using commands like the following allows you to explore interactively Asciidoctor's API and object model with syntax highlighting:
 
     [1] pry(#<Asciidoctor::Section>)> @document
 
-You can also query asciidoctor's documentation:
+You can also query Asciidoctor's documentation:
 
     [4] pry(#<Asciidoctor::Section>)> ? find_by
 
@@ -158,7 +158,7 @@ You can open the generated `.html` in `test/doctest/` in a Web browser.
 
 == Asciidoctor API's gotchas
 
-=== Attribute inheritence
+=== Attribute inheritance
 
 The attr and attr? methods inherit by default. That means if they don't find the attribute defined on the node, they look on the document.
 
@@ -223,7 +223,7 @@ Makes triaging easier.
 
 == Node package
 
-=== Test a local asciidoctor-reveal.js version
+=== Test locally
 
 In order to test the Node package, you first need to build the converter into Javascript and create a tarball of the project.
 
@@ -232,7 +232,7 @@ In order to test the Node package, you first need to build the converter into Ja
 
 That last command will produce a file named `asciidoctor-reveal.js-<version>.tgz` in the working directory.
 
-Then, create a test project adjacent to the clone of the [.path]_asciidoctor-reveal.js_ repository:
+Then, create a test project adjacent to the clone of the [.path]`asciidoctor-reveal.js` repository:
 
  $ mkdir test-project
  $ cd test-project
@@ -258,7 +258,7 @@ Here is how:
 Versions known to work together can be found by looking at the Asciidoctor.js release notes, just replace <tag> with the `asciidoctor.js` release you are interested in: https://github.com/asciidoctor/asciidoctor.js/releases/tag/<tag>.
 Then that Opal version and git revision (if required) must be specified in `asciidoctor-revealjs.gemspec`.
 
-Starting with 3.0.0 we aim to retain binary compatibility between Asciidoctor.js and Asciidoctor-reveal.js.
+Starting with 3.0.0 we aim to retain binary compatibility between Asciidoctor.js and Asciidoctor reveal.js.
 This should allow other Asciidoctor extensions to be called along with this converter.
 Asciidoctor.js is no longer a direct dependency but should be seen as a tool that powers this converter.
 We need to allow users to have flexibility in the version they choose to run.
