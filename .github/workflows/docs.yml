@@ -14,6 +14,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7'
+      - name: Install asciidoctor gem
+        run: |
+          gem install asciidoctor
       - name: Install Vale
         run: |
           curl -sfL https://install.goreleaser.com/github.com/ValeLint/vale.sh | sh -s v2.6.8
