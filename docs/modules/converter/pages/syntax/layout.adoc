@@ -32,7 +32,7 @@ Here is link:{url-revealjs-doc}#markup[the relevant reveal.js documentation^] on
 
 == Columns layout
 
-Inspired by https://bulma.io/[Bulma^], Asciidoctor reveal.js supports columns layout out-of-the-box:
+Inspired by {url-bulma}[Bulma^], Asciidoctor reveal.js supports columns layout out-of-the-box:
 
 [source,asciidoc]
 ....

@@ -1,7 +1,7 @@
 = Videos
 
 In addition to xref:syntax/background.adoc#background_videos[background videos], videos can be inserted directly into slides.
-The syntax is the standard http://asciidoctor.org/docs/user-manual/#video[AsciiDoc video block macro] syntax.
+The syntax is the standard xref:asciidoc:macros:audio-and-video.adoc#video-macro-syntax[AsciiDoc video block macro] syntax.
 
 [source, asciidoc]
 ----

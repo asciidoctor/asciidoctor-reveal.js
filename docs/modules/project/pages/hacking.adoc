@@ -5,7 +5,7 @@ Short instructions that aim to help potential contributors.
 == Getting Started
 
 * Setup the Asciidoctor-revealjs plugin in xref:ruby-localversion[development mode]
-* Modify the http://slim-lang.com/[slim templates] in `templates/`
+* Modify the {url-slim}[slim templates^] in `templates/`
 * Templates need to be compiled before being used, do so with:
 
     bundle exec rake build
@@ -121,7 +121,7 @@ You can call the slim templates directly with:
 === References
 
 * https://github.com/asciidoctor/asciidoctor.org/issues/80#issuecomment-145698579
-* http://pryrepl.org/
+* https://pry.github.io
 * http://discuss.asciidoctor.org/Interactively-debugging-a-template-with-a-REPL-td4498.html
 
 == Manual Tests
@@ -178,9 +178,9 @@ If that's the case, you generally use the form:
 
     attr('name', nil, false)
 
-The second parameter value is the default attribute value, which is nil by default.
+The second parameter value is the default attribute value, which is `nil` by default.
 
-Relevant documentation: http://www.rubydoc.info/github/asciidoctor/asciidoctor/Asciidoctor%2FAbstractNode%3Aattr
+Relevant documentation: {url-asciidoctor-abstractnode-attr}
 
 
 == Merge / Review policy
@@ -256,7 +256,7 @@ In order for Asciidoctor.js to be able to call code from this converter, the ver
 Right now we track the exact git revision of Opal used by Asciidoctor.js and make sure that we match.
 Here is how:
 
-Versions known to work together can be found by looking at the Asciidoctor.js release notes, just replace <tag> with the `asciidoctor.js` release you are interested in: https://github.com/asciidoctor/asciidoctor.js/releases/tag/<tag>.
+Versions known to work together can be found by looking at the Asciidoctor.js release notes, just replace <tag> with the `asciidoctor.js` release you are interested in: \https://github.com/asciidoctor/asciidoctor.js/releases/tag/<tag>.
 Then that Opal version and git revision (if required) must be specified in `asciidoctor-revealjs.gemspec`.
 
 Starting with 3.0.0 we aim to retain binary compatibility between Asciidoctor.js and Asciidoctor reveal.js.
@@ -272,7 +272,7 @@ We will track and maintain the README on the major version supported and recomme
 
 See https://github.com/asciidoctor/asciidoctor-reveal.js/issues/187#issuecomment-570771473[this issue] for background details on that topic.
 
-Asciidoctor.js versioning policy is https://asciidoctor-docs.netlify.com/asciidoctor.js/project/version-and-lifecycle-policies/[available here].
+Asciidoctor.js versioning policy is xref:asciidoctor.js:project:version-and-lifecycle-policies.adoc[available here].
 
 === Debugging
 
@@ -384,7 +384,7 @@ However, if you have all dependencies properly installed this command should run
 
 === Generating HTML test target
 
-Tests were bootstrapped by https://github.com/asciidoctor/asciidoctor-doctest/#generate-examples[generating them from asciidoctor-doctest's test corpus] and current asciidoctor-revealjs' slim template engine.
+Tests were bootstrapped by https://github.com/asciidoctor/asciidoctor-doctest/#generate-examples[generating them from asciidoctor-doctest's test corpus^] and current asciidoctor-revealjs' slim template engine.
 This is done using the following command:
 
     bundle exec rake doctest:generate FORCE=y
@@ -397,7 +397,7 @@ Resulting slides are kept in `test/doctest/`.
 
 == Netlify Integration
 
-On every commit or PR, the https://www.netlify.com[Netlify] service will convert some examples into slides and host the resulting pages on its platform where it will be visible by anyone.
+On every commit or PR, the {url-netlify}[Netlify^] service will convert some examples into slides and host the resulting pages on its platform where it will be visible by anyone.
 It hosts the converted HTML files, reveal.js framework and static content like images and CSS.
 This integration will allow us to easily preview PRs and demo features to users (source and converted result).
 See the `publish` rake task in `Rakefile` and the `netlify.toml` configuration file.
@@ -410,6 +410,9 @@ Reach out to our Netlify integration contact to make sure that deployed branches
 
 === Integration Contact
 
-Main Contact: https://github.com/Mogztter[@Mogztter]
+Main Contact: {url-gh-mogztter}[@Mogztter^]
 
-Also, in order to stay with a free plan, only the following people have control over our Netlify integration: https://github.com/Mogztter[@Mogztter], https://github.com/mojavelinux[@mojavelinux] and https://github.com/graphitefriction[@graphitefriction].
+Also, in order to stay with a free plan, only the following people have control over our Netlify integration:
+{url-gh-mogztter}[@Mogztter^],
+{url-gh-mojavelinux}[@mojavelinux^] and
+{url-gh-graphitefriction}[@graphitefriction^].

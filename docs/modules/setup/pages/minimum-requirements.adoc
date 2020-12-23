@@ -3,8 +3,8 @@
 Our requirements are expressed in our packages and by our dependencies.
 Basically, all you need is the package manager of the flavor of Asciidoctor reveal.js you are interested to run:
 
-* With Ruby / Bundler: A https://www.ruby-lang.org/en/downloads/[recent Ruby^] and {url-bundler}[Bundler^]
-* With JavaScript (Node.js) / npm: a https://nodejs.org/en/download/[recent Node.js^] environment
+* With Ruby / Bundler: A {url-ruby-download}[recent Ruby^] and {url-bundler}[Bundler^]
+* With JavaScript (Node.js) / npm: a {url-nodejs-download}[recent Node.js^] environment
 
 If you need more details about our dependencies check out Asciidoctor dependencies:
 

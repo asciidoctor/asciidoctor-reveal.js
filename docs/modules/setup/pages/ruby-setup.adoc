@@ -62,7 +62,7 @@ convert AsciiDoc source with
 
   $ bundle exec asciidoctor-revealjs CONTENT_FILE.adoc
 
-TIP: If you are using https://pages.github.com/[GitHub Pages^], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
+TIP: If you are using {url-gh-pages}[GitHub Pages^], plan ahead by keeping your source files on `master` branch and all output files on the `gh-pages` branch.
 
 == Features unique to the Ruby CLI
 
@@ -83,6 +83,6 @@ The feature is activated with the `--template-dir` or `-T` option:
   $ bundle exec asciidoctor-revealjs -T templates/ CONTENT_FILE.adoc
 
 Any individual template file not provided in the directory specified on the command-line will fall back to the template provided by your version of Asciidoctor reveal.js.
-Refer to our https://github.com/asciidoctor/asciidoctor-reveal.js/tree/master/templates[templates^] for inspiration.
+Refer to our {url-project-templates}[templates^] for inspiration.
 
 This feature hasn't been ported to the JavaScript CLI (and API) or the standalone executables.
