@@ -1,0 +1,23 @@
+name: Docs
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  lint:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Vale
+        run: |
+          curl -sfL https://install.goreleaser.com/github.com/ValeLint/vale.sh | sh -s v2.6.8
+          export PATH="./bin:$PATH"
+      - name: Lint
+        run: |
+          ./bin/vale docs/**.adoc
