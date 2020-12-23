@@ -9,17 +9,14 @@ extends: substitution
 message: 'Use "%s" instead of "%s".'
 level: error
 ignorecase: true
+nonword: false
+scope: text
 swap:
 #  netlify: Netlify
-  AsciiDoctor: Asciidoctor
-  asciiDoctor: Asciidoctor
-  asciidoctor: Asciidoctor
-  Reveal.js: reveal.js
-  AsciiDoctorj: AsciidoctorJ
-  asciiDoctorj: AsciidoctorJ
+  '\s(asciidoctor)': Asciidoctor
+  reveal.js: reveal.js
   asciidoctorj: AsciidoctorJ
 #  bundler: Bundler
-  Asciidoctor-reveal.js: Asciidoctor reveal.js
   asciidoctor-reveal.js: Asciidoctor reveal.js
 #  repo: repository
 #  Javascript: JavaScript
