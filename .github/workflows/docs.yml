@@ -20,4 +20,4 @@ jobs:
           export PATH="./bin:$PATH"
       - name: Lint
         run: |
-          ./bin/vale docs/**.adoc
+          ./bin/vale docs/**
