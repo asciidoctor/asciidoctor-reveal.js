@@ -22,11 +22,6 @@ swap:
   node.js: Node.js
   npm: npm
   '[^\.-]js': JS
-  # math in xref target :|
-  # see: docs/modules/project/pages/hacking.adoc#7 and docs/modules/setup/nav.adoc#2
-  #ruby: Ruby
-  # match the language attribute in a source block :|
-  # see: docs/modules/converter/pages/syntax/background.adoc#15
-  #asciidoc: AsciiDoc
-  # match in URLs (for instance: https://github.com/asciidoctor/asciidoctor-reveal.js) and in "asciidoctor-revealjs"
-  #asciidoctor: Asciidoctor
+  ruby: Ruby
+  asciidoc: AsciiDoc
+  asciidoctor: Asciidoctor
