@@ -18,7 +18,6 @@ swap:
   asciidoctorj: AsciidoctorJ
 #  bundler: Bundler
   asciidoctor-reveal.js: Asciidoctor reveal.js
-#  repo: repository
 #  Javascript: JavaScript
 #  javascript: JavaScript
 #  node: Node
