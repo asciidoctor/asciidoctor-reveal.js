@@ -36,7 +36,7 @@ source 'https://rubygems.org'
 gem 'asciidoctor-revealjs' # latest released version
 ----
 +
-NOTE: For some reason, when you use the system Ruby on Fedora, you also have to add the json gem to the Gemfile.
+NOTE: For some reason, when you use the system Ruby on Fedora, you also have to add the `json` gem to the Gemfile.
 +
 . Install the gems into the project
 

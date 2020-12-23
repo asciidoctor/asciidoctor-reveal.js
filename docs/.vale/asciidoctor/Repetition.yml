@@ -1,5 +1,5 @@
 ---
-# Error: gitlab.Repetition
+# Error: asciidoctor.Repetition
 #
 # Checks for duplicate words, like `the the` or `and and`.
 #

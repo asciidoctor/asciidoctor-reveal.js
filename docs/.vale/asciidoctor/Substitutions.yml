@@ -1,16 +1,16 @@
 ---
-# Error: gitlab.Substitutions
+# Error: asciidoctor.Substitutions
 #
-# Checks for use of some of the top misused terms at GitLab.
+# Checks for use of some of the top misused terms in the Asciidoctor community.
 # For substitutions only flagged as warnings, see SubstitutionWarning.yml
 #
 # For a list of all options, see https://errata-ai.gitbook.io/vale/getting-started/styles
 extends: substitution
 message: 'Use "%s" instead of "%s".'
-link: https://about.gitlab.com/handbook/communication/#top-misused-terms
 level: error
 ignorecase: true
 swap:
+#  netlify: Netlify
   AsciiDoctor: Asciidoctor
   asciiDoctor: Asciidoctor
   asciidoctor: Asciidoctor
@@ -18,3 +18,14 @@ swap:
   AsciiDoctorj: AsciidoctorJ
   asciiDoctorj: AsciidoctorJ
   asciidoctorj: AsciidoctorJ
+#  bundler: Bundler
+  Asciidoctor-reveal.js: Asciidoctor reveal.js
+  asciidoctor-reveal.js: Asciidoctor reveal.js
+#  repo: repository
+#  Javascript: JavaScript
+#  javascript: JavaScript
+#  node: Node
+#  NPM: npm
+#  Npm: npm
+#  ruby: Ruby
+#  '[^\.](js)': JS
