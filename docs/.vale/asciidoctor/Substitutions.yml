@@ -18,7 +18,7 @@ swap:
   netlify: Netlify
   bundler: Bundler
   javascript: JavaScript
-  '[^:]node': Node
+  node: Node
   node.js: Node.js
   npm: npm
   '[^\.-]js': JS

@@ -10,3 +10,6 @@ level: error
 scope: heading.h1
 match: $title
 style: Chicago
+exceptions:
+  - npm
+  - reveal.js

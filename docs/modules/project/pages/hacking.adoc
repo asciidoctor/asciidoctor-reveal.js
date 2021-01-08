@@ -4,7 +4,7 @@ Short instructions that aim to help potential contributors.
 
 == Getting Started
 
-* Setup the Asciidoctor-revealjs plugin in xref:ruby-localversion[development mode]
+* Setup the Asciidoctor reveal.js plugin in xref:ruby-localversion[development mode]
 * Modify the {url-slim}[slim templates^] in `templates/`
 * Templates need to be compiled before being used, do so with:
 
@@ -20,7 +20,7 @@ The next section will provide further help on how to use `print` statements or a
 == Inspect the template system
 
 To understand what you have access to in templates you can inject some Ruby.
-With the slim templating system, this is done by prepending the lines with a dash (`-`) and inserting a ruby statement.
+With the slim templating system, this is done by prepending the lines with a dash (`-`) and inserting a Ruby statement.
 Two complementary approaches can be used to explore the context offered by Asciidoctor through the template system:
 
 * logging on the command line via print-like statements
@@ -61,7 +61,7 @@ One might find `pp` to produce better output (and in some cases not):
 
 === Interactively debug a template
 
-Pry is a powerful debugger for ruby that features tab-completion.
+Pry is a powerful debugger for Ruby that features tab-completion.
 It is very useful to discover a complex object hierarchy like what Asciidoctor offers.
 
 ==== Initial Setup
@@ -70,7 +70,7 @@ It is very useful to discover a complex object hierarchy like what Asciidoctor o
 
 ==== Usage
 
-In order to be dropped into the debugger at a specific point in a template simply add the following two lines in the relevant `.slim` template file:
+In order to be dropped into the debugger at a specific point in a template add the following two lines in the relevant `.slim` template file:
 
 ----
 - require 'pry'
@@ -212,7 +212,7 @@ Early communication often times save time consuming mistakes or avoids duplicate
 We encourage contributors to communicate with us early.
 
 Branches on forks of this project are not very visible to maintainers as much as pull requests (PR).
-For this reason we used to recommend sending a PR even if it's not ready and prepend "WIP" in front of its name to let everyone see that you are working on a specific topic.
+For this reason we recommend to open a draft PR to let everyone know that you are working on a specific topic.
 Now, instead of prepending "WIP", we recommend using GitHub "draft pull request" feature instead.
 
 
@@ -256,14 +256,14 @@ In order for Asciidoctor.js to be able to call code from this converter, the ver
 Right now we track the exact git revision of Opal used by Asciidoctor.js and make sure that we match.
 Here is how:
 
-Versions known to work together can be found by looking at the Asciidoctor.js release notes, just replace <tag> with the `asciidoctor.js` release you are interested in: \https://github.com/asciidoctor/asciidoctor.js/releases/tag/<tag>.
+Versions known to work together can be found by looking at the Asciidoctor.js release notes: https://github.com/asciidoctor/asciidoctor.js/releases.
 Then that Opal version and git revision (if required) must be specified in `asciidoctor-revealjs.gemspec`.
 
-Starting with 3.0.0 we aim to retain binary compatibility between Asciidoctor.js and Asciidoctor reveal.js.
+Starting with 3.0.0, we aim to retain binary compatibility between Asciidoctor.js and Asciidoctor reveal.js.
 This should allow other Asciidoctor extensions to be called along with this converter.
 Asciidoctor.js is no longer a direct dependency but should be seen as a tool that powers this converter.
 We need to allow users to have flexibility in the version they choose to run.
-Asciidoctor.js maintainer told us that he is going to consider binary package incompatibility a major break and so we adjusted our README to tell users to install with a specific version range.
+Asciidoctor.js maintainers told us that they are going to consider binary package incompatibility a major break and so we adjusted our README to tell users to install with a specific version range.
 
 We will track and maintain the README on the major version supported and recommended:
 
@@ -399,7 +399,7 @@ Resulting slides are kept in `test/doctest/`.
 
 On every commit or PR, the {url-netlify}[Netlify^] service will convert some examples into slides and host the resulting pages on its platform where it will be visible by anyone.
 It hosts the converted HTML files, reveal.js framework and static content like images and CSS.
-This integration will allow us to easily preview PRs and demo features to users (source and converted result).
+This integration will allow us to preview PRs and demo features to users (source and converted result).
 See the `publish` rake task in `Rakefile` and the `netlify.toml` configuration file.
 
 === Sensitive Data Accidentally Pushed Out
