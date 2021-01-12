@@ -30,7 +30,7 @@ Due to our Ruby to JavaScript conversion process, published npm packages have st
 This table tracks this compatibility.
 
 |===
-|Asciidoctor-reveal.js version |Asciidoctor.js version
+|Asciidoctor reveal.js version |Asciidoctor.js version
 
 |3.x
 |2.x

@@ -21,7 +21,7 @@ For example, to disable all the default plugins set the following document attri
 
 == Additional plugins
 
-Additional reveal.js plugins can be installed and activated using AsciiDoc attributes and external javascript files.
+Additional reveal.js plugins can be installed and activated using AsciiDoc attributes and external JavaScript files.
 
 . Extract the plugin files in a directory
 . Create a JavaScript file that will contain the JavaScript statements to load the plugin (only one required even if you are using several plugins)
