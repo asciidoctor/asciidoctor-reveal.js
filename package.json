@@ -63,6 +63,7 @@
     "textlint-rule-no-repetition": "git+https://github.com/mogztter/textlint-rule-no-repetition.git#main",
     "textlint-rule-spelling": "^0.3.0",
     "textlint-rule-stop-words": "^2.0.9",
+    "textlint-rule-terminology": "^2.1.4",
     "textlint-rule-title-case": "^1.0.0"
   }
 }

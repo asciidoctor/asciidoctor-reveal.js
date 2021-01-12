@@ -62,7 +62,7 @@ It sets reveal.js`' `data-background-image` attribute.
 The `size` attribute is also supported.
 See the link:{url-revealjs-doc}#image-backgrounds[relevant reveal.js documentation] for details.
 
-NOTE: Background images file names are now relative to the `:imagesdir:` attribute if set.
+NOTE: Background images filenames are now relative to the `:imagesdir:` attribute if set.
 
 NOTE: The `canvas` keyword can be used instead of `background` for the same effect.
 

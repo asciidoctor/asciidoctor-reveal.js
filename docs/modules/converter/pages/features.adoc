@@ -51,7 +51,7 @@ There are a few ways to have no titles on slides.
 
 See {url-project-repo}/blob/master/examples/concealed-slide-titles.adoc[concealed-slide-titles.adoc].
 
-NOTE: `conceal` and `notitle` have the advantage that the slide still has an id so it can be linked to.
+NOTE: `conceal` and `notitle` have the advantage that the slide still has an ID so it can be linked to.
 
 IMPORTANT: Like the first page of an AsciiDoc document, the first slide is handled differently.
 To hide the whole slide use the `:notitle:` xref:asciidoc:document:header-ref.adoc[document attribute].

@@ -4,19 +4,25 @@ module.exports = {
   ],
   rules: {
     //'spelling': true,
+    'terminology': {
+      defaultTerms: true,
+      skip: ['Blockquote', 'CodeBlock'],
+      terms: [
+        // checks correct capitalization
+        'Asciidoctor',
+        'AsciiDoc',
+        'Bundler',
+        'npm',
+        'Ruby',
+        'Node',
+      ]
+    },
     'no-repetition': true,
     //'title-case': true,
     'stop-words': {
       skip: ['BlockQuote', 'CodeBlock'],
       defaultWords: false,
       words: [
-        // checks correct capitalization
-        ['asciidoctor', 'Asciidoctor'],
-        ['npm', 'npm'],
-        ['asciidoc', 'AsciiDoc'],
-        ['bundler', 'Bundler'],
-        ['ruby', 'Ruby'],
-        ['node', 'Node'],
         // checks for use of first person pronouns.
         ['I'],
         ['I\'ve'],

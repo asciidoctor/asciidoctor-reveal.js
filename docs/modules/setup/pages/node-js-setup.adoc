@@ -1,9 +1,9 @@
-= Node / JavaScript Setup
-:navtitle: Node / JavaScript
+= Node.js / JavaScript Setup
+:navtitle: Node.js / JavaScript
 
 == Prerequisites
 
-First you must install and configure {url-nodejs-download}[Node] on your machine.
+First you must install and configure {url-nodejs-download}[Node.js] on your machine.
 
 [[node-install]]
 == Install
