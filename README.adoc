@@ -19,7 +19,7 @@ endif::[]
 :url-asciidoctor: https://github.com/asciidoctor/asciidoctor
 :url-asciidoctorjs: https://github.com/asciidoctor/asciidoctor.js
 :url-revealjs-home: https://revealjs.com
-:url-documentation-site: https://docs.asciidoctor.org/reveal.js-converter/current
+:url-documentation-site: https://docs.asciidoctor.org/reveal.js-converter/latest/
 
 ifdef::env-github[]
 image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
