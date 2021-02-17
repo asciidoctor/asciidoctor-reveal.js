@@ -1,0 +1,25 @@
+// .text-formatting
+// :include: //div[@class="slides"]
+// :header_footer:
+= Text Formatting and Punctuation
+
+== Emphasis
+
+An italic _word_, and an italic _phrase of text_.
+
+== Strong
+
+A bold *word*, and a bold *phrase of text*.
+
+== Code
+
+"`Wait!`" Indigo plucked a small vial from her desk's top drawer
+and held it toward us.
+The vial's label read: `E=mc^2^`; the `E` represents _energy_,
+but also pure _genius!_
+
+== Superscript and Subscript
+
+Well the H~2~O formula written on their whiteboard could be part
+of a shopping list, but I don't think the local bodega sells
+E=mc^2^.
