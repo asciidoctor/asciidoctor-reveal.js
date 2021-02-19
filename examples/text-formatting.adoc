@@ -23,3 +23,12 @@ but also pure _genius!_
 Well the H~2~O formula written on their whiteboard could be part
 of a shopping list, but I don't think the local bodega sells
 E=mc^2^.
+
+== Quotation Marks and Apostrophes
+
+"`What kind of charm?`" Lazarus asked.
+"`An odoriferous one or a mineral one?`"
+
+Kizmet shrugged.
+"`The note from Olaf's desk says '`wormwood and licorice,`'
+but these could be normal groceries for werewolves.`"
