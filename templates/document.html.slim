@@ -16,6 +16,15 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     - [:description, :keywords, :author, :copyright].each do |key|
       - if attr? key
         meta name=key content=(attr key)
+    - if attr? 'favicon'
+      - if (icon_href = attr 'favicon').empty?
+        - icon_href = 'favicon.ico'
+        - icon_type = 'image/x-icon'
+      - elsif (icon_ext = File.extname icon_href)
+        - icon_type = icon_ext == '.ico' ? 'image/x-icon' : %(image/#{icon_ext.slice 1, icon_ext.length})
+      - else
+        - icon_type = 'image/x-icon'
+      link rel="icon" type="#{icon_type}" href="#{icon_href}"
     - linkcss = (attr? 'linkcss')
     link rel="stylesheet" href="#{revealjsdir}/css/reset.css"
     link rel="stylesheet" href="#{revealjsdir}/css/reveal.css"
