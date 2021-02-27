@@ -1,0 +1,13 @@
+// .favicon
+// Include default favicon (`./favicon.ico`)
+// :include: //head/link[@rel="icon"]
+// :header_footer:
+= Favicon
+:favicon:
+
+// .favicon-by-path
+// Include favicon by path
+// :include: //head/link[@rel="icon"]
+// :header_footer:
+= Favicon by Path
+:favicon: img/favicon.png
