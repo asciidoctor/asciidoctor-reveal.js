@@ -128,7 +128,7 @@ public class TestClass {
 
 NOTE: You can also use  `highlight=6-8` as an alternative to `highlight=6..8`.
 
-Finally, it is also possible to use https://revealjs.com/code/#step-by-step-highlights[Step-by-step Highlights] by seperating the different highlights with a pipe (`|`) symbol. For example:
+Finally, it is also possible to use https://revealjs.com/code/#step-by-step-highlights[step-by-step Highlights] by separating the different highlights with a pipe (`|`) symbol. For example:
 
 [source, asciidoc]
 -----
