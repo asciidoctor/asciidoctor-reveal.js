@@ -90,11 +90,11 @@ public class TestClass {
 ----
 -----
 
-By adding `highlight`, line numbers will be added:
+By adding `linenums`, line numbers will be added:
 
 [source, asciidoc]
 -----
-[source,java,highlight]
+[source,java,linenums]
 ----
 public class TestClass {
     public TestClass() {
@@ -108,11 +108,11 @@ public class TestClass {
 ----
 -----
 
-It is also possible to highlight only part of the source. This will highlight the `testMethod()` code:
+It is also possible to highlight only part of the source by using `highlight`. This will highlight the `testMethod()` code:
 
 [source, asciidoc]
 -----
-[source,java,highlight=6..8]
+[source,java,linenums,highlight=6..8]
 ----
 public class TestClass {
     public TestClass() {
@@ -125,6 +125,8 @@ public class TestClass {
 }
 ----
 -----
+
+WARNING: The highlighting only works using the default source code formatter https://highlightjs.org/[highlight.js].
 
 NOTE: You can also use  `highlight=6-8` as an alternative to `highlight=6..8`.
 
@@ -147,3 +149,5 @@ public class TestClass {
 -----
 
 This will first highlight the complete source block, then the constructor code on lines 2 to 4, and finally, the method code on lines 6 to 8.
+
+NOTE: Line numbers are always added if you use `highlight`. In that case, you can leave out `linenums`.
