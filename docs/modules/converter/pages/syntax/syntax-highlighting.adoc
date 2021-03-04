@@ -70,7 +70,7 @@ They are considered unsupported by the asciidoctor-reveal.js project.
 
 == Line number highlights
 
-Reveal.js can add https://revealjs.com/code/#line-numbers-%26-highlights[Line Numbers & Highlights] to source code blocks.
+reveal.js can add https://revealjs.com/code/#line-numbers-%26-highlights[Line Numbers & Highlights] to source code blocks.
 
 This example `source` block renders with no line numbers by default:
 
