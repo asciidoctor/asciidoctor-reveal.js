@@ -67,3 +67,87 @@ Alternatively, you can use http://rouge.jneen.net/[Rouge], http://coderay.rubych
 if you are using the Asciidoctor/Ruby/Bundler toolchain (not Asciidoctor.js/JavaScript/npm).
 Check the `examples/` directory for examples and notes about what needs to be done for them to work.
 They are considered unsupported by the asciidoctor-reveal.js project.
+
+== Line number highlights
+
+reveal.js can add https://revealjs.com/code/#line-numbers-%26-highlights[Line Numbers & Highlights] to source code blocks.
+
+This example `source` block renders with no line numbers by default:
+
+[source, asciidoc]
+-----
+[source,java]
+----
+public class TestClass {
+    public TestClass() {
+
+    }
+
+    public void testMethod() {
+
+    }
+}
+----
+-----
+
+By adding `linenums`, line numbers will be added:
+
+[source, asciidoc]
+-----
+[source,java,linenums]
+----
+public class TestClass {
+    public TestClass() {
+
+    }
+
+    public void testMethod() {
+
+    }
+}
+----
+-----
+
+It is also possible to highlight only part of the source by using `highlight`. This will highlight the whole `testMethod()` method:
+
+[source, asciidoc]
+-----
+[source,java,linenums,highlight=6..8]
+----
+public class TestClass {
+    public TestClass() {
+
+    }
+
+    public void testMethod() {
+
+    }
+}
+----
+-----
+
+WARNING: The highlighting only works using the default source code highlighter https://highlightjs.org/[Highlight.js].
+
+NOTE: You can also use `highlight=6-8` as an alternative to `highlight=6..8`.
+
+Finally, it is also possible to use https://revealjs.com/code/#step-by-step-highlights[step-by-step Highlights] by separating the different highlights with a pipe (`|`) symbol. For example:
+
+[source, asciidoc]
+-----
+[source,java,highlight='1..9|2..4|6..8']
+----
+public class TestClass {
+    public TestClass() {
+
+    }
+
+    public void testMethod() {
+
+    }
+}
+----
+-----
+
+This will first highlight the complete source block, then the constructor code on lines 2 to 4, and finally, the method code on lines 6 to 8.
+
+NOTE: Line numbers are always added if you use `highlight`. In that case, you can leave out `linenums`.
