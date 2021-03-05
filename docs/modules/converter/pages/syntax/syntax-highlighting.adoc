@@ -126,7 +126,7 @@ public class TestClass {
 ----
 -----
 
-WARNING: The highlighting only works using the default source code formatter https://highlightjs.org/[highlight.js].
+WARNING: The highlighting only works using the default source code highlighter https://highlightjs.org/[Highlight.js].
 
 NOTE: You can also use  `highlight=6-8` as an alternative to `highlight=6..8`.
 
