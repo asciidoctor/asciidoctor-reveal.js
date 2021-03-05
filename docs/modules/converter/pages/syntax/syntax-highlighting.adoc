@@ -108,7 +108,7 @@ public class TestClass {
 ----
 -----
 
-It is also possible to highlight only part of the source by using `highlight`. This will highlight the `testMethod()` code:
+It is also possible to highlight only part of the source by using `highlight`. This will highlight the whole `testMethod()` method:
 
 [source, asciidoc]
 -----
