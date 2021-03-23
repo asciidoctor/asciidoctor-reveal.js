@@ -360,6 +360,14 @@ has been completed:
 * [ ] Check that the new version is available on https://www.npmjs.com/package/@asciidoctor/reveal.js[npmjs.com]
 * [ ] Check that a https://github.com/asciidoctor/asciidoctor-reveal.js/releases[release has been created on GitHub].
 
+In addition, you can submit pull requests to downstream project:
+
+[%interactive]
+* [ ] submit a pull request downstream to update Asciidoctor reveal.js version in the Asciidoctor Docker Container
+** modify the `Dockerfile`, `Makefile` and `README.adoc` in: https://github.com/asciidoctor/docker-asciidoctor
+* [ ] submit a pull request downstream to update AsciidoctorJ reveal.js version
+** modify `gradle.properties`, `asciidoctorj-revealjs/gradle.properties` and `asciidoctorj-revealjs/build.gradle` in: https://github.com/asciidoctor/asciidoctorj-reveal.js
+
 === Prepare next version
 
 . Run the following command and follow the instructions:
