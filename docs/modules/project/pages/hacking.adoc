@@ -374,6 +374,15 @@ In addition, you can submit pull requests to downstream project:
 
  $ npm run release:next
 
+=== Maintenance branch
+
+You can create a maintenance branch from a tag.
+Please use the following name convention: `maint-{major}.{minor}.x` (e.g., `maint-4.1.x`).
+
+[%interactive]
+* [ ] push the maintenance branch: `git push origin maint-4.1.x`
+* [ ] don't forget to update Antora playbook to add this branch: https://github.com/asciidoctor/docs.asciidoctor.org/edit/main/antora-playbook.yml
+
 == Ruby and asciidoctor-doctest tests
 
 === Running tests
