@@ -45,7 +45,7 @@ NOTE: For some reason, when you use the system Ruby on Fedora, you also have to 
 . Optional: Copy or clone reveal.js presentation framework.
 Allows you to modify themes or view slides offline.
 
-  $ git clone -b 3.9.2 --depth 1 https://github.com/hakimel/reveal.js.git
+  $ git clone -b 4.1.2 --depth 1 https://github.com/hakimel/reveal.js.git
 
 == Rendering the AsciiDoc into slides
 
@@ -55,7 +55,7 @@ See examples on the xref:converter:features.adoc[Features page] to get started.
 . Generate HTML presentation from the AsciiDoc source
 
   $ bundle exec asciidoctor-revealjs \
-    -a revealjsdir=https://cdn.jsdelivr.net/npm/reveal.js@3.9.2 CONTENT_FILE.adoc
+    -a revealjsdir=https://cdn.jsdelivr.net/npm/reveal.js@4.1.2 CONTENT_FILE.adoc
 
 . If you did the optional step of having a local reveal.js clone you can
 convert AsciiDoc source with

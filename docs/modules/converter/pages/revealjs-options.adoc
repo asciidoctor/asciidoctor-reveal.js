@@ -30,7 +30,7 @@ Default is built-in [path]_lib/css/zenburn.css_.
 |<file\|URL>
 |Overrides reveal.js directory.
 Example: ../reveal.js or
-https://cdn.jsdelivr.net/npm/reveal.js@3.9.2.
+https://cdn.jsdelivr.net/npm/reveal.js@4.1.2.
 Default is `reveal.js/` unless in a Node.js environment where it is `node_modules/reveal.js/`.
 
 |:revealjs_controls:
