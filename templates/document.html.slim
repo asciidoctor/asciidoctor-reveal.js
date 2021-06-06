@@ -70,7 +70,6 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     - if syntax_hl && (syntax_hl.docinfo? :head)
       =syntax_hl.docinfo :head, self, cdn_base_url: cdn_base, linkcss: linkcss, self_closing_tag_slash: '/'
 
-    /! Printing and PDF exports
 
 
     - if attr? :customcss
