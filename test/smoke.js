@@ -18,7 +18,7 @@ const content = `= Title Slide
 
 const result = asciidoctor.convert(content, options)
 
-expect(result).to.contain('<script src="node_modules/reveal.js/js/reveal.js">')
+expect(result).to.contain('<script src="node_modules/reveal.js/dist/reveal.js">')
 expect(result).to.contain('<li><p>Foo</p></li>')
 
 // verify version info

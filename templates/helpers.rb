@@ -193,7 +193,7 @@ module Slim::Helpers
 
   def revealjs_dependencies(document, node, revealjsdir)
     dependencies = []
-    dependencies << "{ src: '#{revealjsdir}/plugin/zoom-js/zoom.js', async: true }" unless (node.attr? 'revealjs_plugin_zoom', 'disabled')
+    dependencies << "{ src: '#{revealjsdir}/plugin/zoom/zoom.js', async: true }" unless (node.attr? 'revealjs_plugin_zoom', 'disabled')
     dependencies << "{ src: '#{revealjsdir}/plugin/notes/notes.js', async: true }" unless (node.attr? 'revealjs_plugin_notes', 'disabled')
     dependencies << "{ src: '#{revealjsdir}/plugin/markdown/marked.js', async: true }" if (node.attr? 'revealjs_plugin_marked', 'enabled')
     dependencies << "{ src: '#{revealjsdir}/plugin/markdown/markdown.js', async: true }" if (node.attr? 'revealjs_plugin_markdown', 'enabled')

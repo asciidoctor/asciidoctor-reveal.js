@@ -4,7 +4,7 @@
 // :header_footer:
 = MathJax
 :stem:
-:revealjsdir: https://cdn.jsdelivr.net/npm/reveal.js@3.9.2
+:revealjsdir: https://cdn.jsdelivr.net/npm/reveal.js@4.1.1
 :mathjaxdir: https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/
 
 == Math Equation
