@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "test": "node test/smoke.js",
+    "lint:docs": "textlint docs/**/*.adoc",
     "examples": "node npm/examples.js",
     "release:description": "node npm/release/description.js",
     "release:prepare": "node npm/release/prepare.js",
@@ -48,13 +49,21 @@
   },
   "homepage": "https://github.com/asciidoctor/asciidoctor-reveal.js",
   "dependencies": {
-    "@asciidoctor/cli": "^3.1.0",
+    "@asciidoctor/cli": "^3.4.0",
     "reveal.js": "3.9.2"
   },
   "devDependencies": {
     "@asciidoctor/core": "^2.2.1",
-    "bestikk-log": "0.1.0",
+    "bestikk-log": "1.0.0-alpha.2",
+    "dictionary-en": "^3.1.0",
     "expect.js": "0.3.1",
-    "pkg": "^4.4.2"
+    "pkg": "^4.4.9",
+    "textlint": "^11.7.7",
+    "textlint-plugin-asciidoc": "git+https://github.com/Mogztter/textlint-plugin-asciidoc.git#main",
+    "textlint-rule-no-repetition": "git+https://github.com/mogztter/textlint-rule-no-repetition.git#main",
+    "textlint-rule-spelling": "^0.3.0",
+    "textlint-rule-stop-words": "^2.0.9",
+    "textlint-rule-terminology": "^2.1.4",
+    "textlint-rule-title-case": "^1.0.0"
   }
 }

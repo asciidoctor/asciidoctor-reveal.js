@@ -23,7 +23,7 @@ To understand what you have access to in templates you can inject some Ruby.
 With the slim templating system, this is done by prepending the lines with a dash (`-`) and inserting a Ruby statement.
 Two complementary approaches can be used to explore the context offered by Asciidoctor through the template system:
 
-* logging on the command line via print-like statements
+* logging on the command-line via print-like statements
 * jump into the context through an interactive debugger
 
 [NOTE]
@@ -185,7 +185,7 @@ Relevant documentation: {url-asciidoctor-abstractnode-attr}
 
 == Merge / Review policy
 
-Any non-trivial change should be integrated in master via a pull-request.
+Any non-trivial change should be integrated in `master` branch via a pull-request.
 This gives the community a chance to participate and helps write better code because it encourages people to review their own patches.
 
 Pull requests should come from personal forks in order not the clutter the upstream repository.
@@ -222,11 +222,11 @@ You can apply that label to a pull request that is complete and ready for review
 
 Makes triaging easier.
 
-== Node package
+== Node.js package
 
 === Test locally
 
-In order to test the Node package, you first need to build the converter into JavaScript and create a tarball of the project.
+In order to test the Node.js package, you first need to build the converter into JavaScript and create a tarball of the project.
 
   $ bundle exec rake build:js
   $ npm pack
@@ -281,7 +281,7 @@ For example:
 
   npx --node-arg=--inspect-brk asciidoctor-revealjs -v presentation.adoc
 
-Then open the Chrome Dev Tools and click on the Node logo in the top left corner.
+Then open the Chrome Dev Tools and click on the Node.js logo in the top left corner.
 
 
 == RubyGem package
