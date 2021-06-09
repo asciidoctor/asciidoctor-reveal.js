@@ -1,5 +1,5 @@
 <!-- .theme-custom -->
-<link href="reveal.js/css/reset.css" rel="stylesheet"><link href="reveal.js/css/reveal.css" rel="stylesheet"><link href="reveal.js/css/theme/owasp.css" id="theme" rel="stylesheet"><link href="theme-custom.css" rel="stylesheet">
+<link href="reveal.js/dist/reset.css" rel="stylesheet"><link href="reveal.js/dist/reveal.css" rel="stylesheet"><link href="reveal.js/dist/theme/owasp.css" id="theme" rel="stylesheet"><link href="theme-custom.css" rel="stylesheet">
 <div class="slides">
   <section class="title" data-state="title">
     <h1>OWASP Theme</h1>
@@ -32,7 +32,7 @@
     </div>
   </section>
 </div>
-<script src="reveal.js/js/reveal.js"></script><script>
+<script src="reveal.js/dist/reveal.js"></script><script>
   Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
     if (slide.getAttribute('data-background-color')) return;
     // user needs to explicitly say he wants CSS color to override otherwise we might break custom css or theme (#226)
@@ -191,7 +191,7 @@
 
     // Optional libraries used to extend on reveal.js
     dependencies: [
-        { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+        { src: 'reveal.js/plugin/zoom/zoom.js', async: true },
         { src: 'reveal.js/plugin/notes/notes.js', async: true }
     ],
 
