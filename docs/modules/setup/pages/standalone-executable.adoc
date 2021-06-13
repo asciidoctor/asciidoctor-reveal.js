@@ -11,7 +11,7 @@ The executables are built using the xref:node-js-setup.adoc[Node / JavaScript] t
 * Copy or clone the reveal.js presentation framework in the directory where you will build your slidedeck.
 Here we do a shallow clone of the repo:
 
-  $ git clone -b 3.9.2 --depth 1 https://github.com/hakimel/reveal.js.git
+  $ git clone -b 4.1.2 --depth 1 https://github.com/hakimel/reveal.js.git
 
 == Convert AsciiDoc into slides
 
