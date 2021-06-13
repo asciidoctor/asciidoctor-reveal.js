@@ -69,9 +69,6 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     - syntax_hl = self.syntax_highlighter
     - if syntax_hl && (syntax_hl.docinfo? :head)
       =syntax_hl.docinfo :head, self, cdn_base_url: cdn_base, linkcss: linkcss, self_closing_tag_slash: '/'
-
-
-
     - if attr? :customcss
       link rel='stylesheet' href=((customcss = attr :customcss).empty? ? 'asciidoctor-revealjs.css' : customcss)
     - unless (_docinfo = docinfo :head, '-revealjs.html').empty?
