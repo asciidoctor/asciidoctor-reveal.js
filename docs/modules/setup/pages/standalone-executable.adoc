@@ -34,7 +34,7 @@ If you don't have an existing presentation, you can create a sample presentation
 [source,asciidoc]
 ----
 = Title Slide
-:revealjsdir: reveal.js
+:revealjsdir:  https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.9.0
 
 == Slide One
 
