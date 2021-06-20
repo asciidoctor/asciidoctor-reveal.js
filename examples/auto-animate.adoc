@@ -1,0 +1,143 @@
+= Auto-Animate
+:revealjsdir: ../reveal.js
+
+++++
+<style>
+.brown {
+    color:brown;
+}
+</style>
+++++
+
+== Description
+
+Auto-animate is an option which you can use in adjacent slides.
+In this case, you could use `[%auto-animate]` at the very before
+line of slide title. +
+----
+[%auto-animate]
+== Description
+----
+
+//%auto-animate
+
+[%auto-animate]
+== auto-animate option
+
+[.brown]
+Matched element will be animated automatically!
+
+[%auto-animate]
+== auto-animate option
+
+And move to the right position!
+
+This is Great!
+
+Matched element will be animated automatically!
+
+//auto-animate-easing
+
+[%auto-animate,auto-animate-easing='ease-in-out']
+== auto-animate-easing
+
+
+ease in out!
+
+
+[%auto-animate,auto-animate-easing='ease-in-out']
+== auto-animate-easing
+
+This is GREAT!
+
+The moving speed could
+
+be controlled by CSS transition-timing-function
+
+
+ease in out!
+
+//auto-animate-unmatched
+
+[%auto-animate,auto-animate-unmatched=false]
+== auto-animate-unmatched
+
+Determines whether elements with no matching auto-animate target should fade in. 
+Set to false to make them appear instantly.
+
+[%auto-animate,auto-animate-unmatched=false]
+== auto-animate-unmatched
+
+This will be shown instantly.
+
+Determines whether elements with no matching auto-animate target should fade in. 
+Set to false to make them appear instantly.
+
+//auto-animate-duration
+
+[%auto-animate,auto-animate-duration=5]
+== auto-animate-duration
+
+Animation duration in seconds.
+
+[%auto-animate,auto-animate-duration=5]
+== auto-animate-duration
+
+This auto animation 
+
+will take 5 seconds.
+
+Animation duration in seconds.
+
+//auto-animate-delay
+
+[%auto-animate]
+== data-auto-animate-delay
+
+[data-auto-animate-delay=5]
+Animation delay in seconds (can only be set for specific elements, not at the slide level).
+
+[%auto-animate]
+== data-auto-animate-delay
+
+Attribute exposed to html correctly, not workable for now.
+
+[data-auto-animate-delay=5]
+Animation delay in seconds (can only be set for specific elements, not at the slide level).
+
+
+//auto-animate-id and auto-animate-restart
+[%auto-animate,auto-animate-id="two"]
+== auto-animate-id and %auto-animate-restart
+
+`%auto-animate,auto-animate-id="two"`
+
+When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+
+[%auto-animate,auto-animate-id="three"]
+== auto-animate-id and %auto-animate-restart
+
+`%auto-animate,auto-animate-id="three"`
+
+Two adjacent slides will only auto-animate if they have the same id or if both don't have one.
+
+When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+
+[%auto-animate,auto-animate-id="three"]
+== auto-animate-id and %auto-animate-restart
+
+`%auto-animate,auto-animate-id="three"`
+
+If same Id, animation will work.
+
+When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+
+[%auto-animate%auto-animate-restart,auto-animate-id="three"]
+== auto-animate-id and %auto-animate-restart
+
+`%auto-animate%auto-animate-restart,auto-animate-id="three"`
+
+auto-animate-restart will prevent auto-animate between the previous slide (even if they have the same id) but not between it and the next slide.
+
+When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+
