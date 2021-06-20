@@ -63,7 +63,13 @@
     data-background-video-muted=((attr? 'background-video-muted') || (option? 'muted'))
     data-background-opacity=(attr "background-opacity")
     data-autoslide=(attr "autoslide")
-    data-state=(attr 'state'))
+    data-state=(attr 'state')
+    data-auto-animate=((attr? 'auto-animate') || (option? 'auto-animate'))
+    data-auto-animate-easing=((attr 'auto-animate-easing') || (option? 'auto-animate-easing'))
+    data-auto-animate-unmatched=((attr 'auto-animate-unmatched') || (option? 'auto-animate-unmatched'))
+    data-auto-animate-duration=((attr 'auto-animate-duration') || (option? 'auto-animate-duration'))
+    data-auto-animate-id=(attr 'auto-animate-id')
+    data-auto-animate-restart=((attr? 'auto-animate-restart') || (option? 'auto-animate-restart')))
     - unless hide_title
       h2=section_title
     - if parent_section_with_vertical_slides

@@ -4,6 +4,7 @@
 ** xref:syntax/background.adoc[]
 ** xref:syntax/transition.adoc[]
 ** xref:syntax/state.adoc[]
+** xref:syntax/auto-animate.adoc[]
 ** xref:syntax/fragment.adoc[]
 ** xref:syntax/admonitions.adoc[]
 ** xref:syntax/syntax-highlighting.adoc[]

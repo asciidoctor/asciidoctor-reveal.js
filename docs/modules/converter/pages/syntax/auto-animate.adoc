@@ -1,0 +1,150 @@
+= Auto Animate
+
+This feature is a wrapper of reveal.js auto animation.
+
+Since your AsciiDoc file will be transformed into an HTML 5 presentation, 
+You can define Asciidoctor attributes, options and animate IDs to configure the reveal.js auto-animate feature.
+Under the hood, these settings will be mapped to `data-*` HTML properties, which you can check from: +
+https://revealjs.com/auto-animate/
+
+For bool attributes which means true if you set it, or false if you omit it,
+you should use asciidoctor option, such as: `%auto-animate`.
+
+For reveal.js settings which need to set specific values, you can use Asciidoctor attributes,
+such as: `auto-animate-easing=ease-in-out`.
+
+== Enable auto-animate
+
+To enable the reveal.js auto-animate feature, you can add the `%auto-animate` option on adjacent elements.
+
+In the following example, we are using the `%auto-animate` option on two adjacent sections:
+
+----
+[%auto-animate]
+== auto-animate option
+
+Matched element will be animated automatically!
+
+[%auto-animate]
+== auto-animate option
+
+And move to the right position!
+
+This is Great!
+
+Matched element will be animated automatically!
+----
+
+== Control unmatched element animation
+
+By default, no matching element will fade in.
+You can make them appear instantly with: `auto-animate-unmatched=false`.
+
+----
+[%auto-animate,auto-animate-unmatched=false]
+== auto-animate-unmatched
+
+Determines whether elements with no matching auto-animate target should fade in. 
+Set to false to make them appear instantly.
+
+[%auto-animate,auto-animate-unmatched=false]
+== auto-animate-unmatched
+
+This will be shown instantly.
+
+Determines whether elements with no matching auto-animate target should fade in. 
+Set to false to make them appear instantly.
+----
+
+== Set animation duration
+
+You can set the `auto-animate-duration` attribute to control the animation duration:
+
+----
+[%auto-animate,auto-animate-duration=5]
+== auto-animate-duration
+
+Animation duration in seconds.
+
+[%auto-animate,auto-animate-duration=5]
+== auto-animate-duration
+
+This auto animation 
+
+will take 5 second.
+
+Animation duration in seconds.
+----
+
+== Animation group
+
+You can separate groups of auto-animated slides, which will distinct from each other by using the `auto-animate-id` attribute.
+
+Auto animation occurs in adjacent slides of the same group or both don't have one.
+
+`auto-animate-restart` asciidoctor option will prevent auto-animate between the previous slide (even if they have the same id).
+
+Below example illustrates `auto-animate-id` and `auto-animate-restart` usage:
+
+----
+[%auto-animate,auto-animate-id="two"]
+== auto-animate-id and %auto-animate-restart
+
+`%auto-animate,auto-animate-id="two"`
+
+When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+
+[%auto-animate,auto-animate-id="three"]
+== auto-animate-id and %auto-animate-restart
+
+`%auto-animate,auto-animate-id="three"`
+
+Two adjacent slides will only auto-animate if they have the same id or if both don't have one.
+
+When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+
+[%auto-animate,auto-animate-id="three"]
+== auto-animate-id and %auto-animate-restart
+
+`%auto-animate,auto-animate-id="three"`
+
+If same Id, animation will work.
+
+When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+
+[%auto-animate%auto-animate-restart,auto-animate-id="three"]
+== auto-animate-id and %auto-animate-restart
+
+`%auto-animate%auto-animate-restart,auto-animate-id="three"`
+
+auto-animate-restart will prevent auto-animate between the previous slide (even if they have the same id) but not between it and the next slide.
+
+When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+----
+
+== Set animation easeing function
+
+To use `auto-animate-easing` asciidoctor attribute, you can set
+auto animation easing function.
+
+----
+[%auto-animate,auto-animate-easing='ease-in-out']
+== auto-animate-easing
+
+
+ease in out!
+
+
+[%auto-animate,auto-animate-easing='ease-in-out']
+== auto-animate-easing
+
+This is GREAT!
+
+The moving speed could
+
+be controlled by CSS transition-timing-function
+
+
+ease in out!
+----
+
