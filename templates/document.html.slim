@@ -86,6 +86,10 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         - unless (_docinfo = docinfo :footer, '-revealjs.html').empty?
           = _docinfo
     script src="#{revealjsdir}/dist/reveal.js"
+    //default loaded plugins
+    script src="#{revealjsdir}/plugin/notes/notes.js"
+    script src="#{revealjsdir}/plugin/highlight/highlight.js"
+    script src="#{revealjsdir}/plugin/zoom/zoom.js"
     / Supports easy AsciiDoc syntax for background color
     javascript:
       Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
@@ -243,6 +247,9 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         pdfSeparateFragments: #{to_boolean(attr 'revealjs_pdfseparatefragments', true)},
         // For slides that do not fit on a page, max number of pages
         pdfMaxPagesPerSlide: #{attr 'revealjs_pdfmaxpagesperslide', 1},
+
+        //default loaded plugin register
+        plugins: [ RevealHighlight, RevealNotes,RevealZoom ],
 
         // Optional libraries used to extend on reveal.js
         dependencies: [
