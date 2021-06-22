@@ -205,6 +205,14 @@ module Slim::Helpers
     dependencies.join(",\n      ")
   end
 
+  def revealjs_plugins(document,node,revealjsdir)
+    plugins=[]
+    plugins<<"RevealHighlight" unless (node.attr? 'revealjs_plugin_highlight', 'disabled')
+    plugins<<"RevealNotes" unless (node.attr? 'revealjs_plugin_notes', 'disabled')
+    plugins<<"RevealZoom" unless (node.attr? 'revealjs_plugin_zoom', 'disabled')
+    plugins.join(", ")
+  end
+
 
   # Between delimiters (--) is code taken from asciidoctor-bespoke 1.0.0.alpha.1
   # Licensed under MIT, Copyright (C) 2015-2016 Dan Allen and the Asciidoctor Project

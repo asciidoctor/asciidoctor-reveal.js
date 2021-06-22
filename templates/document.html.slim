@@ -87,9 +87,12 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
           = _docinfo
     script src="#{revealjsdir}/dist/reveal.js"
     //default loaded plugins
-    script src="#{revealjsdir}/plugin/notes/notes.js"
+    - unless (node.attr? 'revealjs_plugin_notes', 'disabled')
+      script src="#{revealjsdir}/plugin/notes/notes.js"
+    - unless (node.attr? 'revealjs_plugin_highlight', 'disabled')
     script src="#{revealjsdir}/plugin/highlight/highlight.js"
-    script src="#{revealjsdir}/plugin/zoom/zoom.js"
+    - unless (node.attr? 'revealjs_plugin_zoom', 'disabled')
+      script src="#{revealjsdir}/plugin/zoom/zoom.js"
     / Supports easy AsciiDoc syntax for background color
     javascript:
       Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
@@ -249,7 +252,8 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         pdfMaxPagesPerSlide: #{attr 'revealjs_pdfmaxpagesperslide', 1},
 
         //default loaded plugin register
-        plugins: [ RevealHighlight, RevealNotes,RevealZoom ],
+        //plugins: [ RevealHighlight, RevealNotes,RevealZoom ],
+        plugins: [ #{revealjs_plugins(document,node,revealjsdir)} ],
 
         // Optional libraries used to extend on reveal.js
         dependencies: [
