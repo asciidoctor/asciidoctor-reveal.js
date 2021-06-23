@@ -4,8 +4,7 @@
 // :header_footer:
 = Custom Plugins
 Author
-:revealjs_plugins: examples/revealjs-plugins.js
-:revealjs_plugins_configuration: examples/revealjs-plugins-conf.js
+:revealjs_config: ./reveal.js/plugin/3rd.js
 
 == Slide 1
 

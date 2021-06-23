@@ -86,13 +86,20 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         - unless (_docinfo = docinfo :footer, '-revealjs.html').empty?
           = _docinfo
     script src="#{revealjsdir}/dist/reveal.js"
-    //default loaded plugins
+    //default load notes, highlight and zoom, these are all reveal.js build in plugins
     - unless (node.attr? 'revealjs_plugin_notes', 'disabled')
       script src="#{revealjsdir}/plugin/notes/notes.js"
     - unless (node.attr? 'revealjs_plugin_highlight', 'disabled')
     script src="#{revealjsdir}/plugin/highlight/highlight.js"
     - unless (node.attr? 'revealjs_plugin_zoom', 'disabled')
       script src="#{revealjsdir}/plugin/zoom/zoom.js"
+    //for any other reveal.js build in plugins, user would have to enable them explicitly
+    - if (node.attr? 'revealjs_plugin_markdown', 'enabled')
+      script src="#{revealjsdir}/plugin/markdown/markdown.js"
+    - if (node.attr? 'revealjs_plugin_search', 'enabled')
+      script src="#{revealjsdir}/plugin/search/search.js"
+    - if (node.attr? 'revealjs_plugin_math', 'enabled')
+      script src="#{revealjsdir}/plugin/math/math.js"
     / Supports easy AsciiDoc syntax for background color
     javascript:
       Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
@@ -109,7 +116,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
       // More info about config & dependencies:
       // - https://github.com/hakimel/reveal.js#configuration
       // - https://github.com/hakimel/reveal.js#dependencies
-      Reveal.initialize({
+      let revealConfig={
         // Display presentation control arrows
         controls: #{to_boolean(attr 'revealjs_controls', true)},
         // Help the user learn the controls by providing hints, for example by
@@ -262,9 +269,19 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
 
         #{(attr? 'revealjs_plugins_configuration') ? File.read(attr('revealjs_plugins_configuration', '')) : ""}
 
-      });
+      };
+
+    /other plugins use js file to loading
+    - if attr? :revealjs_config
+      script src=(attr 'revealjs_config', '') 
+
+    javascript: 
+      //Reveal.initialize(revealConfig);
+      window.addEventListener("load", function(){Reveal.initialize(revealConfig);}); 
     / Workaround the "Only direct descendants of a slide section can be stretched" limitation in reveal.js
     / https://github.com/hakimel/reveal.js/issues/2584
+
+
     include stretch_nested_elements.js.slim
 
     - if syntax_hl && (syntax_hl.docinfo? :footer)
