@@ -89,8 +89,9 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     //default load notes, highlight and zoom, these are all reveal.js build in plugins
     - unless (node.attr? 'revealjs_plugin_notes', 'disabled')
       script src="#{revealjsdir}/plugin/notes/notes.js"
-    - unless (node.attr? 'revealjs_plugin_highlight', 'disabled')
-    script src="#{revealjsdir}/plugin/highlight/highlight.js"
+    //Override reveal.js built-in highlight.js syntax highlighter,so build-in highlight.js will not load
+    //- unless (node.attr? 'revealjs_plugin_highlight', 'disabled')
+    //script src="#{revealjsdir}/plugin/highlight/highlight.js"
     - unless (node.attr? 'revealjs_plugin_zoom', 'disabled')
       script src="#{revealjsdir}/plugin/zoom/zoom.js"
     //for any other reveal.js build in plugins, user would have to enable them explicitly

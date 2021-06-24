@@ -207,7 +207,8 @@ module Slim::Helpers
 
   def revealjs_plugins(document,node,revealjsdir)
     plugins=[]
-    plugins<<"RevealHighlight" unless (node.attr? 'revealjs_plugin_highlight', 'disabled')
+    # Override reveal.js built-in highlight.js syntax highlighter,so build-in highlight.js will not register
+    #plugins<<"RevealHighlight" unless (node.attr? 'revealjs_plugin_highlight', 'disabled')
     plugins<<"RevealNotes" unless (node.attr? 'revealjs_plugin_notes', 'disabled')
     plugins<<"RevealZoom" unless (node.attr? 'revealjs_plugin_zoom', 'disabled')
     plugins<<"RevealMarkdown" if (node.attr? 'revealjs_plugin_markdown', 'enabled')
