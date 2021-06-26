@@ -205,8 +205,8 @@
 
     // Optional libraries used to extend on reveal.js
     dependencies: [
-        { src: 'reveal.js/plugin/zoom/zoom.js', async: true, callback: () => { Reveal.registerPlugin(RevealZoom) } },
-        { src: 'reveal.js/plugin/notes/notes.js', async: true, callback: () => { Reveal.registerPlugin(RevealNotes) } }
+        { src: 'reveal.js/plugin/zoom/zoom.js', async: true, callback: function () { Reveal.registerPlugin(RevealZoom) } },
+        { src: 'reveal.js/plugin/notes/notes.js', async: true, callback: function () { Reveal.registerPlugin(RevealNotes) } }
     ],
 
 

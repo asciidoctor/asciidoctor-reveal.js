@@ -1,11 +1,10 @@
 // .revealjs-plugins
-// Use of the revealjs_plugins attribute to load custom revealjs plugins
+// Use docinfo to load third party plugins
 // :include: //body/script | //div[@class="slides"]
 // :header_footer:
 = Custom Plugins
 Author
-:revealjs_plugins: examples/revealjs-plugins.js
-:revealjs_plugins_configuration: examples/revealjs-plugins-conf.js
+:docinfo: private
 
 == Slide 1
 
