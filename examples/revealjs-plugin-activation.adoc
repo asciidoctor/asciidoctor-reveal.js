@@ -4,8 +4,9 @@
 // :header_footer:
 = Default Plugins Changes
 Author
-:revealjs_plugins_pdf: enabled
-:revealjs_plugins_marked: disabled
+:revealjs_plugins_zoom: disabled
+// notes is enabled by default!
+:revealjs_plugin_notes: enabled
 
 == Slide 1
 

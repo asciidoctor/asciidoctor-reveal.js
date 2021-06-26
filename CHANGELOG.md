@@ -5,6 +5,15 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## master (unreleased)
 
+### Upgrade considerations
+
+ * Plugin `marked` has been removed in reveal.js 4.0.0.
+   Consequently, the `revealjs_plugin_marked` attribute has no effect anymore.
+   You can still enable the Markdown plugin using the `revealjs_plugin_markdown` attribute.
+
+### Enhancements
+
+ * Upgrade to reveal.js 4.1.2 (#370)
 
 ## 4.1.0 (2020-12-19)
 
