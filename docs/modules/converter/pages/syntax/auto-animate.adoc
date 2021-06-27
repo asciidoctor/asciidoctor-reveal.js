@@ -56,7 +56,7 @@ Set to false to make them appear instantly.
 
 == Set animation duration
 
-You can set auto-animate-duration asciidocotr attribute to control the animation duration:
+You can set the `auto-animate-duration` attribute to control the animation duration:
 
 ----
 [%auto-animate,auto-animate-duration=5]
@@ -145,6 +145,5 @@ be controlled by CSS transition-timing-function
 
 ease in out!
 ----
-
 
 
