@@ -3,7 +3,7 @@
 This feature is a wrapper of reveal.js auto animation.
 
 Since your AsciiDoc file will be transformed into an HTML 5 presentation, 
-all settings will be mapped to `data-*` HTML attributes.
+all settings will be mapped to `data-*` HTML properties.
 
 For bool attributes which means true if you set it, or false if you omit it,
 you should use asciidoctor option, such as: `%auto-animate`.
