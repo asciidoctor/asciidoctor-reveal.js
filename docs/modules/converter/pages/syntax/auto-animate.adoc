@@ -13,7 +13,9 @@ such as: `auto-animate-easing=ease-in-out`.
 
 == Enable animate
 
-All you need to do is add %auto-animate to two adjacent slides.
+To enable the reveal.js auto-animate feature, you can add the `%auto-animate` option on adjacent elements.
+
+In the following example, we are using the `%auto-animate` option on two adjacent sections:
 
 ----
 [%auto-animate]
@@ -143,7 +145,6 @@ be controlled by CSS transition-timing-function
 
 ease in out!
 ----
-
 
 
 
