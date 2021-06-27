@@ -2,7 +2,7 @@
 
 This feature is a wrapper of reveal.js auto animation.
 
-Since your adoc file will be transformed into HTML slide file, 
+Since your AsciiDoc file will be transformed into an HTML 5 presentation, 
 all settings will be mapped to `data-*` HTML attributes.
 
 For bool attributes which means true if you set it, or false if you omit it,
@@ -143,7 +143,6 @@ be controlled by CSS transition-timing-function
 
 ease in out!
 ----
-
 
 
 
