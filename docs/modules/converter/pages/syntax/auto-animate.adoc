@@ -76,7 +76,7 @@ Animation duration in seconds.
 
 == Animation group
 
-You can separate groups of auto-animated slides, which will distinct from each other by `auto-animate-id` asciidocotor attribute.
+You can separate groups of auto-animated slides, which will distinct from each other by using the `auto-animate-id` attribute.
 
 Auto animation occurs in adjacent slides of the same group or both don't have one.
 
@@ -145,5 +145,4 @@ be controlled by CSS transition-timing-function
 
 ease in out!
 ----
-
 
