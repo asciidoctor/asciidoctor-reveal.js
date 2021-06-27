@@ -433,3 +433,10 @@ Also, in order to stay with a free plan, only the following people have control 
 {url-gh-mogztter}[@Mogztter^],
 {url-gh-mojavelinux}[@mojavelinux^] and
 {url-gh-graphitefriction}[@graphitefriction^].
+
+== common used command for hacking this repo
+
+* `bundle exec rake build`: regenerate converter.rb
+* `bundle exec asciidoctor-revealjs test.adoc --trace`: convert test.adoc to html slide
+* `bundle exec rake build:js`: build the converter into Javascript
+* `npm run package`: generate binary executable for linux, macos and windows. (you should run `bundle exec rake build:js` firstly)
