@@ -8,8 +8,8 @@ all settings will be mapped to `data-*` HTML attributes.
 For bool attributes which means true if you set it, or false if you omit it,
 you should use asciidoctor option, such as: `%auto-animate`.
 
-For attributes which need to set specific values, you can use asciidoctor attribute,
-such as: `auto-animate-easing='ease-in-out'`.
+For reveal.js settings which need to set specific values, you can use Asciidoctor attributes,
+such as: `auto-animate-easing=ease-in-out`.
 
 == Enable animate
 
@@ -143,7 +143,6 @@ be controlled by CSS transition-timing-function
 
 ease in out!
 ----
-
 
 
 
