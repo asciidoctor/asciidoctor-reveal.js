@@ -1,0 +1,22 @@
+
+<!--chalkboard-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+<link rel="stylesheet" href="./reveal.js/plugin/chalkboard/style.css">
+<script type="text/javascript" src="./reveal.js/plugin/chalkboard/plugin.js"></script>
+<script type="text/javascript">
+  revealConfig.plugins.push(RevealChalkboard);
+  revealConfig.chalkboard={ // font-awesome.min.css must be available
+    src: "chalkboard/chalkboard.json",
+    storage: "chalkboard-demo",
+    toggleChalkboardButton: { left: "80px" },
+    toggleNotesButton: { left: "130px" },
+    colorButtons: 5
+  }
+</script>
+
+<!--menu-->
+<script type="text/javascript" src="./reveal.js/plugin/menu/menu.js"></script>
+<script type="text/javascript">
+    revealConfig.plugins.push(RevealMenu);
+</script>
+  

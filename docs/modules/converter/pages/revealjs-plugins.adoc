@@ -7,7 +7,6 @@ By default, generated presentations will have the following reveal.js plugins en
 
 * plugin/zoom/zoom.js
 * plugin/notes/notes.js
-* plugin/highlight/highlight.js
 
 All these plugins are part of the reveal.js built-in Plugins.
 
@@ -18,7 +17,6 @@ For example, to disable all the default plugins set the following document attri
 ----
 :revealjs_plugin_zoom: disabled
 :revealjs_plugin_notes: disabled
-:revealjs_plugin_highlight: disabled
 ----
 
 For the reveal.js built-in Plugins which are not loaded by default, you can enable
@@ -28,52 +26,42 @@ them explicitly:
 :revealjs_plugin_markdown: enabled
 :revealjs_plugin_search: enabled
 :revealjs_plugin_math: enabled
+:revealjs_plugin_highlight: enabled 
 ----
 
 == Additional plugins
 
-Additional reveal.js plugins can be installed and activated using external JavaScript files.
+=== Introducton
+
+Additional reveal.js plugins can be installed and activated using asciidoctor-revealjs docinfo mechanism.
+You can check the detail of this mechanism here: https://docs.asciidoctor.org/asciidoctor/latest/docinfo/
+
+In revealjs-asciidoctor, adoc file will be converted to HTML file, and from HTML point of view: 
+. To install and activate additional plugins, you may need to set reveal initializating object properties,  which you can directly use `revealConfig` in your docinfo file. 
+. You can push loaded plugins to `revealConfig.plugins`, so that asciidoctor-revealjs will register them for you.
+
+=== Procedure
 
 . Extract the plugin files in a directory
-. Create a JavaScript file that will contain the JavaScript statements to load and register the plugin
-. Add a `:revealjs_config:` attribute to point to that JavaScript file
+. Create docinfo file and enable it in your adoc file
 
-
-Looking at the example provided in the repository will provide guidance: link:{url-project-examples}/revealjs-plugins.adoc[AsciiDoc source], link:{url-project-examples}/3rd.js[Plugin Loader].
+Looking at the example provided in the repository will provide guidance: link:{url-project-examples}/revealjs-plugins.adoc[AsciiDoc source], link:{url-project-examples}/docinfo-footer.html[Plugin Loader].
 
 Provide that you put additional plugins in reveal.js/plugin, 
 and your slide adoc out put html file is slibing of reveal.js folder.
 you can load additional plugins as below.
 
-. In your adoc file, add `:revealjs_config: ./reveal.js/plugin/3rd.js`,
+. In your adoc file, add `:docinfo: shared` and `:docinfodir: .`.
 Looking at the example provided in the repository will provide guidance: link:{url-project-examples}/revealjs-plugins.adoc[AsciiDoc source]
-. create 3rd.js at reveal.js/plugin, the code is listed below, which will load 
+. create docinfo-footer.html at the same folder as you adoc file, the code is listed below, which will load 
 chalkboard and menu plugins: +
-[source,javascript]
+[source,html]
 ----
-/*
-slide html will execute this js file.
-Here to load plugins js file and other needed assets,
-then set revealConfig,
-after this executed, slide html will call
-window.addEventListener("load", function(){Reveal.initialize(revealConfig);}); 
-*/
-
-//Chalkboard
-new_element = document.createElement("link");
-new_element.rel = "stylesheet";
-new_element.href = "https://use.fontawesome.com/releases/v5.15.3/css/all.css";
-document.getElementsByTagName("head")[0].appendChild(new_element);
-
-new_element = document.createElement("link");
-new_element.rel = "stylesheet";
-new_element.href = "./reveal.js/plugin/chalkboard/style.css";
-document.getElementsByTagName("head")[0].appendChild(new_element);
-
-new_element = document.createElement("script");
-new_element.type = "text/javascript";
-new_element.src = "./reveal.js/plugin/chalkboard/plugin.js";
-new_element.onload = function () {
+<!--chalkboard-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+<link rel="stylesheet" href="./reveal.js/plugin/chalkboard/style.css">
+<script type="text/javascript" src="./reveal.js/plugin/chalkboard/plugin.js"></script>
+<script type="text/javascript">
   revealConfig.plugins.push(RevealChalkboard);
   revealConfig.chalkboard={ // font-awesome.min.css must be available
     src: "chalkboard/chalkboard.json",
@@ -82,20 +70,14 @@ new_element.onload = function () {
     toggleNotesButton: { left: "130px" },
     colorButtons: 5
   }
+</script>
 
-};
-document.getElementsByTagName("head")[0].appendChild(new_element);
-
-//menu
-new_element = document.createElement("script");
-new_element.type = "text/javascript";
-new_element.src = "./reveal.js/plugin/menu/menu.js";
-document.getElementsByTagName("head")[0].appendChild(new_element);
-new_element.onload = function () {
-  revealConfig.plugins.push(RevealMenu);
-
-};
+<!--menu-->
+<script type="text/javascript" src="./reveal.js/plugin/menu/menu.js"></script>
+<script type="text/javascript">
+    revealConfig.plugins.push(RevealMenu);
+</script>
 ----
 
 
-Looking at the example provided in the repository will provide guidance: link:{url-project-examples}/3rd.js[Plugin Loader].
+Looking at the example provided in the repository will provide guidance: link:{url-project-examples}/docinfo-footer.html}[Plugin Loader].

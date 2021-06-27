@@ -4,7 +4,8 @@
 // :header_footer:
 = Custom Plugins
 Author
-:revealjs_config: ./reveal.js/plugin/3rd.js
+:docinfo: shared
+:docinfodir: .
 
 == Slide 1
 

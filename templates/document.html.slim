@@ -271,11 +271,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         #{(attr? 'revealjs_plugins_configuration') ? File.read(attr('revealjs_plugins_configuration', '')) : ""}
 
       };
-
-    /other plugins use js file to loading
-    - if attr? :revealjs_config
-      script src=(attr 'revealjs_config', '') 
-
+      
     javascript: 
       //Reveal.initialize(revealConfig);
       window.addEventListener("load", function(){Reveal.initialize(revealConfig);}); 
