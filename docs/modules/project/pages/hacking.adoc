@@ -293,7 +293,7 @@ Compile the converter:
 
   $ bundle exec rake build
 
-In a clean directory besides the `asciidoctor-reveal.js` repository, create the following `Gemspec` file:
+In a clean directory besides the `asciidoctor-reveal.js` repository, create the following `Gemfile` file:
 
   source 'https://rubygems.org'
   gem 'asciidoctor-revealjs', :path => '../asciidoctor-reveal.js'
