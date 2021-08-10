@@ -3,7 +3,7 @@
 // :header_footer:
 = Use a Custom reveal.js Theme
 // please note that in this specific case it would be better to use :revealjs_theme: beige
-:revealjs_customtheme: reveal.js/css/theme/beige.css
+:revealjs_customtheme: reveal.js/dist/theme/beige.css
 
 == Beige is the New Black
 

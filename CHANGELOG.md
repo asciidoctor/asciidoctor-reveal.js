@@ -5,6 +5,76 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## master (unreleased)
 
+### Upgrade considerations
+
+ * Plugin `marked` has been removed in reveal.js 4.0.0.
+   Consequently, the `revealjs_plugin_marked` attribute has no effect anymore.
+   You can still enable the Markdown plugin using the `revealjs_plugin_markdown` attribute.
+ * `revealjs_plugins` and `revealjs_plugins_configuration` are replaced by Docinfo.
+
+**Before**
+
+_presentation.adoc_
+```adoc
+= Third-party Plugins
+:revealjs_plugins: examples/revealjs-plugins.js
+:revealjs_plugins_configuration: examples/revealjs-plugins-conf.js
+
+// ...
+```
+_revealjs-plugin.js_
+```js
+{ src: 'revealjs-plugins/reveal.js-menu/menu.js' },
+{ src: 'revealjs-plugins/chalkboard/chalkboard.js' }
+```
+_revealjs-plugin-conf.js_
+```js
+menu: {
+  side: 'right',
+  openButton: false
+},
+keyboard: {
+  67: function() { RevealChalkboard.toggleNotesCanvas() },
+  66: function() { RevealChalkboard.toggleChalkboard() }
+},
+```
+
+**After**
+
+_presentation.adoc_
+```adoc
+= Third-party Plugins
+:docinfo: private
+
+// ...
+```
+
+_presentation-docinfo-footer.html_
+```html
+<script src="revealjs-plugins/menu/menu.js"></script>
+<link rel="stylesheet" href="revealjs-plugins/chalkboard/style.css">
+<script src="revealjs-plugins/chalkboard/plugin.js"></script>
+<script>
+  Reveal.configure({
+    menu: {
+      side: 'right',
+      openButton: false
+    },
+    keyboard: {
+      67: function() { RevealChalkboard.toggleNotesCanvas() },
+      66: function() { RevealChalkboard.toggleChalkboard() }
+    }
+  })
+  Reveal.registerPlugin(RevealMenu)
+  Reveal.registerPlugin(RevealChalkboard)
+</script>
+```
+
+ * If you are using third party plugins (such as chalkboard), please upgrade to the latest version.
+
+### Enhancements
+
+ * Upgrade to reveal.js 4.1.2 (#370)
 
 ## 4.1.0 (2020-12-19)
 

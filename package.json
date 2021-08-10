@@ -19,7 +19,7 @@
     "release:description": "node npm/release/description.js",
     "release:prepare": "node npm/release/prepare.js",
     "release:next": "node npm/release/next.js",
-    "package": "npm i @asciidoctor/core && pkg -t 'node12-linux-x64,node12-macos-x64,node12-win-x64' package.json --out-path dist/"
+    "package": "npm i @asciidoctor/core && pkg -t node12-linux-x64,node12-macos-x64,node12-win-x64 package.json --out-path dist/"
   },
   "repository": {
     "type": "git",
@@ -49,10 +49,10 @@
   "homepage": "https://github.com/asciidoctor/asciidoctor-reveal.js",
   "dependencies": {
     "@asciidoctor/cli": "^3.1.0",
-    "reveal.js": "3.9.2"
+    "reveal.js": "4.1.2"
   },
   "devDependencies": {
-    "@asciidoctor/core": "^2.2.1",
+    "@asciidoctor/core": "^2.2.4",
     "bestikk-log": "0.1.0",
     "expect.js": "0.3.1",
     "pkg": "^4.4.2"

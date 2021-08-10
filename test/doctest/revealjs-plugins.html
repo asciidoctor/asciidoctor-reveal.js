@@ -21,7 +21,7 @@
     </div>
   </section>
 </div>
-<script src="reveal.js/js/reveal.js"></script>
+<script src="reveal.js/dist/reveal.js"></script>
 <script>
   Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
     if (slide.getAttribute('data-background-color')) return;
@@ -181,22 +181,10 @@
 
     // Optional libraries used to extend on reveal.js
     dependencies: [
-        { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
-        { src: 'reveal.js/plugin/notes/notes.js', async: true },
-        { src: 'revealjs-plugins/reveal.js-menu/menu.js' },
-{ src: 'revealjs-plugins/chalkboard/chalkboard.js' }
+        { src: 'reveal.js/plugin/zoom/zoom.js', async: true, callback: function () { Reveal.registerPlugin(RevealZoom) } },
+        { src: 'reveal.js/plugin/notes/notes.js', async: true, callback: function () { Reveal.registerPlugin(RevealNotes) } }
     ],
 
-    menu: {
-      side: 'right'
-  },
-  keyboard: {
-  	    67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
-  	    66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
-  	    46: function() { RevealChalkboard.clear() },	// clear chalkboard when 'DEL' is pressed
-  	     8: function() { RevealChalkboard.reset() },	// reset chalkboard data on current slide when 'BACKSPACE' is pressed
-  	    68: function() { RevealChalkboard.download() },	// downlad recorded chalkboard drawing when 'd' is pressed
-  },
 
 
   });

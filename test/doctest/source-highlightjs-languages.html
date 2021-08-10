@@ -28,7 +28,7 @@ B = gauss_filter_3_3(A);</code></pre>
     </div>
   </section>
 </div>
-<script src="reveal.js/js/reveal.js"></script>
+<script src="reveal.js/dist/reveal.js"></script>
 <script>
   Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
     if (slide.getAttribute('data-background-color')) return;
@@ -188,8 +188,8 @@ B = gauss_filter_3_3(A);</code></pre>
 
     // Optional libraries used to extend on reveal.js
     dependencies: [
-        { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
-        { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        { src: 'reveal.js/plugin/zoom/zoom.js', async: true, callback: function () { Reveal.registerPlugin(RevealZoom) } },
+        { src: 'reveal.js/plugin/notes/notes.js', async: true, callback: function () { Reveal.registerPlugin(RevealNotes) } }
     ],
 
 
@@ -262,9 +262,9 @@ B = gauss_filter_3_3(A);</code></pre>
     layoutSlideContents(960, 700)
   });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/yaml.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/scilab.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.3/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.3/languages/yaml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.3/languages/scilab.min.js"></script>
 <script>
   /* highlightjs-line-numbers.js 2.6.0 | (C) 2018 Yauheni Pakala | MIT License | github.com/wcoder/highlightjs-line-numbers.js */
   /* Edited by Hakim for reveal.js; removed async timeout */
@@ -338,14 +338,25 @@ B = gauss_filter_3_3(A);</code></pre>
       HIGHLIGHT_LINE_DELIMITER: ',',
       HIGHLIGHT_LINE_RANGE_DELIMITER: '-',
 
-      init: function() {
+      init: function( reveal ) {
 
         // Read the plugin config options and provide fallbacks
         var config = Reveal.getConfig().highlight || {};
         config.highlightOnLoad = typeof config.highlightOnLoad === 'boolean' ? config.highlightOnLoad : true;
         config.escapeHTML = typeof config.escapeHTML === 'boolean' ? config.escapeHTML : true;
 
-        [].slice.call( document.querySelectorAll( '.reveal pre code' ) ).forEach( function( block ) {
+        [].slice.call( reveal.getRevealElement().querySelectorAll( 'pre code' ) ).forEach( function( block ) {
+
+          block.parentNode.className = 'code-wrapper';
+
+          // Code can optionally be wrapped in script template to avoid
+          // HTML being parsed by the browser (i.e. when you need to
+          // include <, > or & in your code).
+          let substitute = block.querySelector( 'script[type="text/template"]' );
+          if( substitute ) {
+            // textContent handles the HTML entity escapes for us
+            block.textContent = substitute.innerHTML;
+          }
 
           // Trim whitespace if the "data-trim" attribute is present
           if( block.hasAttribute( 'data-trim' ) && typeof block.innerHTML.trim === 'function' ) {
@@ -359,7 +370,7 @@ B = gauss_filter_3_3(A);</code></pre>
 
           // Re-highlight when focus is lost (for contenteditable code)
           block.addEventListener( 'focusout', function( event ) {
-            hljs.highlightBlock( event.currentTarget );
+            hljs.highlightElement( event.currentTarget );
           }, false );
 
           if( config.highlightOnLoad ) {
@@ -367,6 +378,13 @@ B = gauss_filter_3_3(A);</code></pre>
           }
         } );
 
+        // If we're printing to PDF, scroll the code highlights of
+        // all blocks in the deck into view at once
+        reveal.on( 'pdf-ready', function() {
+          [].slice.call( reveal.getRevealElement().querySelectorAll( 'pre code[data-line-numbers].current-fragment' ) ).forEach( function( block ) {
+            RevealHighlight.scrollHighlightedLineIntoView( block, {}, true );
+          } );
+        } );
       },
 
       /**
@@ -379,13 +397,15 @@ B = gauss_filter_3_3(A);</code></pre>
        */
       highlightBlock: function( block ) {
 
-        hljs.highlightBlock( block );
+        hljs.highlightElement( block );
 
         // Don't generate line numbers for empty code blocks
         if( block.innerHTML.trim().length === 0 ) return;
 
         if( block.hasAttribute( 'data-line-numbers' ) ) {
           hljs.lineNumbersBlock( block, { singleLine: true } );
+
+          var scrollState = { currentBlock: block };
 
           // If there is at least one highlight step, generate
           // fragments
@@ -395,6 +415,7 @@ B = gauss_filter_3_3(A);</code></pre>
             // If the original code block has a fragment-index,
             // each clone should follow in an incremental sequence
             var fragmentIndex = parseInt( block.getAttribute( 'data-fragment-index' ), 10 );
+
             if( typeof fragmentIndex !== 'number' || isNaN( fragmentIndex ) ) {
               fragmentIndex = null;
             }
@@ -416,6 +437,10 @@ B = gauss_filter_3_3(A);</code></pre>
                 fragmentBlock.removeAttribute( 'data-fragment-index' );
               }
 
+              // Scroll highlights into view as we step through them
+              fragmentBlock.addEventListener( 'visible', RevealHighlight.scrollHighlightedLineIntoView.bind( Plugin, fragmentBlock, scrollState ) );
+              fragmentBlock.addEventListener( 'hidden', RevealHighlight.scrollHighlightedLineIntoView.bind( Plugin, fragmentBlock.previousSibling, scrollState ) );
+
             } );
 
             block.removeAttribute( 'data-fragment-index' )
@@ -423,8 +448,112 @@ B = gauss_filter_3_3(A);</code></pre>
 
           }
 
+          // Scroll the first highlight into view when the slide
+          // becomes visible. Note supported in IE11 since it lacks
+          // support for Element.closest.
+          var slide = typeof block.closest === 'function' ? block.closest( 'section:not(.stack)' ) : null;
+          if( slide ) {
+            var scrollFirstHighlightIntoView = function() {
+              RevealHighlight.scrollHighlightedLineIntoView( block, scrollState, true );
+              slide.removeEventListener( 'visible', scrollFirstHighlightIntoView );
+            }
+            slide.addEventListener( 'visible', scrollFirstHighlightIntoView );
+          }
+
           RevealHighlight.highlightLines( block );
 
+        }
+
+      },
+
+      /**
+       * Animates scrolling to the first highlighted line
+       * in the given code block.
+       */
+      scrollHighlightedLineIntoView: function( block, scrollState, skipAnimation ) {
+
+        cancelAnimationFrame( scrollState.animationFrameID );
+
+        // Match the scroll position of the currently visible
+        // code block
+        if( scrollState.currentBlock ) {
+          block.scrollTop = scrollState.currentBlock.scrollTop;
+        }
+
+        // Remember the current code block so that we can match
+        // its scroll position when showing/hiding fragments
+        scrollState.currentBlock = block;
+
+        var highlightBounds = RevealHighlight.getHighlightedLineBounds( block )
+        var viewportHeight = block.offsetHeight;
+
+        // Subtract padding from the viewport height
+        var blockStyles = getComputedStyle( block );
+        viewportHeight -= parseInt( blockStyles.paddingTop ) + parseInt( blockStyles.paddingBottom );
+
+        // Scroll position which centers all highlights
+        var startTop = block.scrollTop;
+        var targetTop = highlightBounds.top + ( Math.min( highlightBounds.bottom - highlightBounds.top, viewportHeight ) - viewportHeight ) / 2;
+
+        // Account for offsets in position applied to the
+        // <table> that holds our lines of code
+        var lineTable = block.querySelector( '.hljs-ln' );
+        if( lineTable ) targetTop += lineTable.offsetTop - parseInt( blockStyles.paddingTop );
+
+        // Make sure the scroll target is within bounds
+        targetTop = Math.max( Math.min( targetTop, block.scrollHeight - viewportHeight ), 0 );
+
+        if( skipAnimation === true || startTop === targetTop ) {
+          block.scrollTop = targetTop;
+        }
+        else {
+
+          // Don't attempt to scroll if there is no overflow
+          if( block.scrollHeight <= viewportHeight ) return;
+
+          var time = 0;
+          var animate = function() {
+            time = Math.min( time + 0.02, 1 );
+
+            // Update our eased scroll position
+            block.scrollTop = startTop + ( targetTop - startTop ) * RevealHighlight.easeInOutQuart( time );
+
+            // Keep animating unless we've reached the end
+            if( time < 1 ) {
+              scrollState.animationFrameID = requestAnimationFrame( animate );
+            }
+          };
+
+          animate();
+
+        }
+
+      },
+
+      /**
+       * The easing function used when scrolling.
+       */
+      easeInOutQuart: function( t ) {
+
+        // easeInOutQuart
+        return t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t;
+
+      },
+
+      getHighlightedLineBounds: function( block ) {
+
+        var highlightedLines = block.querySelectorAll( '.highlight-line' );
+        if( highlightedLines.length === 0 ) {
+          return { top: 0, bottom: 0 };
+        }
+        else {
+          var firstHighlight = highlightedLines[0];
+          var lastHighlight = highlightedLines[ highlightedLines.length -1 ];
+
+          return {
+            top: firstHighlight.offsetTop,
+            bottom: lastHighlight.offsetTop + lastHighlight.offsetHeight
+          }
         }
 
       },
@@ -567,5 +696,8 @@ B = gauss_filter_3_3(A);</code></pre>
 
   }));
 
-  hljs.initHighlightingOnLoad();
+  hljs.configure({
+    ignoreUnescapedHTML: true,
+  });
+  hljs.highlightAll();
 </script>
