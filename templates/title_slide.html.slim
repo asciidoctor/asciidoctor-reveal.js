@@ -24,5 +24,4 @@ section.title(class = role
   - preamble = @document.find_by context: :preamble
   - unless preamble.nil? or preamble.length == 0
     div.preamble=preamble.pop.content
-  - unless author.nil?
-    p.author: small=author
+  = generate_authors(@document)

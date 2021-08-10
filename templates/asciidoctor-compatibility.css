@@ -388,3 +388,13 @@ td.hdlist1 {
   font-size: 0.65em;
   margin-top: 4em;
 }
+
+.byline {
+  font-size:.8em
+}
+ul.byline {
+  list-style-type: none;
+}
+ul.byline li + li {
+  margin-top: 0.25em;
+}

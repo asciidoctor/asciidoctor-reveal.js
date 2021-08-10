@@ -278,6 +278,42 @@ module Slim::Helpers
     end
     nil
   end
+
+  # Copied from asciidoctor/lib/asciidoctor/converter/semantic-html5.rb which is not yet shipped
+  # @todo remove this code when the new converter becomes available in the main gem
+  def generate_authors node
+    return if node.authors.empty?
+
+    if node.authors.length == 1
+      %(<p class="byline">
+#{format_author node, node.authors.first}
+</p>)
+    else
+      result = ['<ul class="byline">']
+      node.authors.each do |author|
+        result << "<li>#{format_author node, author}</li>"
+      end
+      result << '</ul>'
+      result.join Asciidoctor::LF
+    end
+  end
+
+  # Copied from asciidoctor/lib/asciidoctor/converter/semantic-html5.rb which is not yet shipped
+  # @todo remove this code when the new converter becomes available in the main gem
+  def format_author node, author
+    in_context 'author' do
+      %(<span class="author">#{node.sub_replacements author.name}#{author.email ? %( #{node.sub_macros author.email}) : ''}</span>)
+    end
+  end
+
+  # Copied from asciidoctor/lib/asciidoctor/converter/semantic-html5.rb which is not yet shipped
+  # @todo remove this code when the new converter becomes available in the main gem
+  def in_context name
+    (@convert_context ||= []).push name
+    result = yield
+    @convert_context.pop
+    result
+  end
   #--
 end
 
