@@ -71,8 +71,11 @@ This can help you achieve even more concise AsciiDoc syntax and integration with
 
 To use it, add the following dependencies to your `Gemfile`:
 
-  gem 'tilt', '~>2.0'
-  gem 'slim', '~>4.0'
+[source,ruby]
+----
+gem 'tilt', '~>2.0'
+gem 'slim', '~>4.0'
+----
 
 Then install the dependencies with:
 
