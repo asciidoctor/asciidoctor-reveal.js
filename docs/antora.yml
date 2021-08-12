@@ -1,6 +1,6 @@
 name: reveal.js-converter
 title: Asciidoctor reveal.js
-version: '4.2'
+version: '5.0'
 nav:
   - modules/setup/nav.adoc
   - modules/converter/nav.adoc
