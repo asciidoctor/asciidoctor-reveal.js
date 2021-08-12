@@ -1,0 +1,26 @@
+= Search Plugin
+:revealjs_plugin_search: enabled
+:experimental:
+
+== Search
+
+Press kbd:[Ctrl+Shift+F] to search slide content. +
+For instance, you can search "asciidoc".
+
+Then, press kbd:[Enter] to navigate between search hits.
+
+== Blank
+
+😶
+
+== Asciidoctor
+
+Asciidoctor is a fast, open source text processor and publishing toolchain.
+
+== Content
+
+❔
+
+== AsciiDoc
+
+AsciiDoc is a lightweight and semantic markup language primarily designed for writing technical documentation. 

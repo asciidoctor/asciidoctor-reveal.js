@@ -75,6 +75,8 @@ _presentation-docinfo-footer.html_
 
  * Upgrade to reveal.js 4.1.2 (#370)
  * Add support for the Auto-Animate feature (#439)
+ * Add support for the built-in search plugin (#441)
+   * You can enable this plugin using `:revealjs_plugin_search: enabled`.
 
 ## 4.1.0 (2020-12-19)
 
