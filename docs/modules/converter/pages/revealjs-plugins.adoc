@@ -3,14 +3,14 @@
 
 == Default plugins
 
-By default, generated presentations will have the following reveal.js plugins enabled:
+By default, generated presentations will have the following built-in reveal.js plugins enabled:
 
-* plugin/zoom-js/zoom.js
-* plugin/notes/notes.js
+* `plugin/zoom/zoom.js`
+* `plugin/notes/notes.js`
 
 All these plugins are part of the reveal.js distribution.
 
-To enable or disable a built-in plugin, it is possible to set the `revealjs_plugin_[plugin name]` attribute to `enable` or `disable`.
+To enable or disable a built-in plugin, it is possible to set the `+revealjs_plugin_{plugin name}+` attribute to `enabled` or `disabled`.
 
 For example, to disable all the default plugins set the following document attributes:
 
@@ -21,15 +21,88 @@ For example, to disable all the default plugins set the following document attri
 
 == Additional plugins
 
-Additional reveal.js plugins can be installed and activated using AsciiDoc attributes and external JavaScript files.
+Additional reveal.js plugins can be installed and activated using a xref:asciidoctor:docinfo.adoc[docinfo file].
 
 . Extract the plugin files in a directory
-. Create a JavaScript file that will contain the JavaScript statements to load the plugin (only one required even if you are using several plugins)
-. Add a `:revealjs_plugins:` attribute to point to that JavaScript file
-. (Optional) Add a `:revealjs_plugins_configuration:` attribute to point to a JavaScript file that configures the plugins you use
+. Create a docinfo file to load and register the plugin
+. Add a `:docinfo:` attribute to enable docinfo
 
-Looking at the example provided in the repository will provide guidance: link:{url-project-examples}/revealjs-plugins.adoc[AsciiDoc source], link:{url-project-examples}/revealjs-plugins.js[Plugin Loader], link:{url-project-examples}/revealjs-plugins-conf.js[Plugin Configuration].
+Let's take an example where we want to use the https://github.com/denehyg/reveal.js-menu/tree/master[menu plugin] and the https://github.com/rajgoel/reveal.js-plugins/tree/master/chalkboard[chalkboard plugin].
+First, download the plugins from GitHub and extract the `menu` and `chalkboard` directory in a `revealjs-plugins` folder:
 
-Read link:{url-revealjs-doc}#dependencies[the relevant reveal.js documentation] to understand more about reveal.js plugins.
+[source,console]
+----
+$ tree revealjs-plugins -L 2
+----
+
+....
+revealjs-plugins
+├── chalkboard
+│   ├── img
+│   ├── plugin.js
+│   ├── README.md
+│   └── style.css
+└── menu
+    ├── font-awesome
+    ├── LICENSE
+    ├── menu.css
+    ├── menu.esm.js
+    ├── menu.js
+    ├── plugin.js
+    └── README.md
+
+4 directories, 9 files
+....
+
+Then, create a docinfo file named `<docname>-docinfo-footer.html` where `<docname>` is the name of your AsciiDoc file (i.e., `<docname>.adoc`):
+
+.presentation-docinfo-footer.html
+[source,html]
+----
+<script src="revealjs-plugins/menu/menu.js"></script> // <1>
+<link rel="stylesheet" href="revealjs-plugins/chalkboard/style.css"> // <2>
+<script src="revealjs-plugins/chalkboard/plugin.js"></script> // <2>
+<script>
+  Reveal.configure({
+    menu: {
+      side: 'right',
+      openButton: false
+    },
+    keyboard: {
+      67: function() { RevealChalkboard.toggleNotesCanvas() },
+      66: function() { RevealChalkboard.toggleChalkboard() }
+    }
+  }) // <3>
+  Reveal.registerPlugin(RevealMenu) // <4>
+  Reveal.registerPlugin(RevealChalkboard) // <5>
+</script>
+----
+<1> Load the menu plugin
+<2> Load the chalkboard plugin including a stylesheet
+<3> Configure the menu plugin and assign keyboard bindings to toggle the notes canvas and the chalkboard
+<4> Register the menu plugin
+<5> Register the chalkboard plugin
+
+Please note that the file is named _presentation-docinfo-footer.html_ because our AsciiDoc file is named _presentation.adoc_:
+
+.presentation.adoc
+[source,adoc]
+----
+= Third-party Plugins
+:docinfo: private // <1>
+
+// ...
+----
+<1> Enable docinfo and select the file named _presentation-docinfo-footer.html_
+
+[IMPORTANT]
+====
+By default, docinfo files are searched for in the same folder as the document file.
+If you want to keep them anywhere else, set the docinfodir attribute to their location.
+
+Please read xref:asciidoctor:docinfo.adoc#resolving[] if you want to learn more.
+====
+
+Read https://revealjs.com/plugins/[the relevant reveal.js documentation] to understand more about reveal.js plugins.
 A {url-revealjs-gh}/wiki/Plugins,-Tools-and-Hardware[list of existing reveal.js plugins] is also maintained upstream.
 
