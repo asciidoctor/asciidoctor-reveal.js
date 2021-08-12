@@ -195,6 +195,7 @@ module Slim::Helpers
     dependencies = []
     dependencies << "{ src: '#{revealjsdir}/plugin/zoom/zoom.js', async: true, callback: function () { Reveal.registerPlugin(RevealZoom) } }" unless (node.attr? 'revealjs_plugin_zoom', 'disabled')
     dependencies << "{ src: '#{revealjsdir}/plugin/notes/notes.js', async: true, callback: function () { Reveal.registerPlugin(RevealNotes) } }" unless (node.attr? 'revealjs_plugin_notes', 'disabled')
+    dependencies << "{ src: '#{revealjsdir}/plugin/search/search.js', async: true, callback: function () { Reveal.registerPlugin(RevealSearch) } }" if (node.attr? 'revealjs_plugin_search', 'enabled')
     if (node.attr? 'revealjs_plugins') &&
         !(revealjs_plugins_file = (node.attr 'revealjs_plugins', '').strip).empty? &&
         !(revealjs_plugins_content = (File.read revealjs_plugins_file).strip).empty?
