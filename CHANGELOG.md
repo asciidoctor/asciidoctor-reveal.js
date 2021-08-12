@@ -7,10 +7,9 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ### Upgrade considerations
 
- * Plugin `marked` has been removed in reveal.js 4.0.0.
-   Consequently, the `revealjs_plugin_marked` attribute has no effect anymore.
-   You can still enable the Markdown plugin using the `revealjs_plugin_markdown` attribute.
- * `revealjs_plugins` and `revealjs_plugins_configuration` are replaced by Docinfo.
+ * Plugin `marked` has been removed in reveal.js 4.0.0 and plugin `markdown` has been disabled. 
+   As a result, the `revealjs_plugin_markdown` and `revealjs_plugin_marked` attributes have no effect anymore.
+ * `revealjs_plugins` and `revealjs_plugins_configuration` are replaced by [Docinfo files](https://docs.asciidoctor.org/asciidoctor/latest/docinfo/).
 
 **Before**
 
@@ -75,6 +74,7 @@ _presentation-docinfo-footer.html_
 ### Enhancements
 
  * Upgrade to reveal.js 4.1.2 (#370)
+ * Add support for the Auto-Animate feature (#439)
 
 ## 4.1.0 (2020-12-19)
 
