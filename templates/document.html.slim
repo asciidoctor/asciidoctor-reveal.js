@@ -49,22 +49,24 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     - if attr? :stem
       - eqnums_val = (attr 'eqnums', 'none')
       - eqnums_val = 'AMS' if eqnums_val == ''
-      - eqnums_opt = %( equationNumbers: { autoNumber: "#{eqnums_val}" } )
-      - mathjaxdir = (attr 'mathjaxdir', "#{cdn_base}/mathjax/2.7.6")
-      script type='text/x-mathjax-config'
-        | MathJax.Hub.Config({
-          tex2jax: {
+      - mathjaxdir = (attr 'mathjaxdir', "#{cdn_base}/mathjax/3.2.0/es5")
+      script
+        | window.MathJax = {
+          tex: {
             inlineMath: [#{Asciidoctor::INLINE_MATH_DELIMITERS[:latexmath].to_s}],
             displayMath: [#{Asciidoctor::BLOCK_MATH_DELIMITERS[:latexmath].to_s}],
-            ignoreClass: "nostem|nolatexmath"
+            tags: '#{eqnums_val}'
           },
-          asciimath2jax: {
+          options: {
+            ignoreClass: 'nostem|nolatexmath'
+          },
+          asciimath: {
             delimiters: [#{Asciidoctor::BLOCK_MATH_DELIMITERS[:asciimath].to_s}],
-            ignoreClass: "nostem|noasciimath"
           },
-          TeX: {#{eqnums_opt}}
-          });
-      script src='#{mathjaxdir}/MathJax.js?config=TeX-MML-AM_HTMLorMML'
+          loader: {
+            load: ['input/asciimath', 'output/chtml']
+          }};
+      script(async src='#{mathjaxdir}/tex-mml-chtml.js')
 
     - syntax_hl = self.syntax_highlighter
     - if syntax_hl && (syntax_hl.docinfo? :head)
