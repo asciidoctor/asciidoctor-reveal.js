@@ -21,7 +21,7 @@ For example, to disable all the default plugins set the following document attri
 
 == Additional plugins
 
-Additional reveal.js plugins can be installed and activated using a xref:asciidoctor:docinfo.adoc[docinfo file].
+Additional reveal.js plugins can be installed and activated using a xref:asciidoctor::docinfo.adoc[docinfo file].
 
 . Extract the plugin files in a directory
 . Create a docinfo file to load and register the plugin
