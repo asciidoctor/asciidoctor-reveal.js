@@ -326,7 +326,7 @@ module Slim::Helpers
   ]
 
   # Generate the Mathjax markup to process STEM expressions
-  # @param [String] cdn_base
+  # @param cdn_base [String]
   # @return [String]
   def generate_stem(cdn_base)
     if attr?(:stem)
