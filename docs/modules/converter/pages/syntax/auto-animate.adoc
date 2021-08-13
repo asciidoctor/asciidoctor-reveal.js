@@ -2,7 +2,7 @@
 
 This feature is a wrapper of reveal.js auto animation.
 
-Since your AsciiDoc file will be transformed into an HTML 5 presentation, 
+Since your AsciiDoc file will be transformed into an HTML 5 presentation,
 You can define Asciidoctor attributes, options and animate IDs to configure the reveal.js auto-animate feature.
 Under the hood, these settings will be mapped to `data-*` HTML properties, which you can check from: +
 https://revealjs.com/auto-animate/
@@ -19,6 +19,7 @@ To enable the reveal.js auto-animate feature, you can add the `%auto-animate` op
 
 In the following example, we are using the `%auto-animate` option on two adjacent sections:
 
+[source,asciidoc]
 ----
 [%auto-animate]
 == auto-animate option
@@ -40,11 +41,12 @@ Matched element will be animated automatically!
 By default, no matching element will fade in.
 You can make them appear instantly with: `auto-animate-unmatched=false`.
 
+[source,asciidoc]
 ----
 [%auto-animate,auto-animate-unmatched=false]
 == auto-animate-unmatched
 
-Determines whether elements with no matching auto-animate target should fade in. 
+Determines whether elements with no matching auto-animate target should fade in.
 Set to false to make them appear instantly.
 
 [%auto-animate,auto-animate-unmatched=false]
@@ -52,7 +54,7 @@ Set to false to make them appear instantly.
 
 This will be shown instantly.
 
-Determines whether elements with no matching auto-animate target should fade in. 
+Determines whether elements with no matching auto-animate target should fade in.
 Set to false to make them appear instantly.
 ----
 
@@ -60,6 +62,7 @@ Set to false to make them appear instantly.
 
 You can set the `auto-animate-duration` attribute to control the animation duration:
 
+[source,asciidoc]
 ----
 [%auto-animate,auto-animate-duration=5]
 == auto-animate-duration
@@ -69,7 +72,7 @@ Animation duration in seconds.
 [%auto-animate,auto-animate-duration=5]
 == auto-animate-duration
 
-This auto animation 
+This auto animation
 
 will take 5 second.
 
@@ -86,6 +89,7 @@ Auto animation occurs in adjacent slides of the same group or both don't have on
 
 Below example illustrates `auto-animate-id` and `auto-animate-restart` usage:
 
+[source,asciidoc]
 ----
 [%auto-animate,auto-animate-id="two"]
 == auto-animate-id and %auto-animate-restart
@@ -122,11 +126,12 @@ auto-animate-restart will prevent auto-animate between the previous slide (even 
 When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
 ----
 
-== Set animation easeing function
+== Set animation easing function
 
 To use `auto-animate-easing` asciidoctor attribute, you can set
 auto animation easing function.
 
+[source,asciidoc]
 ----
 [%auto-animate,auto-animate-easing='ease-in-out']
 == auto-animate-easing
@@ -147,4 +152,3 @@ be controlled by CSS transition-timing-function
 
 ease in out!
 ----
-
