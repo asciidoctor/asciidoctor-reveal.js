@@ -8,11 +8,11 @@ Short instructions that aim to help potential contributors.
 * Modify the {url-slim}[slim templates^] in `templates/`
 * Templates need to be compiled before being used, do so with:
 
-    bundle exec rake build
+ $ bundle exec rake build
 
 * Then using the following command will render slides with your template changes baked in:
 
-    bundle exec asciidoctor-revealjs <source.adoc>
+ $ bundle exec asciidoctor-revealjs <source.adoc>
 
 The next section will provide further help on how to use `print` statements or a debugger to assist development.
 
@@ -32,7 +32,7 @@ Debugging is only supported via the Ruby ecosystem.
 You need to recompile the templates when you make changes to them.
 This can be done by running:
 
-    bundle exec rake build
+ $ bundle exec rake build
 --
 
 === Print debugging information
@@ -66,7 +66,7 @@ It is very useful to discover a complex object hierarchy like what Asciidoctor o
 
 ==== Initial Setup
 
-    bundle --path=.bundle/gems --binstubs=.bundle/.bin
+ $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
 ==== Usage
 
@@ -79,7 +79,7 @@ In order to be dropped into the debugger at a specific point in a template add t
 
 Recompile the templates with:
 
-    bundle exec rake build
+ $ bundle exec rake build
 
 Then run `asciidoctor-revealjs` from the command-line to generate your document and you'll be dropped in the debugger:
 
@@ -116,7 +116,7 @@ Since 1.1.0, templates are compiled.
 It is easier to inject the debug triggering statements and use the templates directly instead of debugging compiled templates.
 You can call the slim templates directly with:
 
-    bundle exec asciidoctor-revealjs --trace -T templates/ examples/customcss.adoc
+ $ bundle exec asciidoctor-revealjs --trace -T templates/ examples/customcss.adoc
 
 === References
 
@@ -134,20 +134,20 @@ You can render the tests files and then load them in a browser and check if `asc
 Make sure to have a working version of `asciidoctor-reveals` this is usually
 done with `bundler`:
 
-    bundle config --local github.https true
-    bundle --path=.bundle/gems --binstubs=.bundle/.bin
-    bundle exec rake build
+ $ bundle config --local github.https true
+ $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
+ $ bundle exec rake build
 
 Go to `test/doctest` folder and install `reveal.js`:
 
-    cd test/doctest/
-    git clone https://github.com/hakimel/reveal.js.git
+ $ cd test/doctest/
+ $ git clone https://github.com/hakimel/reveal.js.git
 
 === Render tests into .html
 
 From the project's root directory:
 
-    bundle exec rake doctest::generate FORCE=yes
+ $ bundle exec rake doctest::generate FORCE=yes
 
 === Open rendered files
 
@@ -166,6 +166,7 @@ That means if they don't find the attribute defined on the Node, they look on th
 You only want to enable inheritance if you intend to allow an attribute of the same name to be controlled globally.
 That might be good for configuring transitions. For instance:
 
+[source,asciidoc]
 ----
 = My Slides
 :transition-speed: fast
@@ -213,10 +214,10 @@ We encourage contributors to communicate with us early.
 
 Branches on forks of this project are not very visible to maintainers as much as pull requests (PR).
 For this reason we recommend to open a draft PR to let everyone know that you are working on a specific topic.
-Now, instead of prepending "WIP", we recommend using GitHub "draft pull request" feature instead.
+Now, instead of prepending "`WIP`", we recommend using GitHub "`draft pull request`" feature instead.
 
 
-=== 'needs review' label
+=== "`needs review`" label
 
 You can apply that label to a pull request that is complete and ready for review.
 
@@ -228,8 +229,8 @@ Makes triaging easier.
 
 In order to test the Node package, you first need to build the converter into JavaScript and create a tarball of the project.
 
-  $ bundle exec rake build:js
-  $ npm pack
+ $ bundle exec rake build:js
+ $ npm pack
 
 That last command will produce a file named `asciidoctor-reveal.js-<version>.tgz` in the working directory.
 
@@ -279,7 +280,7 @@ Asciidoctor.js versioning policy is xref:asciidoctor.js:project:version-and-life
 To debug the JavaScript application, just add `--node-arg=--inspect-brk` to the npx command to run the application.
 For example:
 
-  npx --node-arg=--inspect-brk asciidoctor-revealjs -v presentation.adoc
+ $ npx --node-arg=--inspect-brk asciidoctor-revealjs -v presentation.adoc
 
 Then open the Chrome Dev Tools and click on the Node logo in the top left corner.
 
@@ -295,8 +296,11 @@ Compile the converter:
 
 In a clean directory besides the `asciidoctor-reveal.js` repository, create the following `Gemfile` file:
 
-  source 'https://rubygems.org'
-  gem 'asciidoctor-revealjs', :path => '../asciidoctor-reveal.js'
+[source,ruby]
+----
+source 'https://rubygems.org'
+gem 'asciidoctor-revealjs', :path => '../asciidoctor-reveal.js'
+----
 
 Then run:
 
@@ -389,22 +393,22 @@ Please use the following name convention: `maint-{major}.{minor}.x` (e.g., `main
 
 We recommend tests to be run with a fresh install of all dependencies in a local folder that won't affect your Ruby install (a `.bundle/` in this directory):
 
-    bundle --path=.bundle/gems --binstubs=.bundle/.bin
+ $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
 Then you can execute the tests with:
 
-    bundle exec rake doctest
+ $ bundle exec rake doctest
 
 However, if you have all dependencies properly installed this command should run the tests successfully:
 
-    rake doctest
+ $ rake doctest
 
 === Generating HTML test target
 
 Tests were bootstrapped by https://github.com/asciidoctor/asciidoctor-doctest/#generate-examples[generating them from asciidoctor-doctest's test corpus^] and current asciidoctor-revealjs' slim template engine.
 This is done using the following command:
 
-    bundle exec rake doctest:generate FORCE=y
+ $ bundle exec rake doctest:generate FORCE=y
 
 === Custom tests
 
