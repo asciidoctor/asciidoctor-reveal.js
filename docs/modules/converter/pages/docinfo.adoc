@@ -2,7 +2,7 @@
 :navtitle: Docinfo
 // Originally from https://github.com/asciidoctor/asciidoctor-bespoke#supplemental-content
 
-It's possible to inject supplemental content into the output document using xref:asciidoctor:docinfo.adoc[docinfo files].
+It's possible to inject supplemental content into the output document using xref:asciidoctor::docinfo.adoc[docinfo files].
 This core feature of AsciiDoc has been adapted to work with the reveal.js converter.
 
 Currently, there are three insertion locations for docinfo content in a reveal.js document:
