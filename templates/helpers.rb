@@ -325,13 +325,14 @@ module Slim::Helpers
     'all'
   ]
 
+  MATHJAX_VERSION = "3.2.0"
+
   # Generate the Mathjax markup to process STEM expressions
   # @param cdn_base [String]
   # @return [String]
   def generate_stem(cdn_base)
     if attr?(:stem)
-      eqnums_val = attr('eqnums', STEM_EQNUMS_NONE)
-      eqnums_val = STEM_EQNUMS_AMS if eqnums_val == ''
+      eqnums_val = attr('eqnums', STEM_EQNUMS_NONE).downcase
       unless STEM_EQNUMS_VALID_VALUES.include?(eqnums_val)
         eqnums_val = STEM_EQNUMS_AMS
       end
@@ -352,7 +353,7 @@ module Slim::Helpers
           load: ['input/asciimath', 'output/chtml', 'ui/menu']
         }
       }
-      mathjaxdir = attr('mathjaxdir', "#{cdn_base}/mathjax/3.2.0/es5")
+      mathjaxdir = attr('mathjaxdir', "#{cdn_base}/mathjax/#{MATHJAX_VERSION}/es5")
       %(<script>window.MathJax = #{JSON.generate(mathjax_configuration)};</script>) +
       %(<script async src="#{mathjaxdir}/tex-mml-chtml.js"></script>)
     end
