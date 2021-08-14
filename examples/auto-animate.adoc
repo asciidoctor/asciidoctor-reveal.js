@@ -1,143 +1,351 @@
 = Auto-Animate
+:source-highlighter: highlight.js
 :revealjsdir: ../reveal.js
+:revealjs_hash: true
 
 ++++
 <style>
-.brown {
-    color:brown;
+.highlight {
+    color: gold;
 }
 </style>
 ++++
 
 == Description
 
-Auto-animate is an option which you can use in adjacent slides.
-In this case, you could use `[%auto-animate]` at the very before
-line of slide title. +
+[.small%hardbreaks]
+_reveal.js_ can automatically animate elements across slides.
+Use `[%auto-animate]` on two (or more) adjacent sections:
+
+[source,asciidoc]
 ----
 [%auto-animate]
-== Description
-----
+== Title
 
-//%auto-animate
+This is a paragraph.
 
 [%auto-animate]
-== auto-animate option
+== Title
 
-[.brown]
+This is a paragraph.
+
+This is another paragraph.
+----
+
+[%auto-animate]
+== Title
+
+This is a paragraph.
+
+[%auto-animate]
+== Title
+
+This is a paragraph.
+
+This is another paragraph.
+
+[%auto-animate]
+== !
+
 Matched element will be animated automatically!
 
 [%auto-animate]
-== auto-animate option
+== !
+
+[.highlight]
+Matched element will be animated automatically!
 
 And move to the right position!
 
-This is Great!
+[%hardbreaks]
+⬆️
+⬆️
+⬆️
 
-Matched element will be animated automatically!
+== Source Blocks
 
-//auto-animate-easing
+reveal.js supports animation between code blocks.
+To enable this feature, all source blocks must have the same `data-id` value.
 
-[%auto-animate,auto-animate-easing='ease-in-out']
-== auto-animate-easing
+IMPORTANT: This feature is only supported when using Highlight.js as syntax highlighter and when the option `%linenums` is present.
 
+== Source Blocks
 
-ease in out!
+Here's a simple example:
 
+[source.stretch%linenums,asciidoc]
+-----
+[%auto-animate]
+== !
 
-[%auto-animate,auto-animate-easing='ease-in-out']
-== auto-animate-easing
+[source%linenums,js,data-id=hello]
+----
+console.log('Hello')
+----
 
-This is GREAT!
+[%auto-animate]
+== !
 
-The moving speed could
+[source%linenums,js,data-id=hello]
+----
+console.log('Hello')
+console.log('Bonjour')
+----
+-----
 
-be controlled by CSS transition-timing-function
+[%auto-animate]
+== !
 
+[source%linenums,js,data-id=hello]
+----
+console.log('Hello')
+----
 
-ease in out!
+[%auto-animate]
+== !
 
-//auto-animate-unmatched
+[source%linenums,js,data-id=hello]
+----
+console.log('Hello')
+console.log('Bonjour')
+----
+
+== Source Blocks
+
+And here's a more complex example...
+
+[%auto-animate]
+== !
+
+[source%linenums,js,data-id=planets]
+----
+let planets = [
+  { name: 'mars', diameter: 6779 },
+]
+----
+
+[%auto-animate]
+== !
+
+[source%linenums,js,data-id=planets]
+----
+let planets = [
+  { name: 'mars', diameter: 6779 },
+  { name: 'earth', diameter: 12742 },
+  { name: 'jupiter', diameter: 139820 }
+]
+----
+
+[%auto-animate]
+== !
+
+[source%linenums,js,data-id=planets]
+----
+let circumferenceReducer = ( c, planet ) => {
+  return c + planet.diameter * Math.PI;
+}
+
+let planets = [
+  { name: 'mars', diameter: 6779 },
+  { name: 'earth', diameter: 12742 },
+  { name: 'jupiter', diameter: 139820 }
+]
+
+let c = planets.reduce( circumferenceReducer, 0 )
+----
+
+[%auto-animate]
+== Easing
+
+[%hardbreaks.small]
+The attribute `auto-animate-easing` is used to control the speed of the transition.
+You can use any value supported by https://developer.mozilla.org/fr/docs/Web/CSS/transition-timing-function[transition-timing-function].
+
+For instance:
+[source,asciidoc]
+----
+[%auto-animate,auto-animate-easing="ease-in-out"]
+== Easing In Out
+----
+
+[%auto-animate,auto-animate-easing="ease-in-out"]
+== Easing In Out
+
+🏓 Ping?
+
+[%auto-animate,auto-animate-easing="ease-in-out"]
+== Easing In Out
+
+🏓 Ping?
+
+Pong! 🏓
+
+[%auto-animate,auto-animate-easing="ease-in-out"]
+== Easing In Out
+
+🏓 Ping?
+
+Pong! 🏓
+
+🏓 Ping?
+
+[%auto-animate,auto-animate-easing="ease-in-out"]
+== Easing In Out
+
+🏓 Ping?
+
+Pong! 🏓
+
+🏓 Ping?
+
+Pong! 🏓
+
+== Unmatched
+
+[.small]
+Determines whether elements with no matching `auto-animate` target should fade in.
+Set to `false` to make them appear instantly.
+
+For instance:
+
+[source,asciidoc]
+----
+[%auto-animate,auto-animate-unmatched=false]
+== Unmatched
+
+Introduction. (matched)
 
 [%auto-animate,auto-animate-unmatched=false]
-== auto-animate-unmatched
+== Unmatched
 
-Determines whether elements with no matching auto-animate target should fade in. 
-Set to false to make them appear instantly.
+Introduction. (matched)
+
+This will be shown instantly ⚡ (unmatched)
+----
 
 [%auto-animate,auto-animate-unmatched=false]
-== auto-animate-unmatched
+== Unmatched
 
-This will be shown instantly.
+Introduction. (matched)
 
-Determines whether elements with no matching auto-animate target should fade in. 
-Set to false to make them appear instantly.
+[%auto-animate,auto-animate-unmatched=false]
+== Unmatched
 
-//auto-animate-duration
+Introduction. (matched)
 
-[%auto-animate,auto-animate-duration=5]
-== auto-animate-duration
+This will be shown instantly ⚡ (unmatched)
+
+== Duration
 
 Animation duration in seconds.
 
+For instance:
+[source,asciidoc]
+----
 [%auto-animate,auto-animate-duration=5]
-== auto-animate-duration
+== Duration
+----
 
-This auto animation 
+[%auto-animate,auto-animate-duration=5]
+== Duration
 
-will take 5 seconds.
+This animation...
 
-Animation duration in seconds.
+[%auto-animate,auto-animate-duration=5]
+== Duration
 
-//auto-animate-delay
+This animation...
+
+...will take 5 seconds! ⌚
 
 [%auto-animate]
-== data-auto-animate-delay
+== Delay
 
-[data-auto-animate-delay=5]
-Animation delay in seconds (can only be set for specific elements, not at the slide level).
+[.small]
+Animation delay in seconds (can only be set for specific elements, not at the slide level)
+
+For instance:
+[source,asciidoc]
+----
+[%auto-animate]
+== Lift Off
+
+Final countdown...
 
 [%auto-animate]
-== data-auto-animate-delay
+== Lift Off
 
-Attribute exposed to html correctly, not workable for now.
+Final countdown...
 
-[data-auto-animate-delay=5]
-Animation delay in seconds (can only be set for specific elements, not at the slide level).
+[data-auto-animate-delay=1]
+3,
+[data-auto-animate-delay=2]
+2,
+[data-auto-animate-delay=3]
+1...
+[data-auto-animate-delay=4]
+Lift off! 🚀
+----
 
+[%auto-animate]
+== Lift Off
 
-//auto-animate-id and auto-animate-restart
-[%auto-animate,auto-animate-id="two"]
-== auto-animate-id and %auto-animate-restart
+Final countdown...
 
-`%auto-animate,auto-animate-id="two"`
+[%auto-animate]
+== Lift Off
 
-When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+Final countdown...
 
-[%auto-animate,auto-animate-id="three"]
-== auto-animate-id and %auto-animate-restart
+[data-auto-animate-delay=1]
+3,
+[data-auto-animate-delay=2]
+2,
+[data-auto-animate-delay=3]
+1...
+[data-auto-animate-delay=4]
+Lift off! 🚀
 
-`%auto-animate,auto-animate-id="three"`
+== Id and Restart
+
+When you want separate groups of auto-animated slides right next to each other you can use the `auto-animate-id` and `auto-animate-restart` attributes.
+
+== Id and Restart
 
 Two adjacent slides will only auto-animate if they have the same id or if both don't have one.
 
-When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+== Id and Restart
 
-[%auto-animate,auto-animate-id="three"]
-== auto-animate-id and %auto-animate-restart
+`auto-animate-restart` will prevent auto-animate between the previous slide even if they have the same id but _not_ between it and the next slide.
 
-`%auto-animate,auto-animate-id="three"`
+[%auto-animate]
+== !
 
-If same Id, animation will work.
+First Item
 
-When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+[%auto-animate]
+== !
 
-[%auto-animate%auto-animate-restart,auto-animate-id="three"]
-== auto-animate-id and %auto-animate-restart
+First Item
 
-`%auto-animate%auto-animate-restart,auto-animate-id="three"`
+Second Item
 
-auto-animate-restart will prevent auto-animate between the previous slide (even if they have the same id) but not between it and the next slide.
+[%auto-animate%auto-animate-restart]
+== !
 
-When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+First Item
 
+Second Item
+
+Third Item (restart)
+
+[%auto-animate]
+== !
+
+First Item
+
+Second Item
+
+Third Item (restart)
+
+Fourth Item

@@ -22,19 +22,25 @@ module Asciidoctor
         # The steps are split using the | character
         # For example, this method makes "1..3|6,7" into "1,2,3|6,7"
         def _convert_highlight_to_revealjs node
-          return node.attributes["highlight"].split("|").collect { |linenums|
-            node.resolve_lines_to_highlight(node.content, linenums).join(",")
-          }.join("|")
+          node.attributes['highlight'].split('|').collect { |linenums|
+            node.resolve_lines_to_highlight(node.content, linenums).join(',')
+          }.join('|')
         end
 
         def format node, lang, opts
-          super node, lang, (opts.merge transform: proc { |_, code|
+          super node, lang, (opts.merge transform: proc { |pre, code|
             code['class'] = %(language-#{lang || 'none'} hljs)
             code['data-noescape'] = true
+            if (id = node.attr('data-id'))
+              pre['data-id'] = id
+            end
+            if node.option?('trim')
+              code['data-trim'] = ''
+            end
 
-            if node.attributes.key?("highlight")
+            if node.attributes.key?('highlight')
               code['data-line-numbers'] = self._convert_highlight_to_revealjs(node)
-            elsif node.attributes.key?("linenums")
+            elsif node.attributes.key?('linenums')
               code['data-line-numbers'] = ''
             end
           })

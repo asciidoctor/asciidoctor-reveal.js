@@ -8,7 +8,8 @@
     - style = doc_attrs[%(#{syntax_hl.name}-style)]
     - opts = syntax_hl.highlight? ? { css_mode: css_mode, style: style } : {}
     - opts[:nowrap] = nowrap
-= html_tag('div', { :id => id, :class => ['listingblock', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes)))
+// data-id must not be declared on the <div> element (but on the <pre> element for auto-animate)
+= html_tag('div', { :id => id, :class => ['listingblock', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes.reject {|key, _| key == 'data-id' })))
   - if title?
     div.title= captioned_title
   div.content

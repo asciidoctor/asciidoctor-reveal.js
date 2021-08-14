@@ -1,0 +1,47 @@
+= Auto-Animate code
+:source-highlighter: highlight.js
+
+++++
+<style>
+.reveal pre {
+  overflow: hidden;
+}
+.reveal pre code {
+  overflow: hidden;
+}
+.reveal pre code table {
+  overflow: hidden;
+}
+</style>
+<section data-auto-animate>
+  <pre data-id="code-animation"><code class="language-js" data-trim data-line-numbers>
+    let planets = [
+      { name: 'mars', diameter: 6779 },
+    ]
+  </code></pre>
+</section>
+<section data-auto-animate>
+  <pre data-id="code-animation"><code class="language-js" data-trim data-line-numbers>
+    let planets = [
+      { name: 'mars', diameter: 6779 },
+      { name: 'earth', diameter: 12742 },
+      { name: 'jupiter', diameter: 139820 }
+    ]
+  </code></pre>
+</section>
+<section data-auto-animate>
+  <pre data-id="code-animation"><code class="language-js" data-trim data-line-numbers>
+    let circumferenceReducer = ( c, planet ) => {
+      return c + planet.diameter * Math.PI;
+    }
+
+    let planets = [
+      { name: 'mars', diameter: 6779 },
+      { name: 'earth', diameter: 12742 },
+      { name: 'jupiter', diameter: 139820 }
+    ]
+
+    let c = planets.reduce( circumferenceReducer, 0 )
+  </code></pre>
+</section>
+++++
