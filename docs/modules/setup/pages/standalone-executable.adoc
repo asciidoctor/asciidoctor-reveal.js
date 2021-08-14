@@ -49,3 +49,5 @@ To convert the sample presentation into slides, open a terminal and type:
 
 The above command will generate a file named [.path]_presentation.html_.
 You can open this file in a browser.
+
+TIP: Alternatively you can use `:revealjsdir: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.9.0` to avoid having to setup reveal.js locally. Just be aware that then if you have no access to internet then the presentation will not load properly.
