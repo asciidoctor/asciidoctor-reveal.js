@@ -333,7 +333,7 @@ module Slim::Helpers
       eqnums_val = attr('eqnums', STEM_EQNUMS_NONE)
       eqnums_val = STEM_EQNUMS_AMS if eqnums_val == ''
       unless STEM_EQNUMS_VALID_VALUES.include?(eqnums_val)
-        raise ::ArgumentError, %(Invalid eqnums value [#{eqnums_val}], valid values are #{STEM_EQNUMS_VALID_VALUES.join(', ')})
+        eqnums_val = STEM_EQNUMS_AMS
       end
       mathjax_configuration = {
         tex: {
