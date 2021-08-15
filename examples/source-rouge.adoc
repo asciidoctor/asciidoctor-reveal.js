@@ -1,6 +1,6 @@
 // .source-rouge
 // Demonstration of source highlighting with Rouge
-// :include: //div[@class="slides"]
+// :include: //div[@class="slides"] | //head//style[last()]
 // :header_footer:
 = Source Code with Rouge
 :icons: font

@@ -1,3 +1,14 @@
+- slides_content = self.content
+- content_for :slides
+  - unless noheader
+    - unless (header_docinfo = docinfo :header, '-revealjs.html').empty?
+      = header_docinfo
+    - if header?
+      include title_slide.html.slim
+  = slides_content
+  - unless (footer_docinfo = docinfo :footer, '-revealjs.html').empty?
+    = footer_docinfo
+
 doctype 5
 html lang=(attr :lang, 'en' unless attr? :nolang)
   head
@@ -58,14 +69,7 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
     .reveal
       / Any section element inside of this container is displayed as a slide
       .slides
-        - unless noheader
-          - unless (_docinfo = docinfo :header, '-revealjs.html').empty?
-            = _docinfo
-          - if header?
-            include title_slide.html.slim
-        = content
-        - unless (_docinfo = docinfo :footer, '-revealjs.html').empty?
-          = _docinfo
+        - yield_content :slides
     script src="#{revealjsdir}/dist/reveal.js"
     / Supports easy AsciiDoc syntax for background color
     javascript:
