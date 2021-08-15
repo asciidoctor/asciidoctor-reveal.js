@@ -233,9 +233,6 @@ html lang=(attr :lang, 'en' unless attr? :nolang)
         dependencies: [
             #{revealjs_dependencies(document, self, revealjsdir)}
         ],
-
-        #{(attr? 'revealjs_plugins_configuration') ? File.read(attr('revealjs_plugins_configuration', '')) : ""}
-
       });
     / Workaround the "Only direct descendants of a slide section can be stretched" limitation in reveal.js
     / https://github.com/hakimel/reveal.js/issues/2584
