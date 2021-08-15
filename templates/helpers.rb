@@ -325,7 +325,7 @@ module Slim::Helpers
     'all'
   ]
 
-  MATHJAX_VERSION = "3.2.0"
+  MATHJAX_VERSION = '3.2.0'
 
   # Generate the Mathjax markup to process STEM expressions
   # @param cdn_base [String]
