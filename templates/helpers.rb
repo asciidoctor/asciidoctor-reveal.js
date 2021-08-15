@@ -4,6 +4,8 @@ unless RUBY_ENGINE == 'opal'
   require 'asciidoctor'
 end
 
+require 'json'
+
 # This module gets mixed in to every node (the context of the template) at the
 # time the node is being converted. The properties and methods in this module
 # effectively become direct members of the template.
@@ -313,6 +315,48 @@ module Slim::Helpers
     result = yield
     @convert_context.pop
     result
+  end
+
+  STEM_EQNUMS_AMS = 'ams'
+  STEM_EQNUMS_NONE = 'none'
+  STEM_EQNUMS_VALID_VALUES = [
+    STEM_EQNUMS_NONE,
+    STEM_EQNUMS_AMS,
+    'all'
+  ]
+
+  MATHJAX_VERSION = '3.2.0'
+
+  # Generate the Mathjax markup to process STEM expressions
+  # @param cdn_base [String]
+  # @return [String]
+  def generate_stem(cdn_base)
+    if attr?(:stem)
+      eqnums_val = attr('eqnums', STEM_EQNUMS_NONE).downcase
+      unless STEM_EQNUMS_VALID_VALUES.include?(eqnums_val)
+        eqnums_val = STEM_EQNUMS_AMS
+      end
+      mathjax_configuration = {
+        tex: {
+          inlineMath: [Asciidoctor::INLINE_MATH_DELIMITERS[:latexmath]],
+          displayMath: [Asciidoctor::BLOCK_MATH_DELIMITERS[:latexmath]],
+          processEscapes: false,
+          tags: eqnums_val,
+        },
+        options: {
+          ignoreHtmlClass: 'nostem|nolatexmath'
+        },
+        asciimath: {
+          delimiters: [Asciidoctor::BLOCK_MATH_DELIMITERS[:asciimath]],
+        },
+        loader: {
+          load: ['input/asciimath', 'output/chtml', 'ui/menu']
+        }
+      }
+      mathjaxdir = attr('mathjaxdir', "#{cdn_base}/mathjax/#{MATHJAX_VERSION}/es5")
+      %(<script>window.MathJax = #{JSON.generate(mathjax_configuration)};</script>) +
+      %(<script async src="#{mathjaxdir}/tex-mml-chtml.js"></script>)
+    end
   end
   #--
 end
