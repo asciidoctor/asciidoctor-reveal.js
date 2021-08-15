@@ -1,14 +1,13 @@
 = Auto Animate
 
-This feature is a wrapper of reveal.js auto animation.
+This feature is a wrapper of https://revealjs.com/auto-animate/[reveal.js auto-animate feature].
 
 Since your AsciiDoc file will be transformed into an HTML 5 presentation,
-You can define Asciidoctor attributes, options and animate IDs to configure the reveal.js auto-animate feature.
-Under the hood, these settings will be mapped to `data-*` HTML properties, which you can check from: +
-https://revealjs.com/auto-animate/
+You can define Asciidoctor attributes and options to configure the reveal.js auto-animate feature.
+Under the hood, these settings will be mapped to https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*[custom HTML data attributes].
 
-For bool attributes which means true if you set it, or false if you omit it,
-you should use asciidoctor option, such as: `%auto-animate`.
+For boolean attributes which means `true` if you set it, or `false` if you omit it,
+you should use Asciidoctor options, such as: `%auto-animate`.
 
 For reveal.js settings which need to set specific values, you can use Asciidoctor attributes,
 such as: `auto-animate-easing=ease-in-out`.
@@ -22,40 +21,89 @@ In the following example, we are using the `%auto-animate` option on two adjacen
 [source,asciidoc]
 ----
 [%auto-animate]
-== auto-animate option
+== !
 
 Matched element will be animated automatically!
 
 [%auto-animate]
-== auto-animate option
+== !
+
+[.highlight]
+Matched element will be animated automatically!
 
 And move to the right position!
 
-This is Great!
-
-Matched element will be animated automatically!
+[%hardbreaks]
+⬆️
+⬆️
+⬆️
 ----
+
+== Source blocks
+
+Here's a complete example:
+
+[source,asciidoc]
+-----
+[%auto-animate]
+== !
+
+[source%linenums,js,data-id=planets]
+----
+let planets = [
+  { name: 'mars', diameter: 6779 },
+]
+----
+
+[%auto-animate]
+== !
+
+[source%linenums,js,data-id=planets]
+----
+let planets = [
+  { name: 'mars', diameter: 6779 },
+  { name: 'earth', diameter: 12742 },
+  { name: 'jupiter', diameter: 139820 }
+]
+----
+
+[%auto-animate]
+== !
+
+[source%linenums,js,data-id=planets]
+----
+let circumferenceReducer = ( c, planet ) => {
+  return c + planet.diameter * Math.PI;
+}
+
+let planets = [
+  { name: 'mars', diameter: 6779 },
+  { name: 'earth', diameter: 12742 },
+  { name: 'jupiter', diameter: 139820 }
+]
+
+let c = planets.reduce( circumferenceReducer, 0 )
+----
+-----
 
 == Control unmatched element animation
 
 By default, no matching element will fade in.
-You can make them appear instantly with: `auto-animate-unmatched=false`.
+You can make them appear instantly using `auto-animate-unmatched=false`.
 
 [source,asciidoc]
 ----
 [%auto-animate,auto-animate-unmatched=false]
-== auto-animate-unmatched
+== Unmatched
 
-Determines whether elements with no matching auto-animate target should fade in.
-Set to false to make them appear instantly.
+Introduction. (matched)
 
 [%auto-animate,auto-animate-unmatched=false]
-== auto-animate-unmatched
+== Unmatched
 
-This will be shown instantly.
+Introduction. (matched)
 
-Determines whether elements with no matching auto-animate target should fade in.
-Set to false to make them appear instantly.
+This will be shown instantly ⚡ (unmatched)
 ----
 
 == Set animation duration
@@ -65,90 +113,100 @@ You can set the `auto-animate-duration` attribute to control the animation durat
 [source,asciidoc]
 ----
 [%auto-animate,auto-animate-duration=5]
-== auto-animate-duration
+== Duration
 
-Animation duration in seconds.
+This animation...
 
 [%auto-animate,auto-animate-duration=5]
-== auto-animate-duration
+== Duration
 
-This auto animation
+This animation...
 
-will take 5 second.
-
-Animation duration in seconds.
+...will take 5 seconds! ⌚
 ----
 
 == Animation group
 
 You can separate groups of auto-animated slides, which will distinct from each other by using the `auto-animate-id` attribute.
-
 Auto animation occurs in adjacent slides of the same group or both don't have one.
 
-`auto-animate-restart` asciidoctor option will prevent auto-animate between the previous slide (even if they have the same id).
+The `%auto-animate-restart` option will prevent auto-animate between the previous slide (even if they have the same id).
 
-Below example illustrates `auto-animate-id` and `auto-animate-restart` usage:
+The example below illustrates `auto-animate-restart` usage:
 
 [source,asciidoc]
 ----
-[%auto-animate,auto-animate-id="two"]
-== auto-animate-id and %auto-animate-restart
+[%auto-animate]
+== !
 
-`%auto-animate,auto-animate-id="two"`
+First Item
 
-When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+[%auto-animate]
+== !
 
-[%auto-animate,auto-animate-id="three"]
-== auto-animate-id and %auto-animate-restart
+First Item
 
-`%auto-animate,auto-animate-id="three"`
+Second Item
 
-Two adjacent slides will only auto-animate if they have the same id or if both don't have one.
+[%auto-animate%auto-animate-restart]
+== !
 
-When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+First Item
 
-[%auto-animate,auto-animate-id="three"]
-== auto-animate-id and %auto-animate-restart
+Second Item
 
-`%auto-animate,auto-animate-id="three"`
+Third Item (restart)
 
-If same Id, animation will work.
+[%auto-animate]
+== !
 
-When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+First Item
 
-[%auto-animate%auto-animate-restart,auto-animate-id="three"]
-== auto-animate-id and %auto-animate-restart
+Second Item
 
-`%auto-animate%auto-animate-restart,auto-animate-id="three"`
+Third Item (restart)
 
-auto-animate-restart will prevent auto-animate between the previous slide (even if they have the same id) but not between it and the next slide.
-
-When you want separate groups of auto-animated slides right next to each other you can use the auto-animate-id and auto-animate-restart attributes.
+Fourth Item
 ----
 
 == Set animation easing function
 
-To use `auto-animate-easing` asciidoctor attribute, you can set
-auto animation easing function.
+The Asciidoctor attribute `auto-animate-easing` is used to control the speed of the transition.
+You can use any value supported by https://developer.mozilla.org/fr/docs/Web/CSS/transition-timing-function[transition-timing-function].
+
+Here's an example using the value `ease-in-out`:
 
 [source,asciidoc]
 ----
-[%auto-animate,auto-animate-easing='ease-in-out']
-== auto-animate-easing
+[%auto-animate,auto-animate-easing="ease-in-out"]
+== Easing In Out
 
+🏓 Ping?
 
-ease in out!
+[%auto-animate,auto-animate-easing="ease-in-out"]
+== Easing In Out
 
+🏓 Ping?
 
-[%auto-animate,auto-animate-easing='ease-in-out']
-== auto-animate-easing
+Pong! 🏓
 
-This is GREAT!
+[%auto-animate,auto-animate-easing="ease-in-out"]
+== Easing In Out
 
-The moving speed could
+🏓 Ping?
 
-be controlled by CSS transition-timing-function
+Pong! 🏓
 
+🏓 Ping?
 
-ease in out!
+[%auto-animate,auto-animate-easing="ease-in-out"]
+== Easing In Out
+
+🏓 Ping?
+
+Pong! 🏓
+
+🏓 Ping?
+
+Pong! 🏓
 ----
