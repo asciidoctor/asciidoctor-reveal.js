@@ -71,12 +71,35 @@ _presentation-docinfo-footer.html_
 
  * If you are using third party plugins (such as chalkboard), please upgrade to the latest version.
 
+### Bug Fixes
+
+ * Include Rouge stylesheet when `:source-highlighter: rouge is present and when there's a least one source block.
+ * Fix quotation marks and apostrophes
+ * Fix subscripts erroneously mapped to superscripts
+
 ### Enhancements
 
  * Upgrade to reveal.js 4.1.2 (#370)
  * Add support for the Auto-Animate feature (#439)
  * Add support for the built-in search plugin (#441)
    * You can enable this plugin using `:revealjs_plugin_search: enabled`.
+ * Upgrade MathJax to version 3.2.0
+ * Display all the authors (inclusing their email addresses)
+ * Upgrade development dependencies
+   * Bump `path-parse` from 1.0.6 to 1.0.7 in /test/js-babel
+   * Bump `path-parse` from 1.0.6 to 1.0.7
+   * Bump `glob-parent` from 5.1.0 to 5.1.2 
+   * Bump `lodash` from 4.17.19 to 4.17.21 in /test/js-babel
+   * Bump `y18n` from 4.0.0 to 4.0.1
+ * Drop `thread_safe` and `concurrent-ruby` dependencies
+ * Add favicon to HTML if its attribute is present in AsciiDoc
+
+### Documentation
+
+ * Add link to https://asciidoctor-revealjs-examples.netlify.app/ in the documentation
+ * Mention in the documentation that `revealjsdir` can be a CDN
+ * Add maintenance branch procedure
+ * Add downstream projects update procedure
 
 ## 4.1.0 (2020-12-19)
 
