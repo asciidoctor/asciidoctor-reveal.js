@@ -1,1 +1,1 @@
-* xref:showcase.adoc[]
+* https://asciidoctor-revealjs-examples.netlify.app/[What's New^]
