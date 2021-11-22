@@ -41,8 +41,9 @@ NOTE: For some reason, when you use the system Ruby on Fedora, you also have to 
 . Install the gems into the project
 
   $ bundle config --local github.https true
-  $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
-
+  $ bundle config set --local path '.bundle/gems'
+  $ bundle binstubs --all
+  
 . Optional: Copy or clone reveal.js presentation framework.
 Allows you to modify themes or view slides offline.
 
