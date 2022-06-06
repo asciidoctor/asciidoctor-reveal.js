@@ -200,6 +200,94 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       end
     end
 
+    # Retrieves the built-in html5 converter.
+    #
+    # Returns the instance of the Asciidoctor::Converter::Html5Converter
+    # associated with this node.
+    def html5_converter
+      converter.instance_variable_get("@delegate_converter")
+    end
+
+    def convert_inline_image(node = self)
+      target = node.target
+      if (node.type || 'image') == 'icon'
+        if (icons = node.document.attr 'icons') == 'font'
+          i_class_attr_val = %(#{node.attr(:set, 'fa')} fa-#{target})
+          i_class_attr_val = %(#{i_class_attr_val} fa-#{node.attr 'size'}) if node.attr? 'size'
+          if node.attr? 'flip'
+            i_class_attr_val = %(#{i_class_attr_val} fa-flip-#{node.attr 'flip'})
+          elsif node.attr? 'rotate'
+            i_class_attr_val = %(#{i_class_attr_val} fa-rotate-#{node.attr 'rotate'})
+          end
+          attrs = (node.attr? 'title') ? %( title="#{node.attr 'title'}") : ''
+          img = %(<i class="#{i_class_attr_val}"#{attrs}></i>)
+        elsif icons
+          attrs = (node.attr? 'width') ? %( width="#{node.attr 'width'}") : ''
+          attrs = %(#{attrs} height="#{node.attr 'height'}") if node.attr? 'height'
+          attrs = %(#{attrs} title="#{node.attr 'title'}") if node.attr? 'title'
+          img = %(<img src="#{src = node.icon_uri target}" alt="#{encode_attribute_value node.alt}"#{attrs}>)
+        else
+          img = %([#{node.alt}&#93;)
+        end
+      else
+        html_attrs = (node.attr? 'width') ? %( width="#{node.attr 'width'}") : ''
+        html_attrs = %(#{html_attrs} height="#{node.attr 'height'}") if node.attr? 'height'
+        html_attrs = %(#{html_attrs} title="#{node.attr 'title'}") if node.attr? 'title'
+        img, src = img_tag(node, target, html_attrs)
+      end
+      img_link(node, src, img)
+    end
+
+    def convert_image(node = self)
+      # When the stretch class is present, block images will take the most space
+      # they can take. Setting width and height can override that.
+      # We pinned the 100% to height to avoid aspect ratio breakage and since
+      # widescreen monitors are the most popular, chances are that height will
+      # be the biggest constraint
+      if node.has_role?('stretch') && !(node.attr?(:width) || node.attr?(:height))
+        height_value = "100%"
+      elsif node.attr? 'height'
+        height_value = node.attr 'height'
+      else
+        height_value = nil
+      end
+      html_attrs = (node.attr? 'width') ? %( width="#{node.attr 'width'}") : ''
+      html_attrs = %(#{html_attrs} height="#{height_value}") if height_value
+      html_attrs = %(#{html_attrs} title="#{node.attr 'title'}") if node.attr? 'title'
+      html_attrs = %(#{html_attrs} style="background: #{node.attr :background}") if node.attr? 'background'
+      img, src = img_tag(node, node.attr('target'), html_attrs)
+      img_link(node, src, img)
+    end
+
+    def img_tag(node = self, target, html_attrs)
+      if ((node.attr? 'format', 'svg') || (target.include? '.svg')) && node.document.safe < ::Asciidoctor::SafeMode::SECURE
+        if node.option? 'inline'
+          img = (html5_converter.read_svg_contents node, target) || %(<span class="alt">#{node.alt}</span>)
+        elsif node.option? 'interactive'
+          fallback = (node.attr? 'fallback') ? %(<img src="#{node.image_uri node.attr 'fallback'}" alt="#{encode_attribute_value node.alt}"#{html_attrs}>) : %(<span class="alt">#{node.alt}</span>)
+          img = %(<object type="image/svg+xml" data="#{src = node.image_uri target}"#{html_attrs}>#{fallback}</object>)
+        else
+          img = %(<img src="#{src = node.image_uri target}" alt="#{encode_attribute_value node.alt}"#{html_attrs}>)
+        end
+      else
+        img = %(<img src="#{src = node.image_uri target}" alt="#{encode_attribute_value node.alt}"#{html_attrs}>)
+      end
+
+      [img, src]
+    end
+
+    # Wrap the <img> element in a <a> element if the link attribute is defined
+    def img_link(node = self, src, content)
+      if (node.attr? 'link') && ((href_attr_val = node.attr 'link') != 'self' || (href_attr_val = src))
+        if (link_preview_value = bool_data_attr :link_preview)
+          data_preview_attr = %( data-preview-link="#{link_preview_value == true ? "" : link_preview_value}")
+        end
+        return %(<a class="image" href="#{href_attr_val}"#{(append_link_constraint_attrs node).join}#{data_preview_attr}>#{content}</a>)
+      end
+
+      content
+    end
+
     def revealjs_dependencies(document, node, revealjsdir)
       dependencies = []
       dependencies << "{ src: '#{revealjsdir}/plugin/zoom/zoom.js', async: true, callback: function () { Reveal.registerPlugin(RevealZoom) } }" unless (node.attr? 'revealjs_plugin_zoom', 'disabled')
@@ -207,7 +295,6 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       dependencies << "{ src: '#{revealjsdir}/plugin/search/search.js', async: true, callback: function () { Reveal.registerPlugin(RevealSearch) } }" if (node.attr? 'revealjs_plugin_search', 'enabled')
       dependencies.join(",\n      ")
     end
-
 
     # Between delimiters (--) is code taken from asciidoctor-bespoke 1.0.0.alpha.1
     # Licensed under MIT, Copyright (C) 2015-2016 Dan Allen and the Asciidoctor Project
@@ -281,6 +368,23 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
         blks.map {|b| b.call }.join
       end
       nil
+    end
+
+    # Copied from asciidoctor/lib/asciidoctor/converter/html5.rb (method is private)
+    def append_link_constraint_attrs node, attrs = []
+      rel = 'nofollow' if node.option? 'nofollow'
+      if (window = node.attributes['window'])
+        attrs << %( target="#{window}")
+        attrs << (rel ? %( rel="#{rel} noopener") : ' rel="noopener"') if window == '_blank' || (node.option? 'noopener')
+      elsif rel
+        attrs << %( rel="#{rel}")
+      end
+      attrs
+    end
+
+    # Copied from asciidoctor/lib/asciidoctor/converter/html5.rb (method is private)
+    def encode_attribute_value val
+      (val.include? '"') ? (val.gsub '"', '&quot;') : val
     end
 
     # Copied from asciidoctor/lib/asciidoctor/converter/semantic-html5.rb which is not yet shipped
@@ -415,175 +519,42 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
   #----------------- Begin of generated transformation methods -----------------#
 
 
-  def ruler(node, opts = {})
+  def admonition(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _buf << ("<hr>".freeze); 
-      ; _buf
-    end
-  end
-
-  def outline(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; unless sections.empty?; 
-      ; toclevels ||= (document.attr 'toclevels', DEFAULT_TOCLEVELS).to_i; 
-      ; slevel = section_level sections.first; 
-      ; _buf << ("<ol class=\"sectlevel".freeze); _buf << ((slevel).to_s); _buf << ("\">".freeze); 
-      ; sections.each do |sec|; 
-      ; _buf << ("<li><a href=\"#".freeze); 
-      ; _buf << ((sec.id).to_s); _buf << ("\">".freeze); _buf << ((section_title sec).to_s); 
-      ; _buf << ("</a>".freeze); if (sec.level < toclevels) && (child_toc = converter.convert sec, 'outline'); 
-      ; _buf << ((child_toc).to_s); 
-      ; end; _buf << ("</li>".freeze); end; _buf << ("</ol>".freeze); end; _buf
-    end
-  end
-
-  def literal(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _slim_controls1 = html_tag('div', { :id => id, :class => ['literalblock', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      _buf = ''; if (has_role? 'aside') or (has_role? 'speaker') or (has_role? 'notes'); 
+      ; _buf << ("<aside class=\"notes\">".freeze); _buf << ((resolve_content).to_s); 
+      ; _buf << ("</aside>".freeze); 
+      ; else; 
+      ; _slim_controls1 = html_tag('div', { :id => @id, :class => ['admonitionblock', (attr :name), role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      ; _slim_controls2 << ("<table><tr><td class=\"icon\">".freeze); 
+      ; 
+      ; if @document.attr? :icons, 'font'; 
+      ; icon_mapping = Hash['caution', 'fire', 'important', 'exclamation-circle', 'note', 'info-circle', 'tip', 'lightbulb-o', 'warning', 'warning']; 
+      ; _slim_controls2 << ("<i".freeze); _temple_html_attributeremover1 = ''; _slim_codeattributes1 = %(fa fa-#{icon_mapping[attr :name]}); if Array === _slim_codeattributes1; _slim_codeattributes1 = _slim_codeattributes1.flatten; _slim_codeattributes1.map!(&:to_s); _slim_codeattributes1.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes1.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes1).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover1).to_s); _slim_controls2 << ("\"".freeze); end; _slim_codeattributes2 = (attr :textlabel || @caption); if _slim_codeattributes2; if _slim_codeattributes2 == true; _slim_controls2 << (" title".freeze); else; _slim_controls2 << (" title=\"".freeze); _slim_controls2 << ((_slim_codeattributes2).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << ("></i>".freeze); 
+      ; elsif @document.attr? :icons; 
+      ; _slim_controls2 << ("<img".freeze); _slim_codeattributes3 = icon_uri(attr :name); if _slim_codeattributes3; if _slim_codeattributes3 == true; _slim_controls2 << (" src".freeze); else; _slim_controls2 << (" src=\"".freeze); _slim_controls2 << ((_slim_codeattributes3).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes4 = @caption; if _slim_codeattributes4; if _slim_codeattributes4 == true; _slim_controls2 << (" alt".freeze); else; _slim_controls2 << (" alt=\"".freeze); _slim_controls2 << ((_slim_codeattributes4).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << (">".freeze); 
+      ; else; 
+      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << (((attr :textlabel) || @caption).to_s); 
+      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("</td><td class=\"content\">".freeze); 
       ; if title?; 
       ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((title).to_s); 
-      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<div class=\"content\"><pre".freeze); _temple_html_attributeremover1 = ''; _slim_codeattributes1 = (!(@document.attr? :prewrap) || (option? 'nowrap') ? 'nowrap' : nil); if Array === _slim_codeattributes1; _slim_codeattributes1 = _slim_codeattributes1.flatten; _slim_codeattributes1.map!(&:to_s); _slim_codeattributes1.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes1.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes1).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover1).to_s); _slim_controls2 << ("\"".freeze); end; _slim_controls2 << (">".freeze); _slim_controls2 << ((content).to_s); 
-      ; _slim_controls2 << ("</pre></div>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
+      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ((content).to_s); 
+      ; _slim_controls2 << ("</td></tr></table>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); end; _buf
     end
   end
 
-  def title_slide(node, opts = {})
+  def audio(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; bg_image = (attr? 'title-slide-background-image') ? (image_uri(attr 'title-slide-background-image')) : nil; 
-      ; bg_video = (attr? 'title-slide-background-video') ? (media_uri(attr 'title-slide-background-video')) : nil; 
+      _buf = ''; _slim_controls1 = html_tag('div', { :id => @id, :class => ['audioblock', @style, role] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      ; if title?; 
+      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((captioned_title).to_s); 
+      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<div class=\"content\"><audio".freeze); 
+      ; _slim_codeattributes1 = media_uri(attr :target); if _slim_codeattributes1; if _slim_codeattributes1 == true; _slim_controls2 << (" src".freeze); else; _slim_controls2 << (" src=\"".freeze); _slim_controls2 << ((_slim_codeattributes1).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes2 = (option? 'autoplay'); if _slim_codeattributes2; if _slim_codeattributes2 == true; _slim_controls2 << (" autoplay".freeze); else; _slim_controls2 << (" autoplay=\"".freeze); _slim_controls2 << ((_slim_codeattributes2).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes3 = !(option? 'nocontrols'); if _slim_codeattributes3; if _slim_codeattributes3 == true; _slim_controls2 << (" controls".freeze); else; _slim_controls2 << (" controls=\"".freeze); _slim_controls2 << ((_slim_codeattributes3).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes4 = (option? 'loop'); if _slim_codeattributes4; if _slim_codeattributes4 == true; _slim_controls2 << (" loop".freeze); else; _slim_controls2 << (" loop=\"".freeze); _slim_controls2 << ((_slim_codeattributes4).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << (">Your browser does not support the audio tag.</audio></div>".freeze); 
       ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; _buf << ("<section".freeze); _temple_html_attributeremover1 = ''; _temple_html_attributemerger1 = []; _temple_html_attributemerger1[0] = "title"; _temple_html_attributemerger1[1] = ''; _slim_codeattributes1 = role; if Array === _slim_codeattributes1; _slim_codeattributes1 = _slim_codeattributes1.flatten; _slim_codeattributes1.map!(&:to_s); _slim_codeattributes1.reject!(&:empty?); _temple_html_attributemerger1[1] << ((_slim_codeattributes1.join(" ")).to_s); else; _temple_html_attributemerger1[1] << ((_slim_codeattributes1).to_s); end; _temple_html_attributemerger1[1]; _temple_html_attributeremover1 << ((_temple_html_attributemerger1.reject(&:empty?).join(" ")).to_s); _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _buf << (" class=\"".freeze); _buf << ((_temple_html_attributeremover1).to_s); _buf << ("\"".freeze); end; _buf << (" data-state=\"title\"".freeze); _slim_codeattributes2 = (attr 'title-slide-transition'); if _slim_codeattributes2; if _slim_codeattributes2 == true; _buf << (" data-transition".freeze); else; _buf << (" data-transition=\"".freeze); _buf << ((_slim_codeattributes2).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes3 = (attr 'title-slide-transition-speed'); if _slim_codeattributes3; if _slim_codeattributes3 == true; _buf << (" data-transition-speed".freeze); else; _buf << (" data-transition-speed=\"".freeze); _buf << ((_slim_codeattributes3).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes4 = (attr 'title-slide-background'); if _slim_codeattributes4; if _slim_codeattributes4 == true; _buf << (" data-background".freeze); else; _buf << (" data-background=\"".freeze); _buf << ((_slim_codeattributes4).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes5 = (attr 'title-slide-background-size'); if _slim_codeattributes5; if _slim_codeattributes5 == true; _buf << (" data-background-size".freeze); else; _buf << (" data-background-size=\"".freeze); _buf << ((_slim_codeattributes5).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes6 = bg_image; if _slim_codeattributes6; if _slim_codeattributes6 == true; _buf << (" data-background-image".freeze); else; _buf << (" data-background-image=\"".freeze); _buf << ((_slim_codeattributes6).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes7 = bg_video; if _slim_codeattributes7; if _slim_codeattributes7 == true; _buf << (" data-background-video".freeze); else; _buf << (" data-background-video=\"".freeze); _buf << ((_slim_codeattributes7).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes8 = (attr 'title-slide-background-video-loop'); if _slim_codeattributes8; if _slim_codeattributes8 == true; _buf << (" data-background-video-loop".freeze); else; _buf << (" data-background-video-loop=\"".freeze); _buf << ((_slim_codeattributes8).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes9 = (attr 'title-slide-background-video-muted'); if _slim_codeattributes9; if _slim_codeattributes9 == true; _buf << (" data-background-video-muted".freeze); else; _buf << (" data-background-video-muted=\"".freeze); _buf << ((_slim_codeattributes9).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes10 = (attr 'title-slide-background-opacity'); if _slim_codeattributes10; if _slim_codeattributes10 == true; _buf << (" data-background-opacity".freeze); else; _buf << (" data-background-opacity=\"".freeze); _buf << ((_slim_codeattributes10).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes11 = (attr 'title-slide-background-iframe'); if _slim_codeattributes11; if _slim_codeattributes11 == true; _buf << (" data-background-iframe".freeze); else; _buf << (" data-background-iframe=\"".freeze); _buf << ((_slim_codeattributes11).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes12 = (attr 'title-slide-background-color'); if _slim_codeattributes12; if _slim_codeattributes12 == true; _buf << (" data-background-color".freeze); else; _buf << (" data-background-color=\"".freeze); _buf << ((_slim_codeattributes12).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes13 = (attr 'title-slide-background-repeat'); if _slim_codeattributes13; if _slim_codeattributes13 == true; _buf << (" data-background-repeat".freeze); else; _buf << (" data-background-repeat=\"".freeze); _buf << ((_slim_codeattributes13).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes14 = (attr 'title-slide-background-position'); if _slim_codeattributes14; if _slim_codeattributes14 == true; _buf << (" data-background-position".freeze); else; _buf << (" data-background-position=\"".freeze); _buf << ((_slim_codeattributes14).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes15 = (attr 'title-slide-background-transition'); if _slim_codeattributes15; if _slim_codeattributes15 == true; _buf << (" data-background-transition".freeze); else; _buf << (" data-background-transition=\"".freeze); _buf << ((_slim_codeattributes15).to_s); _buf << ("\"".freeze); end; end; _buf << (">".freeze); 
-      ; if (_title_obj = doctitle partition: true, use_fallback: true).subtitle?; 
-      ; _buf << ("<h1>".freeze); _buf << ((slice_text _title_obj.title, (_slice = header.option? :slice)).to_s); 
-      ; _buf << ("</h1><h2>".freeze); _buf << ((slice_text _title_obj.subtitle, _slice).to_s); 
-      ; _buf << ("</h2>".freeze); else; 
-      ; _buf << ("<h1>".freeze); _buf << ((@header.title).to_s); 
-      ; _buf << ("</h1>".freeze); end; preamble = @document.find_by context: :preamble; 
-      ; unless preamble.nil? or preamble.length == 0; 
-      ; _buf << ("<div class=\"preamble\">".freeze); _buf << ((preamble.pop.content).to_s); 
-      ; _buf << ("</div>".freeze); end; _buf << ((generate_authors(@document)).to_s); 
-      ; _buf << ("</section>".freeze); _buf
-    end
-  end
-
-  def inline_kbd(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; if (keys = attr 'keys').size == 1; 
-      ; _slim_controls1 = html_tag('kbd', data_attrs(@attributes)) do; _slim_controls2 = ''; 
-      ; _slim_controls2 << ((keys.first).to_s); 
-      ; _slim_controls2; end; _buf << ((_slim_controls1).to_s); else; 
-      ; _slim_controls3 = html_tag('span', { :class => ['keyseq'] }.merge(data_attrs(@attributes))) do; _slim_controls4 = ''; 
-      ; keys.each_with_index do |key, idx|; 
-      ; unless idx.zero?; 
-      ; _slim_controls4 << ("+".freeze); 
-      ; end; _slim_controls4 << ("<kbd>".freeze); _slim_controls4 << ((key).to_s); 
-      ; _slim_controls4 << ("</kbd>".freeze); end; _slim_controls4; end; _buf << ((_slim_controls3).to_s); end; _buf
-    end
-  end
-
-  def stretch_nested_elements(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _buf << ("<script>var dom = {};\ndom.slides = document.querySelector('.reveal .slides');\n\nfunction getRemainingHeight(element, slideElement, height) {\n  height = height || 0;\n  if (element) {\n    var newHeight, oldHeight = element.style.height;\n    // Change the .stretch element height to 0 in order find the height of all\n    // the other elements\n    element.style.height = '0px';\n    // In Overview mode, the parent (.slide) height is set of 700px.\n    // Restore it temporarily to its natural height.\n    slideElement.style.height = 'auto';\n    newHeight = height - slideElement.offsetHeight;\n    // Restore the old height, just in case\n    element.style.height = oldHeight + 'px';\n    // Clear the parent (.slide) height. .removeProperty works in IE9+\n    slideElement.style.removeProperty('height');\n    return newHeight;\n  }\n  return height;\n}\n\nfunction layoutSlideContents(width, height) {\n  // Handle sizing of elements with the 'stretch' class\n  toArray(dom.slides.querySelectorAll('section .stretch')).forEach(function (element) {\n    // Determine how much vertical space we can use\n    var limit = 5; // hard limit\n    var parent = element.parentNode;\n    while (parent.nodeName !== 'SECTION' && limit > 0) {\n      parent = parent.parentNode;\n      limit--;\n    }\n    if (limit === 0) {\n      // unable to find parent, aborting!\n      return;\n    }\n    var remainingHeight = getRemainingHeight(element, parent, height);\n    // Consider the aspect ratio of media elements\n    if (/(img|video)/gi.test(element.nodeName)) {\n      var nw = element.naturalWidth || element.videoWidth, nh = element.naturalHeight || element.videoHeight;\n      var es = Math.min(width / nw, remainingHeight / nh);\n      element.style.width = (nw * es) + 'px';\n      element.style.height = (nh * es) + 'px';\n    } else {\n      element.style.width = width + 'px';\n      element.style.height = remainingHeight + 'px';\n    }\n  });\n}\n\nfunction toArray(o) {\n  return Array.prototype.slice.call(o);\n}\n\nReveal.addEventListener('slidechanged', function () {\n  layoutSlideContents(".freeze); 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; _buf << ((attr 'revealjs_width', 960).to_s); _buf << (", ".freeze); _buf << ((attr 'revealjs_height', 700).to_s); _buf << (")\n});\nReveal.addEventListener('ready', function () {\n  layoutSlideContents(".freeze); 
-      ; 
-      ; 
-      ; _buf << ((attr 'revealjs_width', 960).to_s); _buf << (", ".freeze); _buf << ((attr 'revealjs_height', 700).to_s); _buf << (")\n});\nReveal.addEventListener('resize', function () {\n  layoutSlideContents(".freeze); 
-      ; 
-      ; 
-      ; _buf << ((attr 'revealjs_width', 960).to_s); _buf << (", ".freeze); _buf << ((attr 'revealjs_height', 700).to_s); _buf << (")\n});</script>".freeze); 
-      ; 
-      ; _buf
-    end
-  end
-
-  def inline_button(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _slim_controls1 = html_tag('b', { :class => ['button'] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
-      ; _slim_controls2 << ((@text).to_s); 
       ; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
     end
   end
@@ -613,69 +584,6 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       ; items.each do |item|; 
       ; _slim_controls2 << ("<li><p>".freeze); _slim_controls2 << ((item.text).to_s); 
       ; _slim_controls2 << ("</p></li>".freeze); end; _slim_controls2 << ("</ol>".freeze); end; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
-    end
-  end
-
-  def pass(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _buf << ((content).to_s); 
-      ; _buf
-    end
-  end
-
-  def table(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; classes = ['tableblock', "frame-#{attr :frame, 'all'}", "grid-#{attr :grid, 'all'}", role, ('fragment' if (option? :step) || (attr? 'step'))]; 
-      ; styles = [("width:#{attr :tablepcwidth}%" unless option? 'autowidth'), ("float:#{attr :float}" if attr? :float)].compact.join('; '); 
-      ; _slim_controls1 = html_tag('table', { :id => @id, :class => classes, :style => styles }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
-      ; if title?; 
-      ; _slim_controls2 << ("<caption class=\"title\">".freeze); _slim_controls2 << ((captioned_title).to_s); 
-      ; _slim_controls2 << ("</caption>".freeze); end; unless (attr :rowcount).zero?; 
-      ; _slim_controls2 << ("<colgroup>".freeze); 
-      ; if option? 'autowidth'; 
-      ; @columns.each do; 
-      ; _slim_controls2 << ("<col>".freeze); 
-      ; end; else; 
-      ; @columns.each do |col|; 
-      ; _slim_controls2 << ("<col style=\"width:".freeze); _slim_controls2 << ((col.attr :colpcwidth).to_s); _slim_controls2 << ("%\">".freeze); 
-      ; end; end; _slim_controls2 << ("</colgroup>".freeze); [:head, :foot, :body].select {|tblsec| !@rows[tblsec].empty? }.each do |tblsec|; 
-      ; 
-      ; _slim_controls2 << ("<t".freeze); _slim_controls2 << ((tblsec).to_s); _slim_controls2 << (">".freeze); 
-      ; @rows[tblsec].each do |row|; 
-      ; _slim_controls2 << ("<tr>".freeze); 
-      ; row.each do |cell|; 
-      ; 
-      ; if tblsec == :head; 
-      ; cell_content = cell.text; 
-      ; else; 
-      ; case cell.style; 
-      ; when :literal; 
-      ; cell_content = cell.text; 
-      ; else; 
-      ; cell_content = cell.content; 
-      ; end; end; _slim_controls3 = html_tag(tblsec == :head || cell.style == :header ? 'th' : 'td',
-      :class=>['tableblock', "halign-#{cell.attr :halign}", "valign-#{cell.attr :valign}"],
-      :colspan=>cell.colspan, :rowspan=>cell.rowspan,
-      :style=>((@document.attr? :cellbgcolor) ? %(background-color:#{@document.attr :cellbgcolor};) : nil)) do; _slim_controls4 = ''; 
-      ; if tblsec == :head; 
-      ; _slim_controls4 << ((cell_content).to_s); 
-      ; else; 
-      ; case cell.style; 
-      ; when :asciidoc; 
-      ; _slim_controls4 << ("<div>".freeze); _slim_controls4 << ((cell_content).to_s); 
-      ; _slim_controls4 << ("</div>".freeze); when :literal; 
-      ; _slim_controls4 << ("<div class=\"literal\"><pre>".freeze); _slim_controls4 << ((cell_content).to_s); 
-      ; _slim_controls4 << ("</pre></div>".freeze); when :header; 
-      ; cell_content.each do |text|; 
-      ; _slim_controls4 << ("<p class=\"tableblock header\">".freeze); _slim_controls4 << ((text).to_s); 
-      ; _slim_controls4 << ("</p>".freeze); end; else; 
-      ; cell_content.each do |text|; 
-      ; _slim_controls4 << ("<p class=\"tableblock\">".freeze); _slim_controls4 << ((text).to_s); 
-      ; _slim_controls4 << ("</p>".freeze); end; end; end; _slim_controls4; end; _slim_controls2 << ((_slim_controls3).to_s); end; _slim_controls2 << ("</tr>".freeze); end; end; end; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
     end
   end
 
@@ -737,100 +645,6 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       ; _slim_controls6 << ("</p>".freeze); end; if dd.blocks?; 
       ; _slim_controls6 << ((dd.content).to_s); 
       ; end; _slim_controls6 << ("</dd>".freeze); end; end; _slim_controls6 << ("</dl>".freeze); _slim_controls6; end; _buf << ((_slim_controls5).to_s); end; _buf
-    end
-  end
-
-  def listing(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; nowrap = (option? 'nowrap') || !(document.attr? 'prewrap'); 
-      ; if @style == 'source'; 
-      ; syntax_hl = document.syntax_highlighter; 
-      ; lang = attr :language; 
-      ; if syntax_hl; 
-      ; doc_attrs = document.attributes; 
-      ; css_mode = (doc_attrs[%(#{syntax_hl.name}-css)] || :class).to_sym; 
-      ; style = doc_attrs[%(#{syntax_hl.name}-style)]; 
-      ; opts = syntax_hl.highlight? ? { css_mode: css_mode, style: style } : {}; 
-      ; opts[:nowrap] = nowrap; 
-      ; end; 
-      ; end; _slim_controls1 = html_tag('div', { :id => id, :class => ['listingblock', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes.reject {|key, _| key == 'data-id' }))) do; _slim_controls2 = ''; 
-      ; if title?; 
-      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((captioned_title).to_s); 
-      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<div class=\"content\">".freeze); 
-      ; if syntax_hl; 
-      ; _slim_controls2 << (((syntax_hl.format self, lang, opts)).to_s); 
-      ; else; 
-      ; if @style == 'source'; 
-      ; _slim_controls2 << ("<pre".freeze); _temple_html_attributeremover1 = ''; _slim_codeattributes1 = ['highlight', ('nowrap' if nowrap)]; if Array === _slim_codeattributes1; _slim_codeattributes1 = _slim_codeattributes1.flatten; _slim_codeattributes1.map!(&:to_s); _slim_codeattributes1.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes1.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes1).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover1).to_s); _slim_controls2 << ("\"".freeze); end; _slim_controls2 << ("><code".freeze); 
-      ; _temple_html_attributeremover2 = ''; _slim_codeattributes2 = [("language-#{lang}" if lang)]; if Array === _slim_codeattributes2; _slim_codeattributes2 = _slim_codeattributes2.flatten; _slim_codeattributes2.map!(&:to_s); _slim_codeattributes2.reject!(&:empty?); _temple_html_attributeremover2 << ((_slim_codeattributes2.join(" ")).to_s); else; _temple_html_attributeremover2 << ((_slim_codeattributes2).to_s); end; _temple_html_attributeremover2; if !_temple_html_attributeremover2.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover2).to_s); _slim_controls2 << ("\"".freeze); end; _slim_codeattributes3 = ("#{lang}" if lang); if _slim_codeattributes3; if _slim_codeattributes3 == true; _slim_controls2 << (" data-lang".freeze); else; _slim_controls2 << (" data-lang=\"".freeze); _slim_controls2 << ((_slim_codeattributes3).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << (">".freeze); 
-      ; _slim_controls2 << ((content || '').to_s); 
-      ; _slim_controls2 << ("</code></pre>".freeze); else; 
-      ; _slim_controls2 << ("<pre".freeze); _temple_html_attributeremover3 = ''; _slim_codeattributes4 = [('nowrap' if nowrap)]; if Array === _slim_codeattributes4; _slim_codeattributes4 = _slim_codeattributes4.flatten; _slim_codeattributes4.map!(&:to_s); _slim_codeattributes4.reject!(&:empty?); _temple_html_attributeremover3 << ((_slim_codeattributes4.join(" ")).to_s); else; _temple_html_attributeremover3 << ((_slim_codeattributes4).to_s); end; _temple_html_attributeremover3; if !_temple_html_attributeremover3.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover3).to_s); _slim_controls2 << ("\"".freeze); end; _slim_controls2 << (">".freeze); 
-      ; _slim_controls2 << ((content || '').to_s); 
-      ; _slim_controls2 << ("</pre>".freeze); end; end; _slim_controls2 << ("</div>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
-    end
-  end
-
-  def inline_quoted(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; quote_tags = { emphasis: 'em', strong: 'strong', monospaced: 'code', superscript: 'sup', subscript: 'sub' }; 
-      ; if (quote_tag = quote_tags[@type]); 
-      ; _buf << ((html_tag(quote_tag, { :id => @id, :class => [role, ('fragment' if (option? :step) || (attr? 'step'))].compact }.merge(data_attrs(@attributes)), @text)).to_s); 
-      ; else; 
-      ; case @type; 
-      ; when :double; 
-      ; _buf << ((inline_text_container("&#8220;#{@text}&#8221;")).to_s); 
-      ; when :single; 
-      ; _buf << ((inline_text_container("&#8216;#{@text}&#8217;")).to_s); 
-      ; when :asciimath, :latexmath; 
-      ; open, close = Asciidoctor::INLINE_MATH_DELIMITERS[@type]; 
-      ; _buf << ((inline_text_container("#{open}#{@text}#{close}")).to_s); 
-      ; else; 
-      ; _buf << ((inline_text_container(@text)).to_s); 
-      ; end; end; _buf
-    end
-  end
-
-  def quote(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _slim_controls1 = html_tag('div', { :id => @id, :class => ['quoteblock', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
-      ; if title?; 
-      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((title).to_s); 
-      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<blockquote>".freeze); _slim_controls2 << ((content).to_s); 
-      ; _slim_controls2 << ("</blockquote>".freeze); attribution = (attr? :attribution) ? (attr :attribution) : nil; 
-      ; citetitle = (attr? :citetitle) ? (attr :citetitle) : nil; 
-      ; if attribution || citetitle; 
-      ; _slim_controls2 << ("<div class=\"attribution\">".freeze); 
-      ; if citetitle; 
-      ; _slim_controls2 << ("<cite>".freeze); _slim_controls2 << ((citetitle).to_s); 
-      ; _slim_controls2 << ("</cite>".freeze); end; if attribution; 
-      ; if citetitle; 
-      ; _slim_controls2 << ("<br>".freeze); 
-      ; end; _slim_controls2 << ("&#8212; ".freeze); _slim_controls2 << ((attribution).to_s); 
-      ; end; _slim_controls2 << ("</div>".freeze); end; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
-    end
-  end
-
-  def embedded(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; unless notitle || !has_header?; 
-      ; _buf << ("<h1".freeze); _slim_codeattributes1 = @id; if _slim_codeattributes1; if _slim_codeattributes1 == true; _buf << (" id".freeze); else; _buf << (" id=\"".freeze); _buf << ((_slim_codeattributes1).to_s); _buf << ("\"".freeze); end; end; _buf << (">".freeze); _buf << ((@header.title).to_s); 
-      ; _buf << ("</h1>".freeze); end; _buf << ((content).to_s); 
-      ; unless !footnotes? || attr?(:nofootnotes); 
-      ; _buf << ("<div id=\"footnotes\"><hr>".freeze); 
-      ; 
-      ; footnotes.each do |fn|; 
-      ; _buf << ("<div class=\"footnote\" id=\"_footnote_".freeze); _buf << ((fn.index).to_s); _buf << ("\"><a href=\"#_footnoteref_".freeze); 
-      ; _buf << ((fn.index).to_s); _buf << ("\">".freeze); _buf << ((fn.index).to_s); _buf << ("</a>. ".freeze); _buf << ((fn.text).to_s); 
-      ; _buf << ("</div>".freeze); end; _buf << ("</div>".freeze); end; _buf
     end
   end
 
@@ -1180,6 +994,115 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
+  def embedded(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; unless notitle || !has_header?; 
+      ; _buf << ("<h1".freeze); _slim_codeattributes1 = @id; if _slim_codeattributes1; if _slim_codeattributes1 == true; _buf << (" id".freeze); else; _buf << (" id=\"".freeze); _buf << ((_slim_codeattributes1).to_s); _buf << ("\"".freeze); end; end; _buf << (">".freeze); _buf << ((@header.title).to_s); 
+      ; _buf << ("</h1>".freeze); end; _buf << ((content).to_s); 
+      ; unless !footnotes? || attr?(:nofootnotes); 
+      ; _buf << ("<div id=\"footnotes\"><hr>".freeze); 
+      ; 
+      ; footnotes.each do |fn|; 
+      ; _buf << ("<div class=\"footnote\" id=\"_footnote_".freeze); _buf << ((fn.index).to_s); _buf << ("\"><a href=\"#_footnoteref_".freeze); 
+      ; _buf << ((fn.index).to_s); _buf << ("\">".freeze); _buf << ((fn.index).to_s); _buf << ("</a>. ".freeze); _buf << ((fn.text).to_s); 
+      ; _buf << ("</div>".freeze); end; _buf << ("</div>".freeze); end; _buf
+    end
+  end
+
+  def example(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; _slim_controls1 = html_tag('div', { :id => @id, :class => ['exampleblock', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      ; if title?; 
+      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((captioned_title).to_s); 
+      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<div class=\"content\">".freeze); _slim_controls2 << ((content).to_s); 
+      ; _slim_controls2 << ("</div>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
+    end
+  end
+
+  def floating_title(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; _slim_htag_filter1 = ((level + 1)).to_s; _buf << ("<h".freeze); _buf << ((_slim_htag_filter1).to_s); _slim_codeattributes1 = id; if _slim_codeattributes1; if _slim_codeattributes1 == true; _buf << (" id".freeze); else; _buf << (" id=\"".freeze); _buf << ((_slim_codeattributes1).to_s); _buf << ("\"".freeze); end; end; _temple_html_attributeremover1 = ''; _slim_codeattributes2 = [style, role]; if Array === _slim_codeattributes2; _slim_codeattributes2 = _slim_codeattributes2.flatten; _slim_codeattributes2.map!(&:to_s); _slim_codeattributes2.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes2.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes2).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _buf << (" class=\"".freeze); _buf << ((_temple_html_attributeremover1).to_s); _buf << ("\"".freeze); end; _buf << (">".freeze); 
+      ; _buf << ((title).to_s); 
+      ; _buf << ("</h".freeze); _buf << ((_slim_htag_filter1).to_s); _buf << (">".freeze); _buf
+    end
+  end
+
+  def image(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; unless attributes[1] == 'background' || attributes[1] == 'canvas'; 
+      ; inline_style = [("text-align: #{attr :align}" if attr? :align),("float: #{attr :float}" if attr? :float)].compact.join('; '); 
+      ; _slim_controls1 = html_tag('div', { :id => @id, :class => ['imageblock', role, ('fragment' if (option? :step) || (attr? 'step'))], :style => inline_style }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      ; _slim_controls2 << ((convert_image).to_s); 
+      ; _slim_controls2; end; _buf << ((_slim_controls1).to_s); if title?; 
+      ; _buf << ("<div class=\"title\">".freeze); _buf << ((captioned_title).to_s); 
+      ; _buf << ("</div>".freeze); end; end; _buf
+    end
+  end
+
+  def inline_anchor(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; case @type; 
+      ; when :xref; 
+      ; refid = (attr :refid) || @target; 
+      ; _slim_controls1 = html_tag('a', { :href => @target, :class => [role, ('fragment' if (option? :step) || (attr? 'step'))].compact }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      ; _slim_controls2 << (((@text || @document.references[:ids].fetch(refid, "[#{refid}]")).tr_s("\n", ' ')).to_s); 
+      ; _slim_controls2; end; _buf << ((_slim_controls1).to_s); when :ref; 
+      ; _buf << ((html_tag('a', { :id => @target }.merge(data_attrs(@attributes)))).to_s); 
+      ; when :bibref; 
+      ; _buf << ((html_tag('a', { :id => @target }.merge(data_attrs(@attributes)))).to_s); 
+      ; _buf << ("[".freeze); _buf << ((@target).to_s); _buf << ("]".freeze); 
+      ; else; 
+      ; _slim_controls3 = html_tag('a', { :href => @target, :class => [role, ('fragment' if (option? :step) || (attr? 'step'))].compact, :target => (attr :window), 'data-preview-link' => (bool_data_attr :preview) }.merge(data_attrs(@attributes))) do; _slim_controls4 = ''; 
+      ; _slim_controls4 << ((@text).to_s); 
+      ; _slim_controls4; end; _buf << ((_slim_controls3).to_s); end; _buf
+    end
+  end
+
+  def inline_break(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; _buf << ((@text).to_s); 
+      ; _buf << ("<br>".freeze); 
+      ; _buf
+    end
+  end
+
+  def inline_button(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; _slim_controls1 = html_tag('b', { :class => ['button'] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      ; _slim_controls2 << ((@text).to_s); 
+      ; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
+    end
+  end
+
+  def inline_callout(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; if @document.attr? :icons, 'font'; 
+      ; _buf << ("<i class=\"conum\"".freeze); _slim_codeattributes1 = @text; if _slim_codeattributes1; if _slim_codeattributes1 == true; _buf << (" data-value".freeze); else; _buf << (" data-value=\"".freeze); _buf << ((_slim_codeattributes1).to_s); _buf << ("\"".freeze); end; end; _buf << ("></i><b>".freeze); 
+      ; _buf << (("(#{@text})").to_s); 
+      ; _buf << ("</b>".freeze); elsif @document.attr? :icons; 
+      ; _buf << ("<img".freeze); _slim_codeattributes2 = icon_uri("callouts/#{@text}"); if _slim_codeattributes2; if _slim_codeattributes2 == true; _buf << (" src".freeze); else; _buf << (" src=\"".freeze); _buf << ((_slim_codeattributes2).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes3 = @text; if _slim_codeattributes3; if _slim_codeattributes3 == true; _buf << (" alt".freeze); else; _buf << (" alt=\"".freeze); _buf << ((_slim_codeattributes3).to_s); _buf << ("\"".freeze); end; end; _buf << (">".freeze); 
+      ; else; 
+      ; _buf << ("<b>".freeze); _buf << (("(#{@text})").to_s); 
+      ; _buf << ("</b>".freeze); end; _buf
+    end
+  end
+
   def inline_footnote(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
@@ -1206,27 +1129,152 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
       _buf = ''; _slim_controls1 = html_tag('span', { :class => [@type, role, ('fragment' if (option? :step) || (attr? 'step'))], :style => ("float: #{attr :float}" if attr? :float) }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
-      ; if @type == 'icon' && (@document.attr? :icons, 'font'); 
-      ; style_class = [(attr :set, 'fa'), "fa-#{@target}", ("fa-#{attr :size}" if attr? :size), ("fa-rotate-#{attr :rotate}" if attr? :rotate), ("fa-flip-#{attr :flip}" if attr? :flip)]; 
-      ; if attr? :link; 
-      ; _slim_controls2 << ("<a class=\"image\"".freeze); _slim_codeattributes1 = (attr :link); if _slim_codeattributes1; if _slim_codeattributes1 == true; _slim_controls2 << (" href".freeze); else; _slim_controls2 << (" href=\"".freeze); _slim_controls2 << ((_slim_codeattributes1).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes2 = (attr :window); if _slim_codeattributes2; if _slim_codeattributes2 == true; _slim_controls2 << (" target".freeze); else; _slim_controls2 << (" target=\"".freeze); _slim_controls2 << ((_slim_codeattributes2).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes3 = (bool_data_attr :link_preview); if _slim_codeattributes3; if _slim_codeattributes3 == true; _slim_controls2 << (" data-preview-link".freeze); else; _slim_controls2 << (" data-preview-link=\"".freeze); _slim_controls2 << ((_slim_codeattributes3).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << ("><i".freeze); 
-      ; _temple_html_attributeremover1 = ''; _slim_codeattributes4 = style_class; if Array === _slim_codeattributes4; _slim_codeattributes4 = _slim_codeattributes4.flatten; _slim_codeattributes4.map!(&:to_s); _slim_codeattributes4.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes4.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes4).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover1).to_s); _slim_controls2 << ("\"".freeze); end; _slim_codeattributes5 = (attr :title); if _slim_codeattributes5; if _slim_codeattributes5 == true; _slim_controls2 << (" title".freeze); else; _slim_controls2 << (" title=\"".freeze); _slim_controls2 << ((_slim_codeattributes5).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << ("></i></a>".freeze); 
+      ; _slim_controls2 << ((convert_inline_image).to_s); 
+      ; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
+    end
+  end
+
+  def inline_indexterm(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; if @type == :visible; 
+      ; _buf << ((@text).to_s); 
+      ; end; _buf
+    end
+  end
+
+  def inline_kbd(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; if (keys = attr 'keys').size == 1; 
+      ; _slim_controls1 = html_tag('kbd', data_attrs(@attributes)) do; _slim_controls2 = ''; 
+      ; _slim_controls2 << ((keys.first).to_s); 
+      ; _slim_controls2; end; _buf << ((_slim_controls1).to_s); else; 
+      ; _slim_controls3 = html_tag('span', { :class => ['keyseq'] }.merge(data_attrs(@attributes))) do; _slim_controls4 = ''; 
+      ; keys.each_with_index do |key, idx|; 
+      ; unless idx.zero?; 
+      ; _slim_controls4 << ("+".freeze); 
+      ; end; _slim_controls4 << ("<kbd>".freeze); _slim_controls4 << ((key).to_s); 
+      ; _slim_controls4 << ("</kbd>".freeze); end; _slim_controls4; end; _buf << ((_slim_controls3).to_s); end; _buf
+    end
+  end
+
+  def inline_menu(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; menu = attr 'menu'; 
+      ; menuitem = attr 'menuitem'; 
+      ; if !(submenus = attr 'submenus').empty?; 
+      ; _slim_controls1 = html_tag('span', { :class => ['menuseq'] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      ; _slim_controls2 << ("<span class=\"menu\">".freeze); _slim_controls2 << ((menu).to_s); 
+      ; _slim_controls2 << ("</span>&#160;&#9656;&#32;".freeze); 
+      ; _slim_controls2 << ((submenus.map {|submenu| %(<span class="submenu">#{submenu}</span>&#160;&#9656;&#32;) }.join).to_s); 
+      ; _slim_controls2 << ("<span class=\"menuitem\">".freeze); _slim_controls2 << ((menuitem).to_s); 
+      ; _slim_controls2 << ("</span>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); elsif !menuitem.nil?; 
+      ; _slim_controls3 = html_tag('span', { :class => ['menuseq'] }.merge(data_attrs(@attributes))) do; _slim_controls4 = ''; 
+      ; _slim_controls4 << ("<span class=\"menu\">".freeze); _slim_controls4 << ((menu).to_s); 
+      ; _slim_controls4 << ("</span>&#160;&#9656;&#32;<span class=\"menuitem\">".freeze); 
+      ; _slim_controls4 << ((menuitem).to_s); 
+      ; _slim_controls4 << ("</span>".freeze); _slim_controls4; end; _buf << ((_slim_controls3).to_s); else; 
+      ; _slim_controls5 = html_tag('span', { :class => ['menu'] }.merge(data_attrs(@attributes))) do; _slim_controls6 = ''; 
+      ; _slim_controls6 << ((menu).to_s); 
+      ; _slim_controls6; end; _buf << ((_slim_controls5).to_s); end; _buf
+    end
+  end
+
+  def inline_quoted(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; quote_tags = { emphasis: 'em', strong: 'strong', monospaced: 'code', superscript: 'sup', subscript: 'sub' }; 
+      ; if (quote_tag = quote_tags[@type]); 
+      ; _buf << ((html_tag(quote_tag, { :id => @id, :class => [role, ('fragment' if (option? :step) || (attr? 'step'))].compact }.merge(data_attrs(@attributes)), @text)).to_s); 
       ; else; 
-      ; _slim_controls2 << ("<i".freeze); _temple_html_attributeremover2 = ''; _slim_codeattributes6 = style_class; if Array === _slim_codeattributes6; _slim_codeattributes6 = _slim_codeattributes6.flatten; _slim_codeattributes6.map!(&:to_s); _slim_codeattributes6.reject!(&:empty?); _temple_html_attributeremover2 << ((_slim_codeattributes6.join(" ")).to_s); else; _temple_html_attributeremover2 << ((_slim_codeattributes6).to_s); end; _temple_html_attributeremover2; if !_temple_html_attributeremover2.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover2).to_s); _slim_controls2 << ("\"".freeze); end; _slim_codeattributes7 = (attr :title); if _slim_codeattributes7; if _slim_codeattributes7 == true; _slim_controls2 << (" title".freeze); else; _slim_controls2 << (" title=\"".freeze); _slim_controls2 << ((_slim_codeattributes7).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << ("></i>".freeze); 
-      ; end; elsif @type == 'icon' && !(@document.attr? :icons); 
-      ; if attr? :link; 
-      ; _slim_controls2 << ("<a class=\"image\"".freeze); _slim_codeattributes8 = (attr :link); if _slim_codeattributes8; if _slim_codeattributes8 == true; _slim_controls2 << (" href".freeze); else; _slim_controls2 << (" href=\"".freeze); _slim_controls2 << ((_slim_codeattributes8).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes9 = (attr :window); if _slim_codeattributes9; if _slim_codeattributes9 == true; _slim_controls2 << (" target".freeze); else; _slim_controls2 << (" target=\"".freeze); _slim_controls2 << ((_slim_codeattributes9).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes10 = (bool_data_attr :link_preview); if _slim_codeattributes10; if _slim_codeattributes10 == true; _slim_controls2 << (" data-preview-link".freeze); else; _slim_controls2 << (" data-preview-link=\"".freeze); _slim_controls2 << ((_slim_codeattributes10).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << (">[".freeze); 
-      ; _slim_controls2 << ((attr :alt).to_s); _slim_controls2 << ("]</a>".freeze); 
+      ; case @type; 
+      ; when :double; 
+      ; _buf << ((inline_text_container("&#8220;#{@text}&#8221;")).to_s); 
+      ; when :single; 
+      ; _buf << ((inline_text_container("&#8216;#{@text}&#8217;")).to_s); 
+      ; when :asciimath, :latexmath; 
+      ; open, close = Asciidoctor::INLINE_MATH_DELIMITERS[@type]; 
+      ; _buf << ((inline_text_container("#{open}#{@text}#{close}")).to_s); 
       ; else; 
-      ; _slim_controls2 << ("[".freeze); _slim_controls2 << ((attr :alt).to_s); _slim_controls2 << ("]".freeze); 
-      ; end; else; 
-      ; src = (@type == 'icon' ? (icon_uri @target) : (image_uri @target)); 
-      ; if attr? :link; 
-      ; _slim_controls2 << ("<a class=\"image\"".freeze); _slim_codeattributes11 = (attr :link); if _slim_codeattributes11; if _slim_codeattributes11 == true; _slim_controls2 << (" href".freeze); else; _slim_controls2 << (" href=\"".freeze); _slim_controls2 << ((_slim_codeattributes11).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes12 = (attr :window); if _slim_codeattributes12; if _slim_codeattributes12 == true; _slim_controls2 << (" target".freeze); else; _slim_controls2 << (" target=\"".freeze); _slim_controls2 << ((_slim_codeattributes12).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes13 = (bool_data_attr :link_preview); if _slim_codeattributes13; if _slim_codeattributes13 == true; _slim_controls2 << (" data-preview-link".freeze); else; _slim_controls2 << (" data-preview-link=\"".freeze); _slim_controls2 << ((_slim_codeattributes13).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << ("><img".freeze); 
-      ; _slim_codeattributes14 = src; if _slim_codeattributes14; if _slim_codeattributes14 == true; _slim_controls2 << (" src".freeze); else; _slim_controls2 << (" src=\"".freeze); _slim_controls2 << ((_slim_codeattributes14).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes15 = (attr :alt); if _slim_codeattributes15; if _slim_codeattributes15 == true; _slim_controls2 << (" alt".freeze); else; _slim_controls2 << (" alt=\"".freeze); _slim_controls2 << ((_slim_codeattributes15).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes16 = (attr :width); if _slim_codeattributes16; if _slim_codeattributes16 == true; _slim_controls2 << (" width".freeze); else; _slim_controls2 << (" width=\"".freeze); _slim_controls2 << ((_slim_codeattributes16).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes17 = (attr :height); if _slim_codeattributes17; if _slim_codeattributes17 == true; _slim_controls2 << (" height".freeze); else; _slim_controls2 << (" height=\"".freeze); _slim_controls2 << ((_slim_codeattributes17).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes18 = (attr :title); if _slim_codeattributes18; if _slim_codeattributes18 == true; _slim_controls2 << (" title".freeze); else; _slim_controls2 << (" title=\"".freeze); _slim_controls2 << ((_slim_codeattributes18).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << ("></a>".freeze); 
+      ; _buf << ((inline_text_container(@text)).to_s); 
+      ; end; end; _buf
+    end
+  end
+
+  def listing(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; nowrap = (option? 'nowrap') || !(document.attr? 'prewrap'); 
+      ; if @style == 'source'; 
+      ; syntax_hl = document.syntax_highlighter; 
+      ; lang = attr :language; 
+      ; if syntax_hl; 
+      ; doc_attrs = document.attributes; 
+      ; css_mode = (doc_attrs[%(#{syntax_hl.name}-css)] || :class).to_sym; 
+      ; style = doc_attrs[%(#{syntax_hl.name}-style)]; 
+      ; opts = syntax_hl.highlight? ? { css_mode: css_mode, style: style } : {}; 
+      ; opts[:nowrap] = nowrap; 
+      ; end; 
+      ; end; _slim_controls1 = html_tag('div', { :id => id, :class => ['listingblock', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes.reject {|key, _| key == 'data-id' }))) do; _slim_controls2 = ''; 
+      ; if title?; 
+      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((captioned_title).to_s); 
+      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<div class=\"content\">".freeze); 
+      ; if syntax_hl; 
+      ; _slim_controls2 << (((syntax_hl.format self, lang, opts)).to_s); 
       ; else; 
-      ; _slim_controls2 << ("<img".freeze); _slim_codeattributes19 = src; if _slim_codeattributes19; if _slim_codeattributes19 == true; _slim_controls2 << (" src".freeze); else; _slim_controls2 << (" src=\"".freeze); _slim_controls2 << ((_slim_codeattributes19).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes20 = (attr :alt); if _slim_codeattributes20; if _slim_codeattributes20 == true; _slim_controls2 << (" alt".freeze); else; _slim_controls2 << (" alt=\"".freeze); _slim_controls2 << ((_slim_codeattributes20).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes21 = (attr :width); if _slim_codeattributes21; if _slim_codeattributes21 == true; _slim_controls2 << (" width".freeze); else; _slim_controls2 << (" width=\"".freeze); _slim_controls2 << ((_slim_codeattributes21).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes22 = (attr :height); if _slim_codeattributes22; if _slim_codeattributes22 == true; _slim_controls2 << (" height".freeze); else; _slim_controls2 << (" height=\"".freeze); _slim_controls2 << ((_slim_codeattributes22).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes23 = (attr :title); if _slim_codeattributes23; if _slim_codeattributes23 == true; _slim_controls2 << (" title".freeze); else; _slim_controls2 << (" title=\"".freeze); _slim_controls2 << ((_slim_codeattributes23).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << (">".freeze); 
-      ; end; end; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
+      ; if @style == 'source'; 
+      ; _slim_controls2 << ("<pre".freeze); _temple_html_attributeremover1 = ''; _slim_codeattributes1 = ['highlight', ('nowrap' if nowrap)]; if Array === _slim_codeattributes1; _slim_codeattributes1 = _slim_codeattributes1.flatten; _slim_codeattributes1.map!(&:to_s); _slim_codeattributes1.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes1.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes1).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover1).to_s); _slim_controls2 << ("\"".freeze); end; _slim_controls2 << ("><code".freeze); 
+      ; _temple_html_attributeremover2 = ''; _slim_codeattributes2 = [("language-#{lang}" if lang)]; if Array === _slim_codeattributes2; _slim_codeattributes2 = _slim_codeattributes2.flatten; _slim_codeattributes2.map!(&:to_s); _slim_codeattributes2.reject!(&:empty?); _temple_html_attributeremover2 << ((_slim_codeattributes2.join(" ")).to_s); else; _temple_html_attributeremover2 << ((_slim_codeattributes2).to_s); end; _temple_html_attributeremover2; if !_temple_html_attributeremover2.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover2).to_s); _slim_controls2 << ("\"".freeze); end; _slim_codeattributes3 = ("#{lang}" if lang); if _slim_codeattributes3; if _slim_codeattributes3 == true; _slim_controls2 << (" data-lang".freeze); else; _slim_controls2 << (" data-lang=\"".freeze); _slim_controls2 << ((_slim_codeattributes3).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << (">".freeze); 
+      ; _slim_controls2 << ((content || '').to_s); 
+      ; _slim_controls2 << ("</code></pre>".freeze); else; 
+      ; _slim_controls2 << ("<pre".freeze); _temple_html_attributeremover3 = ''; _slim_codeattributes4 = [('nowrap' if nowrap)]; if Array === _slim_codeattributes4; _slim_codeattributes4 = _slim_codeattributes4.flatten; _slim_codeattributes4.map!(&:to_s); _slim_codeattributes4.reject!(&:empty?); _temple_html_attributeremover3 << ((_slim_codeattributes4.join(" ")).to_s); else; _temple_html_attributeremover3 << ((_slim_codeattributes4).to_s); end; _temple_html_attributeremover3; if !_temple_html_attributeremover3.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover3).to_s); _slim_controls2 << ("\"".freeze); end; _slim_controls2 << (">".freeze); 
+      ; _slim_controls2 << ((content || '').to_s); 
+      ; _slim_controls2 << ("</pre>".freeze); end; end; _slim_controls2 << ("</div>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
+    end
+  end
+
+  def literal(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; _slim_controls1 = html_tag('div', { :id => id, :class => ['literalblock', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      ; if title?; 
+      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((title).to_s); 
+      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<div class=\"content\"><pre".freeze); _temple_html_attributeremover1 = ''; _slim_codeattributes1 = (!(@document.attr? :prewrap) || (option? 'nowrap') ? 'nowrap' : nil); if Array === _slim_codeattributes1; _slim_codeattributes1 = _slim_codeattributes1.flatten; _slim_codeattributes1.map!(&:to_s); _slim_codeattributes1.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes1.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes1).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover1).to_s); _slim_controls2 << ("\"".freeze); end; _slim_controls2 << (">".freeze); _slim_controls2 << ((content).to_s); 
+      ; _slim_controls2 << ("</pre></div>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
+    end
+  end
+
+  def notes(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; _buf << ("<aside class=\"notes\">".freeze); _buf << ((resolve_content).to_s); 
+      ; _buf << ("</aside>".freeze); _buf
+    end
+  end
+
+  def olist(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; _slim_controls1 = html_tag('div', { :id => @id, :class => ['olist', @style, role] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      ; if title?; 
+      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((title).to_s); 
+      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<ol".freeze); _temple_html_attributeremover1 = ''; _slim_codeattributes1 = @style; if Array === _slim_codeattributes1; _slim_codeattributes1 = _slim_codeattributes1.flatten; _slim_codeattributes1.map!(&:to_s); _slim_codeattributes1.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes1.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes1).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover1).to_s); _slim_controls2 << ("\"".freeze); end; _slim_codeattributes2 = (attr :start); if _slim_codeattributes2; if _slim_codeattributes2 == true; _slim_controls2 << (" start".freeze); else; _slim_controls2 << (" start=\"".freeze); _slim_controls2 << ((_slim_codeattributes2).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes3 = list_marker_keyword; if _slim_codeattributes3; if _slim_codeattributes3 == true; _slim_controls2 << (" type".freeze); else; _slim_controls2 << (" type=\"".freeze); _slim_controls2 << ((_slim_codeattributes3).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << (">".freeze); 
+      ; items.each do |item|; 
+      ; _slim_controls2 << ("<li".freeze); _temple_html_attributeremover2 = ''; _slim_codeattributes4 = ('fragment' if (option? :step) || (has_role? 'step') || (attr? 'step')); if Array === _slim_codeattributes4; _slim_codeattributes4 = _slim_codeattributes4.flatten; _slim_codeattributes4.map!(&:to_s); _slim_codeattributes4.reject!(&:empty?); _temple_html_attributeremover2 << ((_slim_codeattributes4.join(" ")).to_s); else; _temple_html_attributeremover2 << ((_slim_codeattributes4).to_s); end; _temple_html_attributeremover2; if !_temple_html_attributeremover2.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover2).to_s); _slim_controls2 << ("\"".freeze); end; _slim_controls2 << ("><p>".freeze); 
+      ; _slim_controls2 << ((item.text).to_s); 
+      ; _slim_controls2 << ("</p>".freeze); if item.blocks?; 
+      ; _slim_controls2 << ((item.content).to_s); 
+      ; end; _slim_controls2 << ("</li>".freeze); end; _slim_controls2 << ("</ol>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
     end
   end
 
@@ -1257,15 +1305,94 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def example(node, opts = {})
+  def outline(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _slim_controls1 = html_tag('div', { :id => @id, :class => ['exampleblock', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      _buf = ''; unless sections.empty?; 
+      ; toclevels ||= (document.attr 'toclevels', DEFAULT_TOCLEVELS).to_i; 
+      ; slevel = section_level sections.first; 
+      ; _buf << ("<ol class=\"sectlevel".freeze); _buf << ((slevel).to_s); _buf << ("\">".freeze); 
+      ; sections.each do |sec|; 
+      ; _buf << ("<li><a href=\"#".freeze); 
+      ; _buf << ((sec.id).to_s); _buf << ("\">".freeze); _buf << ((section_title sec).to_s); 
+      ; _buf << ("</a>".freeze); if (sec.level < toclevels) && (child_toc = converter.convert sec, 'outline'); 
+      ; _buf << ((child_toc).to_s); 
+      ; end; _buf << ("</li>".freeze); end; _buf << ("</ol>".freeze); end; _buf
+    end
+  end
+
+  def page_break(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; _buf << ("<div style=\"page-break-after: always;\"></div>".freeze); 
+      ; _buf
+    end
+  end
+
+  def paragraph(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; _slim_controls1 = html_tag('div', { :id => @id, :class => ['paragraph', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
       ; if title?; 
-      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((captioned_title).to_s); 
-      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<div class=\"content\">".freeze); _slim_controls2 << ((content).to_s); 
-      ; _slim_controls2 << ("</div>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
+      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((title).to_s); 
+      ; _slim_controls2 << ("</div>".freeze); end; if has_role? 'small'; 
+      ; _slim_controls2 << ("<small>".freeze); _slim_controls2 << ((content).to_s); 
+      ; _slim_controls2 << ("</small>".freeze); else; 
+      ; _slim_controls2 << ("<p>".freeze); _slim_controls2 << ((content).to_s); 
+      ; _slim_controls2 << ("</p>".freeze); end; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
+    end
+  end
+
+  def pass(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; _buf << ((content).to_s); 
+      ; _buf
+    end
+  end
+
+  def preamble(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; 
+      ; 
+      ; _buf
+    end
+  end
+
+  def quote(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; _slim_controls1 = html_tag('div', { :id => @id, :class => ['quoteblock', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      ; if title?; 
+      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((title).to_s); 
+      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<blockquote>".freeze); _slim_controls2 << ((content).to_s); 
+      ; _slim_controls2 << ("</blockquote>".freeze); attribution = (attr? :attribution) ? (attr :attribution) : nil; 
+      ; citetitle = (attr? :citetitle) ? (attr :citetitle) : nil; 
+      ; if attribution || citetitle; 
+      ; _slim_controls2 << ("<div class=\"attribution\">".freeze); 
+      ; if citetitle; 
+      ; _slim_controls2 << ("<cite>".freeze); _slim_controls2 << ((citetitle).to_s); 
+      ; _slim_controls2 << ("</cite>".freeze); end; if attribution; 
+      ; if citetitle; 
+      ; _slim_controls2 << ("<br>".freeze); 
+      ; end; _slim_controls2 << ("&#8212; ".freeze); _slim_controls2 << ((attribution).to_s); 
+      ; end; _slim_controls2 << ("</div>".freeze); end; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
+    end
+  end
+
+  def ruler(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; _buf << ("<hr>".freeze); 
+      ; _buf
     end
   end
 
@@ -1382,68 +1509,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def inline_callout(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; if @document.attr? :icons, 'font'; 
-      ; _buf << ("<i class=\"conum\"".freeze); _slim_codeattributes1 = @text; if _slim_codeattributes1; if _slim_codeattributes1 == true; _buf << (" data-value".freeze); else; _buf << (" data-value=\"".freeze); _buf << ((_slim_codeattributes1).to_s); _buf << ("\"".freeze); end; end; _buf << ("></i><b>".freeze); 
-      ; _buf << (("(#{@text})").to_s); 
-      ; _buf << ("</b>".freeze); elsif @document.attr? :icons; 
-      ; _buf << ("<img".freeze); _slim_codeattributes2 = icon_uri("callouts/#{@text}"); if _slim_codeattributes2; if _slim_codeattributes2 == true; _buf << (" src".freeze); else; _buf << (" src=\"".freeze); _buf << ((_slim_codeattributes2).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes3 = @text; if _slim_codeattributes3; if _slim_codeattributes3 == true; _buf << (" alt".freeze); else; _buf << (" alt=\"".freeze); _buf << ((_slim_codeattributes3).to_s); _buf << ("\"".freeze); end; end; _buf << (">".freeze); 
-      ; else; 
-      ; _buf << ("<b>".freeze); _buf << (("(#{@text})").to_s); 
-      ; _buf << ("</b>".freeze); end; _buf
-    end
-  end
-
-  def olist(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _slim_controls1 = html_tag('div', { :id => @id, :class => ['olist', @style, role] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
-      ; if title?; 
-      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((title).to_s); 
-      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<ol".freeze); _temple_html_attributeremover1 = ''; _slim_codeattributes1 = @style; if Array === _slim_codeattributes1; _slim_codeattributes1 = _slim_codeattributes1.flatten; _slim_codeattributes1.map!(&:to_s); _slim_codeattributes1.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes1.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes1).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover1).to_s); _slim_controls2 << ("\"".freeze); end; _slim_codeattributes2 = (attr :start); if _slim_codeattributes2; if _slim_codeattributes2 == true; _slim_controls2 << (" start".freeze); else; _slim_controls2 << (" start=\"".freeze); _slim_controls2 << ((_slim_codeattributes2).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes3 = list_marker_keyword; if _slim_codeattributes3; if _slim_codeattributes3 == true; _slim_controls2 << (" type".freeze); else; _slim_controls2 << (" type=\"".freeze); _slim_controls2 << ((_slim_codeattributes3).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << (">".freeze); 
-      ; items.each do |item|; 
-      ; _slim_controls2 << ("<li".freeze); _temple_html_attributeremover2 = ''; _slim_codeattributes4 = ('fragment' if (option? :step) || (has_role? 'step') || (attr? 'step')); if Array === _slim_codeattributes4; _slim_codeattributes4 = _slim_codeattributes4.flatten; _slim_codeattributes4.map!(&:to_s); _slim_codeattributes4.reject!(&:empty?); _temple_html_attributeremover2 << ((_slim_codeattributes4.join(" ")).to_s); else; _temple_html_attributeremover2 << ((_slim_codeattributes4).to_s); end; _temple_html_attributeremover2; if !_temple_html_attributeremover2.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover2).to_s); _slim_controls2 << ("\"".freeze); end; _slim_controls2 << ("><p>".freeze); 
-      ; _slim_controls2 << ((item.text).to_s); 
-      ; _slim_controls2 << ("</p>".freeze); if item.blocks?; 
-      ; _slim_controls2 << ((item.content).to_s); 
-      ; end; _slim_controls2 << ("</li>".freeze); end; _slim_controls2 << ("</ol>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
-    end
-  end
-
-  def image(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; width = (attr? :width) ? (attr :width) : nil; 
-      ; height = (attr? :height) ? (attr :height) : nil; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; if (has_role? 'stretch') && !((attr? :width) || (attr? :height)); 
-      ; height = "100%"; 
-      ; 
-      ; end; unless attributes[1] == 'background' || attributes[1] == 'canvas'; 
-      ; inline_style = [("text-align: #{attr :align}" if attr? :align),("float: #{attr :float}" if attr? :float)].compact.join('; '); 
-      ; _slim_controls1 = html_tag('div', { :id => @id, :class => ['imageblock', role, ('fragment' if (option? :step) || (attr? 'step'))], :style => inline_style }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
-      ; if attr? :link; 
-      ; _slim_controls2 << ("<a class=\"image\"".freeze); _slim_codeattributes1 = (attr :link); if _slim_codeattributes1; if _slim_codeattributes1 == true; _slim_controls2 << (" href".freeze); else; _slim_controls2 << (" href=\"".freeze); _slim_controls2 << ((_slim_codeattributes1).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes2 = (attr :window); if _slim_codeattributes2; if _slim_codeattributes2 == true; _slim_controls2 << (" target".freeze); else; _slim_controls2 << (" target=\"".freeze); _slim_controls2 << ((_slim_codeattributes2).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes3 = (bool_data_attr :link_preview); if _slim_codeattributes3; if _slim_codeattributes3 == true; _slim_controls2 << (" data-preview-link".freeze); else; _slim_controls2 << (" data-preview-link=\"".freeze); _slim_controls2 << ((_slim_codeattributes3).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << ("><img".freeze); 
-      ; _slim_codeattributes4 = image_uri(attr :target); if _slim_codeattributes4; if _slim_codeattributes4 == true; _slim_controls2 << (" src".freeze); else; _slim_controls2 << (" src=\"".freeze); _slim_controls2 << ((_slim_codeattributes4).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes5 = (attr :alt); if _slim_codeattributes5; if _slim_codeattributes5 == true; _slim_controls2 << (" alt".freeze); else; _slim_controls2 << (" alt=\"".freeze); _slim_controls2 << ((_slim_codeattributes5).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes6 = (width); if _slim_codeattributes6; if _slim_codeattributes6 == true; _slim_controls2 << (" width".freeze); else; _slim_controls2 << (" width=\"".freeze); _slim_controls2 << ((_slim_codeattributes6).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes7 = (height); if _slim_codeattributes7; if _slim_codeattributes7 == true; _slim_controls2 << (" height".freeze); else; _slim_controls2 << (" height=\"".freeze); _slim_controls2 << ((_slim_codeattributes7).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes8 = ((attr? :background) ? "background: #{attr :background}" : nil); if _slim_codeattributes8; if _slim_codeattributes8 == true; _slim_controls2 << (" style".freeze); else; _slim_controls2 << (" style=\"".freeze); _slim_controls2 << ((_slim_codeattributes8).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << ("></a>".freeze); 
-      ; else; 
-      ; _slim_controls2 << ("<img".freeze); _slim_codeattributes9 = image_uri(attr :target); if _slim_codeattributes9; if _slim_codeattributes9 == true; _slim_controls2 << (" src".freeze); else; _slim_controls2 << (" src=\"".freeze); _slim_controls2 << ((_slim_codeattributes9).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes10 = (attr :alt); if _slim_codeattributes10; if _slim_codeattributes10 == true; _slim_controls2 << (" alt".freeze); else; _slim_controls2 << (" alt=\"".freeze); _slim_controls2 << ((_slim_codeattributes10).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes11 = (width); if _slim_codeattributes11; if _slim_codeattributes11 == true; _slim_controls2 << (" width".freeze); else; _slim_controls2 << (" width=\"".freeze); _slim_controls2 << ((_slim_codeattributes11).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes12 = (height); if _slim_codeattributes12; if _slim_codeattributes12 == true; _slim_controls2 << (" height".freeze); else; _slim_controls2 << (" height=\"".freeze); _slim_controls2 << ((_slim_codeattributes12).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes13 = ((attr? :background) ? "background: #{attr :background}" : nil); if _slim_codeattributes13; if _slim_codeattributes13 == true; _slim_controls2 << (" style".freeze); else; _slim_controls2 << (" style=\"".freeze); _slim_controls2 << ((_slim_codeattributes13).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << (">".freeze); 
-      ; end; _slim_controls2; end; _buf << ((_slim_controls1).to_s); if title?; 
-      ; _buf << ("<div class=\"title\">".freeze); _buf << ((captioned_title).to_s); 
-      ; _buf << ("</div>".freeze); end; end; _buf
-    end
-  end
-
-  def admonition(node, opts = {})
+  def sidebar(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1451,21 +1517,226 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       ; _buf << ("<aside class=\"notes\">".freeze); _buf << ((resolve_content).to_s); 
       ; _buf << ("</aside>".freeze); 
       ; else; 
-      ; _slim_controls1 = html_tag('div', { :id => @id, :class => ['admonitionblock', (attr :name), role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
-      ; _slim_controls2 << ("<table><tr><td class=\"icon\">".freeze); 
-      ; 
-      ; if @document.attr? :icons, 'font'; 
-      ; icon_mapping = Hash['caution', 'fire', 'important', 'exclamation-circle', 'note', 'info-circle', 'tip', 'lightbulb-o', 'warning', 'warning']; 
-      ; _slim_controls2 << ("<i".freeze); _temple_html_attributeremover1 = ''; _slim_codeattributes1 = %(fa fa-#{icon_mapping[attr :name]}); if Array === _slim_codeattributes1; _slim_codeattributes1 = _slim_codeattributes1.flatten; _slim_codeattributes1.map!(&:to_s); _slim_codeattributes1.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes1.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes1).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _slim_controls2 << (" class=\"".freeze); _slim_controls2 << ((_temple_html_attributeremover1).to_s); _slim_controls2 << ("\"".freeze); end; _slim_codeattributes2 = (attr :textlabel || @caption); if _slim_codeattributes2; if _slim_codeattributes2 == true; _slim_controls2 << (" title".freeze); else; _slim_controls2 << (" title=\"".freeze); _slim_controls2 << ((_slim_codeattributes2).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << ("></i>".freeze); 
-      ; elsif @document.attr? :icons; 
-      ; _slim_controls2 << ("<img".freeze); _slim_codeattributes3 = icon_uri(attr :name); if _slim_codeattributes3; if _slim_codeattributes3 == true; _slim_controls2 << (" src".freeze); else; _slim_controls2 << (" src=\"".freeze); _slim_controls2 << ((_slim_codeattributes3).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes4 = @caption; if _slim_codeattributes4; if _slim_codeattributes4 == true; _slim_controls2 << (" alt".freeze); else; _slim_controls2 << (" alt=\"".freeze); _slim_controls2 << ((_slim_codeattributes4).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << (">".freeze); 
-      ; else; 
-      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << (((attr :textlabel) || @caption).to_s); 
-      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("</td><td class=\"content\">".freeze); 
+      ; _slim_controls1 = html_tag('div', { :id => @id, :class => ['sidebarblock', role, ('fragment' if (option? :step) || (has_role? 'step') || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      ; _slim_controls2 << ("<div class=\"content\">".freeze); 
       ; if title?; 
       ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((title).to_s); 
       ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ((content).to_s); 
-      ; _slim_controls2 << ("</td></tr></table>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); end; _buf
+      ; _slim_controls2 << ("</div>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); end; _buf
+    end
+  end
+
+  def stem(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; open, close = Asciidoctor::BLOCK_MATH_DELIMITERS[@style.to_sym]; 
+      ; equation = content.strip; 
+      ; if (@subs.nil? || @subs.empty?) && !(attr? 'subs'); 
+      ; equation = sub_specialcharacters equation; 
+      ; end; unless (equation.start_with? open) && (equation.end_with? close); 
+      ; equation = %(#{open}#{equation}#{close}); 
+      ; end; _slim_controls1 = html_tag('div', { :id => @id, :class => ['stemblock', role, ('fragment' if (option? :step) || (has_role? 'step') || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      ; if title?; 
+      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((title).to_s); 
+      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<div class=\"content\">".freeze); _slim_controls2 << ((equation).to_s); 
+      ; _slim_controls2 << ("</div>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
+    end
+  end
+
+  def stretch_nested_elements(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; _buf << ("<script>var dom = {};\ndom.slides = document.querySelector('.reveal .slides');\n\nfunction getRemainingHeight(element, slideElement, height) {\n  height = height || 0;\n  if (element) {\n    var newHeight, oldHeight = element.style.height;\n    // Change the .stretch element height to 0 in order find the height of all\n    // the other elements\n    element.style.height = '0px';\n    // In Overview mode, the parent (.slide) height is set of 700px.\n    // Restore it temporarily to its natural height.\n    slideElement.style.height = 'auto';\n    newHeight = height - slideElement.offsetHeight;\n    // Restore the old height, just in case\n    element.style.height = oldHeight + 'px';\n    // Clear the parent (.slide) height. .removeProperty works in IE9+\n    slideElement.style.removeProperty('height');\n    return newHeight;\n  }\n  return height;\n}\n\nfunction layoutSlideContents(width, height) {\n  // Handle sizing of elements with the 'stretch' class\n  toArray(dom.slides.querySelectorAll('section .stretch')).forEach(function (element) {\n    // Determine how much vertical space we can use\n    var limit = 5; // hard limit\n    var parent = element.parentNode;\n    while (parent.nodeName !== 'SECTION' && limit > 0) {\n      parent = parent.parentNode;\n      limit--;\n    }\n    if (limit === 0) {\n      // unable to find parent, aborting!\n      return;\n    }\n    var remainingHeight = getRemainingHeight(element, parent, height);\n    // Consider the aspect ratio of media elements\n    if (/(img|video)/gi.test(element.nodeName)) {\n      var nw = element.naturalWidth || element.videoWidth, nh = element.naturalHeight || element.videoHeight;\n      var es = Math.min(width / nw, remainingHeight / nh);\n      element.style.width = (nw * es) + 'px';\n      element.style.height = (nh * es) + 'px';\n    } else {\n      element.style.width = width + 'px';\n      element.style.height = remainingHeight + 'px';\n    }\n  });\n}\n\nfunction toArray(o) {\n  return Array.prototype.slice.call(o);\n}\n\nReveal.addEventListener('slidechanged', function () {\n  layoutSlideContents(".freeze); 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; _buf << ((attr 'revealjs_width', 960).to_s); _buf << (", ".freeze); _buf << ((attr 'revealjs_height', 700).to_s); _buf << (")\n});\nReveal.addEventListener('ready', function () {\n  layoutSlideContents(".freeze); 
+      ; 
+      ; 
+      ; _buf << ((attr 'revealjs_width', 960).to_s); _buf << (", ".freeze); _buf << ((attr 'revealjs_height', 700).to_s); _buf << (")\n});\nReveal.addEventListener('resize', function () {\n  layoutSlideContents(".freeze); 
+      ; 
+      ; 
+      ; _buf << ((attr 'revealjs_width', 960).to_s); _buf << (", ".freeze); _buf << ((attr 'revealjs_height', 700).to_s); _buf << (")\n});</script>".freeze); 
+      ; 
+      ; _buf
+    end
+  end
+
+  def table(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; classes = ['tableblock', "frame-#{attr :frame, 'all'}", "grid-#{attr :grid, 'all'}", role, ('fragment' if (option? :step) || (attr? 'step'))]; 
+      ; styles = [("width:#{attr :tablepcwidth}%" unless option? 'autowidth'), ("float:#{attr :float}" if attr? :float)].compact.join('; '); 
+      ; _slim_controls1 = html_tag('table', { :id => @id, :class => classes, :style => styles }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      ; if title?; 
+      ; _slim_controls2 << ("<caption class=\"title\">".freeze); _slim_controls2 << ((captioned_title).to_s); 
+      ; _slim_controls2 << ("</caption>".freeze); end; unless (attr :rowcount).zero?; 
+      ; _slim_controls2 << ("<colgroup>".freeze); 
+      ; if option? 'autowidth'; 
+      ; @columns.each do; 
+      ; _slim_controls2 << ("<col>".freeze); 
+      ; end; else; 
+      ; @columns.each do |col|; 
+      ; _slim_controls2 << ("<col style=\"width:".freeze); _slim_controls2 << ((col.attr :colpcwidth).to_s); _slim_controls2 << ("%\">".freeze); 
+      ; end; end; _slim_controls2 << ("</colgroup>".freeze); [:head, :foot, :body].select {|tblsec| !@rows[tblsec].empty? }.each do |tblsec|; 
+      ; 
+      ; _slim_controls2 << ("<t".freeze); _slim_controls2 << ((tblsec).to_s); _slim_controls2 << (">".freeze); 
+      ; @rows[tblsec].each do |row|; 
+      ; _slim_controls2 << ("<tr>".freeze); 
+      ; row.each do |cell|; 
+      ; 
+      ; if tblsec == :head; 
+      ; cell_content = cell.text; 
+      ; else; 
+      ; case cell.style; 
+      ; when :literal; 
+      ; cell_content = cell.text; 
+      ; else; 
+      ; cell_content = cell.content; 
+      ; end; end; _slim_controls3 = html_tag(tblsec == :head || cell.style == :header ? 'th' : 'td',
+      :class=>['tableblock', "halign-#{cell.attr :halign}", "valign-#{cell.attr :valign}"],
+      :colspan=>cell.colspan, :rowspan=>cell.rowspan,
+      :style=>((@document.attr? :cellbgcolor) ? %(background-color:#{@document.attr :cellbgcolor};) : nil)) do; _slim_controls4 = ''; 
+      ; if tblsec == :head; 
+      ; _slim_controls4 << ((cell_content).to_s); 
+      ; else; 
+      ; case cell.style; 
+      ; when :asciidoc; 
+      ; _slim_controls4 << ("<div>".freeze); _slim_controls4 << ((cell_content).to_s); 
+      ; _slim_controls4 << ("</div>".freeze); when :literal; 
+      ; _slim_controls4 << ("<div class=\"literal\"><pre>".freeze); _slim_controls4 << ((cell_content).to_s); 
+      ; _slim_controls4 << ("</pre></div>".freeze); when :header; 
+      ; cell_content.each do |text|; 
+      ; _slim_controls4 << ("<p class=\"tableblock header\">".freeze); _slim_controls4 << ((text).to_s); 
+      ; _slim_controls4 << ("</p>".freeze); end; else; 
+      ; cell_content.each do |text|; 
+      ; _slim_controls4 << ("<p class=\"tableblock\">".freeze); _slim_controls4 << ((text).to_s); 
+      ; _slim_controls4 << ("</p>".freeze); end; end; end; _slim_controls4; end; _slim_controls2 << ((_slim_controls3).to_s); end; _slim_controls2 << ("</tr>".freeze); end; end; end; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
+    end
+  end
+
+  def thematic_break(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; _buf << ("<hr>".freeze); 
+      ; _buf
+    end
+  end
+
+  def title_slide(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; bg_image = (attr? 'title-slide-background-image') ? (image_uri(attr 'title-slide-background-image')) : nil; 
+      ; bg_video = (attr? 'title-slide-background-video') ? (media_uri(attr 'title-slide-background-video')) : nil; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; _buf << ("<section".freeze); _temple_html_attributeremover1 = ''; _temple_html_attributemerger1 = []; _temple_html_attributemerger1[0] = "title"; _temple_html_attributemerger1[1] = ''; _slim_codeattributes1 = role; if Array === _slim_codeattributes1; _slim_codeattributes1 = _slim_codeattributes1.flatten; _slim_codeattributes1.map!(&:to_s); _slim_codeattributes1.reject!(&:empty?); _temple_html_attributemerger1[1] << ((_slim_codeattributes1.join(" ")).to_s); else; _temple_html_attributemerger1[1] << ((_slim_codeattributes1).to_s); end; _temple_html_attributemerger1[1]; _temple_html_attributeremover1 << ((_temple_html_attributemerger1.reject(&:empty?).join(" ")).to_s); _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _buf << (" class=\"".freeze); _buf << ((_temple_html_attributeremover1).to_s); _buf << ("\"".freeze); end; _buf << (" data-state=\"title\"".freeze); _slim_codeattributes2 = (attr 'title-slide-transition'); if _slim_codeattributes2; if _slim_codeattributes2 == true; _buf << (" data-transition".freeze); else; _buf << (" data-transition=\"".freeze); _buf << ((_slim_codeattributes2).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes3 = (attr 'title-slide-transition-speed'); if _slim_codeattributes3; if _slim_codeattributes3 == true; _buf << (" data-transition-speed".freeze); else; _buf << (" data-transition-speed=\"".freeze); _buf << ((_slim_codeattributes3).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes4 = (attr 'title-slide-background'); if _slim_codeattributes4; if _slim_codeattributes4 == true; _buf << (" data-background".freeze); else; _buf << (" data-background=\"".freeze); _buf << ((_slim_codeattributes4).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes5 = (attr 'title-slide-background-size'); if _slim_codeattributes5; if _slim_codeattributes5 == true; _buf << (" data-background-size".freeze); else; _buf << (" data-background-size=\"".freeze); _buf << ((_slim_codeattributes5).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes6 = bg_image; if _slim_codeattributes6; if _slim_codeattributes6 == true; _buf << (" data-background-image".freeze); else; _buf << (" data-background-image=\"".freeze); _buf << ((_slim_codeattributes6).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes7 = bg_video; if _slim_codeattributes7; if _slim_codeattributes7 == true; _buf << (" data-background-video".freeze); else; _buf << (" data-background-video=\"".freeze); _buf << ((_slim_codeattributes7).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes8 = (attr 'title-slide-background-video-loop'); if _slim_codeattributes8; if _slim_codeattributes8 == true; _buf << (" data-background-video-loop".freeze); else; _buf << (" data-background-video-loop=\"".freeze); _buf << ((_slim_codeattributes8).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes9 = (attr 'title-slide-background-video-muted'); if _slim_codeattributes9; if _slim_codeattributes9 == true; _buf << (" data-background-video-muted".freeze); else; _buf << (" data-background-video-muted=\"".freeze); _buf << ((_slim_codeattributes9).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes10 = (attr 'title-slide-background-opacity'); if _slim_codeattributes10; if _slim_codeattributes10 == true; _buf << (" data-background-opacity".freeze); else; _buf << (" data-background-opacity=\"".freeze); _buf << ((_slim_codeattributes10).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes11 = (attr 'title-slide-background-iframe'); if _slim_codeattributes11; if _slim_codeattributes11 == true; _buf << (" data-background-iframe".freeze); else; _buf << (" data-background-iframe=\"".freeze); _buf << ((_slim_codeattributes11).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes12 = (attr 'title-slide-background-color'); if _slim_codeattributes12; if _slim_codeattributes12 == true; _buf << (" data-background-color".freeze); else; _buf << (" data-background-color=\"".freeze); _buf << ((_slim_codeattributes12).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes13 = (attr 'title-slide-background-repeat'); if _slim_codeattributes13; if _slim_codeattributes13 == true; _buf << (" data-background-repeat".freeze); else; _buf << (" data-background-repeat=\"".freeze); _buf << ((_slim_codeattributes13).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes14 = (attr 'title-slide-background-position'); if _slim_codeattributes14; if _slim_codeattributes14 == true; _buf << (" data-background-position".freeze); else; _buf << (" data-background-position=\"".freeze); _buf << ((_slim_codeattributes14).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes15 = (attr 'title-slide-background-transition'); if _slim_codeattributes15; if _slim_codeattributes15 == true; _buf << (" data-background-transition".freeze); else; _buf << (" data-background-transition=\"".freeze); _buf << ((_slim_codeattributes15).to_s); _buf << ("\"".freeze); end; end; _buf << (">".freeze); 
+      ; if (_title_obj = doctitle partition: true, use_fallback: true).subtitle?; 
+      ; _buf << ("<h1>".freeze); _buf << ((slice_text _title_obj.title, (_slice = header.option? :slice)).to_s); 
+      ; _buf << ("</h1><h2>".freeze); _buf << ((slice_text _title_obj.subtitle, _slice).to_s); 
+      ; _buf << ("</h2>".freeze); else; 
+      ; _buf << ("<h1>".freeze); _buf << ((@header.title).to_s); 
+      ; _buf << ("</h1>".freeze); end; preamble = @document.find_by context: :preamble; 
+      ; unless preamble.nil? or preamble.length == 0; 
+      ; _buf << ("<div class=\"preamble\">".freeze); _buf << ((preamble.pop.content).to_s); 
+      ; _buf << ("</div>".freeze); end; _buf << ((generate_authors(@document)).to_s); 
+      ; _buf << ("</section>".freeze); _buf
+    end
+  end
+
+  def toc(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; _buf << ("<div id=\"toc\"".freeze); _temple_html_attributeremover1 = ''; _slim_codeattributes1 = (document.attr 'toc-class', 'toc'); if Array === _slim_codeattributes1; _slim_codeattributes1 = _slim_codeattributes1.flatten; _slim_codeattributes1.map!(&:to_s); _slim_codeattributes1.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes1.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes1).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _buf << (" class=\"".freeze); _buf << ((_temple_html_attributeremover1).to_s); _buf << ("\"".freeze); end; _buf << ("><div id=\"toctitle\">".freeze); 
+      ; _buf << (((document.attr 'toc-title')).to_s); 
+      ; _buf << ("</div>".freeze); 
+      ; _buf << ((converter.convert document, 'outline').to_s); 
+      ; _buf << ("</div>".freeze); _buf
     end
   end
 
@@ -1502,13 +1773,25 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def floating_title(node, opts = {})
+  def verse(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _slim_htag_filter1 = ((level + 1)).to_s; _buf << ("<h".freeze); _buf << ((_slim_htag_filter1).to_s); _slim_codeattributes1 = id; if _slim_codeattributes1; if _slim_codeattributes1 == true; _buf << (" id".freeze); else; _buf << (" id=\"".freeze); _buf << ((_slim_codeattributes1).to_s); _buf << ("\"".freeze); end; end; _temple_html_attributeremover1 = ''; _slim_codeattributes2 = [style, role]; if Array === _slim_codeattributes2; _slim_codeattributes2 = _slim_codeattributes2.flatten; _slim_codeattributes2.map!(&:to_s); _slim_codeattributes2.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes2.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes2).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _buf << (" class=\"".freeze); _buf << ((_temple_html_attributeremover1).to_s); _buf << ("\"".freeze); end; _buf << (">".freeze); 
-      ; _buf << ((title).to_s); 
-      ; _buf << ("</h".freeze); _buf << ((_slim_htag_filter1).to_s); _buf << (">".freeze); _buf
+      _buf = ''; _slim_controls1 = html_tag('div', { :id => @id, :class => ['verseblock', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
+      ; if title?; 
+      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((title).to_s); 
+      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<pre class=\"content\">".freeze); _slim_controls2 << ((content).to_s); 
+      ; _slim_controls2 << ("</pre>".freeze); attribution = (attr? :attribution) ? (attr :attribution) : nil; 
+      ; citetitle = (attr? :citetitle) ? (attr :citetitle) : nil; 
+      ; if attribution || citetitle; 
+      ; _slim_controls2 << ("<div class=\"attribution\">".freeze); 
+      ; if citetitle; 
+      ; _slim_controls2 << ("<cite>".freeze); _slim_controls2 << ((citetitle).to_s); 
+      ; _slim_controls2 << ("</cite>".freeze); end; if attribution; 
+      ; if citetitle; 
+      ; _slim_controls2 << ("<br>".freeze); 
+      ; end; _slim_controls2 << ("&#8212; ".freeze); _slim_controls2 << ((attribution).to_s); 
+      ; end; _slim_controls2 << ("</div>".freeze); end; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
     end
   end
 
@@ -1563,219 +1846,6 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       ; _slim_controls2 << ("<video".freeze); _slim_codeattributes14 = media_uri(attr :target); if _slim_codeattributes14; if _slim_codeattributes14 == true; _slim_controls2 << (" src".freeze); else; _slim_controls2 << (" src=\"".freeze); _slim_controls2 << ((_slim_codeattributes14).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes15 = (width); if _slim_codeattributes15; if _slim_codeattributes15 == true; _slim_controls2 << (" width".freeze); else; _slim_controls2 << (" width=\"".freeze); _slim_controls2 << ((_slim_codeattributes15).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes16 = (height); if _slim_codeattributes16; if _slim_codeattributes16 == true; _slim_controls2 << (" height".freeze); else; _slim_controls2 << (" height=\"".freeze); _slim_controls2 << ((_slim_codeattributes16).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes17 = ((attr :poster) ? media_uri(attr :poster) : nil); if _slim_codeattributes17; if _slim_codeattributes17 == true; _slim_controls2 << (" poster".freeze); else; _slim_controls2 << (" poster=\"".freeze); _slim_controls2 << ((_slim_codeattributes17).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes18 = (option? 'autoplay'); if _slim_codeattributes18; if _slim_codeattributes18 == true; _slim_controls2 << (" data-autoplay".freeze); else; _slim_controls2 << (" data-autoplay=\"".freeze); _slim_controls2 << ((_slim_codeattributes18).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes19 = !(option? 'nocontrols'); if _slim_codeattributes19; if _slim_codeattributes19 == true; _slim_controls2 << (" controls".freeze); else; _slim_controls2 << (" controls=\"".freeze); _slim_controls2 << ((_slim_codeattributes19).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes20 = (option? 'loop'); if _slim_codeattributes20; if _slim_codeattributes20 == true; _slim_controls2 << (" loop".freeze); else; _slim_controls2 << (" loop=\"".freeze); _slim_controls2 << ((_slim_codeattributes20).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << (">Your browser does not support the video tag.</video>".freeze); 
       ; 
       ; end; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
-    end
-  end
-
-  def toc(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; _buf << ("<div id=\"toc\"".freeze); _temple_html_attributeremover1 = ''; _slim_codeattributes1 = (document.attr 'toc-class', 'toc'); if Array === _slim_codeattributes1; _slim_codeattributes1 = _slim_codeattributes1.flatten; _slim_codeattributes1.map!(&:to_s); _slim_codeattributes1.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes1.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes1).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _buf << (" class=\"".freeze); _buf << ((_temple_html_attributeremover1).to_s); _buf << ("\"".freeze); end; _buf << ("><div id=\"toctitle\">".freeze); 
-      ; _buf << (((document.attr 'toc-title')).to_s); 
-      ; _buf << ("</div>".freeze); 
-      ; _buf << ((converter.convert document, 'outline').to_s); 
-      ; _buf << ("</div>".freeze); _buf
-    end
-  end
-
-  def verse(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _slim_controls1 = html_tag('div', { :id => @id, :class => ['verseblock', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
-      ; if title?; 
-      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((title).to_s); 
-      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<pre class=\"content\">".freeze); _slim_controls2 << ((content).to_s); 
-      ; _slim_controls2 << ("</pre>".freeze); attribution = (attr? :attribution) ? (attr :attribution) : nil; 
-      ; citetitle = (attr? :citetitle) ? (attr :citetitle) : nil; 
-      ; if attribution || citetitle; 
-      ; _slim_controls2 << ("<div class=\"attribution\">".freeze); 
-      ; if citetitle; 
-      ; _slim_controls2 << ("<cite>".freeze); _slim_controls2 << ((citetitle).to_s); 
-      ; _slim_controls2 << ("</cite>".freeze); end; if attribution; 
-      ; if citetitle; 
-      ; _slim_controls2 << ("<br>".freeze); 
-      ; end; _slim_controls2 << ("&#8212; ".freeze); _slim_controls2 << ((attribution).to_s); 
-      ; end; _slim_controls2 << ("</div>".freeze); end; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
-    end
-  end
-
-  def notes(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _buf << ("<aside class=\"notes\">".freeze); _buf << ((resolve_content).to_s); 
-      ; _buf << ("</aside>".freeze); _buf
-    end
-  end
-
-  def preamble(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; 
-      ; 
-      ; _buf
-    end
-  end
-
-  def paragraph(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _slim_controls1 = html_tag('div', { :id => @id, :class => ['paragraph', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
-      ; if title?; 
-      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((title).to_s); 
-      ; _slim_controls2 << ("</div>".freeze); end; if has_role? 'small'; 
-      ; _slim_controls2 << ("<small>".freeze); _slim_controls2 << ((content).to_s); 
-      ; _slim_controls2 << ("</small>".freeze); else; 
-      ; _slim_controls2 << ("<p>".freeze); _slim_controls2 << ((content).to_s); 
-      ; _slim_controls2 << ("</p>".freeze); end; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
-    end
-  end
-
-  def audio(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _slim_controls1 = html_tag('div', { :id => @id, :class => ['audioblock', @style, role] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
-      ; if title?; 
-      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((captioned_title).to_s); 
-      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<div class=\"content\"><audio".freeze); 
-      ; _slim_codeattributes1 = media_uri(attr :target); if _slim_codeattributes1; if _slim_codeattributes1 == true; _slim_controls2 << (" src".freeze); else; _slim_controls2 << (" src=\"".freeze); _slim_controls2 << ((_slim_codeattributes1).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes2 = (option? 'autoplay'); if _slim_codeattributes2; if _slim_codeattributes2 == true; _slim_controls2 << (" autoplay".freeze); else; _slim_controls2 << (" autoplay=\"".freeze); _slim_controls2 << ((_slim_codeattributes2).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes3 = !(option? 'nocontrols'); if _slim_codeattributes3; if _slim_codeattributes3 == true; _slim_controls2 << (" controls".freeze); else; _slim_controls2 << (" controls=\"".freeze); _slim_controls2 << ((_slim_codeattributes3).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes4 = (option? 'loop'); if _slim_codeattributes4; if _slim_codeattributes4 == true; _slim_controls2 << (" loop".freeze); else; _slim_controls2 << (" loop=\"".freeze); _slim_controls2 << ((_slim_codeattributes4).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << (">Your browser does not support the audio tag.</audio></div>".freeze); 
-      ; 
-      ; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
-    end
-  end
-
-  def inline_indexterm(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; if @type == :visible; 
-      ; _buf << ((@text).to_s); 
-      ; end; _buf
-    end
-  end
-
-  def inline_menu(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; menu = attr 'menu'; 
-      ; menuitem = attr 'menuitem'; 
-      ; if !(submenus = attr 'submenus').empty?; 
-      ; _slim_controls1 = html_tag('span', { :class => ['menuseq'] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
-      ; _slim_controls2 << ("<span class=\"menu\">".freeze); _slim_controls2 << ((menu).to_s); 
-      ; _slim_controls2 << ("</span>&#160;&#9656;&#32;".freeze); 
-      ; _slim_controls2 << ((submenus.map {|submenu| %(<span class="submenu">#{submenu}</span>&#160;&#9656;&#32;) }.join).to_s); 
-      ; _slim_controls2 << ("<span class=\"menuitem\">".freeze); _slim_controls2 << ((menuitem).to_s); 
-      ; _slim_controls2 << ("</span>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); elsif !menuitem.nil?; 
-      ; _slim_controls3 = html_tag('span', { :class => ['menuseq'] }.merge(data_attrs(@attributes))) do; _slim_controls4 = ''; 
-      ; _slim_controls4 << ("<span class=\"menu\">".freeze); _slim_controls4 << ((menu).to_s); 
-      ; _slim_controls4 << ("</span>&#160;&#9656;&#32;<span class=\"menuitem\">".freeze); 
-      ; _slim_controls4 << ((menuitem).to_s); 
-      ; _slim_controls4 << ("</span>".freeze); _slim_controls4; end; _buf << ((_slim_controls3).to_s); else; 
-      ; _slim_controls5 = html_tag('span', { :class => ['menu'] }.merge(data_attrs(@attributes))) do; _slim_controls6 = ''; 
-      ; _slim_controls6 << ((menu).to_s); 
-      ; _slim_controls6; end; _buf << ((_slim_controls5).to_s); end; _buf
-    end
-  end
-
-  def inline_anchor(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; case @type; 
-      ; when :xref; 
-      ; refid = (attr :refid) || @target; 
-      ; _slim_controls1 = html_tag('a', { :href => @target, :class => [role, ('fragment' if (option? :step) || (attr? 'step'))].compact }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
-      ; _slim_controls2 << (((@text || @document.references[:ids].fetch(refid, "[#{refid}]")).tr_s("\n", ' ')).to_s); 
-      ; _slim_controls2; end; _buf << ((_slim_controls1).to_s); when :ref; 
-      ; _buf << ((html_tag('a', { :id => @target }.merge(data_attrs(@attributes)))).to_s); 
-      ; when :bibref; 
-      ; _buf << ((html_tag('a', { :id => @target }.merge(data_attrs(@attributes)))).to_s); 
-      ; _buf << ("[".freeze); _buf << ((@target).to_s); _buf << ("]".freeze); 
-      ; else; 
-      ; _slim_controls3 = html_tag('a', { :href => @target, :class => [role, ('fragment' if (option? :step) || (attr? 'step'))].compact, :target => (attr :window), 'data-preview-link' => (bool_data_attr :preview) }.merge(data_attrs(@attributes))) do; _slim_controls4 = ''; 
-      ; _slim_controls4 << ((@text).to_s); 
-      ; _slim_controls4; end; _buf << ((_slim_controls3).to_s); end; _buf
-    end
-  end
-
-  def stem(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; open, close = Asciidoctor::BLOCK_MATH_DELIMITERS[@style.to_sym]; 
-      ; equation = content.strip; 
-      ; if (@subs.nil? || @subs.empty?) && !(attr? 'subs'); 
-      ; equation = sub_specialcharacters equation; 
-      ; end; unless (equation.start_with? open) && (equation.end_with? close); 
-      ; equation = %(#{open}#{equation}#{close}); 
-      ; end; _slim_controls1 = html_tag('div', { :id => @id, :class => ['stemblock', role, ('fragment' if (option? :step) || (has_role? 'step') || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
-      ; if title?; 
-      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((title).to_s); 
-      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ("<div class=\"content\">".freeze); _slim_controls2 << ((equation).to_s); 
-      ; _slim_controls2 << ("</div>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
-    end
-  end
-
-  def inline_break(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _buf << ((@text).to_s); 
-      ; _buf << ("<br>".freeze); 
-      ; _buf
-    end
-  end
-
-  def thematic_break(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _buf << ("<hr>".freeze); 
-      ; _buf
-    end
-  end
-
-  def page_break(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; _buf << ("<div style=\"page-break-after: always;\"></div>".freeze); 
-      ; _buf
-    end
-  end
-
-  def sidebar(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; if (has_role? 'aside') or (has_role? 'speaker') or (has_role? 'notes'); 
-      ; _buf << ("<aside class=\"notes\">".freeze); _buf << ((resolve_content).to_s); 
-      ; _buf << ("</aside>".freeze); 
-      ; else; 
-      ; _slim_controls1 = html_tag('div', { :id => @id, :class => ['sidebarblock', role, ('fragment' if (option? :step) || (has_role? 'step') || (attr? 'step'))] }.merge(data_attrs(@attributes))) do; _slim_controls2 = ''; 
-      ; _slim_controls2 << ("<div class=\"content\">".freeze); 
-      ; if title?; 
-      ; _slim_controls2 << ("<div class=\"title\">".freeze); _slim_controls2 << ((title).to_s); 
-      ; _slim_controls2 << ("</div>".freeze); end; _slim_controls2 << ((content).to_s); 
-      ; _slim_controls2 << ("</div>".freeze); _slim_controls2; end; _buf << ((_slim_controls1).to_s); end; _buf
     end
   end
   #------------------ End of generated transformation methods ------------------#

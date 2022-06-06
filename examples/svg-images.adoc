@@ -1,0 +1,41 @@
+= SVG Images
+:imagesdir: images/
+:docinfo: private
+
+== Options for SVG images
+
+When the image target is an SVG, the `options` attribute (often abbreviated as `opts`) on the macro accepts one of the following values to control how the SVG is referenced:
+
+* _none_ (default)
+* `interactive`
+* `inline`
+
+The following slide demonstrates the impact these options have.
+
+== None (default)
+
+Observe that the SVG does not respond to the hover event.
+
+[literal]
+image::sample.svg[Static,300]
+
+image::sample.svg[Static,300]
+
+== Interactive
+
+Observe that the color changes when hovering over the SVG.
+
+[literal]
+image::sample.svg[Interactive,300,opts=interactive]
+
+image::sample.svg[Interactive,300,opts=interactive]
+
+== Inline
+
+Observe that the color changes when hovering over the SVG.
+The SVG also inherits CSS from the document stylesheets.
+
+[literal]
+image::sample.svg[Embedded,300,opts=inline]
+
+image::sample.svg[Embedded,300,opts=inline]
