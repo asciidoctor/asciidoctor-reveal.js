@@ -1,16 +1,46 @@
-= Title Slide Customization
+= Title Slide
 :navtitle: Title Slide
 
-The title slide is customized via AsciiDoc attributes.
-These are the global variable assigned at the top of a document under the lead
-title that look like this: `:name: value`.
+The Title Slide is where customization for the generated presentation can be configured via AsciiDoc document attributes.
+These are the global variables assigned at the top of a document under the lead title that look like this: `:name: value`.
 
-This converter supports changing the color, image, video, iframe and
-transitions of the title slide.
+[source,asciidoc]
+----
+= Title Slide
+:revealjs_theme: sky
+:source-highlighter: highlight.js
 
-Read link:{url-revealjs-doc}#slide-backgrounds[the relevant reveal.js documentation] to understand what attributes need to be set.
-Keep in mind that for title slides you must replace `data-` with `title-slide-`.
+== Slide One
 
-See link:{url-project-examples}/title-slide-image.adoc[title-slide-image.adoc].
+* Foo
+* Bar
+* World
+----
 
-The title slide is also added a `title` CSS class to help with template customization.
+In AsciiDoc terms, the first line is the Document Title and the variable definitions following it are considered to be the Document Header.
+See link:{url-asciidoctor-docs}/document/header/[documentation on AsciiDoc Document Header].
+
+Note that starting your document with a section title means AsciiDoc interprets your Document Header to be empty.
+Any variables set will not be picked up by the converter and will not influence the resulting presentation.
+The next example shows this mistake:
+
+[source,asciidoc]
+----
+== This is not a document title
+// These settings are not interpreted as Document Attributes and have no effect
+:revealjs_theme: sky
+:source-highlighter: highlight.js
+----
+
+== Customizing The Title Slide
+
+In addition to configuring document wide settings, the Title Slide can also have specialized visual customization that is only applied to the Title Slide.
+
+This converter supports changing the color, image, video, iframe and transitions of the Title Slide.
+
+Read link:{url-revealjs-doc}#slide-backgrounds[the relevant reveal.js documentation] to understand what attributes can be set.
+Keep in mind that for a Title Slide you must replace `data-` with `title-slide-` in the name of the attribute.
+
+See link:{url-project-examples}/title-slide-image.adoc[title-slide-image.adoc] for an example on using these attributes.
+
+The Title Slide also given an special `title` CSS class to help with template customization.

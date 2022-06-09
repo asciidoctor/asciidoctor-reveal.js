@@ -13,6 +13,7 @@ asciidoc:
     url-project-examples: 'https://github.com/asciidoctor/asciidoctor-reveal.js/tree/master/examples'
     url-project-templates: 'https://github.com/asciidoctor/asciidoctor-reveal.js/tree/master/templates'
     url-asciidoctor: 'https://github.com/asciidoctor/asciidoctor'
+    url-asciidoctor-docs: 'https://docs.asciidoctor.org/asciidoc/latest'
     url-asciidoctorjs: 'https://github.com/asciidoctor/asciidoctor.js'
     url-revealjs-home: 'https://revealjs.com'
     url-revealjs-gh: 'https://github.com/hakimel/reveal.js/blob/v3.9'
