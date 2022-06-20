@@ -18,7 +18,7 @@ These are the document-scope variables assigned at the top of a document, as par
 
 In AsciiDoc terms, the first line is the document title and the variable definitions following it are part of the xref:asciidoc:document:header.adoc[document header].
 
-Note that starting your document with a section title means AsciiDoc interprets your document header to be empty.
+NOTE: Starting your document with a section title means AsciiDoc interprets your document header to be empty.
 Any variables set will not be picked up by the converter and will not influence the resulting presentation.
 The next example shows this mistake:
 
