@@ -30,7 +30,7 @@ In previous snippet we are creating a slide titled Slide One with bullets and an
 Other syntax exists to create speaker notes, see `examples/speaker-notes.adoc`.
 
 IMPORTANT: In order to generate a proper presentation, the source file _must_ contain a proper AsciiDoc document structure.
-This is especially important when configuring how AsciiDoctor-revealjs should convert the document.
+This is especially important when configuring how Asciidoctor reveal.js should convert the document.
 The document properties must be set on the title slide for them to work. 
 See xref:syntax/title.adoc[] for more information.
 
