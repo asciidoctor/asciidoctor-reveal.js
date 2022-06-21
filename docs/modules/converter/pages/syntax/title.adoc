@@ -18,7 +18,8 @@ These are the document-scope variables assigned at the top of a document, as par
 
 In AsciiDoc terms, the first line is the document title and the variable definitions following it are part of the xref:asciidoc:document:header.adoc[document header].
 
-NOTE: Starting your document with a section title means AsciiDoc interprets your document header to be empty.
+NOTE: Starting your document with a section title means AsciiDoc interprets your document header as empty.
+
 Any variables set will not be picked up by the converter and will not influence the resulting presentation.
 The next example shows this mistake:
 
@@ -37,12 +38,12 @@ Another way to think of this is having a document header without a document titl
 
 == Customizing the Title Slide
 
-In addition to configuring document wide settings, the title slide can also have specialized visual customization that is only applied to the title slide.
+In addition to configuring document-wide settings, the title slide can also define visual customization that is only applied to the title slide.
 
 This converter supports changing the color, image, video, iframe and transitions of the title slide.
 
 Read {url-revealjs-doc}#slide-backgrounds[the reveal.js documentation] to understand what attributes can be set.
-Keep in mind that for a title slide you must replace `data-` with `title-slide-` in the name of the attribute.
+Keep in mind that for a title slide, you must replace `data-` with `title-slide-` in the name of the attribute.
 
 See link:{url-project-examples}/title-slide-image.adoc[title-slide-image.adoc] for an example of using these attributes.
 
