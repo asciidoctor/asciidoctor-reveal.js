@@ -29,6 +29,11 @@ A Great Story
 In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js`' default behavior) with link:{url-revealjs-doc}#speaker-notes[speaker notes].
 Other syntax exists to create speaker notes, see `examples/speaker-notes.adoc`.
 
+IMPORTANT: In order to generate a proper presentation, the source file _must_ contain a proper AsciiDoc document structure.
+This is especially important when configuring how Asciidoctor reveal.js should convert the document.
+The document properties must be set on the title slide for them to work. 
+See xref:syntax/title.adoc[] for more information.
+
 Starting with reveal.js 3.5 speaker notes supports configurable layouts:
 image:https://cloud.githubusercontent.com/assets/629429/21808439/b941eb52-d743-11e6-9936-44ef80c60580.gif[]
 
