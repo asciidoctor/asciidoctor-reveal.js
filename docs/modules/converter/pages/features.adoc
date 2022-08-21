@@ -33,7 +33,7 @@ Starting with reveal.js 3.5 speaker notes supports configurable layouts:
 image:https://cloud.githubusercontent.com/assets/629429/21808439/b941eb52-d743-11e6-9936-44ef80c60580.gif[]
 
 Speaker notes are opened by pressing `s`.
-With reveal.js 3.5 they require a webserver to work.
+With reveal.js 3.5 they require a web server to work.
 This limitation is not present in 3.6.
 You can get a Web server running quickly with:
 

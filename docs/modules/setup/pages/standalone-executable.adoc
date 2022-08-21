@@ -8,7 +8,7 @@ The executables are built using the xref:node-js-setup.adoc[Node / JavaScript] t
 == Install
 
 * {url-project-repo}/releases[Download the executable] for your platform and make it executable with `chmod` or using the files properties' user interface.
-* Copy or clone the reveal.js presentation framework in the directory where you will build your slidedeck.
+* Copy or clone the reveal.js presentation framework in the directory where you will build your slide deck.
 Here we do a shallow clone of the repo:
 
   $ git clone -b 3.9.2 --depth 1 https://github.com/hakimel/reveal.js.git

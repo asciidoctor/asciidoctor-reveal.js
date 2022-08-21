@@ -100,7 +100,7 @@ For example:
 ----
 
 See link:{url-revealjs-doc}#video-backgrounds[the relevant reveal.js documentation] for details.
-Note that the `data-` prefix is not required in asciidoc files.
+Note that the `data-` prefix is not required in AsciiDoc files.
 
 
 == Background iframes
