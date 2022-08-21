@@ -172,7 +172,7 @@ you can wrap a list block in an open block:
 
 In the above example, the title "Greek Alphabet" and all the list items will be revealed at once.
 
-And here's a another example where we apply the _step_ option on different elements:
+And here's another example where we apply the _step_ option on different elements:
 
 [source, asciidoc]
 ----

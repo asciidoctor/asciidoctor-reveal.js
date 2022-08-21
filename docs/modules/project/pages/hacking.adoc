@@ -4,7 +4,7 @@ Short instructions that aim to help potential contributors.
 
 == Getting Started
 
-* Setup the Asciidoctor-revealjs plugin in <<ruby-localversion,development mode>>
+* Set up the Asciidoctor reveal.js plugin in <<ruby-localversion,development mode>>
 * Modify the http://slim-lang.com/[slim templates] in `templates/`
 * Templates need to be compiled before being used, do so with:
 
@@ -21,7 +21,7 @@ The next section will provide further help on how to use `print` statements or a
 
 To understand what you have access to in templates you can inject some ruby.
 With the slim templating system, this is done by prepending the lines with a dash (`-`) and inserting a ruby statement.
-Two complementary approaches can be used to explore the context offered by asciidoctor through the template system:
+Two complementary approaches can be used to explore the context offered by Asciidoctor through the template system:
 
 * logging on the command line via print-like statements
 * jump into the context through an interactive debugger
@@ -62,7 +62,7 @@ One might find `pp` to produce better output (and in some cases not):
 === Interactively debug a template
 
 Pry is a powerful debugger for ruby that features tab-completion.
-It is very useful to discover a complex object hierarchy like what asciidoctor offers.
+It is very useful to discover a complex object hierarchy like what Asciidoctor offers.
 
 ==== Initial Setup
 
@@ -101,11 +101,11 @@ From: /home/olivier/src/asciidoc/asciidoctor-reveal.js/templates/slim/section.ht
 [1] pry(#<Asciidoctor::Section>)>
 ----
 
-Then using commands like the following allows you to explore interactively asciidoctor's API and object model with syntax highlighting:
+Then using commands like the following allows you to explore interactively Asciidoctor's API and object model with syntax highlighting:
 
     [1] pry(#<Asciidoctor::Section>)> @document
 
-You can also query asciidoctor's documentation:
+You can also query Asciidoctor's documentation:
 
     [4] pry(#<Asciidoctor::Section>)> ? find_by
 
@@ -126,7 +126,7 @@ You can call the slim templates directly with:
 
 == Manual Tests
 
-In order to help troubleshoot issues and test syntax improvements, some minimalist asciidoc test files are provided.
+In order to help troubleshoot issues and test syntax improvements, some minimalist AsciiDoc test files are provided.
 You can render the tests files and then load them in a browser and check if `asciidoctor-revealjs` behaves as expected.
 
 === Initial Setup
@@ -160,7 +160,7 @@ You can open the generated `.html` in `test/doctest/` in a Web browser.
 
 === Attribute inheritence
 
-The attr and attr? methods inherit by default. That means if they don't find the attribute defined on the node, they look on the document.
+The `attr` and `attr?` methods inherit by default. That means if they don't find the attribute defined on the node, they look on the document.
 
 You only want to enable inheritance if you intend to allow an attribute of the same name to be controlled globally.
 That might be good for configuring transitions. For instance:
@@ -201,13 +201,13 @@ Positive feedback or no feedback should be handled like for small changes.
 Breaking changes should sit until a prominent contributor comments on the changes.
 Ping `@mojavelinux` and `@obilodeau` if necessary.
 
-Remember that this is a slower moving project since people are not designing slides everyday.
+Remember that this is a slower moving project since people are not designing slides every day.
 Well, for most people.
 
 === Work-in-progress pull-requests
 
 Letting know to the maintainers that you are working on a feature or a fix is useful.
-Early communication often times save time consuming mistakes or avoids duplicated effort.
+Early communication often times save time-consuming mistakes or avoids duplicated effort.
 We encourage contributors to communicate with us early.
 
 Branches on forks of this project are not very visible to maintainers as much as pull requests (PR).
@@ -225,7 +225,7 @@ Makes triaging easier.
 
 === Test a local asciidoctor-reveal.js version
 
-In order to test the Node package, you first need to build the converter into Javascript and create a tarball of the project.
+In order to test the Node package, you first need to build the converter into JavaScript and create a tarball of the project.
 
   $ bundle exec rake build:js
   $ npm pack
@@ -405,10 +405,10 @@ See the `publish` rake task in `Rakefile` and the `netlify.toml` configuration f
 
 Only content that is copied into the `public/` directory will be published on the Netlify site.
 If, by accident, something sensitive is copied over there, delete it, rewrite the git history to remove the sensitive information and force push the branch.
-Reach out to our netlify integration contact to make sure that deployed branches were rebuilt and no longer contain the sensitive information.
+Reach out to our Netlify integration contact to make sure that deployed branches were rebuilt and no longer contain the sensitive information.
 
 === Integration Contact
 
 Main Contact: https://github.com/Mogztter[@Mogztter]
 
-Also, in order to stay with a free plan, only the following people have control over our netlify integration: https://github.com/Mogztter[@Mogztter], https://github.com/mojavelinux[@mojavelinux] and https://github.com/graphitefriction[@graphitefriction].
+Also, in order to stay with a free plan, only the following people have control over our Netlify integration: https://github.com/Mogztter[@Mogztter], https://github.com/mojavelinux[@mojavelinux] and https://github.com/graphitefriction[@graphitefriction].

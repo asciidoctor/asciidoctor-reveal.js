@@ -1,7 +1,7 @@
 = Title Slide Customization
 :navtitle: Title Slide
 
-The title slide is customized via Asciidoc attributes.
+The title slide is customized via AsciiDoc attributes.
 These are the global variable assigned at the top of a document under the lead
 title that look like this: `:name: value`.
 
