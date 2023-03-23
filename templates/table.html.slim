@@ -15,7 +15,7 @@
       / not sure about this one, done when converting to a compilable slim template
       <t#{tblsec}>
         - @rows[tblsec].each do |row|
-          tr class=('fragment' if (tblsec != :head) && ((option? :rowStep) || (has_role? 'rowStep') || (attr? 'rowStep')))
+          tr class=('fragment' if (tblsec != :head) && ((option? :rowSteps) || (has_role? 'rowSteps') || (attr? 'rowSteps')))
             - row.each do |cell|
               / store reference of content in advance to resolve attribute assignments in cells
               - if tblsec == :head

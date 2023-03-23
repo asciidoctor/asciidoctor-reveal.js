@@ -45,7 +45,7 @@ This is step two:
 
 == Fragments on tables
 
-[%rowStep]
+[%rowSteps]
 |===
 |Fruit |Color
 
