@@ -147,7 +147,7 @@ Go to `test/doctest` folder and install `reveal.js`:
 
 From the project's root directory:
 
- $ bundle exec rake doctest::generate FORCE=yes
+ $ bundle exec rake doctest:generate FORCE=yes
 
 === Open rendered files
 
