@@ -193,6 +193,94 @@ module Slim::Helpers
     end
   end
 
+  # Retrieves the built-in html5 converter.
+  #
+  # Returns the instance of the Asciidoctor::Converter::Html5Converter
+  # associated with this node.
+  def html5_converter
+    converter.instance_variable_get("@delegate_converter")
+  end
+
+  def convert_inline_image(node = self)
+    target = node.target
+    if (node.type || 'image') == 'icon'
+      if (icons = node.document.attr 'icons') == 'font'
+        i_class_attr_val = %(#{node.attr(:set, 'fa')} fa-#{target})
+        i_class_attr_val = %(#{i_class_attr_val} fa-#{node.attr 'size'}) if node.attr? 'size'
+        if node.attr? 'flip'
+          i_class_attr_val = %(#{i_class_attr_val} fa-flip-#{node.attr 'flip'})
+        elsif node.attr? 'rotate'
+          i_class_attr_val = %(#{i_class_attr_val} fa-rotate-#{node.attr 'rotate'})
+        end
+        attrs = (node.attr? 'title') ? %( title="#{node.attr 'title'}") : ''
+        img = %(<i class="#{i_class_attr_val}"#{attrs}></i>)
+      elsif icons
+        attrs = (node.attr? 'width') ? %( width="#{node.attr 'width'}") : ''
+        attrs = %(#{attrs} height="#{node.attr 'height'}") if node.attr? 'height'
+        attrs = %(#{attrs} title="#{node.attr 'title'}") if node.attr? 'title'
+        img = %(<img src="#{src = node.icon_uri target}" alt="#{encode_attribute_value node.alt}"#{attrs}>)
+      else
+        img = %([#{node.alt}&#93;)
+      end
+    else
+      html_attrs = (node.attr? 'width') ? %( width="#{node.attr 'width'}") : ''
+      html_attrs = %(#{html_attrs} height="#{node.attr 'height'}") if node.attr? 'height'
+      html_attrs = %(#{html_attrs} title="#{node.attr 'title'}") if node.attr? 'title'
+      img, src = img_tag(node, target, html_attrs)
+    end
+    img_link(node, src, img)
+  end
+
+  def convert_image(node = self)
+    # When the stretch class is present, block images will take the most space
+    # they can take. Setting width and height can override that.
+    # We pinned the 100% to height to avoid aspect ratio breakage and since
+    # widescreen monitors are the most popular, chances are that height will
+    # be the biggest constraint
+    if node.has_role?('stretch') && !(node.attr?(:width) || node.attr?(:height))
+      height_value = "100%"
+    elsif node.attr? 'height'
+      height_value = node.attr 'height'
+    else
+      height_value = nil
+    end
+    html_attrs = (node.attr? 'width') ? %( width="#{node.attr 'width'}") : ''
+    html_attrs = %(#{html_attrs} height="#{height_value}") if height_value
+    html_attrs = %(#{html_attrs} title="#{node.attr 'title'}") if node.attr? 'title'
+    html_attrs = %(#{html_attrs} style="background: #{node.attr :background}") if node.attr? 'background'
+    img, src = img_tag(node, node.attr('target'), html_attrs)
+    img_link(node, src, img)
+  end
+
+  def img_tag(node = self, target, html_attrs)
+    if ((node.attr? 'format', 'svg') || (target.include? '.svg')) && node.document.safe < ::Asciidoctor::SafeMode::SECURE
+      if node.option? 'inline'
+        img = (html5_converter.read_svg_contents node, target) || %(<span class="alt">#{node.alt}</span>)
+      elsif node.option? 'interactive'
+        fallback = (node.attr? 'fallback') ? %(<img src="#{node.image_uri node.attr 'fallback'}" alt="#{encode_attribute_value node.alt}"#{html_attrs}>) : %(<span class="alt">#{node.alt}</span>)
+        img = %(<object type="image/svg+xml" data="#{src = node.image_uri target}"#{html_attrs}>#{fallback}</object>)
+      else
+        img = %(<img src="#{src = node.image_uri target}" alt="#{encode_attribute_value node.alt}"#{html_attrs}>)
+      end
+    else
+      img = %(<img src="#{src = node.image_uri target}" alt="#{encode_attribute_value node.alt}"#{html_attrs}>)
+    end
+
+    [img, src]
+  end
+
+  # Wrap the <img> element in a <a> element if the link attribute is defined
+  def img_link(node = self, src, content)
+    if (node.attr? 'link') && ((href_attr_val = node.attr 'link') != 'self' || (href_attr_val = src))
+      if (link_preview_value = bool_data_attr :link_preview)
+        data_preview_attr = %( data-preview-link="#{link_preview_value == true ? "" : link_preview_value}")
+      end
+      return %(<a class="image" href="#{href_attr_val}"#{(append_link_constraint_attrs node).join}#{data_preview_attr}>#{content}</a>)
+    end
+
+    content
+  end
+
   def revealjs_dependencies(document, node, revealjsdir)
     dependencies = []
     dependencies << "{ src: '#{revealjsdir}/plugin/zoom/zoom.js', async: true, callback: function () { Reveal.registerPlugin(RevealZoom) } }" unless (node.attr? 'revealjs_plugin_zoom', 'disabled')
@@ -200,7 +288,6 @@ module Slim::Helpers
     dependencies << "{ src: '#{revealjsdir}/plugin/search/search.js', async: true, callback: function () { Reveal.registerPlugin(RevealSearch) } }" if (node.attr? 'revealjs_plugin_search', 'enabled')
     dependencies.join(",\n      ")
   end
-
 
   # Between delimiters (--) is code taken from asciidoctor-bespoke 1.0.0.alpha.1
   # Licensed under MIT, Copyright (C) 2015-2016 Dan Allen and the Asciidoctor Project
@@ -274,6 +361,23 @@ module Slim::Helpers
       blks.map {|b| b.call }.join
     end
     nil
+  end
+
+  # Copied from asciidoctor/lib/asciidoctor/converter/html5.rb (method is private)
+  def append_link_constraint_attrs node, attrs = []
+    rel = 'nofollow' if node.option? 'nofollow'
+    if (window = node.attributes['window'])
+      attrs << %( target="#{window}")
+      attrs << (rel ? %( rel="#{rel} noopener") : ' rel="noopener"') if window == '_blank' || (node.option? 'noopener')
+    elsif rel
+      attrs << %( rel="#{rel}")
+    end
+    attrs
+  end
+
+  # Copied from asciidoctor/lib/asciidoctor/converter/html5.rb (method is private)
+  def encode_attribute_value val
+    (val.include? '"') ? (val.gsub '"', '&quot;') : val
   end
 
   # Copied from asciidoctor/lib/asciidoctor/converter/semantic-html5.rb which is not yet shipped
