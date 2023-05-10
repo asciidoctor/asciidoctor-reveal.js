@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        ruby: ['2.3', '2.4', '2.5', '2.6']
+        ruby: ['2.5', '3.0', '3.2']
         include:
           - os: ubuntu-latest
             ruby: truffleruby-20.2.0
@@ -58,12 +58,12 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: ['12.x', '14.x', '15.x']
+        node-version: ['16', '18']
         include:
           - os: macos-latest
-            node-version: '14.x'
+            node-version: '16'
           - os: windows-latest
-            node-version: '14.x'
+            node-version: '16'
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
