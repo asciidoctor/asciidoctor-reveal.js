@@ -22,7 +22,7 @@ endif::[]
 :url-documentation-site: https://docs.asciidoctor.org/reveal.js-converter/latest/
 
 ifdef::env-github[]
-image:https://travis-ci.org/asciidoctor/asciidoctor-reveal.js.svg?branch=master[Build Status,link=https://travis-ci.org/asciidoctor/asciidoctor-reveal.js]
+image:https://github.com/asciidoctor/asciidoctor-reveal.js/actions/workflows/ci.yml/badge.svg[Build Status,link=https://github.com/asciidoctor/asciidoctor-reveal.js/actions/workflows/ci.yml]
 image:http://img.shields.io/gem/v/asciidoctor-revealjs.svg[gem, link=https://rubygems.org/gems/asciidoctor-revealjs]
 image:http://img.shields.io/npm/v/@asciidoctor/reveal.js.svg[npm, link=https://www.npmjs.org/package/@asciidoctor/reveal.js]
 image:https://api.netlify.com/api/v1/badges/facd68e7-9337-4b83-bcac-7262720a6915/deploy-status[Netlify Status, link=https://app.netlify.com/sites/asciidoctor-revealjs-examples/deploys]
