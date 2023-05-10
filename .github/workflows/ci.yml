@@ -75,6 +75,11 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '2.7'
+      - name: Configure Nokogiri installation (Linux)
+        if: matrix.os == 'ubuntu-20.04'
+        run: |
+          bundle config --local build__nokogiri --use-system-libraries
+          sudo apt-get install libxslt1-dev
       - name: Install dependencies
         run: |
           bundle --jobs 3 --retry 3
