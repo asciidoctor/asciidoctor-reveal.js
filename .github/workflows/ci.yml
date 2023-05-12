@@ -12,16 +12,16 @@ jobs:
   build_ruby:
     strategy:
       matrix:
-        os: [ubuntu-20.04]
-        ruby: ['2.5', '3.0']
+        os: [ubuntu-22.04]
+        ruby: ['2.7', '3.0']
         include:
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             ruby: truffleruby-22.3.1
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             ruby: jruby-9.4.2.0
           - os: macos-latest
             ruby: '2.7'
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             ruby: '2.7'
           - os: windows-latest
             ruby: '2.7'
@@ -36,7 +36,7 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
       - name: Configure Nokogiri installation (Linux)
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           bundle config --local build__nokogiri --use-system-libraries
           sudo apt-get install libxslt1-dev
@@ -57,7 +57,7 @@ jobs:
   build_js:
     strategy:
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-22.04]
         node-version: ['16', '18']
         include:
           - os: macos-latest
@@ -76,7 +76,7 @@ jobs:
         with:
           ruby-version: '2.7'
       - name: Configure Nokogiri installation (Linux)
-        if: matrix.os == 'ubuntu-20.04'
+        if: matrix.os == 'ubuntu-22.04'
         run: |
           bundle config --local build__nokogiri --use-system-libraries
           sudo apt-get install libxslt1-dev
