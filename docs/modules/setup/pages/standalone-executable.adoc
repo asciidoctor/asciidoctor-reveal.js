@@ -52,3 +52,4 @@ You can open this file in a browser.
 
 TIP: Alternatively you can use `:revealjsdir: https://cdn.jsdelivr.net/npm/reveal.js` to avoid having to setup reveal.js locally.
 Just be aware that then if you have no access to internet then the presentation will not load properly.
+Also, when using the CDN, the speacker notes will be send as plain text - instead of HTML - due to security reasons.
