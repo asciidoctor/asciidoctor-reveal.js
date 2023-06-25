@@ -4,7 +4,7 @@ Short instructions that aim to help potential contributors.
 
 == Getting Started
 
-* Setup the Asciidoctor reveal.js plugin in xref:ruby-localversion[development mode]
+* Set up the Asciidoctor reveal.js plugin in xref:ruby-localversion[development mode]
 * Modify the {url-slim}[slim templates^] in `templates/`
 * Templates need to be compiled before being used, do so with:
 
@@ -264,7 +264,7 @@ Starting with 3.0.0, we aim to retain binary compatibility between Asciidoctor.j
 This should allow other Asciidoctor extensions to be called along with this converter.
 Asciidoctor.js is no longer a direct dependency but should be seen as a tool that powers this converter.
 We need to allow users to have flexibility in the version they choose to run.
-Asciidoctor.js maintainers told us that they are going to consider binary package incompatibility a major break and so we adjusted our README to tell users to install with a specific version range.
+Asciidoctor.js maintainers told us that they are going to consider binary package incompatibility a major break, and so we adjusted our README to tell users to install with a specific version range.
 
 We will track and maintain the README on the major version supported and recommended:
 
@@ -381,17 +381,17 @@ In addition, you can submit pull requests to downstream project:
 === Maintenance branch
 
 You can create a maintenance branch from a tag.
-Please use the following name convention: `maint-{major}.{minor}.x` (e.g., `maint-4.1.x`).
+Please use the following name convention: `\{major}.\{minor}.x` (e.g., `4.1.x`).
 
 [%interactive]
-* [ ] push the maintenance branch: `git push origin maint-4.1.x`
+* [ ] push the maintenance branch: `git push origin 4.1.x`
 * [ ] don't forget to update Antora playbook to add this branch: https://github.com/asciidoctor/docs.asciidoctor.org/edit/main/antora-playbook.yml
 
 == Ruby and asciidoctor-doctest tests
 
 === Running tests
 
-We recommend tests to be run with a fresh install of all dependencies in a local folder that won't affect your Ruby install (a `.bundle/` in this directory):
+We recommend tests to be run with a fresh installation of all dependencies in a local folder that won't affect your Ruby install (a `.bundle/` in this directory):
 
  $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
