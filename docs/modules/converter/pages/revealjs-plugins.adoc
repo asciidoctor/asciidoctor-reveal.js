@@ -21,7 +21,7 @@ For example, to disable all the default plugins set the following document attri
 
 == Additional plugins
 
-Additional reveal.js plugins can be installed and activated using a xref:asciidoc::docinfo.adoc[docinfo file].
+Additional reveal.js plugins can be installed and activated using a xref:asciidoc:docinfo:index.adoc[docinfo file].
 
 . Extract the plugin files in a directory
 . Create a docinfo file to load and register the plugin
@@ -100,7 +100,7 @@ Please note that the file is named _presentation-docinfo-footer.html_ because ou
 By default, docinfo files are searched for in the same folder as the document file.
 If you want to keep them anywhere else, set the docinfodir attribute to their location.
 
-Please read xref:asciidoctor:docinfo.adoc#resolving[] if you want to learn more.
+Please read xref:asciidoc:docinfo:index.adoc#resolving[] if you want to learn more.
 ====
 
 Read https://revealjs.com/plugins/[the relevant reveal.js documentation] to understand more about reveal.js plugins.
