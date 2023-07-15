@@ -1,0 +1,43 @@
+= Asciidoctor reveal.js 5.1
+//:stem:
+:source-highlighter: highlight.js
+:highlightjs-theme: a11y-dark.css
+:highlightjs-languages: asciidoc
+:icons: font
+:imagesdir: images/
+// reveal.js config
+:customcss: release-5.1.css
+:revealjs_theme: moon
+:revealjs_hash: true
+:revealjs_width: 1080
+
+== New Features icon:rocket[set=fas]
+
+[background-gradient="linear-gradient(to bottom, #002b36, #00b4e0)"]
+== Gradient slide backgrounds
+
+[.big-fish]
+🐟
+
+[background-gradient="radial-gradient(#002b36, #00b4e0)"]
+=== Radial gradient
+
+[.big-fish]
+🐳
+
+== Typesetting Libraries
+
+[latexmath]
+++++
+\lim_{n \to \infty}\frac{n}{\sqrt[n]{n!}} = {\large e}
+++++
+
+
+[transition=fade,transition-speed=slow]
+== Learn More!
+
+* https://github.com/asciidoctor/asciidoctor-reveal.js/[Asciidoctor reveal.js]
+* https://revealjs.com[reveal.js]
+* https://github.com/asciidoctor/asciidoctor/[Asciidoctor]
+* https://asciidoc.org/[What is AsciiDoc?]
+* https://github.com/asciidoctor/asciidoctor-reveal.js/raw/master/examples/release-5.1.adoc[Source of this presentation (AsciiDoc)]
