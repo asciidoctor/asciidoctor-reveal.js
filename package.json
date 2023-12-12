@@ -19,7 +19,7 @@
     "release:description": "node npm/release/description.js",
     "release:prepare": "node npm/release/prepare.js",
     "release:next": "node npm/release/next.js",
-    "package": "npm i @asciidoctor/core && pkg -t node12-linux-x64,node12-macos-x64,node12-win-x64 package.json --out-path dist/"
+    "package": "npm i @asciidoctor/core && pkg -t node16-linux-x64,node16-macos-x64,node16-win-x64 package.json --out-path dist/"
   },
   "repository": {
     "type": "git",
@@ -55,7 +55,7 @@
     "@asciidoctor/core": "~3.0",
     "bestikk-log": "0.1.0",
     "expect.js": "0.3.1",
-    "pkg": "^4.4.2"
+    "pkg": "5.8.1"
   },
   "volta": {
     "node": "16.20.1"
