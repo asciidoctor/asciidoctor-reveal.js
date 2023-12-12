@@ -43,7 +43,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency 'pygments.rb'
   end
   s.add_development_dependency 'colorize'
-  s.add_development_dependency 'asciidoctor-templates-compiler', '~> 0.6.0'
+  s.add_development_dependency 'asciidoctor-templates-compiler', '~> 0.7.0'
   s.add_development_dependency 'slim', '~> 3.0.6'
   s.add_development_dependency 'slim-htag', '~> 0.1.0'
   s.add_development_dependency 'rouge'

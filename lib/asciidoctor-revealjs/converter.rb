@@ -501,25 +501,21 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
   end
 
   def convert(node, transform = nil, opts = {})
-    transform ||= node.node_name
+    meth_name = "convert_#{transform || node.node_name}"
     opts ||= {}
-    converter = respond_to?(transform) ? self : @delegate_converter
+    converter = respond_to?(meth_name) ? self : @delegate_converter
 
     if opts.empty?
-      converter.send(transform, node)
+      converter.send(meth_name, node)
     else
-      converter.send(transform, node, opts)
+      converter.send(meth_name, node, opts)
     end
-  end
-
-  def handles?(transform)
-    respond_to?("convert_#{transform}") || respond_to?(transform)
   end
 
   #----------------- Begin of generated transformation methods -----------------#
 
 
-  def admonition(node, opts = {})
+  def convert_admonition(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -545,7 +541,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def audio(node, opts = {})
+  def convert_audio(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -559,7 +555,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def colist(node, opts = {})
+  def convert_colist(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -587,7 +583,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def dlist(node, opts = {})
+  def convert_dlist(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -648,7 +644,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def document(node, opts = {})
+  def convert_document(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -994,7 +990,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def embedded(node, opts = {})
+  def convert_embedded(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1011,7 +1007,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def example(node, opts = {})
+  def convert_example(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1023,7 +1019,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def floating_title(node, opts = {})
+  def convert_floating_title(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1033,7 +1029,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def image(node, opts = {})
+  def convert_image(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1047,7 +1043,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def inline_anchor(node, opts = {})
+  def convert_inline_anchor(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1068,7 +1064,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def inline_break(node, opts = {})
+  def convert_inline_break(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1078,7 +1074,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def inline_button(node, opts = {})
+  def convert_inline_button(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1088,7 +1084,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def inline_callout(node, opts = {})
+  def convert_inline_callout(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1103,7 +1099,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def inline_footnote(node, opts = {})
+  def convert_inline_footnote(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1124,7 +1120,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def inline_image(node, opts = {})
+  def convert_inline_image(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1134,7 +1130,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def inline_indexterm(node, opts = {})
+  def convert_inline_indexterm(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1144,7 +1140,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def inline_kbd(node, opts = {})
+  def convert_inline_kbd(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1161,7 +1157,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def inline_menu(node, opts = {})
+  def convert_inline_menu(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1185,7 +1181,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def inline_quoted(node, opts = {})
+  def convert_inline_quoted(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1207,7 +1203,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def listing(node, opts = {})
+  def convert_listing(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1240,7 +1236,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def literal(node, opts = {})
+  def convert_literal(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1252,7 +1248,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def notes(node, opts = {})
+  def convert_notes(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1261,7 +1257,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def olist(node, opts = {})
+  def convert_olist(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1278,7 +1274,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def open(node, opts = {})
+  def convert_open(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1305,7 +1301,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def outline(node, opts = {})
+  def convert_outline(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1322,7 +1318,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def page_break(node, opts = {})
+  def convert_page_break(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1331,7 +1327,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def paragraph(node, opts = {})
+  def convert_paragraph(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1346,7 +1342,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def pass(node, opts = {})
+  def convert_pass(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1355,7 +1351,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def preamble(node, opts = {})
+  def convert_preamble(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1365,7 +1361,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def quote(node, opts = {})
+  def convert_quote(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1387,7 +1383,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def ruler(node, opts = {})
+  def convert_ruler(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1396,7 +1392,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def section(node, opts = {})
+  def convert_section(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1509,7 +1505,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def sidebar(node, opts = {})
+  def convert_sidebar(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1526,7 +1522,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def stem(node, opts = {})
+  def convert_stem(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1544,7 +1540,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def stretch_nested_elements(node, opts = {})
+  def convert_stretch_nested_elements(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1617,7 +1613,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def table(node, opts = {})
+  def convert_table(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1671,7 +1667,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def thematic_break(node, opts = {})
+  def convert_thematic_break(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1680,7 +1676,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def title_slide(node, opts = {})
+  def convert_title_slide(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1715,7 +1711,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def toc(node, opts = {})
+  def convert_toc(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1740,7 +1736,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def ulist(node, opts = {})
+  def convert_ulist(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1773,7 +1769,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def verse(node, opts = {})
+  def convert_verse(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
@@ -1795,7 +1791,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def video(node, opts = {})
+  def convert_video(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
       converter.set_local_variables(binding, opts) unless opts.empty?
