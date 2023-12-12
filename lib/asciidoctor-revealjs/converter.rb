@@ -747,8 +747,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       ; 
       ; 
       ; yield_content :slides; 
-      ; _buf << ("</div></div><script src=\"".freeze); _buf << ((revealjsdir).to_s); _buf << ("/dist/reveal.js\"></script><script src=\"".freeze); 
-      ; _buf << ((revealjsdir).to_s); _buf << ("/plugin/math/math.js\"></script><script>Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {\n  if (slide.getAttribute('data-background-color')) return;\n  // user needs to explicitly say he wants CSS color to override otherwise we might break custom css or theme (#226)\n  if (!(slide.classList.contains('canvas') || slide.classList.contains('background'))) return;\n  var bgColor = getComputedStyle(slide).backgroundColor;\n  if (bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {\n    slide.setAttribute('data-background-color', bgColor);\n    slide.style.backgroundColor = 'transparent';\n  }\n});\n\n// More info about config & dependencies:\n// - https://github.com/hakimel/reveal.js#configuration\n// - https://github.com/hakimel/reveal.js#dependencies\nReveal.initialize({\n  // Display presentation control arrows\n  controls: ".freeze); 
+      ; _buf << ("</div></div><script src=\"".freeze); _buf << ((revealjsdir).to_s); _buf << ("/dist/reveal.js\"></script><script>Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {\n  if (slide.getAttribute('data-background-color')) return;\n  // user needs to explicitly say he wants CSS color to override otherwise we might break custom css or theme (#226)\n  if (!(slide.classList.contains('canvas') || slide.classList.contains('background'))) return;\n  var bgColor = getComputedStyle(slide).backgroundColor;\n  if (bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {\n    slide.setAttribute('data-background-color', bgColor);\n    slide.style.backgroundColor = 'transparent';\n  }\n});\n\n// More info about config & dependencies:\n// - https://github.com/hakimel/reveal.js#configuration\n// - https://github.com/hakimel/reveal.js#dependencies\nReveal.initialize({\n  // Display presentation control arrows\n  controls: ".freeze); 
       ; 
       ; 
       ; 
@@ -910,18 +909,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       ; 
       ; 
       ; _buf << ((revealjs_dependencies(document, self, revealjsdir)).to_s); 
-      ; _buf << ("\n  ],\n  mathjax3: {\n    mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',\n    // pass other options into `MathJax.Hub.Config()`\n    tex: {\n      inlineMath: [['$', '$'], ['\\\\$', '\\\\$']]\n    },\n    options: {\n      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']\n    },\n  },\n  plugins: [RevealMath.MathJax3]\n});</script><script>var dom = {};\ndom.slides = document.querySelector('.reveal .slides');\n\nfunction getRemainingHeight(element, slideElement, height) {\n  height = height || 0;\n  if (element) {\n    var newHeight, oldHeight = element.style.height;\n    // Change the .stretch element height to 0 in order find the height of all\n    // the other elements\n    element.style.height = '0px';\n    // In Overview mode, the parent (.slide) height is set of 700px.\n    // Restore it temporarily to its natural height.\n    slideElement.style.height = 'auto';\n    newHeight = height - slideElement.offsetHeight;\n    // Restore the old height, just in case\n    element.style.height = oldHeight + 'px';\n    // Clear the parent (.slide) height. .removeProperty works in IE9+\n    slideElement.style.removeProperty('height');\n    return newHeight;\n  }\n  return height;\n}\n\nfunction layoutSlideContents(width, height) {\n  // Handle sizing of elements with the 'stretch' class\n  toArray(dom.slides.querySelectorAll('section .stretch')).forEach(function (element) {\n    // Determine how much vertical space we can use\n    var limit = 5; // hard limit\n    var parent = element.parentNode;\n    while (parent.nodeName !== 'SECTION' && limit > 0) {\n      parent = parent.parentNode;\n      limit--;\n    }\n    if (limit === 0) {\n      // unable to find parent, aborting!\n      return;\n    }\n    var remainingHeight = getRemainingHeight(element, parent, height);\n    // Consider the aspect ratio of media elements\n    if (/(img|video)/gi.test(element.nodeName)) {\n      var nw = element.naturalWidth || element.videoWidth, nh = element.naturalHeight || element.videoHeight;\n      var es = Math.min(width / nw, remainingHeight / nh);\n      element.style.width = (nw * es) + 'px';\n      element.style.height = (nh * es) + 'px';\n    } else {\n      element.style.width = width + 'px';\n      element.style.height = remainingHeight + 'px';\n    }\n  });\n}\n\nfunction toArray(o) {\n  return Array.prototype.slice.call(o);\n}\n\nReveal.addEventListener('slidechanged', function () {\n  layoutSlideContents(".freeze); 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
+      ; _buf << ("\n  ],\n});</script><script>var dom = {};\ndom.slides = document.querySelector('.reveal .slides');\n\nfunction getRemainingHeight(element, slideElement, height) {\n  height = height || 0;\n  if (element) {\n    var newHeight, oldHeight = element.style.height;\n    // Change the .stretch element height to 0 in order find the height of all\n    // the other elements\n    element.style.height = '0px';\n    // In Overview mode, the parent (.slide) height is set of 700px.\n    // Restore it temporarily to its natural height.\n    slideElement.style.height = 'auto';\n    newHeight = height - slideElement.offsetHeight;\n    // Restore the old height, just in case\n    element.style.height = oldHeight + 'px';\n    // Clear the parent (.slide) height. .removeProperty works in IE9+\n    slideElement.style.removeProperty('height');\n    return newHeight;\n  }\n  return height;\n}\n\nfunction layoutSlideContents(width, height) {\n  // Handle sizing of elements with the 'stretch' class\n  toArray(dom.slides.querySelectorAll('section .stretch')).forEach(function (element) {\n    // Determine how much vertical space we can use\n    var limit = 5; // hard limit\n    var parent = element.parentNode;\n    while (parent.nodeName !== 'SECTION' && limit > 0) {\n      parent = parent.parentNode;\n      limit--;\n    }\n    if (limit === 0) {\n      // unable to find parent, aborting!\n      return;\n    }\n    var remainingHeight = getRemainingHeight(element, parent, height);\n    // Consider the aspect ratio of media elements\n    if (/(img|video)/gi.test(element.nodeName)) {\n      var nw = element.naturalWidth || element.videoWidth, nh = element.naturalHeight || element.videoHeight;\n      var es = Math.min(width / nw, remainingHeight / nh);\n      element.style.width = (nw * es) + 'px';\n      element.style.height = (nh * es) + 'px';\n    } else {\n      element.style.width = width + 'px';\n      element.style.height = remainingHeight + 'px';\n    }\n  });\n}\n\nfunction toArray(o) {\n  return Array.prototype.slice.call(o);\n}\n\nReveal.addEventListener('slidechanged', function () {\n  layoutSlideContents(".freeze); 
       ; 
       ; 
       ; 
@@ -1404,120 +1392,6 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
   end
 
-  def convert_section(node, opts = {})
-    node.extend(Helpers)
-    node.instance_eval do
-      converter.set_local_variables(binding, opts) unless opts.empty?
-      _buf = ''; 
-      ; 
-      ; titleless = (title = self.title) == '!'; 
-      ; hide_title = (titleless || (option? :notitle) || (option? :conceal)); 
-      ; 
-      ; vertical_slides = find_by(context: :section) {|section| section.level == 2 }; 
-      ; 
-      ; 
-      ; 
-      ; data_background_image, data_background_size, data_background_repeat,
-      data_background_position, data_background_transition = nil; 
-      ; 
-      ; 
-      ; section_images = blocks.map do |block|; 
-      ; if (ctx = block.context) == :image; 
-      ; ['background', 'canvas'].include?(block.attributes[1]) ? block : []; 
-      ; elsif ctx == :section; 
-      ; []; 
-      ; else; 
-      ; block.find_by(context: :image) {|image| ['background', 'canvas'].include?(image.attributes[1]) } || []; 
-      ; end; end; if (bg_image = section_images.flatten.first); 
-      ; data_background_image = image_uri(bg_image.attr 'target'); 
-      ; 
-      ; data_background_size = bg_image.attr 'size'; 
-      ; data_background_repeat = bg_image.attr 'repeat'; 
-      ; data_background_transition = bg_image.attr 'transition'; 
-      ; data_background_position = bg_image.attr 'position'; 
-      ; 
-      ; 
-      ; end; if attr? 'background-image'; 
-      ; data_background_image = image_uri(attr 'background-image'); 
-      ; 
-      ; end; if attr? 'background-video'; 
-      ; data_background_video = media_uri(attr 'background-video'); 
-      ; 
-      ; end; if attr? 'background-color'; 
-      ; data_background_color = attr 'background-color'; 
-      ; 
-      ; end; parent_section_with_vertical_slides = @level == 1 && !vertical_slides.empty?; 
-      ; 
-      ; content_for :footnotes do; 
-      ; slide_footnotes = slide_footnotes(self); 
-      ; if document.footnotes? && !(parent.attr? 'nofootnotes') && !slide_footnotes.empty?; 
-      ; _buf << ("<div class=\"footnotes\">".freeze); 
-      ; slide_footnotes.each do |footnote|; 
-      ; _buf << ("<div class=\"footnote\">".freeze); 
-      ; _buf << (("#{footnote.index}. #{footnote.text}").to_s); 
-      ; 
-      ; _buf << ("</div>".freeze); end; _buf << ("</div>".freeze); end; end; content_for :section do; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; 
-      ; _buf << ("<section".freeze); _slim_codeattributes1 = (titleless ? nil : id); if _slim_codeattributes1; if _slim_codeattributes1 == true; _buf << (" id".freeze); else; _buf << (" id=\"".freeze); _buf << ((_slim_codeattributes1).to_s); _buf << ("\"".freeze); end; end; _temple_html_attributeremover1 = ''; _slim_codeattributes2 = roles; if Array === _slim_codeattributes2; _slim_codeattributes2 = _slim_codeattributes2.flatten; _slim_codeattributes2.map!(&:to_s); _slim_codeattributes2.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes2.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes2).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _buf << (" class=\"".freeze); _buf << ((_temple_html_attributeremover1).to_s); _buf << ("\"".freeze); end; _slim_codeattributes3 = (attr "background-gradient"); if _slim_codeattributes3; if _slim_codeattributes3 == true; _buf << (" data-background-gradient".freeze); else; _buf << (" data-background-gradient=\"".freeze); _buf << ((_slim_codeattributes3).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes4 = (attr 'transition'); if _slim_codeattributes4; if _slim_codeattributes4 == true; _buf << (" data-transition".freeze); else; _buf << (" data-transition=\"".freeze); _buf << ((_slim_codeattributes4).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes5 = (attr 'transition-speed'); if _slim_codeattributes5; if _slim_codeattributes5 == true; _buf << (" data-transition-speed".freeze); else; _buf << (" data-transition-speed=\"".freeze); _buf << ((_slim_codeattributes5).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes6 = data_background_color; if _slim_codeattributes6; if _slim_codeattributes6 == true; _buf << (" data-background-color".freeze); else; _buf << (" data-background-color=\"".freeze); _buf << ((_slim_codeattributes6).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes7 = data_background_image; if _slim_codeattributes7; if _slim_codeattributes7 == true; _buf << (" data-background-image".freeze); else; _buf << (" data-background-image=\"".freeze); _buf << ((_slim_codeattributes7).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes8 = (data_background_size || attr('background-size')); if _slim_codeattributes8; if _slim_codeattributes8 == true; _buf << (" data-background-size".freeze); else; _buf << (" data-background-size=\"".freeze); _buf << ((_slim_codeattributes8).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes9 = (data_background_repeat || attr('background-repeat')); if _slim_codeattributes9; if _slim_codeattributes9 == true; _buf << (" data-background-repeat".freeze); else; _buf << (" data-background-repeat=\"".freeze); _buf << ((_slim_codeattributes9).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes10 = (data_background_transition || attr('background-transition')); if _slim_codeattributes10; if _slim_codeattributes10 == true; _buf << (" data-background-transition".freeze); else; _buf << (" data-background-transition=\"".freeze); _buf << ((_slim_codeattributes10).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes11 = (data_background_position || attr('background-position')); if _slim_codeattributes11; if _slim_codeattributes11 == true; _buf << (" data-background-position".freeze); else; _buf << (" data-background-position=\"".freeze); _buf << ((_slim_codeattributes11).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes12 = (attr "background-iframe"); if _slim_codeattributes12; if _slim_codeattributes12 == true; _buf << (" data-background-iframe".freeze); else; _buf << (" data-background-iframe=\"".freeze); _buf << ((_slim_codeattributes12).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes13 = data_background_video; if _slim_codeattributes13; if _slim_codeattributes13 == true; _buf << (" data-background-video".freeze); else; _buf << (" data-background-video=\"".freeze); _buf << ((_slim_codeattributes13).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes14 = ((attr? 'background-video-loop') || (option? 'loop')); if _slim_codeattributes14; if _slim_codeattributes14 == true; _buf << (" data-background-video-loop".freeze); else; _buf << (" data-background-video-loop=\"".freeze); _buf << ((_slim_codeattributes14).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes15 = ((attr? 'background-video-muted') || (option? 'muted')); if _slim_codeattributes15; if _slim_codeattributes15 == true; _buf << (" data-background-video-muted".freeze); else; _buf << (" data-background-video-muted=\"".freeze); _buf << ((_slim_codeattributes15).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes16 = (attr "background-opacity"); if _slim_codeattributes16; if _slim_codeattributes16 == true; _buf << (" data-background-opacity".freeze); else; _buf << (" data-background-opacity=\"".freeze); _buf << ((_slim_codeattributes16).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes17 = (attr "autoslide"); if _slim_codeattributes17; if _slim_codeattributes17 == true; _buf << (" data-autoslide".freeze); else; _buf << (" data-autoslide=\"".freeze); _buf << ((_slim_codeattributes17).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes18 = (attr 'state'); if _slim_codeattributes18; if _slim_codeattributes18 == true; _buf << (" data-state".freeze); else; _buf << (" data-state=\"".freeze); _buf << ((_slim_codeattributes18).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes19 = ((attr? 'auto-animate') || (option? 'auto-animate')); if _slim_codeattributes19; if _slim_codeattributes19 == true; _buf << (" data-auto-animate".freeze); else; _buf << (" data-auto-animate=\"".freeze); _buf << ((_slim_codeattributes19).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes20 = ((attr 'auto-animate-easing') || (option? 'auto-animate-easing')); if _slim_codeattributes20; if _slim_codeattributes20 == true; _buf << (" data-auto-animate-easing".freeze); else; _buf << (" data-auto-animate-easing=\"".freeze); _buf << ((_slim_codeattributes20).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes21 = ((attr 'auto-animate-unmatched') || (option? 'auto-animate-unmatched')); if _slim_codeattributes21; if _slim_codeattributes21 == true; _buf << (" data-auto-animate-unmatched".freeze); else; _buf << (" data-auto-animate-unmatched=\"".freeze); _buf << ((_slim_codeattributes21).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes22 = ((attr 'auto-animate-duration') || (option? 'auto-animate-duration')); if _slim_codeattributes22; if _slim_codeattributes22 == true; _buf << (" data-auto-animate-duration".freeze); else; _buf << (" data-auto-animate-duration=\"".freeze); _buf << ((_slim_codeattributes22).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes23 = (attr 'auto-animate-id'); if _slim_codeattributes23; if _slim_codeattributes23 == true; _buf << (" data-auto-animate-id".freeze); else; _buf << (" data-auto-animate-id=\"".freeze); _buf << ((_slim_codeattributes23).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes24 = ((attr? 'auto-animate-restart') || (option? 'auto-animate-restart')); if _slim_codeattributes24; if _slim_codeattributes24 == true; _buf << (" data-auto-animate-restart".freeze); else; _buf << (" data-auto-animate-restart=\"".freeze); _buf << ((_slim_codeattributes24).to_s); _buf << ("\"".freeze); end; end; _buf << (">".freeze); 
-      ; unless hide_title; 
-      ; _buf << ("<h2>".freeze); _buf << ((section_title).to_s); 
-      ; _buf << ("</h2>".freeze); end; if parent_section_with_vertical_slides; 
-      ; unless (_blocks = blocks - vertical_slides).empty?; 
-      ; _buf << ("<div class=\"slide-content\">".freeze); 
-      ; _blocks.each do |block|; 
-      ; _buf << ((block.convert).to_s); 
-      ; end; _buf << ("</div>".freeze); end; yield_content :footnotes; 
-      ; 
-      ; else; 
-      ; unless (_content = content.chomp).empty?; 
-      ; _buf << ("<div class=\"slide-content\">".freeze); 
-      ; _buf << ((_content).to_s); 
-      ; _buf << ("</div>".freeze); end; yield_content :footnotes; 
-      ; 
-      ; end; clear_slide_footnotes; 
-      ; 
-      ; _buf << ("</section>".freeze); 
-      ; 
-      ; end; if parent_section_with_vertical_slides; 
-      ; _buf << ("<section>".freeze); 
-      ; yield_content :section; 
-      ; vertical_slides.each do |subsection|; 
-      ; _buf << ((subsection.convert).to_s); 
-      ; 
-      ; end; _buf << ("</section>".freeze); 
-      ; else; 
-      ; if @level >= 3; 
-      ; 
-      ; _slim_htag_filter1 = ((@level)).to_s; _buf << ("<h".freeze); _buf << ((_slim_htag_filter1).to_s); _buf << (">".freeze); _buf << ((title).to_s); 
-      ; _buf << ("</h".freeze); _buf << ((_slim_htag_filter1).to_s); _buf << (">".freeze); _buf << ((content.chomp).to_s); 
-      ; else; 
-      ; yield_content :section; 
-      ; end; end; _buf
-    end
-  end
-
   def convert_sidebar(node, opts = {})
     node.extend(Helpers)
     node.instance_eval do
@@ -1855,6 +1729,120 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       ; _slim_controls2 << ("<video".freeze); _slim_codeattributes14 = media_uri(attr :target); if _slim_codeattributes14; if _slim_codeattributes14 == true; _slim_controls2 << (" src".freeze); else; _slim_controls2 << (" src=\"".freeze); _slim_controls2 << ((_slim_codeattributes14).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes15 = (width); if _slim_codeattributes15; if _slim_codeattributes15 == true; _slim_controls2 << (" width".freeze); else; _slim_controls2 << (" width=\"".freeze); _slim_controls2 << ((_slim_codeattributes15).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes16 = (height); if _slim_codeattributes16; if _slim_codeattributes16 == true; _slim_controls2 << (" height".freeze); else; _slim_controls2 << (" height=\"".freeze); _slim_controls2 << ((_slim_codeattributes16).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes17 = ((attr :poster) ? media_uri(attr :poster) : nil); if _slim_codeattributes17; if _slim_codeattributes17 == true; _slim_controls2 << (" poster".freeze); else; _slim_controls2 << (" poster=\"".freeze); _slim_controls2 << ((_slim_codeattributes17).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes18 = (option? 'autoplay'); if _slim_codeattributes18; if _slim_codeattributes18 == true; _slim_controls2 << (" data-autoplay".freeze); else; _slim_controls2 << (" data-autoplay=\"".freeze); _slim_controls2 << ((_slim_codeattributes18).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes19 = !(option? 'nocontrols'); if _slim_codeattributes19; if _slim_codeattributes19 == true; _slim_controls2 << (" controls".freeze); else; _slim_controls2 << (" controls=\"".freeze); _slim_controls2 << ((_slim_codeattributes19).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_codeattributes20 = (option? 'loop'); if _slim_codeattributes20; if _slim_codeattributes20 == true; _slim_controls2 << (" loop".freeze); else; _slim_controls2 << (" loop=\"".freeze); _slim_controls2 << ((_slim_codeattributes20).to_s); _slim_controls2 << ("\"".freeze); end; end; _slim_controls2 << (">Your browser does not support the video tag.</video>".freeze); 
       ; 
       ; end; _slim_controls2; end; _buf << ((_slim_controls1).to_s); _buf
+    end
+  end
+
+  def convert_section(node, opts = {})
+    node.extend(Helpers)
+    node.instance_eval do
+      converter.set_local_variables(binding, opts) unless opts.empty?
+      _buf = ''; 
+      ; 
+      ; titleless = (title = self.title) == '!'; 
+      ; hide_title = (titleless || (option? :notitle) || (option? :conceal)); 
+      ; 
+      ; vertical_slides = find_by(context: :section) {|section| section.level == 2 }; 
+      ; 
+      ; 
+      ; 
+      ; data_background_image, data_background_size, data_background_repeat,
+      data_background_position, data_background_transition = nil; 
+      ; 
+      ; 
+      ; section_images = blocks.map do |block|; 
+      ; if (ctx = block.context) == :image; 
+      ; ['background', 'canvas'].include?(block.attributes[1]) ? block : []; 
+      ; elsif ctx == :section; 
+      ; []; 
+      ; else; 
+      ; block.find_by(context: :image) {|image| ['background', 'canvas'].include?(image.attributes[1]) } || []; 
+      ; end; end; if (bg_image = section_images.flatten.first); 
+      ; data_background_image = image_uri(bg_image.attr 'target'); 
+      ; 
+      ; data_background_size = bg_image.attr 'size'; 
+      ; data_background_repeat = bg_image.attr 'repeat'; 
+      ; data_background_transition = bg_image.attr 'transition'; 
+      ; data_background_position = bg_image.attr 'position'; 
+      ; 
+      ; 
+      ; end; if attr? 'background-image'; 
+      ; data_background_image = image_uri(attr 'background-image'); 
+      ; 
+      ; end; if attr? 'background-video'; 
+      ; data_background_video = media_uri(attr 'background-video'); 
+      ; 
+      ; end; if attr? 'background-color'; 
+      ; data_background_color = attr 'background-color'; 
+      ; 
+      ; end; parent_section_with_vertical_slides = @level == 1 && !vertical_slides.empty?; 
+      ; 
+      ; content_for :footnotes do; 
+      ; slide_footnotes = slide_footnotes(self); 
+      ; if document.footnotes? && !(parent.attr? 'nofootnotes') && !slide_footnotes.empty?; 
+      ; _buf << ("<div class=\"footnotes\">".freeze); 
+      ; slide_footnotes.each do |footnote|; 
+      ; _buf << ("<div class=\"footnote\">".freeze); 
+      ; _buf << (("#{footnote.index}. #{footnote.text}").to_s); 
+      ; 
+      ; _buf << ("</div>".freeze); end; _buf << ("</div>".freeze); end; end; content_for :section do; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; 
+      ; _buf << ("<section".freeze); _slim_codeattributes1 = (titleless ? nil : id); if _slim_codeattributes1; if _slim_codeattributes1 == true; _buf << (" id".freeze); else; _buf << (" id=\"".freeze); _buf << ((_slim_codeattributes1).to_s); _buf << ("\"".freeze); end; end; _temple_html_attributeremover1 = ''; _slim_codeattributes2 = roles; if Array === _slim_codeattributes2; _slim_codeattributes2 = _slim_codeattributes2.flatten; _slim_codeattributes2.map!(&:to_s); _slim_codeattributes2.reject!(&:empty?); _temple_html_attributeremover1 << ((_slim_codeattributes2.join(" ")).to_s); else; _temple_html_attributeremover1 << ((_slim_codeattributes2).to_s); end; _temple_html_attributeremover1; if !_temple_html_attributeremover1.empty?; _buf << (" class=\"".freeze); _buf << ((_temple_html_attributeremover1).to_s); _buf << ("\"".freeze); end; _slim_codeattributes3 = (attr "background-gradient"); if _slim_codeattributes3; if _slim_codeattributes3 == true; _buf << (" data-background-gradient".freeze); else; _buf << (" data-background-gradient=\"".freeze); _buf << ((_slim_codeattributes3).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes4 = (attr 'transition'); if _slim_codeattributes4; if _slim_codeattributes4 == true; _buf << (" data-transition".freeze); else; _buf << (" data-transition=\"".freeze); _buf << ((_slim_codeattributes4).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes5 = (attr 'transition-speed'); if _slim_codeattributes5; if _slim_codeattributes5 == true; _buf << (" data-transition-speed".freeze); else; _buf << (" data-transition-speed=\"".freeze); _buf << ((_slim_codeattributes5).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes6 = data_background_color; if _slim_codeattributes6; if _slim_codeattributes6 == true; _buf << (" data-background-color".freeze); else; _buf << (" data-background-color=\"".freeze); _buf << ((_slim_codeattributes6).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes7 = data_background_image; if _slim_codeattributes7; if _slim_codeattributes7 == true; _buf << (" data-background-image".freeze); else; _buf << (" data-background-image=\"".freeze); _buf << ((_slim_codeattributes7).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes8 = (data_background_size || attr('background-size')); if _slim_codeattributes8; if _slim_codeattributes8 == true; _buf << (" data-background-size".freeze); else; _buf << (" data-background-size=\"".freeze); _buf << ((_slim_codeattributes8).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes9 = (data_background_repeat || attr('background-repeat')); if _slim_codeattributes9; if _slim_codeattributes9 == true; _buf << (" data-background-repeat".freeze); else; _buf << (" data-background-repeat=\"".freeze); _buf << ((_slim_codeattributes9).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes10 = (data_background_transition || attr('background-transition')); if _slim_codeattributes10; if _slim_codeattributes10 == true; _buf << (" data-background-transition".freeze); else; _buf << (" data-background-transition=\"".freeze); _buf << ((_slim_codeattributes10).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes11 = (data_background_position || attr('background-position')); if _slim_codeattributes11; if _slim_codeattributes11 == true; _buf << (" data-background-position".freeze); else; _buf << (" data-background-position=\"".freeze); _buf << ((_slim_codeattributes11).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes12 = (attr "background-iframe"); if _slim_codeattributes12; if _slim_codeattributes12 == true; _buf << (" data-background-iframe".freeze); else; _buf << (" data-background-iframe=\"".freeze); _buf << ((_slim_codeattributes12).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes13 = data_background_video; if _slim_codeattributes13; if _slim_codeattributes13 == true; _buf << (" data-background-video".freeze); else; _buf << (" data-background-video=\"".freeze); _buf << ((_slim_codeattributes13).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes14 = ((attr? 'background-video-loop') || (option? 'loop')); if _slim_codeattributes14; if _slim_codeattributes14 == true; _buf << (" data-background-video-loop".freeze); else; _buf << (" data-background-video-loop=\"".freeze); _buf << ((_slim_codeattributes14).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes15 = ((attr? 'background-video-muted') || (option? 'muted')); if _slim_codeattributes15; if _slim_codeattributes15 == true; _buf << (" data-background-video-muted".freeze); else; _buf << (" data-background-video-muted=\"".freeze); _buf << ((_slim_codeattributes15).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes16 = (attr "background-opacity"); if _slim_codeattributes16; if _slim_codeattributes16 == true; _buf << (" data-background-opacity".freeze); else; _buf << (" data-background-opacity=\"".freeze); _buf << ((_slim_codeattributes16).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes17 = (attr "autoslide"); if _slim_codeattributes17; if _slim_codeattributes17 == true; _buf << (" data-autoslide".freeze); else; _buf << (" data-autoslide=\"".freeze); _buf << ((_slim_codeattributes17).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes18 = (attr 'state'); if _slim_codeattributes18; if _slim_codeattributes18 == true; _buf << (" data-state".freeze); else; _buf << (" data-state=\"".freeze); _buf << ((_slim_codeattributes18).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes19 = ((attr? 'auto-animate') || (option? 'auto-animate')); if _slim_codeattributes19; if _slim_codeattributes19 == true; _buf << (" data-auto-animate".freeze); else; _buf << (" data-auto-animate=\"".freeze); _buf << ((_slim_codeattributes19).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes20 = ((attr 'auto-animate-easing') || (option? 'auto-animate-easing')); if _slim_codeattributes20; if _slim_codeattributes20 == true; _buf << (" data-auto-animate-easing".freeze); else; _buf << (" data-auto-animate-easing=\"".freeze); _buf << ((_slim_codeattributes20).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes21 = ((attr 'auto-animate-unmatched') || (option? 'auto-animate-unmatched')); if _slim_codeattributes21; if _slim_codeattributes21 == true; _buf << (" data-auto-animate-unmatched".freeze); else; _buf << (" data-auto-animate-unmatched=\"".freeze); _buf << ((_slim_codeattributes21).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes22 = ((attr 'auto-animate-duration') || (option? 'auto-animate-duration')); if _slim_codeattributes22; if _slim_codeattributes22 == true; _buf << (" data-auto-animate-duration".freeze); else; _buf << (" data-auto-animate-duration=\"".freeze); _buf << ((_slim_codeattributes22).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes23 = (attr 'auto-animate-id'); if _slim_codeattributes23; if _slim_codeattributes23 == true; _buf << (" data-auto-animate-id".freeze); else; _buf << (" data-auto-animate-id=\"".freeze); _buf << ((_slim_codeattributes23).to_s); _buf << ("\"".freeze); end; end; _slim_codeattributes24 = ((attr? 'auto-animate-restart') || (option? 'auto-animate-restart')); if _slim_codeattributes24; if _slim_codeattributes24 == true; _buf << (" data-auto-animate-restart".freeze); else; _buf << (" data-auto-animate-restart=\"".freeze); _buf << ((_slim_codeattributes24).to_s); _buf << ("\"".freeze); end; end; _buf << (">".freeze); 
+      ; unless hide_title; 
+      ; _buf << ("<h2>".freeze); _buf << ((section_title).to_s); 
+      ; _buf << ("</h2>".freeze); end; if parent_section_with_vertical_slides; 
+      ; unless (_blocks = blocks - vertical_slides).empty?; 
+      ; _buf << ("<div class=\"slide-content\">".freeze); 
+      ; _blocks.each do |block|; 
+      ; _buf << ((block.convert).to_s); 
+      ; end; _buf << ("</div>".freeze); end; yield_content :footnotes; 
+      ; 
+      ; else; 
+      ; unless (_content = content.chomp).empty?; 
+      ; _buf << ("<div class=\"slide-content\">".freeze); 
+      ; _buf << ((_content).to_s); 
+      ; _buf << ("</div>".freeze); end; yield_content :footnotes; 
+      ; 
+      ; end; clear_slide_footnotes; 
+      ; 
+      ; _buf << ("</section>".freeze); 
+      ; 
+      ; end; if parent_section_with_vertical_slides; 
+      ; _buf << ("<section>".freeze); 
+      ; yield_content :section; 
+      ; vertical_slides.each do |subsection|; 
+      ; _buf << ((subsection.convert).to_s); 
+      ; 
+      ; end; _buf << ("</section>".freeze); 
+      ; else; 
+      ; if @level >= 3; 
+      ; 
+      ; _slim_htag_filter1 = ((@level)).to_s; _buf << ("<h".freeze); _buf << ((_slim_htag_filter1).to_s); _buf << (">".freeze); _buf << ((title).to_s); 
+      ; _buf << ("</h".freeze); _buf << ((_slim_htag_filter1).to_s); _buf << (">".freeze); _buf << ((content.chomp).to_s); 
+      ; else; 
+      ; yield_content :section; 
+      ; end; end; _buf
     end
   end
   #------------------ End of generated transformation methods ------------------#
