@@ -4,8 +4,8 @@
   "description": "A reveal.js converter for Asciidoctor.js. Write your slides in AsciiDoc!",
   "main": "dist/main.js",
   "engines": {
-    "node": ">=8.11",
-    "npm": ">=5.0.0"
+    "node": ">=16",
+    "npm": ">=8.0.0"
   },
   "bin": {
     "asciidoctor-revealjs": "npm/asciidoctor-revealjs"
