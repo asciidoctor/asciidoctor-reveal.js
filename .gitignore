@@ -28,3 +28,5 @@ build/
 test/doctest/source-coderay.html
 # - pygments is unsupported on JRuby
 test/doctest/source-pygments.html
+
+/public/
