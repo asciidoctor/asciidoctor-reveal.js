@@ -413,3 +413,65 @@ ul.byline {
 ul.byline li + li {
   margin-top: 0.25em;
 }
+
+ul.square {
+  list-style-type: square;
+}
+
+ul.circle {
+  list-style-type: circle;
+}
+
+ul.disc {
+  list-style-type: disc;
+}
+
+ol.arabic {
+  list-style-type: decimal;
+}
+
+ol.decimal {
+  list-style-type: decimal-leading-zero;
+}
+
+ol.loweralpha {
+  list-style-type: lower-alpha;
+}
+
+ol.upperalpha {
+  list-style-type: upper-alpha;
+}
+
+ol.lowerroman {
+  list-style-type: lower-roman;
+}
+
+ol.upperroman {
+  list-style-type: upper-roman;
+}
+
+ol.lowergreek {
+  list-style-type: lower-greek;
+}
+
+ul.checklist,
+ul.none,
+ol.none,
+ul.no-bullet,
+ol.no-bullet,
+ol.unnumbered,
+ul.unstyled,
+ol.unstyled {
+  list-style-type: none;
+}
+
+ul.no-bullet,
+ol.no-bullet,
+ol.unnumbered {
+  margin-left: 0.625em;
+}
+
+ul.unstyled,
+ol.unstyled {
+  margin-left: 0;
+}
