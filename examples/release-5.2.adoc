@@ -1,0 +1,35 @@
+= Asciidoctor reveal.js 5.2
+//:stem:
+:source-highlighter: highlight.js
+:highlightjs-theme: a11y-dark.css
+:highlightjs-languages: asciidoc
+:icons: font
+:imagesdir: images/
+// reveal.js config
+:customcss: release-5.1.css
+:revealjs_theme: moon
+:revealjs_hash: true
+:revealjs_width: 1080
+
+== New Features icon:rocket[set=fas]
+
+== Iterating through callouts
+[source, javascript]
+----
+let a = 2; <1>
+let b = 3; <2>
+console.log(a+b); <3>
+----
+[%step]
+<1> It is now possible to iterate through callout lists...
+<2> using the `%step` attribute...
+<3> to explain code more easily !
+
+[transition=fade,transition-speed=slow]
+== Learn More!
+
+* https://github.com/asciidoctor/asciidoctor-reveal.js/[Asciidoctor reveal.js]
+* https://revealjs.com[reveal.js]
+* https://github.com/asciidoctor/asciidoctor/[Asciidoctor]
+* https://asciidoc.org/[What is AsciiDoc?]
+* https://github.com/asciidoctor/asciidoctor-reveal.js/raw/master/examples/release-5.1.adoc[Source of this presentation (AsciiDoc)]

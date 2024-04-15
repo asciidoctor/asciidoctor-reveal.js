@@ -153,6 +153,7 @@ namespace :examples do
     FileUtils.cp 'examples/a11y-dark.css', "#{PUBLIC_DIR}/a11y-dark.css"
     FileUtils.cp 'examples/release-5.1.html', "#{PUBLIC_DIR}/release-5.1.html"
     FileUtils.cp 'examples/release-5.1.css', "#{PUBLIC_DIR}/release-5.1.css"
+    FileUtils.cp 'examples/release-5.2.html', "#{PUBLIC_DIR}/release-5.2.html"
   end
 end
 
