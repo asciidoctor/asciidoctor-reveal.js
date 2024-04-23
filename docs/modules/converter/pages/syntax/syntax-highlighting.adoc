@@ -11,6 +11,13 @@ You can activate Highlight.js syntax highlighting (disabled by default) by setti
 :source-highlighter: highlight.js
 ----
 
+[IMPORTANT]
+====
+The first empty line in the document marks the end of the header.
+In other words, if you declare the `source-highlighter` attribute after an empty line it won't activate syntax highlighting.
+
+Reference: xref:asciidoc:document:header.adoc[]
+====
 [NOTE]
 ====
 By default, we are using a prebuilt version of Highlight.js with 34 commonly used languages hosted on {url-cdnjs}[cdnjs].
