@@ -13,6 +13,10 @@ You can activate Highlight.js syntax highlighting (disabled by default) by setti
 
 [NOTE]
 ====
+There can be no blank lines between the title and the `source-highlighter` attribute. If you insert a blank line, the source highlighter will be ignored.
+
+[NOTE]
+====
 By default, we are using a prebuilt version of Highlight.js with 34 commonly used languages hosted on {url-cdnjs}[cdnjs].
 You can load additional languages using the `:highlightjs-languages:` attribute:
 
