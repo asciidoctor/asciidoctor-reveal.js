@@ -25,6 +25,20 @@ console.log(a+b); <3>
 <2> using the `%step` attribute...
 <3> to explain code more easily !
 
+== Synchronising step-by-step syntax highlighting
+[.fragment, java, highlight="1|2|3", step=0]
+----
+Optional<String> foo();
+Optional<String> bar();
+Optional<String> foobar();
+----
+[.fragment, data-fragment-index=0]
+step-by-step syntax highlighting
+[.fragment, data-fragment-index=1]
+In combination with data-fragment-index
+[.fragment, data-fragment-index=2]
+Allow synchronized fragment display
+
 [transition=fade,transition-speed=slow]
 == Learn More!
 

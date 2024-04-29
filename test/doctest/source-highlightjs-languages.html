@@ -409,12 +409,18 @@ B = gauss_filter_3_3(A);</code></pre>
           var highlightSteps = RevealHighlight.deserializeHighlightSteps( block.getAttribute( 'data-line-numbers' ) );
           if( highlightSteps.length > 1 ) {
 
+            // When rendered with asciidoc, data-fragment index if it exists lies on the listing block element, so we have to lookup
             // If the original code block has a fragment-index,
             // each clone should follow in an incremental sequence
-            var fragmentIndex = parseInt( block.getAttribute( 'data-fragment-index' ), 10 );
+            var preCodeWrapper = block.parentElement;
+            var divContent = preCodeWrapper.parentElement;
+            var listingBlock = divContent.parentElement;
+            var fragmentIndex = parseInt( listingBlock.getAttribute( 'data-fragment-index' ), 10 );
 
             if( typeof fragmentIndex !== 'number' || isNaN( fragmentIndex ) ) {
               fragmentIndex = null;
+            } else {
+              fragmentIndex += 1;
             }
 
             // Generate fragments for all steps except the original block
