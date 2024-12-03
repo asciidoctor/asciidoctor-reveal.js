@@ -5,6 +5,17 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## master (unreleased)
 
+## 5.2 (2024-02-12)
+
+### Enhancements
+
+  * Iterating through callouts
+  * Upgrade to pkg 5.8.1
+
+### Bug Fixes
+
+  * Fix data-fragment-index on code block (#532)
+
 ## 5.1.0 (2023-12-12)
 
 ### Enhancements
@@ -20,7 +31,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ### Upgrade considerations
 
- * Plugin `marked` has been removed in reveal.js 4.0.0 and plugin `markdown` has been disabled. 
+ * Plugin `marked` has been removed in reveal.js 4.0.0 and plugin `markdown` has been disabled.
    As a result, the `revealjs_plugin_markdown` and `revealjs_plugin_marked` attributes have no effect anymore.
  * `revealjs_plugins` and `revealjs_plugins_configuration` are replaced by [Docinfo files](https://docs.asciidoctor.org/asciidoctor/latest/docinfo/).
 
@@ -101,7 +112,7 @@ _presentation-docinfo-footer.html_
  * Upgrade development dependencies
    * Bump `path-parse` from 1.0.6 to 1.0.7 in /test/js-babel
    * Bump `path-parse` from 1.0.6 to 1.0.7
-   * Bump `glob-parent` from 5.1.0 to 5.1.2 
+   * Bump `glob-parent` from 5.1.0 to 5.1.2
    * Bump `lodash` from 4.17.19 to 4.17.21 in /test/js-babel
    * Bump `y18n` from 4.0.0 to 4.0.1
  * Drop `thread_safe` and `concurrent-ruby` dependencies
