@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake', '~> 13.0.0'
   # Overriden in Gemfile
   #s.add_development_dependency 'asciidoctor-doctest', '= 2.0.0.beta.7'
-  s.add_development_dependency 'minitest', '~> 5.14'
+  s.add_development_dependency 'minitest', [ '~> 5.24.0', '< 5.25']
   if RUBY_ENGINE != 'jruby'
     s.add_development_dependency 'pry', '~> 0.12.0'
     s.add_development_dependency 'irb'
