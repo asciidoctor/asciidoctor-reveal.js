@@ -85,3 +85,16 @@ but in [.step.highlight-red]#rising every time we fall#.
 . [.step]#Protons#
 . [.step]#Electrons#
 . [.step]#Neutrons#
+
+== On a code callout list
+
+[source, html]
+----
+<b>complex code</b> <!--1-->
+<b>more complex code</b> <!--2-->
+<b>most complex code</b> <!--3-->
+----
+[%step]
+<1> complex code needs a callout
+<2> as much as a more complex code
+<3> but less than the most complex code

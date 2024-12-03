@@ -431,9 +431,9 @@ Reach out to our Netlify integration contact to make sure that deployed branches
 
 === Integration Contact
 
-Main Contact: {url-gh-mogztter}[@Mogztter^]
+Main Contact: {url-gh-ggrosetie}[@ggrossetie^]
 
 Also, in order to stay with a free plan, only the following people have control over our Netlify integration:
-{url-gh-mogztter}[@Mogztter^],
+{url-gh-ggrossetie}[@ggrossetie^],
 {url-gh-mojavelinux}[@mojavelinux^] and
 {url-gh-graphitefriction}[@graphitefriction^].

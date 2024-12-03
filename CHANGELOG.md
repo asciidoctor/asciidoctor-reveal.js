@@ -5,6 +5,19 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## master (unreleased)
 
+## 5.1.0 (2023-12-12)
+
+### Enhancements
+
+ * Upgrade to reveal.js 4.5.0
+
+### Bug Fixes
+
+ * Fix a compatibility issue between Opal and Asciidoctor.js 3.x by upgrading Opal to 1.7.3
+ * Fix a compatibility issue with `asciidoctor-chart` by upgrading `asciidoctor-templates-compiler` to 0.7.0
+
+## 5.0.1 (2023-06-24)
+
 ### Upgrade considerations
 
  * Plugin `marked` has been removed in reveal.js 4.0.0 and plugin `markdown` has been disabled. 

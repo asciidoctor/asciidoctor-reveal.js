@@ -1,4 +1,4 @@
-= html_tag('div', { :id => @id, :class => ['colist', @style, role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes)))
+= html_tag('div', { :id => @id, :class => ['colist', @style, role] }.merge(data_attrs(@attributes)))
   - if title?
     .title=title
   - if @document.attr? :icons
@@ -6,7 +6,7 @@
     table
       - items.each_with_index do |item, i|
         - num = i + 1
-        tr
+        tr class=('fragment' if (option? :step) || (has_role? 'step') || (attr? 'step'))
           td
             - if font_icons
               i.conum data-value=num
@@ -17,4 +17,5 @@
   - else
     ol
       - items.each do |item|
-        li: p=item.text
+        li class=('fragment' if (option? :step) || (has_role? 'step') || (attr? 'step'))
+          p=item.text
