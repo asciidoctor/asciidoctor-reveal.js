@@ -368,11 +368,14 @@ In addition, you can submit pull requests to downstream project:
 
 [%interactive]
 * [ ] submit a pull request downstream to update Asciidoctor reveal.js version in the Asciidoctor Docker Container
-** modify the `Dockerfile`, `Makefile` and `README.adoc` in: https://github.com/asciidoctor/docker-asciidoctor
+** modify the `Dockerfile`, `tests/asciidoctor.bats`, `README.md` and `README.adoc` in: https://github.com/asciidoctor/docker-asciidoctor
 * [ ] submit a pull request downstream to update AsciidoctorJ reveal.js version
-** modify `gradle.properties`, `asciidoctorj-revealjs/gradle.properties` and `asciidoctorj-revealjs/build.gradle` in: https://github.com/asciidoctor/asciidoctorj-reveal.js
+** modify `gradle.properties` and `asciidoctorj-revealjs/gradle.properties`. if `reveal.js`version has been updated, +
+also amend `WhenBackendIsRevealJs.java` in both `tests` and `itests` folders and `README.adoc` in: https://github.com/asciidoctor/asciidoctorj-reveal.js
 
 === Prepare next version
+
+This step is optional and should only be done if needed.
 
 . Run the following command and follow the instructions:
 
@@ -380,12 +383,17 @@ In addition, you can submit pull requests to downstream project:
 
 === Maintenance branch
 
-You can create a maintenance branch from a tag.
+You can (not must) create a maintenance branch from a tag.
 Please use the following name convention: `\{major}.\{minor}.x` (e.g., `4.1.x`).
 
 [%interactive]
 * [ ] push the maintenance branch: `git push origin 4.1.x`
 * [ ] don't forget to update Antora playbook to add this branch: https://github.com/asciidoctor/docs.asciidoctor.org/edit/main/antora-playbook.yml
+
+=== New major version
+
+In case of a new major version, you must follow the steps described for a <<_maintenance_branch,Maintenance branch>>.
+
 
 == Ruby and asciidoctor-doctest tests
 
