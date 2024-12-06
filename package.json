@@ -49,7 +49,7 @@
   "homepage": "https://github.com/asciidoctor/asciidoctor-reveal.js",
   "dependencies": {
     "@asciidoctor/cli": "~4.0",
-    "reveal.js": "4.5.0"
+    "reveal.js": "5.1.0"
   },
   "devDependencies": {
     "@asciidoctor/core": "~3.0",
@@ -58,6 +58,6 @@
     "pkg": "5.8.1"
   },
   "volta": {
-    "node": "16.20.1"
+    "node": "18.20.5"
   }
 }
