@@ -367,25 +367,28 @@ has been completed:
 In addition, you can submit pull requests to downstream project:
 
 [%interactive]
-* [ ] submit a pull request downstream to update Asciidoctor reveal.js version in the Asciidoctor Docker Container
-** modify the `Dockerfile`, `Makefile` and `README.adoc` in: https://github.com/asciidoctor/docker-asciidoctor
+* [ ] Asciidoctor reveal.js version in the Asciidoctor Docker Container is normally updated by the update cli bot. If not, submit a PR to update it.
+** modify the `Dockerfile`, `test/asciidoctor.baats` and `README.adoc` in: https://github.com/asciidoctor/docker-asciidoctor
 * [ ] submit a pull request downstream to update AsciidoctorJ reveal.js version
 ** modify `gradle.properties`, `asciidoctorj-revealjs/gradle.properties` and `asciidoctorj-revealjs/build.gradle` in: https://github.com/asciidoctor/asciidoctorj-reveal.js
 
-=== Prepare next version
+==== Prepare next version
 
 . Run the following command and follow the instructions:
 
  $ npm run release:next
 
-=== Maintenance branch
+==== Maintenance branch
 
-You can create a maintenance branch from a tag.
+Create a maintenance branch from a tag.
 Please use the following name convention: `\{major}.\{minor}.x` (e.g., `4.1.x`).
+
+We try to keep only one maintenance branch per major version.
 
 [%interactive]
 * [ ] push the maintenance branch: `git push origin 4.1.x`
-* [ ] don't forget to update Antora playbook to add this branch: https://github.com/asciidoctor/docs.asciidoctor.org/edit/main/antora-playbook.yml
+* [ ] delete the previous maintenance branch : `git branch -d 4.0.X && git push origin --delete 4.0.X`
+* [ ] don't forget to update Antora playbook to fix branch: https://github.com/asciidoctor/docs.asciidoctor.org/edit/main/antora-playbook.yml
 
 == Ruby and asciidoctor-doctest tests
 
@@ -431,7 +434,7 @@ Reach out to our Netlify integration contact to make sure that deployed branches
 
 === Integration Contact
 
-Main Contact: {url-gh-ggrosetie}[@ggrossetie^]
+Main Contact: {url-gh-ggrossetie}[@ggrossetie^]
 
 Also, in order to stay with a free plan, only the following people have control over our Netlify integration:
 {url-gh-ggrossetie}[@ggrossetie^],
