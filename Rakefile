@@ -3,33 +3,15 @@
 require 'asciidoctor'
 require 'asciidoctor/doctest'
 require 'colorize'
-require 'tilt'
 require 'rake/testtask'
 
-CONVERTER_FILE = 'lib/asciidoctor-revealjs/converter.rb'
 JS_FILE = 'build/asciidoctor-reveal.js'
 DIST_FILE = 'dist/main.js'
-TEMPLATES_DIR = 'templates'
 PUBLIC_DIR = 'public'
 
-file CONVERTER_FILE => FileList["#{TEMPLATES_DIR}/*"] do
-  build_converter :fast
-end
-
 namespace :build do
-  desc 'Compile Slim templates and generate converter.rb'
-  task :converter => 'clean' do
-    # NOTE: use :pretty if you want to debug the generated code
-    build_converter :fast
-  end
-
-  desc 'Compile Slim templates and generate converter.rb for Opal'
-  task 'converter:opal' => 'clean' do
-    build_converter :opal
-  end
-
-  desc "Transcompile to JavaScript and generate #{JS_FILE}"
-  task :js => 'converter:opal' do
+  desc "Transcompile the converter to JavaScript and generate #{JS_FILE}"
+  task :js do
     require 'opal'
 
     builder = Opal::Builder.new(compiler_options: {
@@ -50,45 +32,15 @@ namespace :build do
   end
 end
 
-task :build => 'build:converter'
+task :build => 'build:js'
 
 task :clean do
-  rm_rf CONVERTER_FILE
   rm_rf PUBLIC_DIR
 end
 
-def build_converter(mode = :pretty)
-  #require 'asciidoctor-templates-compiler'
-  require_relative 'lib/asciidoctor-templates-compiler'
-  require 'slim-htag'
-
-  generator = if mode == :opal
-    Temple::Generators::ArrayBuffer.new(freeze_static: false)
-  else
-    Temple::Generators::StringBuffer
-  end
-
-  File.open(CONVERTER_FILE, 'w') do |file|
-    puts "Generating #{file.path} (mode: #{mode})."
-
-    Asciidoctor::TemplatesCompiler::RevealjsSlim.compile_converter(
-      templates_dir: TEMPLATES_DIR,
-      class_name: 'Asciidoctor::Revealjs::Converter',
-      register_for: ['revealjs', 'reveal.js'],
-      backend_info: {
-        basebackend: 'html',
-        outfilesuffix: '.html',
-        filetype: 'html',
-        supports_templates: true
-      },
-      delegate_backend: 'html5',
-      engine_opts: {
-        generator: generator,
-      },
-      pretty: (mode == :pretty),
-      output: file
-    )
-  end
+# Loads the converter so its backend is registered with Asciidoctor.
+task 'load-converter' do
+  require_relative 'lib/asciidoctor-revealjs'
 end
 
 DocTest::RakeTasks.new do |t|
@@ -103,20 +55,10 @@ Rake::TestTask.new(:test) do |t|
   t.warning = false
 end
 
-task 'prepare-converter' do
-  # Run as an external process to ensure that it will not affect tests
-  # environment with extra loaded modules (especially slim).
-  `bundle exec rake #{CONVERTER_FILE}`
-
-  require_relative 'lib/asciidoctor-revealjs'
-end
-
 namespace :examples do
   desc 'Converts all the test slides into fully working examples that you can look in a browser'
   # converted slides will be put in examples/ directory
-  task :convert => 'build:converter' do
-    require 'slim-htag'
-    require_relative 'lib/asciidoctor-revealjs'
+  task :convert => 'load-converter' do
     Dir.glob('examples/*.adoc') do |_file|
       print "Converting file #{_file}... "
       out = Asciidoctor.convert_file _file,
@@ -158,7 +100,7 @@ namespace :examples do
 end
 
 task 'test' => 'doctest'
-task 'doctest:test' => 'prepare-converter'
-task 'doctest:generate' => 'prepare-converter'
+task 'doctest:test' => 'load-converter'
+task 'doctest:generate' => 'load-converter'
 # When no task specified, run test.
 task :default => :test

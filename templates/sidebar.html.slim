@@ -1,8 +1,0 @@
-- if (has_role? 'aside') or (has_role? 'speaker') or (has_role? 'notes')
-  include notes.html.slim
-- else
-  = html_tag('div', { :id => @id, :class => ['sidebarblock', role, ('fragment' if (option? :step) || (has_role? 'step') || (attr? 'step'))] }.merge(data_attrs(@attributes)))
-    .content
-      - if title?
-        .title=title
-      =content

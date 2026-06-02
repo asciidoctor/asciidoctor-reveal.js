@@ -17,14 +17,12 @@ Gem::Specification.new do |s|
     if (result = Open3.popen3('git ls-files -z') {|_, out| out.read }.split %(\0)).empty?
       Dir['**/*']
     else
-      # converter.rb is built locally before packaging but ignored by git. Adding manually.
-      result + ['lib/asciidoctor-revealjs/converter.rb']
+      result
     end
   rescue
     Dir['**/*']
   end
-  # TODO should we still package template files now that they are built into ruby?
-  s.files = files.grep %r/^(?:(?:examples|lib|templates)\/.+|Gemfile|Rakefile|(?:CHANGELOG|LICENSE|README)\.adoc|#{s.name}\.gemspec)$/
+  s.files = files.grep %r/^(?:(?:examples|lib)\/.+|Gemfile|Rakefile|(?:CHANGELOG|LICENSE|README)\.adoc|#{s.name}\.gemspec)$/
 
   s.executables = ['asciidoctor-revealjs']
   s.extra_rdoc_files = Dir['README.adoc', 'LICENSE.adoc', 'HACKING.adoc']
@@ -43,9 +41,9 @@ Gem::Specification.new do |s|
     s.add_development_dependency 'pygments.rb'
   end
   s.add_development_dependency 'colorize'
-  s.add_development_dependency 'asciidoctor-templates-compiler', '~> 0.7.0'
+  # slim is only used by the custom-templates test, which checks that users can
+  # still override individual templates with their own Slim files.
   s.add_development_dependency 'slim', '~> 3.0.6'
-  s.add_development_dependency 'slim-htag', '~> 0.1.0'
   s.add_development_dependency 'rouge'
   # Overriden in Gemfile and Gemfile.upstream for now
   #s.add_development_dependency 'opal', '~> 0.11.1'

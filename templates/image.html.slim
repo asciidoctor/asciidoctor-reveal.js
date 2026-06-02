@@ -1,6 +1,0 @@
-- unless attributes[1] == 'background' || attributes[1] == 'canvas'
-  - inline_style = [("text-align: #{attr :align}" if attr? :align),("float: #{attr :float}" if attr? :float)].compact.join('; ')
-  = html_tag('div', { :id => @id, :class => ['imageblock', role, ('fragment' if (option? :step) || (attr? 'step'))], :style => inline_style }.merge(data_attrs(@attributes)))
-    = convert_image
-  - if title?
-    .title=captioned_title
