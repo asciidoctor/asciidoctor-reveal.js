@@ -1,11 +1,8 @@
+# frozen_string_literal: true
+
 # This converter is written by hand in pure Ruby (no Slim templates).
 
-unless RUBY_ENGINE == 'opal'
-  # This converter borrows from the Bespoke converter
-  # https://github.com/asciidoctor/asciidoctor-bespoke
-  require 'asciidoctor'
-end
-
+require 'asciidoctor'
 require 'json'
 
 module Asciidoctor; module Revealjs; end end
@@ -526,7 +523,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       buf << '<table>'
       node.items.each_with_index do |item, i|
         num = i + 1
-        cell = '<td>'
+        cell = +'<td>'
         if font_icons
           cell << %(<i#{Helpers.attributes(class: 'conum', 'data-value' => num)}></i>)
           cell << %(<b>#{num}</b>)
@@ -650,7 +647,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     return '' if node.attributes[1] == 'background' || node.attributes[1] == 'canvas'
     inline_style = [("text-align: #{node.attr :align}" if node.attr? :align), ("float: #{node.attr :float}" if node.attr? :float)].compact.join('; ')
     attrs = Helpers.attributes({ :id => node.id, :class => ['imageblock', node.role, ('fragment' if Helpers.step?(node))], :style => inline_style }.merge(Helpers.data_attrs(node.attributes)))
-    buf = %(<div#{attrs}>#{Helpers.image_content(node)}</div>)
+    buf = +%(<div#{attrs}>#{Helpers.image_content(node)}</div>)
     buf << %(<div class="title">#{node.captioned_title}</div>) if node.title?
     buf
   end
@@ -806,7 +803,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     buf << %(<div class="title">#{node.title}</div>) if node.title?
     inner = +''
     node.items.each do |item|
-      li = %(<p>#{item.text}</p>)
+      li = +%(<p>#{item.text}</p>)
       li << item.content.to_s if item.blocks?
       inner << %(<li#{Helpers.attributes(class: ('fragment' if Helpers.step_or_role?(node)))}>#{li}</li>)
     end
@@ -844,7 +841,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     return '' if node.sections.empty?
     toclevels = (opts[:toclevels] if opts) || (node.document.attr 'toclevels', Helpers::DEFAULT_TOCLEVELS).to_i
     slevel = Helpers.section_level node.sections.first
-    buf = %(<ol class="sectlevel#{slevel}">)
+    buf = +%(<ol class="sectlevel#{slevel}">)
     node.sections.each do |sec|
       buf << %(<li><a href="##{sec.id}">#{Helpers.section_title sec}</a>)
       if (sec.level < toclevels) && (child_toc = convert(sec, 'outline'))
@@ -1012,7 +1009,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       %(<aside class="notes">#{Helpers.resolve_content(node)}</aside>)
     else
       attrs = Helpers.attributes({ :id => node.id, :class => ['sidebarblock', node.role, ('fragment' if Helpers.step_or_role?(node))] }.merge(Helpers.data_attrs(node.attributes)))
-      buf = %(<div class="content">)
+      buf = +%(<div class="content">)
       buf << %(<div class="title">#{node.title}</div>) if node.title?
       buf << node.content.to_s
       buf << %(</div>)
@@ -1162,7 +1159,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     buf << %(<div class="title">#{node.title}</div>) if node.title?
     inner = +''
     node.items.each do |item|
-      li = '<p>'
+      li = +'<p>'
       if checklist && (item.attr? :checkbox)
         li << %(#{(item.attr? :checked) ? marker_checked : marker_unchecked}#{item.text})
       else
@@ -1264,11 +1261,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       buf
     end
 
-    if RUBY_ENGINE == 'opal' && JAVASCRIPT_PLATFORM == 'node'
-      revealjsdir = (node.attr :revealjsdir, 'node_modules/reveal.js')
-    else
-      revealjsdir = (node.attr :revealjsdir, 'reveal.js')
-    end
+    revealjsdir = (node.attr :revealjsdir, 'reveal.js')
     unless (asset_uri_scheme = (node.attr 'asset-uri-scheme', 'https')).empty?
       asset_uri_scheme = %(#{asset_uri_scheme}:)
     end

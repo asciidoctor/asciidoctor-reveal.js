@@ -51,11 +51,7 @@ module Asciidoctor
         end
 
         def docinfo location, doc, opts
-          if RUBY_ENGINE == 'opal' && JAVASCRIPT_PLATFORM == 'node'
-            revealjsdir = (doc.attr :revealjsdir, 'node_modules/reveal.js')
-          else
-            revealjsdir = (doc.attr :revealjsdir, 'reveal.js')
-          end
+          revealjsdir = (doc.attr :revealjsdir, 'reveal.js')
           if doc.attr? 'highlightjs-theme'
             theme_href = doc.attr 'highlightjs-theme'
           else

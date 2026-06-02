@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Builds the inline <script> that configures reveal.js for a converted
 # presentation: a small static fix-up script followed by the Reveal.initialize
 # call.
