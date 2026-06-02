@@ -340,21 +340,30 @@ You can get the list of all contributors using `git` (don't forget to replace `%
 . Make sure that the highlight plugin code embed in _lib/asciidoctor-revealjs/highlightjs.rb_ is up-to-date with the version of reveal.js
 . Do we need to do anything regarding our Opal dependency and Asciidoctor.js?
 See <<node-binary-compatibility,our section on the topic>>.
-. Run the following command to prepare the release (don't forget to replace `%version%` with an actual version):
-
- $ npm run release:prepare %version%
-
-. Push your changes (including the tag):
-
- $ git push origin master --tags
+. Make sure the changelog entry for the version you are about to release is committed and pushed to `master`.
 
 === Release
 
-The release process is automated and relies on GitHub Actions.
+The release is fully automated and triggered from GitHub Actions.
 We are using personal tokens to publish to rubygems.org and npmjs.com.
 
 The `RUBYGEMS_API_KEY` and `NPM_TOKEN` secrets are configured on GitHub.
 See the `.github/workflows/release.yml` file for details.
+
+To trigger a release:
+
+. Go to the https://github.com/asciidoctor/asciidoctor-reveal.js/actions/workflows/release.yml[Release workflow] on GitHub Actions.
+. Click *Run workflow*, keep the `master` branch selected, and enter the version to release (e.g., `5.3.0` or `5.3.0-beta.1`).
+. Click *Run workflow*.
+
+The workflow bumps the version in _package.json_ and _lib/asciidoctor-revealjs/version.rb_, builds the project and runs the tests.
+Only if the tests pass does it commit, tag (`v%version%`) and push to `master`, then publish to rubygems.org and npmjs.com and create the GitHub release with the platform binaries.
+
+[NOTE]
+====
+The `master` branch must allow the `github-actions[bot]` to push the release commits and tag.
+If branch protection rules reject the push, the release will fail at the *Push release commits and tag* step.
+====
 
 Once the https://github.com/asciidoctor/asciidoctor-reveal.js/actions?query=workflow%3Arelease[release workflow]
 has been completed:
@@ -375,9 +384,12 @@ also amend `WhenBackendIsRevealJs.java` in both `tests` and `itests` folders and
 
 === Prepare next version
 
-This step is optional and should only be done if needed.
+This step is optional and should only be done after a *final* release (not after a pre-release such as `5.3.0-beta.1`).
 
-. Run the following command and follow the instructions:
+Trigger the https://github.com/asciidoctor/asciidoctor-reveal.js/actions/workflows/post-release.yml[Begin next development version workflow] from GitHub Actions.
+It bumps the minor version to the next `-dev` version (e.g., `5.3.0` -> `5.4.0-dev`) in _package.json_, _lib/asciidoctor-revealjs/version.rb_ and _docs/antora.yml_, then commits and pushes to `master`.
+
+Alternatively, you can run it locally and follow the printed instructions:
 
  $ npm run release:next
 
