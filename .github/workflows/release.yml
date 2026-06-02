@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           ref: master
           fetch-depth: 0
@@ -30,7 +30,7 @@ jobs:
         with:
           ruby-version: '2.7'
       - name: Install Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
           node-version: 16
       - name: Configure Nokogiri installation (Linux)
@@ -62,7 +62,7 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           ref: refs/tags/v${{ inputs.version }}
       - uses: ruby/setup-ruby@v1
@@ -92,10 +92,10 @@ jobs:
     needs: publish_ruby
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
         with:
           ref: refs/tags/v${{ inputs.version }}
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v6
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
