@@ -42,3 +42,13 @@ This is step two:
 
  $ echo 'hello world'
 --
+
+== Fragments on tables
+
+[%rowSteps]
+|===
+|Fruit |Color
+
+|Apple |red
+|Banana |yellow
+|===
