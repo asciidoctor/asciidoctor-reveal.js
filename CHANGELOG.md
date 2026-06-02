@@ -5,6 +5,10 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## master (unreleased)
 
+### Bug Fixes
+
+  * Fix `NoSuchMethodError` (`RubyFixnum.newFixnum`) on JRuby 9.4 by upgrading `asciidoctor-doctest` to 2.0.0 (pulling Nokogiri 1.14 instead of 1.13)
+
 ### Build
 
   * Automate the release process via GitHub Actions, triggered from the Actions UI with a version input
