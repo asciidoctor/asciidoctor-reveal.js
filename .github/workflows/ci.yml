@@ -16,7 +16,7 @@ jobs:
         ruby: ['2.7', '3.0']
         include:
           - os: ubuntu-22.04
-            ruby: truffleruby-22.3.1
+            ruby: truffleruby
           - os: ubuntu-22.04
             ruby: jruby-9.4.14.0
           - os: macos-latest

@@ -13,6 +13,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Replace the archived `actions/create-release` and `actions/upload-release-asset` actions with the GitHub CLI
   * Bump `actions/checkout` and `actions/setup-node` to their latest versions
   * Fix `NoSuchMethodError` (`RubyFixnum.newFixnum`) in the JRuby test job by bumping JRuby from 9.4.2.0 to 9.4.14.0
+  * Fix the TruffleRuby test job (psych 5.4.0 native build failure) by using the latest stable TruffleRuby instead of 22.3.1
   * Upgrade `asciidoctor-doctest` to the released 2.0.0 (and relax the `minitest` constraint to `~> 5.25`)
 
 ## 5.2.0 (2024-02-12)
