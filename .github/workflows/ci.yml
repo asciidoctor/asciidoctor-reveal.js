@@ -49,7 +49,9 @@ jobs:
       - name: Install dependencies
         run: bundle --jobs 3 --retry 3
       - name: Build
-        run: bundle exec rake build
+        run: |
+          bundle exec rubocop
+          bundle exec rake build
       - name: Run tests
         run: bundle exec rake test
       - name: Run examples:convert

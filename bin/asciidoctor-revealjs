@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-if File.file?(asciidoctor_revealjs = (File.expand_path '../../lib/asciidoctor-revealjs.rb', __FILE__))
+if File.file?(asciidoctor_revealjs = (File.expand_path '../lib/asciidoctor-revealjs.rb', __dir__))
   require asciidoctor_revealjs
 else
   require 'asciidoctor-revealjs'
@@ -9,15 +10,15 @@ require 'asciidoctor/cli'
 
 options = Asciidoctor::Cli::Options.new backend: 'revealjs'
 
-# FIXME (from asciidoctor-pdf) provide an API in Asciidoctor for sub-components to print version information
+# FIXME: (from asciidoctor-pdf) provide an API in Asciidoctor for sub-components to print version information
 unless ARGV != ['-v'] && (ARGV & ['-V', '--version']).empty?
   $stdout.write %(Asciidoctor reveal.js #{Asciidoctor::Revealjs::VERSION} using )
   options.print_version
   exit 0
 end
 
-# FIXME (from bespoke) This is a really bizarre API. Please make me simpler.
-if Integer === (result = options.parse! ARGV)
+# FIXME: (from bespoke) This is a really bizarre API. Please make me simpler.
+if (result = options.parse! ARGV).is_a?(Integer)
   exit result
 else
   invoker = Asciidoctor::Cli::Invoker.new options

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Asciidoctor
   module Revealjs
     module SyntaxHighlighter
@@ -11,7 +12,7 @@ module Asciidoctor
         # We are using unescaped HTML in source blocks for callout.
         HIGHLIGHT_JS_VERSION = '10.7.3'
 
-        def initialize *args
+        def initialize(*args)
           super
           @name = @pre_class = 'highlightjs'
         end
@@ -21,46 +22,48 @@ module Asciidoctor
         # we also support reveal.js step-by-step highlights.
         # The steps are split using the | character
         # For example, this method makes "1..3|6,7" into "1,2,3|6,7"
-        def _convert_highlight_to_revealjs node
-          node.attributes['highlight'].split('|').collect { |linenums|
+        def _convert_highlight_to_revealjs(node)
+          node.attributes['highlight'].split('|').collect do |linenums|
             node.resolve_lines_to_highlight(node.content, linenums).join(',')
-          }.join('|')
+          end.join('|')
         end
 
-        def format node, lang, opts
-          super node, lang, (opts.merge transform: proc { |pre, code|
+        def format(node, lang, opts)
+          super(node, lang, (opts.merge transform: proc { |pre, code|
             code['class'] = %(language-#{lang || 'none'} hljs)
             code['data-noescape'] = true
             if (id = node.attr('data-id'))
               pre['data-id'] = id
             end
-            if node.option?('trim')
-              code['data-trim'] = ''
-            end
+            code['data-trim'] = '' if node.option?('trim')
 
             if node.attributes.key?('highlight')
-              code['data-line-numbers'] = self._convert_highlight_to_revealjs(node)
+              code['data-line-numbers'] = _convert_highlight_to_revealjs(node)
             elsif node.attributes.key?('linenums')
               code['data-line-numbers'] = ''
             end
-          })
+          }))
         end
 
-        def docinfo? location
+        def docinfo?(location)
           location == :footer
         end
 
-        def docinfo location, doc, opts
+        def docinfo(_location, doc, opts)
           revealjsdir = (doc.attr :revealjsdir, 'reveal.js')
-          if doc.attr? 'highlightjs-theme'
-            theme_href = doc.attr 'highlightjs-theme'
-          else
-            theme_href = "#{revealjsdir}/plugin/highlight/monokai.css"
-          end
+          theme_href = if doc.attr? 'highlightjs-theme'
+                         doc.attr 'highlightjs-theme'
+                       else
+                         "#{revealjsdir}/plugin/highlight/monokai.css"
+                       end
           base_url = doc.attr 'highlightjsdir', %(#{opts[:cdn_base_url]}/highlight.js/#{HIGHLIGHT_JS_VERSION})
           %(<link rel="stylesheet" href="#{theme_href}"#{opts[:self_closing_tag_slash]}>
 <script src="#{base_url}/highlight.min.js"></script>
-#{(doc.attr? 'highlightjs-languages') ? ((doc.attr 'highlightjs-languages').split ',').map {|lang| %[<script src="#{base_url}/languages/#{lang.lstrip}.min.js"></script>\n] }.join : ''}
+#{if doc.attr?('highlightjs-languages')
+    ((doc.attr 'highlightjs-languages').split ',').map do |lang|
+      %(<script src="#{base_url}/languages/#{lang.lstrip}.min.js"></script>\n)
+    end.join
+  end}
 <script>
 #{HIGHLIGHT_PLUGIN_SOURCE}
 hljs.configure({
