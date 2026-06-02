@@ -243,4 +243,76 @@ module Asciidoctor; module Revealjs; module RevealJsOptions
   def script(node, revealjsdir)
     "#{BACKGROUND_COLOR_FIX}\n\n#{initialize_script(node, revealjsdir)}"
   end
+
+  # Static helper functions for the "stretch nested elements" workaround.
+  # No Ruby interpolation: kept as a verbatim JS string.
+  STRETCH_HELPERS = <<~JS.chomp
+    var dom = {};
+    dom.slides = document.querySelector('.reveal .slides');
+
+    function getRemainingHeight(element, slideElement, height) {
+      height = height || 0;
+      if (element) {
+        var newHeight, oldHeight = element.style.height;
+        // Change the .stretch element height to 0 in order find the height of all
+        // the other elements
+        element.style.height = '0px';
+        // In Overview mode, the parent (.slide) height is set of 700px.
+        // Restore it temporarily to its natural height.
+        slideElement.style.height = 'auto';
+        newHeight = height - slideElement.offsetHeight;
+        // Restore the old height, just in case
+        element.style.height = oldHeight + 'px';
+        // Clear the parent (.slide) height. .removeProperty works in IE9+
+        slideElement.style.removeProperty('height');
+        return newHeight;
+      }
+      return height;
+    }
+
+    function layoutSlideContents(width, height) {
+      // Handle sizing of elements with the 'stretch' class
+      toArray(dom.slides.querySelectorAll('section .stretch')).forEach(function (element) {
+        // Determine how much vertical space we can use
+        var limit = 5; // hard limit
+        var parent = element.parentNode;
+        while (parent.nodeName !== 'SECTION' && limit > 0) {
+          parent = parent.parentNode;
+          limit--;
+        }
+        if (limit === 0) {
+          // unable to find parent, aborting!
+          return;
+        }
+        var remainingHeight = getRemainingHeight(element, parent, height);
+        // Consider the aspect ratio of media elements
+        if (/(img|video)/gi.test(element.nodeName)) {
+          var nw = element.naturalWidth || element.videoWidth, nh = element.naturalHeight || element.videoHeight;
+          var es = Math.min(width / nw, remainingHeight / nh);
+          element.style.width = (nw * es) + 'px';
+          element.style.height = (nh * es) + 'px';
+        } else {
+          element.style.width = width + 'px';
+          element.style.height = remainingHeight + 'px';
+        }
+      });
+    }
+
+    function toArray(o) {
+      return Array.prototype.slice.call(o);
+    }
+  JS
+
+  # The <script> that works around the reveal.js limitation "Only direct
+  # descendants of a slide section can be stretched", wiring the static helpers
+  # to the relevant reveal.js events at the document's configured size.
+  # See https://github.com/hakimel/reveal.js/issues/2584
+  def stretch_nested_elements_script(node)
+    width = node.attr 'revealjs_width', 960
+    height = node.attr 'revealjs_height', 700
+    listeners = %w(slidechanged ready resize).map {|event|
+      "Reveal.addEventListener('#{event}', function () {\n  layoutSlideContents(#{width}, #{height})\n});"
+    }.join("\n")
+    "<script>#{STRETCH_HELPERS}\n\n#{listeners}</script>"
+  end
 end end end

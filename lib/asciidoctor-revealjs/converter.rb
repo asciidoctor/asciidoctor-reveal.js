@@ -374,82 +374,6 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       end
     end
     #--
-
-    # Generate the <script> block that works around the reveal.js limitation
-    # "Only direct descendants of a slide section can be stretched".
-    # See https://github.com/hakimel/reveal.js/issues/2584
-    # @param node [Asciidoctor::Document]
-    # @return [String]
-    def stretch_nested_elements_script(node)
-      width = node.attr 'revealjs_width', 960
-      height = node.attr 'revealjs_height', 700
-      %(<script>) + <<~JS.chomp + %(</script>)
-        var dom = {};
-        dom.slides = document.querySelector('.reveal .slides');
-
-        function getRemainingHeight(element, slideElement, height) {
-          height = height || 0;
-          if (element) {
-            var newHeight, oldHeight = element.style.height;
-            // Change the .stretch element height to 0 in order find the height of all
-            // the other elements
-            element.style.height = '0px';
-            // In Overview mode, the parent (.slide) height is set of 700px.
-            // Restore it temporarily to its natural height.
-            slideElement.style.height = 'auto';
-            newHeight = height - slideElement.offsetHeight;
-            // Restore the old height, just in case
-            element.style.height = oldHeight + 'px';
-            // Clear the parent (.slide) height. .removeProperty works in IE9+
-            slideElement.style.removeProperty('height');
-            return newHeight;
-          }
-          return height;
-        }
-
-        function layoutSlideContents(width, height) {
-          // Handle sizing of elements with the 'stretch' class
-          toArray(dom.slides.querySelectorAll('section .stretch')).forEach(function (element) {
-            // Determine how much vertical space we can use
-            var limit = 5; // hard limit
-            var parent = element.parentNode;
-            while (parent.nodeName !== 'SECTION' && limit > 0) {
-              parent = parent.parentNode;
-              limit--;
-            }
-            if (limit === 0) {
-              // unable to find parent, aborting!
-              return;
-            }
-            var remainingHeight = getRemainingHeight(element, parent, height);
-            // Consider the aspect ratio of media elements
-            if (/(img|video)/gi.test(element.nodeName)) {
-              var nw = element.naturalWidth || element.videoWidth, nh = element.naturalHeight || element.videoHeight;
-              var es = Math.min(width / nw, remainingHeight / nh);
-              element.style.width = (nw * es) + 'px';
-              element.style.height = (nh * es) + 'px';
-            } else {
-              element.style.width = width + 'px';
-              element.style.height = remainingHeight + 'px';
-            }
-          });
-        }
-
-        function toArray(o) {
-          return Array.prototype.slice.call(o);
-        }
-
-        Reveal.addEventListener('slidechanged', function () {
-          layoutSlideContents(#{width}, #{height})
-        });
-        Reveal.addEventListener('ready', function () {
-          layoutSlideContents(#{width}, #{height})
-        });
-        Reveal.addEventListener('resize', function () {
-          layoutSlideContents(#{width}, #{height})
-        });
-      JS
-    end
   end
 
   register_for "revealjs", "reveal.js"
@@ -1034,7 +958,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
   end
 
   def convert_stretch_nested_elements(node, opts = {})
-    Helpers.stretch_nested_elements_script(node)
+    Asciidoctor::Revealjs::RevealJsOptions.stretch_nested_elements_script(node)
   end
 
   def convert_table(node, opts = {})
@@ -1327,7 +1251,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     buf << %(<script>#{Asciidoctor::Revealjs::RevealJsOptions.script(node, revealjsdir)}</script>)
     # Workaround the "Only direct descendants of a slide section can be stretched" limitation in reveal.js
     # https://github.com/hakimel/reveal.js/issues/2584
-    buf << Helpers.stretch_nested_elements_script(node)
+    buf << Asciidoctor::Revealjs::RevealJsOptions.stretch_nested_elements_script(node)
 
     if syntax_hl && (syntax_hl.docinfo? :footer)
       buf << (syntax_hl.docinfo :footer, node, cdn_base_url: cdn_base, linkcss: linkcss, self_closing_tag_slash: '/').to_s
