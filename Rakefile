@@ -5,34 +5,7 @@ require 'asciidoctor/doctest'
 require 'colorize'
 require 'rake/testtask'
 
-JS_FILE = 'build/asciidoctor-reveal.js'
-DIST_FILE = 'dist/main.js'
 PUBLIC_DIR = 'public'
-
-namespace :build do
-  desc "Transcompile the converter to JavaScript and generate #{JS_FILE}"
-  task :js do
-    require 'opal'
-
-    builder = Opal::Builder.new(compiler_options: {
-      dynamic_require_severity: :error,
-    })
-    builder.append_paths 'lib'
-    builder.build 'asciidoctor-revealjs'
-
-    mkdir_p [File.dirname(JS_FILE), File.dirname(DIST_FILE)]
-    File.open(JS_FILE, 'w') do |file|
-      template = File.read('src/asciidoctor-revealjs.tmpl.js')
-      template['//OPAL-GENERATED-CODE//'] = builder.to_s
-      file << template
-    end
-    File.binwrite "#{JS_FILE}.map", builder.source_map
-
-    cp JS_FILE, DIST_FILE, :verbose => true
-  end
-end
-
-task :build => 'build:js'
 
 task :clean do
   rm_rf PUBLIC_DIR
