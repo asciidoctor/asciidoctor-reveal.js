@@ -5,7 +5,15 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## master (unreleased)
 
-## 5.2 (2024-02-12)
+### Build
+
+  * Automate the release process via GitHub Actions, triggered from the Actions UI with a version input
+  * Add a workflow to begin the next development version after a final release
+  * Mark GitHub releases as pre-releases automatically for pre-release versions
+  * Replace the archived `actions/create-release` and `actions/upload-release-asset` actions with the GitHub CLI
+  * Bump `actions/checkout` and `actions/setup-node` to their latest versions
+
+## 5.2.0 (2024-02-12)
 
 ### Enhancements
 
