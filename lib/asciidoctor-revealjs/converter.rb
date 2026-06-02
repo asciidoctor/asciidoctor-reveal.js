@@ -46,10 +46,6 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       end
     end
 
-    def to_boolean(val)
-      val && val != 'false' && val.to_s != '0' || false
-    end
-
     # bool_data_attr
     # If the AsciiDoc attribute doesn't exist, no HTML attribute is added
     # If the AsciiDoc attribute exist and is a true value, HTML attribute is enabled (bool)
@@ -65,15 +61,6 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       else
         true
       end
-    end
-
-    # false needs to be verbatim everything else is a string.
-    # Calling side isn't responsible for quoting so we are doing it here
-    def to_valid_slidenumber(val)
-      # corner case: empty is empty attribute which is true
-      return true if val == ""
-      # using to_s here handles both the 'false' string and the false boolean
-      val.to_s == 'false' ? false : "'#{val}'"
     end
 
     # Whether the node should carry the reveal.js +fragment+ class because it is
@@ -299,14 +286,6 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       end
 
       content
-    end
-
-    def revealjs_dependencies(node, revealjsdir)
-      dependencies = []
-      dependencies << "{ src: '#{revealjsdir}/plugin/zoom/zoom.js', async: true, callback: function () { Reveal.registerPlugin(RevealZoom) } }" unless (node.attr? 'revealjs_plugin_zoom', 'disabled')
-      dependencies << "{ src: '#{revealjsdir}/plugin/notes/notes.js', async: true, callback: function () { Reveal.registerPlugin(RevealNotes) } }" unless (node.attr? 'revealjs_plugin_notes', 'disabled')
-      dependencies << "{ src: '#{revealjsdir}/plugin/search/search.js', async: true, callback: function () { Reveal.registerPlugin(RevealSearch) } }" if (node.attr? 'revealjs_plugin_search', 'enabled')
-      dependencies.join(",\n      ")
     end
 
     # Between delimiters (--) is code taken from asciidoctor-bespoke 1.0.0.alpha.1

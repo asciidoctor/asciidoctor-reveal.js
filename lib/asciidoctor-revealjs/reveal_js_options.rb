@@ -19,11 +19,24 @@ module Asciidoctor; module Revealjs; module RevealJsOptions
   # - :raw         => emitted verbatim (numbers, null, Reveal.* method references)
   def format_value(type, raw)
     case type
-    when :bool        then Converter::Helpers.to_boolean(raw)
-    when :slidenumber then Converter::Helpers.to_valid_slidenumber(raw)
+    when :bool        then to_boolean(raw)
+    when :slidenumber then to_valid_slidenumber(raw)
     when :string      then "'#{raw}'"
     else                   raw
     end
+  end
+
+  def to_boolean(val)
+    val && val != 'false' && val.to_s != '0' || false
+  end
+
+  # false needs to be verbatim everything else is a string.
+  # Calling side isn't responsible for quoting so we are doing it here
+  def to_valid_slidenumber(val)
+    # corner case: empty is empty attribute which is true
+    return true if val == ""
+    # using to_s here handles both the 'false' string and the false boolean
+    val.to_s == 'false' ? false : "'#{val}'"
   end
 
   # The reveal.js options, in output order. Each entry is either:
@@ -208,10 +221,20 @@ module Asciidoctor; module Revealjs; module RevealJsOptions
       '',
       '  // Optional libraries used to extend on reveal.js',
       '  dependencies: [',
-      "      #{Converter::Helpers.revealjs_dependencies(node, revealjsdir)}",
+      "      #{revealjs_dependencies(node, revealjsdir)}",
       '  ],',
       '});',
     ].join("\n")
+  end
+
+  # The reveal.js plugin dependencies enabled for this document, formatted as
+  # the entries of the Reveal.initialize +dependencies+ array.
+  def revealjs_dependencies(node, revealjsdir)
+    dependencies = []
+    dependencies << "{ src: '#{revealjsdir}/plugin/zoom/zoom.js', async: true, callback: function () { Reveal.registerPlugin(RevealZoom) } }" unless (node.attr? 'revealjs_plugin_zoom', 'disabled')
+    dependencies << "{ src: '#{revealjsdir}/plugin/notes/notes.js', async: true, callback: function () { Reveal.registerPlugin(RevealNotes) } }" unless (node.attr? 'revealjs_plugin_notes', 'disabled')
+    dependencies << "{ src: '#{revealjsdir}/plugin/search/search.js', async: true, callback: function () { Reveal.registerPlugin(RevealSearch) } }" if (node.attr? 'revealjs_plugin_search', 'enabled')
+    dependencies.join(",\n      ")
   end
 
   # The full content of the reveal.js configuration <script> element.
