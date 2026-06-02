@@ -28,9 +28,6 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     DEFAULT_TOCLEVELS = 2
     DEFAULT_SECTNUMLEVELS = 3
 
-    VOID_ELEMENTS = %w(area base br col command embed hr img input keygen link
-                       meta param source track wbr)
-
     STEM_EQNUMS_AMS = 'ams'
     STEM_EQNUMS_NONE = 'none'
     STEM_EQNUMS_VALID_VALUES = [
@@ -92,30 +89,25 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
 
     ##
-    # Creates an HTML tag with the given name and optionally attributes. Can take
-    # a block that will run between the opening and closing tags.
+    # Serializes a Hash of attributes into the string that goes inside an opening
+    # tag, e.g. { id: 'x', class: ['a', nil, 'b'] } => %( id="x" class="a b").
     #
-    # @param name [#to_s] the name of the tag.
-    # @param attributes [Hash] (default: {})
-    # @param content [#to_s] the content; +nil+ to call the block. (default: nil).
-    # @yield The block of HTML code within the tag (optional).
-    # @return [String] a rendered HTML element.
+    # The HTML tag itself is written literally at the call site; only this
+    # (genuinely data-driven) part is factored out. The rules are:
+    # - +nil+, +false+ and empty values are omitted (so an absent id produces
+    #   nothing rather than id="");
+    # - +true+ produces a boolean attribute (just the name, e.g. controls);
+    # - Array values are compacted and joined with a space (and omitted if the
+    #   array collapses to nothing), just like Slim does for class lists.
     #
-    def html_tag(name, attributes = {}, content = nil)
-      attrs = attributes.inject([]) do |attrs, (k, v)|
-        # Join (and reject empties of) array values first so that an array that
-        # collapses to nothing is omitted, just like Slim does for class lists.
+    # @param pairs [Hash]
+    # @return [String] the attributes string with a leading space, or '' if none.
+    #
+    def attributes(pairs)
+      pairs.inject(+'') do |str, (k, v)|
         v = v.compact.join(' ') if v.is_a? Array
-        next attrs unless v && (v == true || !v.nil_or_empty?)
-        attrs << (v == true ? k : %(#{k}="#{v}"))
-      end
-      attrs_str = attrs.empty? ? '' : ' ' + attrs.join(' ')
-
-      if VOID_ELEMENTS.include? name.to_s
-        %(<#{name}#{attrs_str}>)
-      else
-        content ||= (yield if block_given?)
-        %(<#{name}#{attrs_str}>#{content}</#{name}>)
+        next str unless v && (v == true || !v.nil_or_empty?)
+        str << (v == true ? %( #{k}) : %( #{k}="#{v}"))
       end
     end
 
@@ -141,7 +133,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       data_attrs = data_attrs(node.attributes)
       classes = [node.role, ('fragment' if (node.option? :step) || (node.attr? 'step') || (node.roles.include? 'step'))].compact
       if !node.roles.empty? || !data_attrs.empty? || !node.id.nil?
-        html_tag('span', { :id => node.id, :class => classes }.merge(data_attrs), (content || (yield if block_given?)))
+        %(<span#{attributes({ :id => node.id, :class => classes }.merge(data_attrs))}>#{content || (yield if block_given?)}</span>)
       else
         content || (yield if block_given?)
       end
@@ -520,151 +512,137 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     if (node.has_role? 'aside') || (node.has_role? 'speaker') || (node.has_role? 'notes')
       %(<aside class="notes">#{Helpers.resolve_content(node)}</aside>)
     else
-      Helpers.html_tag('div', { :id => node.id, :class => ['admonitionblock', (node.attr :name), node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes))) do
-        icon = if node.document.attr? :icons, 'font'
-          icon_mapping = { 'caution' => 'fire', 'important' => 'exclamation-circle', 'note' => 'info-circle', 'tip' => 'lightbulb-o', 'warning' => 'warning' }
-          Helpers.html_tag('i', class: %(fa fa-#{icon_mapping[node.attr :name]}), title: (node.attr :textlabel || node.caption))
-        elsif node.document.attr? :icons
-          Helpers.html_tag('img', src: node.icon_uri(node.attr :name), alt: node.caption)
-        else
-          %(<div class="title">#{(node.attr :textlabel) || node.caption}</div>)
-        end
-        cell = +''
-        cell << %(<div class="title">#{node.title}</div>) if node.title?
-        cell << node.content.to_s
-        %(<table><tr><td class="icon">#{icon}</td><td class="content">#{cell}</td></tr></table>)
+      attrs = Helpers.attributes({ :id => node.id, :class => ['admonitionblock', (node.attr :name), node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes)))
+      icon = if node.document.attr? :icons, 'font'
+        icon_mapping = { 'caution' => 'fire', 'important' => 'exclamation-circle', 'note' => 'info-circle', 'tip' => 'lightbulb-o', 'warning' => 'warning' }
+        %(<i#{Helpers.attributes(class: %(fa fa-#{icon_mapping[node.attr :name]}), title: (node.attr :textlabel || node.caption))}></i>)
+      elsif node.document.attr? :icons
+        %(<img#{Helpers.attributes(src: node.icon_uri(node.attr :name), alt: node.caption)}>)
+      else
+        %(<div class="title">#{(node.attr :textlabel) || node.caption}</div>)
       end
+      cell = +''
+      cell << %(<div class="title">#{node.title}</div>) if node.title?
+      cell << node.content.to_s
+      %(<div#{attrs}><table><tr><td class="icon">#{icon}</td><td class="content">#{cell}</td></tr></table></div>)
     end
   end
 
   def convert_audio(node, opts = {})
-    Helpers.html_tag('div', { :id => node.id, :class => ['audioblock', node.style, node.role] }.merge(Helpers.data_attrs(node.attributes))) do
-      buf = +''
-      buf << %(<div class="title">#{node.captioned_title}</div>) if node.title?
-      buf << %(<div class="content">)
-      buf << Helpers.html_tag('audio', src: node.media_uri(node.attr :target), autoplay: (node.option? 'autoplay'), controls: !(node.option? 'nocontrols'), loop: (node.option? 'loop')) do
-        'Your browser does not support the audio tag.'
-      end
-      buf << %(</div>)
-      buf
-    end
+    attrs = Helpers.attributes({ :id => node.id, :class => ['audioblock', node.style, node.role] }.merge(Helpers.data_attrs(node.attributes)))
+    buf = +''
+    buf << %(<div class="title">#{node.captioned_title}</div>) if node.title?
+    buf << %(<div class="content">)
+    buf << %(<audio#{Helpers.attributes(src: node.media_uri(node.attr :target), autoplay: (node.option? 'autoplay'), controls: !(node.option? 'nocontrols'), loop: (node.option? 'loop'))}>Your browser does not support the audio tag.</audio>)
+    buf << %(</div>)
+    %(<div#{attrs}>#{buf}</div>)
   end
 
   def convert_colist(node, opts = {})
-    Helpers.html_tag('div', { :id => node.id, :class => ['colist', node.style, node.role] }.merge(Helpers.data_attrs(node.attributes))) do
-      buf = +''
-      buf << %(<div class="title">#{node.title}</div>) if node.title?
-      if node.document.attr? :icons
-        font_icons = node.document.attr? :icons, 'font'
-        buf << '<table>'
-        node.items.each_with_index do |item, i|
-          num = i + 1
-          buf << Helpers.html_tag('tr', class: ('fragment' if Helpers.step_or_role?(node))) do
-            cell = '<td>'
-            if font_icons
-              cell << Helpers.html_tag('i', class: 'conum', 'data-value' => num)
-              cell << %(<b>#{num}</b>)
-            else
-              cell << Helpers.html_tag('img', src: node.icon_uri("callouts/#{num}"), alt: num)
-            end
-            cell << %(</td><td>#{item.text}</td>)
-            cell
-          end
+    attrs = Helpers.attributes({ :id => node.id, :class => ['colist', node.style, node.role] }.merge(Helpers.data_attrs(node.attributes)))
+    buf = +''
+    buf << %(<div class="title">#{node.title}</div>) if node.title?
+    if node.document.attr? :icons
+      font_icons = node.document.attr? :icons, 'font'
+      buf << '<table>'
+      node.items.each_with_index do |item, i|
+        num = i + 1
+        cell = '<td>'
+        if font_icons
+          cell << %(<i#{Helpers.attributes(class: 'conum', 'data-value' => num)}></i>)
+          cell << %(<b>#{num}</b>)
+        else
+          cell << %(<img#{Helpers.attributes(src: node.icon_uri("callouts/#{num}"), alt: num)}>)
         end
-        buf << '</table>'
-      else
-        buf << '<ol>'
-        node.items.each do |item|
-          buf << Helpers.html_tag('li', class: ('fragment' if Helpers.step_or_role?(node))) do
-            %(<p>#{item.text}</p>)
-          end
-        end
-        buf << '</ol>'
+        cell << %(</td><td>#{item.text}</td>)
+        buf << %(<tr#{Helpers.attributes(class: ('fragment' if Helpers.step_or_role?(node)))}>#{cell}</tr>)
       end
-      buf
+      buf << '</table>'
+    else
+      buf << '<ol>'
+      node.items.each do |item|
+        buf << %(<li#{Helpers.attributes(class: ('fragment' if Helpers.step_or_role?(node)))}><p>#{item.text}</p></li>)
+      end
+      buf << '</ol>'
     end
+    %(<div#{attrs}>#{buf}</div>)
   end
 
   def convert_dlist(node, opts = {})
     case node.style
     when 'qanda'
-      Helpers.html_tag('div', { :id => node.id, :class => ['qlist', node.style, node.role] }.merge(Helpers.data_attrs(node.attributes))) do
-        buf = +''
-        buf << %(<div class="title">#{node.title}</div>) if node.title?
-        buf << '<ol>'
-        node.items.each do |questions, answer|
-          buf << '<li>'
-          [*questions].each do |question|
-            buf << %(<p><em>#{question.text}</em></p>)
-          end
-          unless answer.nil?
-            buf << %(<p>#{answer.text}</p>) if answer.text?
-            buf << answer.content.to_s if answer.blocks?
-          end
-          buf << '</li>'
+      attrs = Helpers.attributes({ :id => node.id, :class => ['qlist', node.style, node.role] }.merge(Helpers.data_attrs(node.attributes)))
+      buf = +''
+      buf << %(<div class="title">#{node.title}</div>) if node.title?
+      buf << '<ol>'
+      node.items.each do |questions, answer|
+        buf << '<li>'
+        [*questions].each do |question|
+          buf << %(<p><em>#{question.text}</em></p>)
         end
-        buf << '</ol>'
-        buf
+        unless answer.nil?
+          buf << %(<p>#{answer.text}</p>) if answer.text?
+          buf << answer.content.to_s if answer.blocks?
+        end
+        buf << '</li>'
       end
+      buf << '</ol>'
+      %(<div#{attrs}>#{buf}</div>)
     when 'horizontal'
-      Helpers.html_tag('div', { :id => node.id, :class => ['hdlist', node.role] }.merge(Helpers.data_attrs(node.attributes))) do
-        buf = +''
-        buf << %(<div class="title">#{node.title}</div>) if node.title?
-        buf << '<table>'
-        if (node.attr? :labelwidth) || (node.attr? :itemwidth)
-          buf << '<colgroup>'
-          buf << Helpers.html_tag('col', style: ((node.attr? :labelwidth) ? %(width:#{(node.attr :labelwidth).chomp '%'}%;) : nil))
-          buf << Helpers.html_tag('col', style: ((node.attr? :itemwidth) ? %(width:#{(node.attr :itemwidth).chomp '%'}%;) : nil))
-          buf << '</colgroup>'
-        end
-        node.items.each do |terms, dd|
-          buf << '<tr>'
-          buf << Helpers.html_tag('td', class: ['hdlist1', ('strong' if node.option? 'strong')]) do
-            cell = +''
-            terms = [*terms]
-            last_term = terms.last
-            terms.each do |dt|
-              cell << dt.text.to_s
-              cell << '<br>' if dt != last_term
-            end
-            cell
-          end
-          buf << '<td class="hdlist2">'
-          unless dd.nil?
-            buf << %(<p>#{dd.text}</p>) if dd.text?
-            buf << dd.content.to_s if dd.blocks?
-          end
-          buf << '</td></tr>'
-        end
-        buf << '</table>'
-        buf
+      attrs = Helpers.attributes({ :id => node.id, :class => ['hdlist', node.role] }.merge(Helpers.data_attrs(node.attributes)))
+      buf = +''
+      buf << %(<div class="title">#{node.title}</div>) if node.title?
+      buf << '<table>'
+      if (node.attr? :labelwidth) || (node.attr? :itemwidth)
+        buf << '<colgroup>'
+        buf << %(<col#{Helpers.attributes(style: ((node.attr? :labelwidth) ? %(width:#{(node.attr :labelwidth).chomp '%'}%;) : nil))}>)
+        buf << %(<col#{Helpers.attributes(style: ((node.attr? :itemwidth) ? %(width:#{(node.attr :itemwidth).chomp '%'}%;) : nil))}>)
+        buf << '</colgroup>'
       end
+      node.items.each do |terms, dd|
+        buf << '<tr>'
+        cell = +''
+        terms = [*terms]
+        last_term = terms.last
+        terms.each do |dt|
+          cell << dt.text.to_s
+          cell << '<br>' if dt != last_term
+        end
+        buf << %(<td#{Helpers.attributes(class: ['hdlist1', ('strong' if node.option? 'strong')])}>#{cell}</td>)
+        buf << '<td class="hdlist2">'
+        unless dd.nil?
+          buf << %(<p>#{dd.text}</p>) if dd.text?
+          buf << dd.content.to_s if dd.blocks?
+        end
+        buf << '</td></tr>'
+      end
+      buf << '</table>'
+      %(<div#{attrs}>#{buf}</div>)
     else
-      Helpers.html_tag('div', { :id => node.id, :class => ['dlist', node.style, node.role] }.merge(Helpers.data_attrs(node.attributes))) do
-        buf = +''
-        buf << %(<div class="title">#{node.title}</div>) if node.title?
-        buf << '<dl>'
-        node.items.each do |terms, dd|
-          [*terms].each do |dt|
-            buf << Helpers.html_tag('dt', class: ('hdlist1' unless node.style)) { dt.text }
-          end
-          unless dd.nil?
-            buf << '<dd>'
-            buf << %(<p>#{dd.text}</p>) if dd.text?
-            buf << dd.content.to_s if dd.blocks?
-            buf << '</dd>'
-          end
+      attrs = Helpers.attributes({ :id => node.id, :class => ['dlist', node.style, node.role] }.merge(Helpers.data_attrs(node.attributes)))
+      buf = +''
+      buf << %(<div class="title">#{node.title}</div>) if node.title?
+      buf << '<dl>'
+      node.items.each do |terms, dd|
+        [*terms].each do |dt|
+          buf << %(<dt#{Helpers.attributes(class: ('hdlist1' unless node.style))}>#{dt.text}</dt>)
         end
-        buf << '</dl>'
-        buf
+        unless dd.nil?
+          buf << '<dd>'
+          buf << %(<p>#{dd.text}</p>) if dd.text?
+          buf << dd.content.to_s if dd.blocks?
+          buf << '</dd>'
+        end
       end
+      buf << '</dl>'
+      %(<div#{attrs}>#{buf}</div>)
     end
   end
 
   def convert_embedded(node, opts = {})
     buf = +''
     unless node.notitle || !node.has_header?
-      buf << Helpers.html_tag('h1', id: node.id) { node.header.title }
+      buf << %(<h1#{Helpers.attributes(id: node.id)}>#{node.header.title}</h1>)
     end
     buf << node.content.to_s
     unless !node.footnotes? || node.attr?(:nofootnotes)
@@ -678,24 +656,22 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
   end
 
   def convert_example(node, opts = {})
-    Helpers.html_tag('div', { :id => node.id, :class => ['exampleblock', node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes))) do
-      buf = +''
-      buf << %(<div class="title">#{node.captioned_title}</div>) if node.title?
-      buf << %(<div class="content">#{node.content}</div>)
-      buf
-    end
+    attrs = Helpers.attributes({ :id => node.id, :class => ['exampleblock', node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes)))
+    buf = +''
+    buf << %(<div class="title">#{node.captioned_title}</div>) if node.title?
+    buf << %(<div class="content">#{node.content}</div>)
+    %(<div#{attrs}>#{buf}</div>)
   end
 
   def convert_floating_title(node, opts = {})
-    Helpers.html_tag("h#{node.level + 1}", id: node.id, class: [node.style, node.role]) { node.title }
+    %(<h#{node.level + 1}#{Helpers.attributes(id: node.id, class: [node.style, node.role])}>#{node.title}</h#{node.level + 1}>)
   end
 
   def convert_image(node, opts = {})
     return '' if node.attributes[1] == 'background' || node.attributes[1] == 'canvas'
     inline_style = [("text-align: #{node.attr :align}" if node.attr? :align), ("float: #{node.attr :float}" if node.attr? :float)].compact.join('; ')
-    buf = Helpers.html_tag('div', { :id => node.id, :class => ['imageblock', node.role, ('fragment' if Helpers.step?(node))], :style => inline_style }.merge(Helpers.data_attrs(node.attributes))) do
-      Helpers.image_content(node)
-    end
+    attrs = Helpers.attributes({ :id => node.id, :class => ['imageblock', node.role, ('fragment' if Helpers.step?(node))], :style => inline_style }.merge(Helpers.data_attrs(node.attributes)))
+    buf = %(<div#{attrs}>#{Helpers.image_content(node)}</div>)
     buf << %(<div class="title">#{node.captioned_title}</div>) if node.title?
     buf
   end
@@ -704,17 +680,15 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     case node.type
     when :xref
       refid = (node.attr :refid) || node.target
-      Helpers.html_tag('a', { :href => node.target, :class => [node.role, ('fragment' if Helpers.step?(node))].compact }.merge(Helpers.data_attrs(node.attributes))) do
-        (node.text || node.document.references[:ids].fetch(refid, "[#{refid}]")).tr_s("\n", ' ')
-      end
+      attrs = Helpers.attributes({ :href => node.target, :class => [node.role, ('fragment' if Helpers.step?(node))].compact }.merge(Helpers.data_attrs(node.attributes)))
+      %(<a#{attrs}>#{(node.text || node.document.references[:ids].fetch(refid, "[#{refid}]")).tr_s("\n", ' ')}</a>)
     when :ref
-      Helpers.html_tag('a', { :id => node.target }.merge(Helpers.data_attrs(node.attributes)))
+      %(<a#{Helpers.attributes({ :id => node.target }.merge(Helpers.data_attrs(node.attributes)))}></a>)
     when :bibref
-      Helpers.html_tag('a', { :id => node.target }.merge(Helpers.data_attrs(node.attributes))) + %([#{node.target}])
+      %(<a#{Helpers.attributes({ :id => node.target }.merge(Helpers.data_attrs(node.attributes)))}></a>[#{node.target}])
     else
-      Helpers.html_tag('a', { :href => node.target, :class => [node.role, ('fragment' if Helpers.step?(node))].compact, :target => (node.attr :window), 'data-preview-link' => (Helpers.bool_data_attr(node, :preview)) }.merge(Helpers.data_attrs(node.attributes))) do
-        node.text
-      end
+      attrs = Helpers.attributes({ :href => node.target, :class => [node.role, ('fragment' if Helpers.step?(node))].compact, :target => (node.attr :window), 'data-preview-link' => (Helpers.bool_data_attr(node, :preview)) }.merge(Helpers.data_attrs(node.attributes)))
+      %(<a#{attrs}>#{node.text}</a>)
     end
   end
 
@@ -723,14 +697,14 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
   end
 
   def convert_inline_button(node, opts = {})
-    Helpers.html_tag('b', { :class => ['button'] }.merge(Helpers.data_attrs(node.attributes))) { node.text }
+    %(<b#{Helpers.attributes({ :class => ['button'] }.merge(Helpers.data_attrs(node.attributes)))}>#{node.text}</b>)
   end
 
   def convert_inline_callout(node, opts = {})
     if node.document.attr? :icons, 'font'
-      %(#{Helpers.html_tag('i', class: 'conum', 'data-value' => node.text)}<b>(#{node.text})</b>)
+      %(<i#{Helpers.attributes(class: 'conum', 'data-value' => node.text)}></i><b>(#{node.text})</b>)
     elsif node.document.attr? :icons
-      Helpers.html_tag('img', src: node.icon_uri("callouts/#{node.text}"), alt: node.text)
+      %(<img#{Helpers.attributes(src: node.icon_uri("callouts/#{node.text}"), alt: node.text)}>)
     else
       %(<b>(#{node.text})</b>)
     end
@@ -741,20 +715,15 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     index = footnote.attr(:index)
     id = footnote.id
     if node.type == :xref
-      Helpers.html_tag('sup', { :class => ['footnoteref'] }.merge(Helpers.data_attrs(footnote.attributes))) do
-        %([<span class="footnote" title="View footnote.">#{index}</span>])
-      end
+      %(<sup#{Helpers.attributes({ :class => ['footnoteref'] }.merge(Helpers.data_attrs(footnote.attributes)))}>[<span class="footnote" title="View footnote.">#{index}</span>]</sup>)
     else
-      Helpers.html_tag('sup', { :id => ("_footnote_#{id}" if id), :class => ['footnote'] }.merge(Helpers.data_attrs(footnote.attributes))) do
-        %([<span class="footnote" title="View footnote.">#{index}</span>])
-      end
+      %(<sup#{Helpers.attributes({ :id => ("_footnote_#{id}" if id), :class => ['footnote'] }.merge(Helpers.data_attrs(footnote.attributes)))}>[<span class="footnote" title="View footnote.">#{index}</span>]</sup>)
     end
   end
 
   def convert_inline_image(node, opts = {})
-    Helpers.html_tag('span', { :class => [node.type, node.role, ('fragment' if Helpers.step?(node))], :style => ("float: #{node.attr :float}" if node.attr? :float) }.merge(Helpers.data_attrs(node.attributes))) do
-      Helpers.inline_image_content(node)
-    end
+    attrs = Helpers.attributes({ :class => [node.type, node.role, ('fragment' if Helpers.step?(node))], :style => ("float: #{node.attr :float}" if node.attr? :float) }.merge(Helpers.data_attrs(node.attributes)))
+    %(<span#{attrs}>#{Helpers.inline_image_content(node)}</span>)
   end
 
   def convert_inline_indexterm(node, opts = {})
@@ -763,16 +732,14 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
 
   def convert_inline_kbd(node, opts = {})
     if (keys = node.attr 'keys').size == 1
-      Helpers.html_tag('kbd', Helpers.data_attrs(node.attributes)) { keys.first }
+      %(<kbd#{Helpers.attributes(Helpers.data_attrs(node.attributes))}>#{keys.first}</kbd>)
     else
-      Helpers.html_tag('span', { :class => ['keyseq'] }.merge(Helpers.data_attrs(node.attributes))) do
-        buf = +''
-        keys.each_with_index do |key, idx|
-          buf << '+' unless idx.zero?
-          buf << %(<kbd>#{key}</kbd>)
-        end
-        buf
+      buf = +''
+      keys.each_with_index do |key, idx|
+        buf << '+' unless idx.zero?
+        buf << %(<kbd>#{key}</kbd>)
       end
+      %(<span#{Helpers.attributes({ :class => ['keyseq'] }.merge(Helpers.data_attrs(node.attributes)))}>#{buf}</span>)
     end
   end
 
@@ -780,24 +747,21 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     menu = node.attr 'menu'
     menuitem = node.attr 'menuitem'
     if !(submenus = node.attr 'submenus').empty?
-      Helpers.html_tag('span', { :class => ['menuseq'] }.merge(Helpers.data_attrs(node.attributes))) do
-        %(<span class="menu">#{menu}</span>&#160;&#9656;&#32;) +
-          submenus.map {|submenu| %(<span class="submenu">#{submenu}</span>&#160;&#9656;&#32;) }.join +
-          %(<span class="menuitem">#{menuitem}</span>)
-      end
+      content = %(<span class="menu">#{menu}</span>&#160;&#9656;&#32;) +
+        submenus.map {|submenu| %(<span class="submenu">#{submenu}</span>&#160;&#9656;&#32;) }.join +
+        %(<span class="menuitem">#{menuitem}</span>)
+      %(<span#{Helpers.attributes({ :class => ['menuseq'] }.merge(Helpers.data_attrs(node.attributes)))}>#{content}</span>)
     elsif !menuitem.nil?
-      Helpers.html_tag('span', { :class => ['menuseq'] }.merge(Helpers.data_attrs(node.attributes))) do
-        %(<span class="menu">#{menu}</span>&#160;&#9656;&#32;<span class="menuitem">#{menuitem}</span>)
-      end
+      %(<span#{Helpers.attributes({ :class => ['menuseq'] }.merge(Helpers.data_attrs(node.attributes)))}><span class="menu">#{menu}</span>&#160;&#9656;&#32;<span class="menuitem">#{menuitem}</span></span>)
     else
-      Helpers.html_tag('span', { :class => ['menu'] }.merge(Helpers.data_attrs(node.attributes))) { menu }
+      %(<span#{Helpers.attributes({ :class => ['menu'] }.merge(Helpers.data_attrs(node.attributes)))}>#{menu}</span>)
     end
   end
 
   def convert_inline_quoted(node, opts = {})
     quote_tags = { emphasis: 'em', strong: 'strong', monospaced: 'code', superscript: 'sup', subscript: 'sub' }
     if (quote_tag = quote_tags[node.type])
-      Helpers.html_tag(quote_tag, { :id => node.id, :class => [node.role, ('fragment' if Helpers.step?(node))].compact }.merge(Helpers.data_attrs(node.attributes)), node.text)
+      %(<#{quote_tag}#{Helpers.attributes({ :id => node.id, :class => [node.role, ('fragment' if Helpers.step?(node))].compact }.merge(Helpers.data_attrs(node.attributes)))}>#{node.text}</#{quote_tag}>)
     else
       case node.type
       when :double
@@ -827,33 +791,30 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       end
     end
     # data-id must not be declared on the <div> element (but on the <pre> element for auto-animate)
-    Helpers.html_tag('div', { :id => node.id, :class => ['listingblock', node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes.reject {|key, _| key == 'data-id' }))) do
-      buf = +''
-      buf << %(<div class="title">#{node.captioned_title}</div>) if node.title?
-      buf << %(<div class="content">)
-      if syntax_hl
-        buf << (syntax_hl.format node, lang, hl_opts).to_s
-      elsif node.style == 'source'
-        buf << Helpers.html_tag('pre', class: ['highlight', ('nowrap' if nowrap)]) do
-          Helpers.html_tag('code', { class: [("language-#{lang}" if lang)], 'data-lang' => ("#{lang}" if lang) }, node.content || '')
-        end
-      else
-        buf << Helpers.html_tag('pre', { class: [('nowrap' if nowrap)] }, node.content || '')
-      end
-      buf << %(</div>)
-      buf
+    attrs = Helpers.attributes({ :id => node.id, :class => ['listingblock', node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes.reject {|key, _| key == 'data-id' })))
+    buf = +''
+    buf << %(<div class="title">#{node.captioned_title}</div>) if node.title?
+    buf << %(<div class="content">)
+    if syntax_hl
+      buf << (syntax_hl.format node, lang, hl_opts).to_s
+    elsif node.style == 'source'
+      code = %(<code#{Helpers.attributes({ class: [("language-#{lang}" if lang)], 'data-lang' => ("#{lang}" if lang) })}>#{node.content || ''}</code>)
+      buf << %(<pre#{Helpers.attributes(class: ['highlight', ('nowrap' if nowrap)])}>#{code}</pre>)
+    else
+      buf << %(<pre#{Helpers.attributes({ class: [('nowrap' if nowrap)] })}>#{node.content || ''}</pre>)
     end
+    buf << %(</div>)
+    %(<div#{attrs}>#{buf}</div>)
   end
 
   def convert_literal(node, opts = {})
-    Helpers.html_tag('div', { :id => node.id, :class => ['literalblock', node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes))) do
-      buf = +''
-      buf << %(<div class="title">#{node.title}</div>) if node.title?
-      buf << %(<div class="content">)
-      buf << Helpers.html_tag('pre', { class: (!(node.document.attr? :prewrap) || (node.option? 'nowrap') ? 'nowrap' : nil) }, node.content)
-      buf << %(</div>)
-      buf
-    end
+    attrs = Helpers.attributes({ :id => node.id, :class => ['literalblock', node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes)))
+    buf = +''
+    buf << %(<div class="title">#{node.title}</div>) if node.title?
+    buf << %(<div class="content">)
+    buf << %(<pre#{Helpers.attributes({ class: (!(node.document.attr? :prewrap) || (node.option? 'nowrap') ? 'nowrap' : nil) })}>#{node.content}</pre>)
+    buf << %(</div>)
+    %(<div#{attrs}>#{buf}</div>)
   end
 
   def convert_notes(node, opts = {})
@@ -861,22 +822,17 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
   end
 
   def convert_olist(node, opts = {})
-    Helpers.html_tag('div', { :id => node.id, :class => ['olist', node.style, node.role] }.merge(Helpers.data_attrs(node.attributes))) do
-      buf = +''
-      buf << %(<div class="title">#{node.title}</div>) if node.title?
-      buf << Helpers.html_tag('ol', class: node.style, start: (node.attr :start), type: node.list_marker_keyword) do
-        inner = +''
-        node.items.each do |item|
-          inner << Helpers.html_tag('li', class: ('fragment' if Helpers.step_or_role?(node))) do
-            li = %(<p>#{item.text}</p>)
-            li << item.content.to_s if item.blocks?
-            li
-          end
-        end
-        inner
-      end
-      buf
+    attrs = Helpers.attributes({ :id => node.id, :class => ['olist', node.style, node.role] }.merge(Helpers.data_attrs(node.attributes)))
+    buf = +''
+    buf << %(<div class="title">#{node.title}</div>) if node.title?
+    inner = +''
+    node.items.each do |item|
+      li = %(<p>#{item.text}</p>)
+      li << item.content.to_s if item.blocks?
+      inner << %(<li#{Helpers.attributes(class: ('fragment' if Helpers.step_or_role?(node)))}>#{li}</li>)
     end
+    buf << %(<ol#{Helpers.attributes(class: node.style, start: (node.attr :start), type: node.list_marker_keyword)}>#{inner}</ol>)
+    %(<div#{attrs}>#{buf}</div>)
   end
 
   def convert_open(node, opts = {})
@@ -885,12 +841,11 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
         puts 'asciidoctor: WARNING: abstract block cannot be used in a document without a title when doctype is book. Excluding block content.'
         ''
       else
-        Helpers.html_tag('div', { :id => node.id, :class => ['quoteblock', 'abstract', node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes))) do
-          buf = +''
-          buf << %(<div class="title">#{node.title}</div>) if node.title?
-          buf << %(<blockquote>#{node.content}</blockquote>)
-          buf
-        end
+        attrs = Helpers.attributes({ :id => node.id, :class => ['quoteblock', 'abstract', node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes)))
+        buf = +''
+        buf << %(<div class="title">#{node.title}</div>) if node.title?
+        buf << %(<blockquote>#{node.content}</blockquote>)
+        %(<div#{attrs}>#{buf}</div>)
       end
     elsif node.style == 'partintro' && (node.level != 0 || node.parent.context != :section || node.document.doctype != 'book')
       puts 'asciidoctor: ERROR: partintro block can only be used when doctype is book and it\'s a child of a book part. Excluding block content.'
@@ -898,12 +853,11 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     elsif (node.has_role? 'aside') or (node.has_role? 'speaker') or (node.has_role? 'notes')
       %(<aside class="notes">#{Helpers.resolve_content(node)}</aside>)
     else
-      Helpers.html_tag('div', { :id => node.id, :class => ['openblock', (node.style != 'open' ? node.style : nil), node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes))) do
-        buf = +''
-        buf << %(<div class="title">#{node.title}</div>) if node.title?
-        buf << %(<div class="content">#{node.content}</div>)
-        buf
-      end
+      attrs = Helpers.attributes({ :id => node.id, :class => ['openblock', (node.style != 'open' ? node.style : nil), node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes)))
+      buf = +''
+      buf << %(<div class="title">#{node.title}</div>) if node.title?
+      buf << %(<div class="content">#{node.content}</div>)
+      %(<div#{attrs}>#{buf}</div>)
     end
   end
 
@@ -928,12 +882,11 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
   end
 
   def convert_paragraph(node, opts = {})
-    Helpers.html_tag('div', { :id => node.id, :class => ['paragraph', node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes))) do
-      buf = +''
-      buf << %(<div class="title">#{node.title}</div>) if node.title?
-      buf << (node.has_role?('small') ? %(<small>#{node.content}</small>) : %(<p>#{node.content}</p>))
-      buf
-    end
+    attrs = Helpers.attributes({ :id => node.id, :class => ['paragraph', node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes)))
+    buf = +''
+    buf << %(<div class="title">#{node.title}</div>) if node.title?
+    buf << (node.has_role?('small') ? %(<small>#{node.content}</small>) : %(<p>#{node.content}</p>))
+    %(<div#{attrs}>#{buf}</div>)
   end
 
   def convert_pass(node, opts = {})
@@ -946,23 +899,22 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
   end
 
   def convert_quote(node, opts = {})
-    Helpers.html_tag('div', { :id => node.id, :class => ['quoteblock', node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes))) do
-      buf = +''
-      buf << %(<div class="title">#{node.title}</div>) if node.title?
-      buf << %(<blockquote>#{node.content}</blockquote>)
-      attribution = (node.attr? :attribution) ? (node.attr :attribution) : nil
-      citetitle = (node.attr? :citetitle) ? (node.attr :citetitle) : nil
-      if attribution || citetitle
-        buf << %(<div class="attribution">)
-        buf << %(<cite>#{citetitle}</cite>) if citetitle
-        if attribution
-          buf << '<br>' if citetitle
-          buf << %(&#8212; #{attribution})
-        end
-        buf << %(</div>)
+    attrs = Helpers.attributes({ :id => node.id, :class => ['quoteblock', node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes)))
+    buf = +''
+    buf << %(<div class="title">#{node.title}</div>) if node.title?
+    buf << %(<blockquote>#{node.content}</blockquote>)
+    attribution = (node.attr? :attribution) ? (node.attr :attribution) : nil
+    citetitle = (node.attr? :citetitle) ? (node.attr :citetitle) : nil
+    if attribution || citetitle
+      buf << %(<div class="attribution">)
+      buf << %(<cite>#{citetitle}</cite>) if citetitle
+      if attribution
+        buf << '<br>' if citetitle
+        buf << %(&#8212; #{attribution})
       end
-      buf
+      buf << %(</div>)
     end
+    %(<div#{attrs}>#{buf}</div>)
   end
 
   def convert_ruler(node, opts = {})
@@ -1019,7 +971,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     end
 
     section = lambda do
-      buf = Helpers.html_tag('section', {
+      attrs = Helpers.attributes({
         :id => (titleless ? nil : node.id),
         :class => node.roles,
         'data-background-gradient' => (node.attr "background-gradient"),
@@ -1044,22 +996,21 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
         'data-auto-animate-duration' => ((node.attr 'auto-animate-duration') || (node.option? 'auto-animate-duration')),
         'data-auto-animate-id' => (node.attr 'auto-animate-id'),
         'data-auto-animate-restart' => ((node.attr? 'auto-animate-restart') || (node.option? 'auto-animate-restart')),
-      }) do
-        inner = +''
-        inner << %(<h2>#{Helpers.section_title node}</h2>) unless hide_title
-        if parent_section_with_vertical_slides
-          unless (_blocks = node.blocks - vertical_slides).empty?
-            inner << %(<div class="slide-content">#{_blocks.map(&:convert).join}</div>)
-          end
-          inner << footnotes.call
-        else
-          unless (_content = node.content.chomp).empty?
-            inner << %(<div class="slide-content">#{_content}</div>)
-          end
-          inner << footnotes.call
+      })
+      inner = +''
+      inner << %(<h2>#{Helpers.section_title node}</h2>) unless hide_title
+      if parent_section_with_vertical_slides
+        unless (_blocks = node.blocks - vertical_slides).empty?
+          inner << %(<div class="slide-content">#{_blocks.map(&:convert).join}</div>)
         end
-        inner
+        inner << footnotes.call
+      else
+        unless (_content = node.content.chomp).empty?
+          inner << %(<div class="slide-content">#{_content}</div>)
+        end
+        inner << footnotes.call
       end
+      buf = %(<section#{attrs}>#{inner}</section>)
       Helpers.clear_slide_footnotes
       buf
     end
@@ -1081,13 +1032,12 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     if (node.has_role? 'aside') or (node.has_role? 'speaker') or (node.has_role? 'notes')
       %(<aside class="notes">#{Helpers.resolve_content(node)}</aside>)
     else
-      Helpers.html_tag('div', { :id => node.id, :class => ['sidebarblock', node.role, ('fragment' if Helpers.step_or_role?(node))] }.merge(Helpers.data_attrs(node.attributes))) do
-        buf = %(<div class="content">)
-        buf << %(<div class="title">#{node.title}</div>) if node.title?
-        buf << node.content.to_s
-        buf << %(</div>)
-        buf
-      end
+      attrs = Helpers.attributes({ :id => node.id, :class => ['sidebarblock', node.role, ('fragment' if Helpers.step_or_role?(node))] }.merge(Helpers.data_attrs(node.attributes)))
+      buf = %(<div class="content">)
+      buf << %(<div class="title">#{node.title}</div>) if node.title?
+      buf << node.content.to_s
+      buf << %(</div>)
+      %(<div#{attrs}>#{buf}</div>)
     end
   end
 
@@ -1100,12 +1050,11 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     unless (equation.start_with? open) && (equation.end_with? close)
       equation = %(#{open}#{equation}#{close})
     end
-    Helpers.html_tag('div', { :id => node.id, :class => ['stemblock', node.role, ('fragment' if Helpers.step_or_role?(node))] }.merge(Helpers.data_attrs(node.attributes))) do
-      buf = +''
-      buf << %(<div class="title">#{node.title}</div>) if node.title?
-      buf << %(<div class="content">#{equation}</div>)
-      buf
-    end
+    attrs = Helpers.attributes({ :id => node.id, :class => ['stemblock', node.role, ('fragment' if Helpers.step_or_role?(node))] }.merge(Helpers.data_attrs(node.attributes)))
+    buf = +''
+    buf << %(<div class="title">#{node.title}</div>) if node.title?
+    buf << %(<div class="content">#{equation}</div>)
+    %(<div#{attrs}>#{buf}</div>)
   end
 
   def convert_stretch_nested_elements(node, opts = {})
@@ -1115,59 +1064,59 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
   def convert_table(node, opts = {})
     classes = ['tableblock', "frame-#{node.attr :frame, 'all'}", "grid-#{node.attr :grid, 'all'}", node.role, ('fragment' if Helpers.step?(node))]
     styles = [("width:#{node.attr :tablepcwidth}%" unless node.option? 'autowidth'), ("float:#{node.attr :float}" if node.attr? :float)].compact.join('; ')
-    Helpers.html_tag('table', { :id => node.id, :class => classes, :style => styles }.merge(Helpers.data_attrs(node.attributes))) do
-      buf = +''
-      buf << %(<caption class="title">#{node.captioned_title}</caption>) if node.title?
-      unless (node.attr :rowcount).zero?
-        buf << '<colgroup>'
-        if node.option? 'autowidth'
-          node.columns.each { buf << '<col>' }
-        else
-          node.columns.each {|col| buf << %(<col style="width:#{col.attr :colpcwidth}%">) }
-        end
-        buf << '</colgroup>'
-        [:head, :foot, :body].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
-          buf << %(<t#{tblsec}>)
-          node.rows[tblsec].each do |row|
-            buf << '<tr>'
-            row.each do |cell|
-              # store reference of content in advance to resolve attribute assignments in cells
-              if tblsec == :head
+    attrs = Helpers.attributes({ :id => node.id, :class => classes, :style => styles }.merge(Helpers.data_attrs(node.attributes)))
+    buf = +''
+    buf << %(<caption class="title">#{node.captioned_title}</caption>) if node.title?
+    unless (node.attr :rowcount).zero?
+      buf << '<colgroup>'
+      if node.option? 'autowidth'
+        node.columns.each { buf << '<col>' }
+      else
+        node.columns.each {|col| buf << %(<col style="width:#{col.attr :colpcwidth}%">) }
+      end
+      buf << '</colgroup>'
+      [:head, :foot, :body].select {|tblsec| !node.rows[tblsec].empty? }.each do |tblsec|
+        buf << %(<t#{tblsec}>)
+        node.rows[tblsec].each do |row|
+          buf << '<tr>'
+          row.each do |cell|
+            # store reference of content in advance to resolve attribute assignments in cells
+            if tblsec == :head
+              cell_content = cell.text
+            else
+              case cell.style
+              when :literal
                 cell_content = cell.text
               else
-                case cell.style
-                when :literal
-                  cell_content = cell.text
-                else
-                  cell_content = cell.content
-                end
-              end
-              buf << Helpers.html_tag(tblsec == :head || cell.style == :header ? 'th' : 'td',
-                  :class => ['tableblock', "halign-#{cell.attr :halign}", "valign-#{cell.attr :valign}"],
-                  :colspan => cell.colspan, :rowspan => cell.rowspan,
-                  :style => ((node.document.attr? :cellbgcolor) ? %(background-color:#{node.document.attr :cellbgcolor};) : nil)) do
-                if tblsec == :head
-                  cell_content.to_s
-                else
-                  case cell.style
-                  when :asciidoc
-                    %(<div>#{cell_content}</div>)
-                  when :literal
-                    %(<div class="literal"><pre>#{cell_content}</pre></div>)
-                  when :header
-                    cell_content.map {|text| %(<p class="tableblock header">#{text}</p>) }.join
-                  else
-                    cell_content.map {|text| %(<p class="tableblock">#{text}</p>) }.join
-                  end
-                end
+                cell_content = cell.content
               end
             end
-            buf << '</tr>'
+            cell_attrs = Helpers.attributes(
+                :class => ['tableblock', "halign-#{cell.attr :halign}", "valign-#{cell.attr :valign}"],
+                :colspan => cell.colspan, :rowspan => cell.rowspan,
+                :style => ((node.document.attr? :cellbgcolor) ? %(background-color:#{node.document.attr :cellbgcolor};) : nil))
+            cell_inner = if tblsec == :head
+              cell_content.to_s
+            else
+              case cell.style
+              when :asciidoc
+                %(<div>#{cell_content}</div>)
+              when :literal
+                %(<div class="literal"><pre>#{cell_content}</pre></div>)
+              when :header
+                cell_content.map {|text| %(<p class="tableblock header">#{text}</p>) }.join
+              else
+                cell_content.map {|text| %(<p class="tableblock">#{text}</p>) }.join
+              end
+            end
+            tag = tblsec == :head || cell.style == :header ? 'th' : 'td'
+            buf << %(<#{tag}#{cell_attrs}>#{cell_inner}</#{tag}>)
           end
+          buf << '</tr>'
         end
       end
-      buf
     end
+    %(<table#{attrs}>#{buf}</table>)
   end
 
   def convert_thematic_break(node, opts = {})
@@ -1177,7 +1126,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
   def convert_title_slide(node, opts = {})
     bg_image = (node.attr? 'title-slide-background-image') ? (node.image_uri(node.attr 'title-slide-background-image')) : nil
     bg_video = (node.attr? 'title-slide-background-video') ? (node.media_uri(node.attr 'title-slide-background-video')) : nil
-    Helpers.html_tag('section', {
+    attrs = Helpers.attributes({
       :class => ['title', node.role],
       'data-state' => 'title',
       'data-transition' => (node.attr 'title-slide-transition'),
@@ -1194,27 +1143,25 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       'data-background-repeat' => (node.attr 'title-slide-background-repeat'),
       'data-background-position' => (node.attr 'title-slide-background-position'),
       'data-background-transition' => (node.attr 'title-slide-background-transition'),
-    }) do
-      buf = +''
-      if (_title_obj = node.doctitle partition: true, use_fallback: true).subtitle?
-        buf << %(<h1>#{Helpers.slice_text node, _title_obj.title, (_slice = node.header.option? :slice)}</h1><h2>#{Helpers.slice_text node, _title_obj.subtitle, _slice}</h2>)
-      else
-        buf << %(<h1>#{node.header.title}</h1>)
-      end
-      preamble = node.document.find_by context: :preamble
-      unless preamble.nil? or preamble.length == 0
-        buf << %(<div class="preamble">#{preamble.pop.content}</div>)
-      end
-      buf << Helpers.generate_authors(node.document).to_s
-      buf
+    })
+    buf = +''
+    if (_title_obj = node.doctitle partition: true, use_fallback: true).subtitle?
+      buf << %(<h1>#{Helpers.slice_text node, _title_obj.title, (_slice = node.header.option? :slice)}</h1><h2>#{Helpers.slice_text node, _title_obj.subtitle, _slice}</h2>)
+    else
+      buf << %(<h1>#{node.header.title}</h1>)
     end
+    preamble = node.document.find_by context: :preamble
+    unless preamble.nil? or preamble.length == 0
+      buf << %(<div class="preamble">#{preamble.pop.content}</div>)
+    end
+    buf << Helpers.generate_authors(node.document).to_s
+    %(<section#{attrs}>#{buf}</section>)
   end
 
   def convert_toc(node, opts = {})
-    Helpers.html_tag('div', id: 'toc', class: (node.document.attr 'toc-class', 'toc')) do
-      %(<div id="toctitle">#{node.document.attr 'toc-title'}</div>) +
-        convert(node.document, 'outline').to_s
-    end
+    content = %(<div id="toctitle">#{node.document.attr 'toc-title'}</div>) +
+      convert(node.document, 'outline').to_s
+    %(<div#{Helpers.attributes(id: 'toc', class: (node.document.attr 'toc-class', 'toc'))}>#{content}</div>)
   end
 
   def convert_ulist(node, opts = {})
@@ -1231,48 +1178,42 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
         marker_unchecked = '<input type="checkbox" data-item-complete="0" disabled>'
       end
     end
-    Helpers.html_tag('div', { :id => node.id, :class => ['ulist', checklist, node.style, node.role] }.merge(Helpers.data_attrs(node.attributes))) do
-      buf = +''
-      buf << %(<div class="title">#{node.title}</div>) if node.title?
-      buf << Helpers.html_tag('ul', class: (checklist || node.style)) do
-        inner = +''
-        node.items.each do |item|
-          inner << Helpers.html_tag('li', class: ('fragment' if Helpers.step_or_role?(node))) do
-            li = '<p>'
-            if checklist && (item.attr? :checkbox)
-              li << %(#{(item.attr? :checked) ? marker_checked : marker_unchecked}#{item.text})
-            else
-              li << item.text.to_s
-            end
-            li << '</p>'
-            li << item.content.to_s if item.blocks?
-            li
-          end
-        end
-        inner
+    attrs = Helpers.attributes({ :id => node.id, :class => ['ulist', checklist, node.style, node.role] }.merge(Helpers.data_attrs(node.attributes)))
+    buf = +''
+    buf << %(<div class="title">#{node.title}</div>) if node.title?
+    inner = +''
+    node.items.each do |item|
+      li = '<p>'
+      if checklist && (item.attr? :checkbox)
+        li << %(#{(item.attr? :checked) ? marker_checked : marker_unchecked}#{item.text})
+      else
+        li << item.text.to_s
       end
-      buf
+      li << '</p>'
+      li << item.content.to_s if item.blocks?
+      inner << %(<li#{Helpers.attributes(class: ('fragment' if Helpers.step_or_role?(node)))}>#{li}</li>)
     end
+    buf << %(<ul#{Helpers.attributes(class: (checklist || node.style))}>#{inner}</ul>)
+    %(<div#{attrs}>#{buf}</div>)
   end
 
   def convert_verse(node, opts = {})
-    Helpers.html_tag('div', { :id => node.id, :class => ['verseblock', node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes))) do
-      buf = +''
-      buf << %(<div class="title">#{node.title}</div>) if node.title?
-      buf << %(<pre class="content">#{node.content}</pre>)
-      attribution = (node.attr? :attribution) ? (node.attr :attribution) : nil
-      citetitle = (node.attr? :citetitle) ? (node.attr :citetitle) : nil
-      if attribution || citetitle
-        buf << %(<div class="attribution">)
-        buf << %(<cite>#{citetitle}</cite>) if citetitle
-        if attribution
-          buf << '<br>' if citetitle
-          buf << %(&#8212; #{attribution})
-        end
-        buf << %(</div>)
+    attrs = Helpers.attributes({ :id => node.id, :class => ['verseblock', node.role, ('fragment' if Helpers.step?(node))] }.merge(Helpers.data_attrs(node.attributes)))
+    buf = +''
+    buf << %(<div class="title">#{node.title}</div>) if node.title?
+    buf << %(<pre class="content">#{node.content}</pre>)
+    attribution = (node.attr? :attribution) ? (node.attr :attribution) : nil
+    citetitle = (node.attr? :citetitle) ? (node.attr :citetitle) : nil
+    if attribution || citetitle
+      buf << %(<div class="attribution">)
+      buf << %(<cite>#{citetitle}</cite>) if citetitle
+      if attribution
+        buf << '<br>' if citetitle
+        buf << %(&#8212; #{attribution})
       end
-      buf
+      buf << %(</div>)
     end
+    %(<div#{attrs}>#{buf}</div>)
   end
 
   def convert_video(node, opts = {})
@@ -1282,50 +1223,49 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     width = (node.attr? :width) ? (node.attr :width) : "100%"
     height = (node.attr? :height) ? (node.attr :height) : "100%"
     # we apply revealjs stretch class to the videoblock take all the place we can
-    Helpers.html_tag('div', { :id => node.id, :class => ['videoblock', node.style, node.role, (no_stretch ? nil : 'stretch'), ('fragment' if Helpers.step_or_role?(node))] }.merge(Helpers.data_attrs(node.attributes))) do
-      buf = +''
-      buf << %(<div class="title">#{node.captioned_title}</div>) if node.title?
-      case node.attr :poster
-      when 'vimeo'
-        unless (asset_uri_scheme = (node.attr :asset_uri_scheme, 'https')).empty?
-          asset_uri_scheme = %(#{asset_uri_scheme}:)
-        end
-        start_anchor = (node.attr? :start) ? "#at=#{node.attr :start}" : nil
-        delimiter = ['?']
-        loop_param = (node.option? 'loop') ? %(#{delimiter.pop || '&amp;'}loop=1) : ''
-        muted_param = (node.option? 'muted') ? %(#{delimiter.pop || '&amp;'}muted=1) : ''
-        src = %(#{asset_uri_scheme}//player.vimeo.com/video/#{node.attr :target}#{loop_param}#{muted_param}#{start_anchor})
-        # We need to delegate autoplay into the iframe starting with Chrome 62 (and other browsers too)
-        # See https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#iframe
-        buf << Helpers.html_tag('iframe', width: width, height: height, src: src, frameborder: 0,
-          webkitAllowFullScreen: true, mozallowfullscreen: true, allowFullScreen: true,
-          'data-autoplay' => (node.option? 'autoplay'),
-          allow: ((node.option? 'autoplay') ? "autoplay" : nil))
-      when 'youtube'
-        unless (asset_uri_scheme = (node.attr :asset_uri_scheme, 'https')).empty?
-          asset_uri_scheme = %(#{asset_uri_scheme}:)
-        end
-        params = ['rel=0']
-        params << "start=#{node.attr :start}" if node.attr? :start
-        params << "end=#{node.attr :end}" if node.attr? :end
-        params << "loop=1" if node.option? 'loop'
-        params << "mute=1" if node.option? 'muted'
-        params << "controls=0" if node.option? 'nocontrols'
-        src = %(#{asset_uri_scheme}//www.youtube.com/embed/#{node.attr :target}?#{params * '&amp;'})
-        # We need to delegate autoplay into the iframe starting with Chrome 62 (and other browsers too)
-        # See https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#iframe
-        buf << Helpers.html_tag('iframe', width: width, height: height, src: src,
-          frameborder: 0, allowfullscreen: !(node.option? 'nofullscreen'),
-          'data-autoplay' => (node.option? 'autoplay'),
-          allow: ((node.option? 'autoplay') ? "autoplay" : nil))
-      else
-        buf << Helpers.html_tag('video', { src: node.media_uri(node.attr :target), width: width, height: height,
-          poster: ((node.attr :poster) ? node.media_uri(node.attr :poster) : nil),
-          'data-autoplay' => (node.option? 'autoplay'), controls: !(node.option? 'nocontrols'),
-          loop: (node.option? 'loop') }, 'Your browser does not support the video tag.')
+    attrs = Helpers.attributes({ :id => node.id, :class => ['videoblock', node.style, node.role, (no_stretch ? nil : 'stretch'), ('fragment' if Helpers.step_or_role?(node))] }.merge(Helpers.data_attrs(node.attributes)))
+    buf = +''
+    buf << %(<div class="title">#{node.captioned_title}</div>) if node.title?
+    case node.attr :poster
+    when 'vimeo'
+      unless (asset_uri_scheme = (node.attr :asset_uri_scheme, 'https')).empty?
+        asset_uri_scheme = %(#{asset_uri_scheme}:)
       end
-      buf
+      start_anchor = (node.attr? :start) ? "#at=#{node.attr :start}" : nil
+      delimiter = ['?']
+      loop_param = (node.option? 'loop') ? %(#{delimiter.pop || '&amp;'}loop=1) : ''
+      muted_param = (node.option? 'muted') ? %(#{delimiter.pop || '&amp;'}muted=1) : ''
+      src = %(#{asset_uri_scheme}//player.vimeo.com/video/#{node.attr :target}#{loop_param}#{muted_param}#{start_anchor})
+      # We need to delegate autoplay into the iframe starting with Chrome 62 (and other browsers too)
+      # See https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#iframe
+      buf << %(<iframe#{Helpers.attributes(width: width, height: height, src: src, frameborder: 0,
+        webkitAllowFullScreen: true, mozallowfullscreen: true, allowFullScreen: true,
+        'data-autoplay' => (node.option? 'autoplay'),
+        allow: ((node.option? 'autoplay') ? "autoplay" : nil))}></iframe>)
+    when 'youtube'
+      unless (asset_uri_scheme = (node.attr :asset_uri_scheme, 'https')).empty?
+        asset_uri_scheme = %(#{asset_uri_scheme}:)
+      end
+      params = ['rel=0']
+      params << "start=#{node.attr :start}" if node.attr? :start
+      params << "end=#{node.attr :end}" if node.attr? :end
+      params << "loop=1" if node.option? 'loop'
+      params << "mute=1" if node.option? 'muted'
+      params << "controls=0" if node.option? 'nocontrols'
+      src = %(#{asset_uri_scheme}//www.youtube.com/embed/#{node.attr :target}?#{params * '&amp;'})
+      # We need to delegate autoplay into the iframe starting with Chrome 62 (and other browsers too)
+      # See https://developers.google.com/web/updates/2017/09/autoplay-policy-changes#iframe
+      buf << %(<iframe#{Helpers.attributes(width: width, height: height, src: src,
+        frameborder: 0, allowfullscreen: !(node.option? 'nofullscreen'),
+        'data-autoplay' => (node.option? 'autoplay'),
+        allow: ((node.option? 'autoplay') ? "autoplay" : nil))}></iframe>)
+    else
+      buf << %(<video#{Helpers.attributes({ src: node.media_uri(node.attr :target), width: width, height: height,
+        poster: ((node.attr :poster) ? node.media_uri(node.attr :poster) : nil),
+        'data-autoplay' => (node.option? 'autoplay'), controls: !(node.option? 'nocontrols'),
+        loop: (node.option? 'loop') })}>Your browser does not support the video tag.</video>)
     end
+    %(<div#{attrs}>#{buf}</div>)
   end
 
   def convert_document(node, opts = {})
@@ -1362,7 +1302,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     buf << %(<title>#{node.doctitle sanitize: true, use_fallback: true}</title>)
 
     [:description, :keywords, :author, :copyright].each do |key|
-      buf << Helpers.html_tag('meta', name: key.to_s, content: (node.attr key)) if node.attr? key
+      buf << %(<meta#{Helpers.attributes(name: key.to_s, content: (node.attr key))}>) if node.attr? key
     end
     if node.attr? 'favicon'
       if (icon_href = node.attr 'favicon').empty?
@@ -1378,22 +1318,22 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
     linkcss = (node.attr? 'linkcss')
     buf << %(<link rel="stylesheet" href="#{revealjsdir}/dist/reset.css"><link rel="stylesheet" href="#{revealjsdir}/dist/reveal.css">)
     # Default theme required even when using custom theme
-    buf << Helpers.html_tag('link', rel: 'stylesheet', href: (node.attr :revealjs_customtheme, %(#{revealjsdir}/dist/theme/#{node.attr 'revealjs_theme', 'black'}.css)), id: 'theme')
+    buf << %(<link#{Helpers.attributes(rel: 'stylesheet', href: (node.attr :revealjs_customtheme, %(#{revealjsdir}/dist/theme/#{node.attr 'revealjs_theme', 'black'}.css)), id: 'theme')}>)
     buf << %(<!--This CSS is generated by the Asciidoctor reveal.js converter to further integrate AsciiDoc's existing semantic with reveal.js-->)
     buf << %(<style type="text/css">#{Asciidoctor::Revealjs::Stylesheet::COMPATIBILITY}</style>)
     if node.attr? :icons, 'font'
       # iconfont-remote is implicitly set by Asciidoctor core. See https://github.com/asciidoctor/asciidoctor.org/issues/361
       if node.attr? 'iconfont-remote'
         if (iconfont_cdn = (node.attr 'iconfont-cdn'))
-          buf << Helpers.html_tag('link', rel: 'stylesheet', href: iconfont_cdn)
+          buf << %(<link#{Helpers.attributes(rel: 'stylesheet', href: iconfont_cdn)}>)
         else
           # default icon font is Font Awesome
           font_awesome_version = (node.attr 'font-awesome-version', '5.15.1')
-          buf << Helpers.html_tag('link', rel: 'stylesheet', href: %(#{cdn_base}/font-awesome/#{font_awesome_version}/css/all.min.css))
-          buf << Helpers.html_tag('link', rel: 'stylesheet', href: %(#{cdn_base}/font-awesome/#{font_awesome_version}/css/v4-shims.min.css))
+          buf << %(<link#{Helpers.attributes(rel: 'stylesheet', href: %(#{cdn_base}/font-awesome/#{font_awesome_version}/css/all.min.css))}>)
+          buf << %(<link#{Helpers.attributes(rel: 'stylesheet', href: %(#{cdn_base}/font-awesome/#{font_awesome_version}/css/v4-shims.min.css))}>)
         end
       else
-        buf << Helpers.html_tag('link', rel: 'stylesheet', href: (node.normalize_web_path %(#{node.attr 'iconfont-name', 'font-awesome'}.css), (node.attr 'stylesdir', ''), false))
+        buf << %(<link#{Helpers.attributes(rel: 'stylesheet', href: (node.normalize_web_path %(#{node.attr 'iconfont-name', 'font-awesome'}.css), (node.attr 'stylesdir', ''), false))}>)
       end
     end
     buf << Helpers.generate_stem(node, cdn_base).to_s
@@ -1402,7 +1342,7 @@ class Asciidoctor::Revealjs::Converter < ::Asciidoctor::Converter::Base
       buf << (syntax_hl.docinfo :head, node, cdn_base_url: cdn_base, linkcss: linkcss, self_closing_tag_slash: '/').to_s
     end
     if node.attr? :customcss
-      buf << Helpers.html_tag('link', rel: 'stylesheet', href: ((customcss = node.attr :customcss).empty? ? 'asciidoctor-revealjs.css' : customcss))
+      buf << %(<link#{Helpers.attributes(rel: 'stylesheet', href: ((customcss = node.attr :customcss).empty? ? 'asciidoctor-revealjs.css' : customcss))}>)
     end
     unless (_docinfo = node.docinfo :head, '-revealjs.html').empty?
       buf << _docinfo.to_s
