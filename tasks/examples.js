@@ -1,12 +1,11 @@
 import { readdirSync } from 'node:fs'
 import path from 'node:path'
-import log from 'bestikk-log'
 import { convertFile } from 'asciidoctor'
 import { register } from '../js/src/index.js'
 
 const examplesDir = 'examples'
 
-log.task('examples')
+console.log('examples')
 
 // Register the native reveal.js converter
 register()
@@ -20,9 +19,9 @@ for (const filename of readdirSync(examplesDir)) {
     try {
       // convert handlers are async in Asciidoctor.js 4.0
       await convertFile(path.join(examplesDir, filename), options)
-      log.info(`Successfully converted ${filename}`)
+      console.log(`Successfully converted ${filename}`)
     } catch (err) {
-      log.error(`Error converting ${filename}: ${err}`)
+      console.error(`Error converting ${filename}: ${err}`)
     }
   }
 }

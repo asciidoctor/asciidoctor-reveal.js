@@ -5,8 +5,18 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## master (unreleased)
 
+### Enhancements
+
+  * Upgrade to reveal.js 6.0.1
+  * Reimplement the converter in pure Ruby (drop the `asciidoctor-templates-compiler` Slim templates)
+  * Port the converter to native Asciidoctor.js 4.0 (Node 18+, async convert handlers, validated byte-for-byte against the Ruby converter)
+  * Update Asciidoctor to 4.0.0-alpha.6 and drop the workarounds that are no longer needed
+
 ### Build
 
+  * Replace `bestikk-log` with plain `console` logging in the build tasks
+  * Bump the Volta-pinned Node.js to 24.16.0
+  * Improve the Renovate configuration for smaller, scheduled pull requests
   * Automate the release process via GitHub Actions, triggered from the Actions UI with a version input
   * Add a workflow to begin the next development version after a final release
   * Mark GitHub releases as pre-releases automatically for pre-release versions
