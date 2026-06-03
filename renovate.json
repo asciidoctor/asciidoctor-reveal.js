@@ -7,19 +7,44 @@
     "asciidoctor/asciidoctor-reveal.js"
   ],
   "labels": [
-    ":link: dependencies"
+    "dependencies"
   ],
-  "commitMessagePrefix": ":arrow_up:",
-  "separateMajorMinor": true,
   "extends": [
     ":preserveSemverRanges",
-    "group:all",
-    ":maintainLockFilesMonthly"
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)"
+  ],
+  "schedule": [
+    "before 6am on monday"
+  ],
+  "minimumReleaseAge": "7 days",
+  "internalChecksFilter": "strict",
+  "prConcurrentLimit": 3,
+  "prHourlyLimit": 0,
+  "separateMajorMinor": true,
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "matchDepTypes": ["devDependencies"],
+      "groupName": "npm dev dependencies (non-major)"
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchDepTypes": ["dependencies"],
+      "groupName": "npm dependencies (non-major)"
+    },
+    {
+      "matchManagers": ["bundler"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "ruby dependencies (non-major)"
+    }
   ],
   "lockFileMaintenance": {
-    "extends": [
-      "group:all"
-    ],
-    "commitMessageAction": "Update"
+    "enabled": true,
+    "schedule": [
+      "before 6am on monday"
+    ]
   }
 }
