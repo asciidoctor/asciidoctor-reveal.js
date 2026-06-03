@@ -1,4 +1,0 @@
-= html_tag('div', { :id => id, :class => ['literalblock', role, ('fragment' if (option? :step) || (attr? 'step'))] }.merge(data_attrs(@attributes)))
-  - if title?
-    .title=title
-  .content: pre class=(!(@document.attr? :prewrap) || (option? 'nowrap') ? 'nowrap' : nil) =content

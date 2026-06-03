@@ -1,151 +1,175 @@
 #!/usr/bin/env rake
+# frozen_string_literal: true
 
 require 'asciidoctor'
 require 'asciidoctor/doctest'
 require 'colorize'
-require 'tilt'
 require 'rake/testtask'
 
-CONVERTER_FILE = 'lib/asciidoctor-revealjs/converter.rb'
-JS_FILE = 'build/asciidoctor-reveal.js'
-DIST_FILE = 'dist/main.js'
-TEMPLATES_DIR = 'templates'
 PUBLIC_DIR = 'public'
 
-file CONVERTER_FILE => FileList["#{TEMPLATES_DIR}/*"] do
-  build_converter :fast
-end
-
-namespace :build do
-  desc 'Compile Slim templates and generate converter.rb'
-  task :converter => 'clean' do
-    # NOTE: use :pretty if you want to debug the generated code
-    build_converter :fast
-  end
-
-  desc 'Compile Slim templates and generate converter.rb for Opal'
-  task 'converter:opal' => 'clean' do
-    build_converter :opal
-  end
-
-  desc "Transcompile to JavaScript and generate #{JS_FILE}"
-  task :js => 'converter:opal' do
-    require 'opal'
-
-    builder = Opal::Builder.new(compiler_options: {
-      dynamic_require_severity: :error,
-    })
-    builder.append_paths 'lib'
-    builder.build 'asciidoctor-revealjs'
-
-    mkdir_p [File.dirname(JS_FILE), File.dirname(DIST_FILE)]
-    File.open(JS_FILE, 'w') do |file|
-      template = File.read('src/asciidoctor-revealjs.tmpl.js')
-      template['//OPAL-GENERATED-CODE//'] = builder.to_s
-      file << template
-    end
-    File.binwrite "#{JS_FILE}.map", builder.source_map
-
-    cp JS_FILE, DIST_FILE, :verbose => true
-  end
-end
-
-task :build => 'build:converter'
-
+desc 'Clean public directory'
 task :clean do
-  rm_rf CONVERTER_FILE
   rm_rf PUBLIC_DIR
 end
 
-def build_converter(mode = :pretty)
-  #require 'asciidoctor-templates-compiler'
-  require_relative 'lib/asciidoctor-templates-compiler'
-  require 'slim-htag'
-
-  generator = if mode == :opal
-    Temple::Generators::ArrayBuffer.new(freeze_static: false)
-  else
-    Temple::Generators::StringBuffer
-  end
-
-  File.open(CONVERTER_FILE, 'w') do |file|
-    puts "Generating #{file.path} (mode: #{mode})."
-
-    Asciidoctor::TemplatesCompiler::RevealjsSlim.compile_converter(
-      templates_dir: TEMPLATES_DIR,
-      class_name: 'Asciidoctor::Revealjs::Converter',
-      register_for: ['revealjs', 'reveal.js'],
-      backend_info: {
-        basebackend: 'html',
-        outfilesuffix: '.html',
-        filetype: 'html',
-        supports_templates: true
-      },
-      delegate_backend: 'html5',
-      engine_opts: {
-        generator: generator,
-      },
-      pretty: (mode == :pretty),
-      output: file
-    )
-  end
+# Loads the converter so its backend is registered with Asciidoctor.
+desc 'Load converter'
+task 'load-converter' do
+  require_relative 'lib/asciidoctor_revealjs'
 end
 
 DocTest::RakeTasks.new do |t|
   t.output_examples :html, path: 'test/doctest'
-  t.input_examples :asciidoc, path: [ *DocTest.examples_path, 'examples' ]
+  t.input_examples :asciidoc, path: [*DocTest.examples_path, 'examples']
   t.converter = DocTest::HTML::Converter
   t.converter_opts = { backend_name: 'revealjs' }
 end
 
 Rake::TestTask.new(:test) do |t|
-  t.test_files = FileList['test/asciidoctor-revealjs/*_test.rb']
+  t.test_files = FileList['test/asciidoctor_revealjs/*_test.rb']
   t.warning = false
 end
 
-task 'prepare-converter' do
-  # Run as an external process to ensure that it will not affect tests
-  # environment with extra loaded modules (especially slim).
-  `bundle exec rake #{CONVERTER_FILE}`
-
-  require_relative 'lib/asciidoctor-revealjs'
-end
-
 namespace :examples do
-  desc 'Converts all the test slides into fully working examples that you can look in a browser'
+  # The examples reference reveal.js assets relatively (reveal.js/dist/...), so a
+  # local copy must live under examples/. That directory is gitignored, hence the
+  # copy from node_modules on demand.
+  desc 'Copy reveal.js assets into the examples directory'
+  task :assets do
+    src = File.expand_path('node_modules/reveal.js', __dir__)
+    dest = File.expand_path('examples/reveal.js', __dir__)
+    raise "reveal.js not found at #{src}; run `npm install` first" unless Dir.exist?(src)
+
+    FileUtils.rm_rf(dest)
+    FileUtils.cp_r(src, dest)
+    puts "Copied reveal.js assets to #{dest}"
+  end
+
   # converted slides will be put in examples/ directory
-  task :convert => 'build:converter' do
-    require 'slim-htag'
-    require_relative 'lib/asciidoctor-revealjs'
-    Dir.glob('examples/*.adoc') do |_file|
-      print "Converting file #{_file}... "
-      out = Asciidoctor.convert_file _file,
-        :safe => 'safe',
-        :backend => 'revealjs',
-        :base_dir => 'examples'
+  desc 'Converts all the test slides into fully working examples that you can look in a browser'
+  task convert: ['load-converter', :assets] do
+    Dir.glob('examples/*.adoc') do |f|
+      print "Converting file #{f}... "
+      out = Asciidoctor.convert_file f,
+                                     safe: 'safe',
+                                     backend: 'revealjs',
+                                     base_dir: 'examples'
       if out.instance_of? Asciidoctor::Document
-        puts "✔️".green
+        puts '✔️'.green
       else
-        puts "✖️".red
+        puts '✖️'.red
       end
     end
   end
 
-  task :serve do
-    puts "View rendered examples at: http://127.0.0.1:5000/"
-    puts "Exit with Ctrl-C"
-    Dir.chdir('examples') do
-      `ruby -run -e httpd . -p 5000 -b 127.0.0.1`
+  desc 'Serve'
+  task serve: :assets do
+    # Minimal static file server built on the stdlib (no WEBrick / external gem).
+    # Serves the examples/ directory and exposes an auto-generated index listing
+    # every HTML page found there.
+    require 'socket'
+
+    host = '127.0.0.1'
+    port = 5000
+    root = File.expand_path('examples', __dir__)
+
+    content_types = {
+      '.html' => 'text/html; charset=utf-8',
+      '.css' => 'text/css; charset=utf-8',
+      '.js' => 'text/javascript; charset=utf-8',
+      '.mjs' => 'text/javascript; charset=utf-8',
+      '.json' => 'application/json; charset=utf-8',
+      '.svg' => 'image/svg+xml',
+      '.png' => 'image/png',
+      '.jpg' => 'image/jpeg',
+      '.jpeg' => 'image/jpeg',
+      '.gif' => 'image/gif',
+      '.ico' => 'image/x-icon',
+      '.woff' => 'font/woff',
+      '.woff2' => 'font/woff2',
+      '.ttf' => 'font/ttf'
+    }.freeze
+
+    index_page = lambda do
+      items = Dir.glob('*.html', base: root).sort.map do |name|
+        %(      <li><a href="/#{name}">#{name}</a></li>)
+      end.join("\n")
+      <<~HTML
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <title>asciidoctor-revealjs examples</title>
+        </head>
+        <body>
+          <h1>Examples</h1>
+          <ul>
+        #{items}
+          </ul>
+        </body>
+        </html>
+      HTML
+    end
+
+    respond = lambda do |client, status, type, body|
+      client.write "HTTP/1.1 #{status}\r\n"
+      client.write "Content-Type: #{type}\r\n"
+      client.write "Content-Length: #{body.bytesize}\r\n"
+      client.write "Connection: close\r\n\r\n"
+      client.write body
+    end
+
+    server = TCPServer.new(host, port)
+    puts "View rendered examples at: http://#{host}:#{port}/"
+    puts 'Exit with Ctrl-C'
+
+    begin
+      loop do
+        Thread.new(server.accept) do |client|
+          request_line = client.gets
+          next unless request_line
+
+          _method, raw_path, = request_line.split
+          # Drain the remaining request headers.
+          while (line = client.gets) && line != "\r\n"; end
+
+          path = raw_path.to_s.split('?', 2).first
+          decoded = path.gsub(/%([0-9A-Fa-f]{2})/) { Regexp.last_match(1).hex.chr }
+
+          if decoded == '/'
+            respond.call(client, '200 OK', 'text/html; charset=utf-8', index_page.call.b)
+            next
+          end
+
+          full = File.expand_path(decoded.sub(%r{\A/}, ''), root)
+          if full.start_with?("#{root}#{File::SEPARATOR}") && File.file?(full)
+            type = content_types[File.extname(full).downcase] || 'application/octet-stream'
+            respond.call(client, '200 OK', type, File.binread(full))
+          else
+            respond.call(client, '404 Not Found', 'text/plain; charset=utf-8', "Not Found\n".b)
+          end
+        rescue Errno::EPIPE, Errno::ECONNRESET
+          # Client disconnected before we finished writing; ignore.
+        ensure
+          client.close
+        end
+      end
+    rescue Interrupt
+      puts "\nBye"
+    ensure
+      server.close
     end
   end
 
+  desc 'Publish'
   task :publish do
     FileUtils.rm_rf PUBLIC_DIR
     Dir.mkdir PUBLIC_DIR
     Dir.mkdir "#{PUBLIC_DIR}/reveal.js"
     FileUtils.cp 'src/index.html', "#{PUBLIC_DIR}/index.html"
-    FileUtils.cp_r 'node_modules/reveal.js/', "#{PUBLIC_DIR}"
-    FileUtils.cp_r 'examples/images/', "#{PUBLIC_DIR}"
+    FileUtils.cp_r 'node_modules/reveal.js/', PUBLIC_DIR.to_s
+    FileUtils.cp_r 'examples/images/', PUBLIC_DIR.to_s
     FileUtils.cp 'examples/release-4.0.html', "#{PUBLIC_DIR}/release-4.0.html"
     FileUtils.cp 'examples/release-4.0.css', "#{PUBLIC_DIR}/release-4.0.css"
     FileUtils.cp 'examples/release-4.1.html', "#{PUBLIC_DIR}/release-4.1.html"
@@ -157,8 +181,14 @@ namespace :examples do
   end
 end
 
+desc 'Run all tests'
 task 'test' => 'doctest'
-task 'doctest:test' => 'prepare-converter'
-task 'doctest:generate' => 'prepare-converter'
-# When no task specified, run test.
-task :default => :test
+
+desc 'Test using doctest'
+task 'doctest:test' => 'load-converter'
+
+desc 'Generate doctest'
+task 'doctest:generate' => 'load-converter'
+
+desc 'No task specified, run tes'
+task default: :test

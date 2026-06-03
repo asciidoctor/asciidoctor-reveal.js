@@ -5,61 +5,51 @@ Short instructions that aim to help potential contributors.
 == Getting Started
 
 * Set up the Asciidoctor reveal.js plugin in xref:ruby-localversion[development mode]
-* Modify the {url-slim}[slim templates^] in `templates/`
-* Templates need to be compiled before being used, do so with:
+* Modify the converter, written in plain Ruby, in `lib/asciidoctor-revealjs/converter.rb`
 
- $ bundle exec rake build
+There is no build step: each AsciiDoc node is converted by a matching `convert_<node>` method.
 
-* Then using the following command will render slides with your template changes baked in:
+* Render slides with your changes using:
 
  $ bundle exec asciidoctor-revealjs <source.adoc>
 
 The next section will provide further help on how to use `print` statements or a debugger to assist development.
 
 
-== Inspect the template system
+== Inspect the converter
 
-To understand what you have access to in templates you can inject some Ruby.
-With the slim templating system, this is done by prepending the lines with a dash (`-`) and inserting a Ruby statement.
-Two complementary approaches can be used to explore the context offered by Asciidoctor through the template system:
+To understand what you have access to while converting a node you can inject some Ruby.
+Each `convert_<node>` method runs in the context of the node being converted (`self` is the node), so you can call node methods and inspect them directly.
+Two complementary approaches can be used to explore the context offered by Asciidoctor:
 
 * logging on the command line via print-like statements
 * jump into the context through an interactive debugger
 
-[NOTE]
---
-Debugging is only supported via the Ruby ecosystem.
-You need to recompile the templates when you make changes to them.
-This can be done by running:
-
- $ bundle exec rake build
---
-
 === Print debugging information
 
-For example to see which attributes are available, you can print them by adding these lines in the `.slim` file of interest:
+For example to see which attributes are available, you can print them by adding these lines inside the relevant `convert_<node>` method:
 
 ----
-- puts @document.attributes.inspect
-- puts @attributes.inspect
-- puts @document.methods
+puts @document.attributes.inspect
+puts @attributes.inspect
+puts @document.methods
 ----
 
 Other generally useful Ruby specific introspection:
 
 ----
-- puts instance_variables
-- puts local_variables
+puts instance_variables
+puts local_variables
 ----
 
 One might find `pp` to produce better output (and in some cases not):
 
 ----
-- require 'pp'
-- pp @document.attributes
+require 'pp'
+pp @document.attributes
 ----
 
-=== Interactively debug a template
+=== Interactively debug the converter
 
 Pry is a powerful debugger for Ruby that features tab-completion.
 It is very useful to discover a complex object hierarchy like what Asciidoctor offers.
@@ -70,33 +60,19 @@ It is very useful to discover a complex object hierarchy like what Asciidoctor o
 
 ==== Usage
 
-In order to be dropped into the debugger at a specific point in a template add the following two lines in the relevant `.slim` template file:
+In order to be dropped into the debugger at a specific point, add the following two lines inside the relevant `convert_<node>` method:
 
 ----
-- require 'pry'
-- binding.pry
+require 'pry'
+binding.pry
 ----
-
-Recompile the templates with:
-
- $ bundle exec rake build
 
 Then run `asciidoctor-revealjs` from the command-line to generate your document and you'll be dropped in the debugger:
 
 ----
 $ bundle exec asciidoctor-revealjs examples/video.adoc
-asciidoctor: WARNING: level-sections.adoc: line 29: section title out of sequence: expected level 2, got level 3
 
-From: /home/olivier/src/asciidoc/asciidoctor-reveal.js/templates/slim/section.html.slim @ line 3 :
-
-    1: - hide_title = (title = self.title) == '!'
-    2: - require 'pry'
- => 3: - binding.pry
-    4: / parent section of vertical slides set
-    5: - if @level == 1 && !(subsections = sections).empty?
-    6:   section
-    7:     section id=(hide_title ? nil : @id) data-transition=(attr 'data-transition') data-transition-speed=(attr 'data-transition-speed') data-background=(attr 'data-background') data-background-size=(attr 'data-background-size') data-background-repeat=(attr 'data-background-repeat') data-background-transition=(attr 'data-background-transition')
-    8:       - unless hide_title
+From: lib/asciidoctor-revealjs/converter.rb @ line ... :
 
 [1] pry(#<Asciidoctor::Section>)>
 ----
@@ -111,12 +87,6 @@ You can also query Asciidoctor's documentation:
 
 If you install the `pry-byebug` gem you get additional debugging capabilities.
 See the gem's documentation for details.
-
-Since 1.1.0, templates are compiled.
-It is easier to inject the debug triggering statements and use the templates directly instead of debugging compiled templates.
-You can call the slim templates directly with:
-
- $ bundle exec asciidoctor-revealjs --trace -T templates/ examples/customcss.adoc
 
 === References
 
@@ -136,7 +106,6 @@ done with `bundler`:
 
  $ bundle config --local github.https true
  $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
- $ bundle exec rake build
 
 Go to `test/doctest` folder and install `reveal.js`:
 
@@ -247,34 +216,6 @@ NOTE: The relative portion of the last command is where you are installing the l
 
 Then proceed as documented in the `README.adoc`.
 
-[[node-binary-compatibility]]
-=== Binary package compatibility with Asciidoctor.js
-
-Asciidoctor.js is source-to-source compiled into JavaScript from Ruby using Opal.
-The JavaScript generated requires a specific version of the Opal-runtime for it to work with Node.js.
-This project is source-to-source compiled into JavaScript from Ruby using Opal too.
-In order for Asciidoctor.js to be able to call code from this converter, the versions of Opal (both runtime and compiler) must be compatible.
-Right now we track the exact git revision of Opal used by Asciidoctor.js and make sure that we match.
-Here is how:
-
-Versions known to work together can be found by looking at the Asciidoctor.js release notes: https://github.com/asciidoctor/asciidoctor.js/releases.
-Then that Opal version and git revision (if required) must be specified in `asciidoctor-revealjs.gemspec`.
-
-Starting with 3.0.0, we aim to retain binary compatibility between Asciidoctor.js and Asciidoctor reveal.js.
-This should allow other Asciidoctor extensions to be called along with this converter.
-Asciidoctor.js is no longer a direct dependency but should be seen as a tool that powers this converter.
-We need to allow users to have flexibility in the version they choose to run.
-Asciidoctor.js maintainers told us that they are going to consider binary package incompatibility a major break, and so we adjusted our README to tell users to install with a specific version range.
-
-We will track and maintain the README on the major version supported and recommended:
-
-* In the xref:setup:node-js-setup.adoc[version range to install by default] for a given release (and on master)
-* In the xref:setup:compatibility-matrix.adoc#asciidoctorjs-compatibility-matrix[compatibility matrix]
-
-See https://github.com/asciidoctor/asciidoctor-reveal.js/issues/187#issuecomment-570771473[this issue] for background details on that topic.
-
-Asciidoctor.js versioning policy is xref:asciidoctor.js:project:version-and-lifecycle-policies.adoc[available here].
-
 === Debugging
 
 To debug the JavaScript application, just add `--node-arg=--inspect-brk` to the npx command to run the application.
@@ -338,8 +279,6 @@ You can get the list of all contributors using `git` (don't forget to replace `%
 ====
 
 . Make sure that the highlight plugin code embed in _lib/asciidoctor-revealjs/highlightjs.rb_ is up-to-date with the version of reveal.js
-. Do we need to do anything regarding our Opal dependency and Asciidoctor.js?
-See <<node-binary-compatibility,our section on the topic>>.
 . Make sure the changelog entry for the version you are about to release is committed and pushed to `master`.
 
 === Release

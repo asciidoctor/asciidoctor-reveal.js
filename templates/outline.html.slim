@@ -1,9 +1,0 @@
-- unless sections.empty?
-  - toclevels ||= (document.attr 'toclevels', DEFAULT_TOCLEVELS).to_i
-  - slevel = section_level sections.first
-  ol class="sectlevel#{slevel}"
-    - sections.each do |sec|
-      li
-        a href="##{sec.id}" =section_title sec
-        - if (sec.level < toclevels) && (child_toc = converter.convert sec, 'outline')
-          = child_toc
