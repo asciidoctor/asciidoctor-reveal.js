@@ -1,7 +1,7 @@
 # Native JavaScript reveal.js converter
 
 A native JavaScript implementation of the Asciidoctor reveal.js converter, built
-on the **Asciidoctor.js 4.0** converter API (`@asciidoctor/core@>=4.0.0-alpha.5`).
+on the **Asciidoctor.js 4.0** converter API (`asciidoctor@>=4.0.0-alpha.6`).
 
 Asciidoctor.js 4.0 is a native JavaScript rewrite of Asciidoctor (no longer an
 Opal transpilation), so this converter is a direct, idiomatic port of the Ruby
@@ -10,7 +10,7 @@ converter in `../lib/asciidoctor_revealjs/` rather than transpiled output.
 ## Requirements
 
 - **Node.js >= 18** (the Asciidoctor.js 4.0 ESM build uses import attributes).
-- `@asciidoctor/core@>=4.0.0-alpha.5` (peer dependency).
+- `asciidoctor@>=4.0.0-alpha.6` (peer dependency).
 
 This code ships as part of the `@asciidoctor/reveal.js` package: the repository's
 root `package.json` declares `"type": "module"` and points `main` at
@@ -19,7 +19,7 @@ root `package.json` declares `"type": "module"` and points `main` at
 ## Usage
 
 ```js
-import { convert } from '@asciidoctor/core'
+import { convert } from 'asciidoctor'
 import { register } from '@asciidoctor/reveal.js'
 
 register() // registers the `revealjs` / `reveal.js` backends and the highlight.js adapter
@@ -48,11 +48,6 @@ cat slides.adoc | node js/bin/asciidoctor-revealjs -    # read from stdin
 Run `--help` for the full option list. The standalone `@asciidoctor/cli` package
 is **not** used — it is CommonJS and still calls the removed `asciidoctor()`
 3.x factory; the `asciidoctor` meta package bundles core 4.0 + an ESM CLI instead.
-
-> Note: `import … from 'asciidoctor'` (the package main) is broken with
-> `@asciidoctor/core@4.0.0-alpha.5` (it re-exports a non-existent `default`), so
-> the converter still imports from `@asciidoctor/core` (resolved transitively via
-> `asciidoctor`); only the bin imports the working `asciidoctor/cli` subpath.
 
 ## Layout
 
@@ -87,8 +82,6 @@ presentations in `../examples`, 65 are identical. The remaining differences are
 - Convert handlers are **async** (`await node.content()`); per-slide footnote
   state must be mutated in document order, so vertical slides/blocks are
   converted sequentially (never with `Promise.all`).
-- `node.findBy()` throws on `List` nodes when the tree contains a description
-  list, so a local `safeFindBy` traversal is used instead.
 
 ## Test
 

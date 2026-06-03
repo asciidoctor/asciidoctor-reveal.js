@@ -3,7 +3,7 @@
 
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { convert } from '@asciidoctor/core'
+import { convert } from 'asciidoctor'
 import { register, getVersion } from '../src/index.js'
 
 register()

@@ -1,7 +1,7 @@
 import { readdirSync } from 'node:fs'
 import path from 'node:path'
 import log from 'bestikk-log'
-import { convertFile } from '@asciidoctor/core'
+import { convertFile } from 'asciidoctor'
 import { register } from '../js/src/index.js'
 
 const examplesDir = 'examples'
