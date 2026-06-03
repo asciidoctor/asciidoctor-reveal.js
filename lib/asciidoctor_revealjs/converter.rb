@@ -945,12 +945,8 @@ module Asciidoctor
         buf << %(</head><body><div class="reveal"><div class="slides">)
         # Any section element inside of this container is displayed as a slide
         buf << slides.call
-        buf << %(</div></div><script src="#{revealjsdir}/dist/reveal.js"></script>)
-        # Supports easy AsciiDoc syntax for background color, then the reveal.js configuration
-        buf << %(<script>#{Asciidoctor::Revealjs::RevealJsOptions.script(node, revealjsdir)}</script>)
-        # Workaround the "Only direct descendants of a slide section can be stretched" limitation in reveal.js
-        # https://github.com/hakimel/reveal.js/issues/2584
-        buf << Asciidoctor::Revealjs::RevealJsOptions.stretch_nested_elements_script(node)
+        buf << %(</div></div>)
+        buf << Asciidoctor::Revealjs::RevealJsOptions.script(node, revealjsdir)
 
         buf << (syntax_hl.docinfo :footer, node, cdn_base_url: cdn_base, linkcss: linkcss, self_closing_tag_slash: '/').to_s if syntax_hl&.docinfo? :footer
         unless (docinfo_content = (node.docinfo :footer, '.html')).empty?

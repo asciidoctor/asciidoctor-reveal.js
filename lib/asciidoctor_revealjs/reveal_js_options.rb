@@ -218,7 +218,7 @@ module Asciidoctor
       end
 
       # The Reveal.initialize(...) call, including the dependencies block.
-      def initialize_script(node, revealjsdir)
+      def initialize_script(node)
         [
           '// More info about config & dependencies:',
           '// - https://github.com/hakimel/reveal.js#configuration',
@@ -227,29 +227,28 @@ module Asciidoctor
           render_options(node),
           '',
           '  // Optional libraries used to extend on reveal.js',
-          '  dependencies: [',
-          "      #{revealjs_dependencies(node, revealjsdir)}",
-          '  ],',
+          "  plugins: [#{plugins(node)}],",
           '});'
         ].join("\n")
       end
 
-      # The reveal.js plugin dependencies enabled for this document, formatted as
-      # the entries of the Reveal.initialize +dependencies+ array.
-      def revealjs_dependencies(node, revealjsdir)
-        dependencies = []
-        dependencies << "{ src: '#{revealjsdir}/plugin/zoom/zoom.js', async: true, callback: function () { Reveal.registerPlugin(RevealZoom) } }" unless node.attr? 'revealjs_plugin_zoom',
-                                                                                                                                                                    'disabled'
-        dependencies << "{ src: '#{revealjsdir}/plugin/notes/notes.js', async: true, callback: function () { Reveal.registerPlugin(RevealNotes) } }" unless node.attr? 'revealjs_plugin_notes',
-                                                                                                                                                                       'disabled'
-        dependencies << "{ src: '#{revealjsdir}/plugin/search/search.js', async: true, callback: function () { Reveal.registerPlugin(RevealSearch) } }" if node.attr? 'revealjs_plugin_search',
-                                                                                                                                                                      'enabled'
-        dependencies.join(",\n      ")
+      def plugins(node)
+        result = []
+        result << 'RevealZoom' unless node.attr? 'revealjs_plugin_zoom', 'disabled'
+        result << 'RevealNotes' unless node.attr? 'revealjs_plugin_notes', 'disabled'
+        result << 'RevealSearch' if node.attr? 'revealjs_plugin_search', 'enabled'
+        result.join(', ')
       end
 
       # The full content of the reveal.js configuration <script> element.
       def script(node, revealjsdir)
-        "#{BACKGROUND_COLOR_FIX}\n\n#{initialize_script(node, revealjsdir)}"
+        result = []
+        result << %(<script src="#{revealjsdir}/dist/reveal.js"></script>)
+        result << %(<script src="#{revealjsdir}/dist/plugin/zoom.js"></script>) unless node.attr? 'revealjs_plugin_zoom', 'disabled'
+        result << %(<script src="#{revealjsdir}/dist/plugin/notes.js"></script>) unless node.attr? 'revealjs_plugin_notes', 'disabled'
+        result << %(<script src="#{revealjsdir}/dist/plugin/search.js"></script>) if node.attr? 'revealjs_plugin_search', 'enabled'
+        result << %(<script>#{BACKGROUND_COLOR_FIX}\n\n#{initialize_script(node)}\n\n#{stretch_nested_elements(node)}</script>)
+        result.join LF
       end
 
       # Static helper functions for the "stretch nested elements" workaround.
@@ -311,17 +310,17 @@ module Asciidoctor
         }
       JS
 
-      # The <script> that works around the reveal.js limitation "Only direct
+      # The JavaScript that works around the reveal.js limitation "Only direct
       # descendants of a slide section can be stretched", wiring the static helpers
       # to the relevant reveal.js events at the document's configured size.
       # See https://github.com/hakimel/reveal.js/issues/2584
-      def stretch_nested_elements_script(node)
+      def stretch_nested_elements(node)
         width = node.attr 'revealjs_width', 960
         height = node.attr 'revealjs_height', 700
         listeners = %w[slidechanged ready resize].map do |event|
           "Reveal.addEventListener('#{event}', function () {\n  layoutSlideContents(#{width}, #{height})\n});"
         end.join("\n")
-        "<script>#{STRETCH_HELPERS}\n\n#{listeners}</script>"
+        "#{STRETCH_HELPERS}\n\n#{listeners}"
       end
     end
   end

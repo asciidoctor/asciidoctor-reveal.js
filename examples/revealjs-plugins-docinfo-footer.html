@@ -1,20 +1,22 @@
-<script src="revealjs-plugins/menu/menu.js"></script>
-<link rel="stylesheet" href="revealjs-plugins/chalkboard/style.css">
-<script src="revealjs-plugins/chalkboard/plugin.js"></script>
 <script>
   Reveal.configure({
+    controls: true,
     menu: {
-      side: 'right',
-      openButton: false,
+      markers: true
     },
-    keyboard: {
-      67: function() { RevealChalkboard.toggleNotesCanvas() },	// toggle notes canvas when 'c' is pressed
-      66: function() { RevealChalkboard.toggleChalkboard() },	// toggle chalkboard when 'b' is pressed
-      46: function() { RevealChalkboard.clear() }, // clear chalkboard when 'DEL' is pressed
-      8: function() { RevealChalkboard.reset() }, // reset chalkboard data on current slide when 'BACKSPACE' is pressed
-      68: function() { RevealChalkboard.download() },	// download recorded chalkboard drawing when 'd' is pressed
+    customcontrols: {
+      controls: [
+        { icon: '<i class="fa fa-pen-square"></i>',
+          title: 'Toggle chalkboard (B)',
+          action: 'RevealChalkboard.toggleChalkboard();'
+        },
+        { icon: '<i class="fa fa-pen"></i>',
+          title: 'Toggle notes canvas (C)',
+          action: 'RevealChalkboard.toggleNotesCanvas();'
+        }
+      ]
     }
   })
-  Reveal.registerPlugin(RevealMenu)
-  Reveal.registerPlugin(RevealChalkboard)
+  RevealChalkboard.init(Reveal)
+  RevealCustomControls.init(Reveal)
 </script>

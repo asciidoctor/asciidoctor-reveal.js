@@ -54,7 +54,7 @@ module Asciidoctor
           theme_href = if doc.attr? 'highlightjs-theme'
                          doc.attr 'highlightjs-theme'
                        else
-                         "#{revealjsdir}/plugin/highlight/monokai.css"
+                         "#{revealjsdir}/dist/plugin/highlight/monokai.css"
                        end
           base_url = doc.attr 'highlightjsdir', %(#{opts[:cdn_base_url]}/highlight.js/#{HIGHLIGHT_JS_VERSION})
           %(<link rel="stylesheet" href="#{theme_href}"#{opts[:self_closing_tag_slash]}>

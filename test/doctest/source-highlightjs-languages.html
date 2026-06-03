@@ -29,6 +29,8 @@ B = gauss_filter_3_3(A);</code></pre>
   </section>
 </div>
 <script src="reveal.js/dist/reveal.js"></script>
+<script src="reveal.js/dist/plugin/zoom.js"></script>
+<script src="reveal.js/dist/plugin/notes.js"></script>
 <script>
   Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
     if (slide.getAttribute('data-background-color')) return;
@@ -187,13 +189,9 @@ B = gauss_filter_3_3(A);</code></pre>
     pdfMaxPagesPerSlide: 1,
 
     // Optional libraries used to extend on reveal.js
-    dependencies: [
-        { src: 'reveal.js/plugin/zoom/zoom.js', async: true, callback: function () { Reveal.registerPlugin(RevealZoom) } },
-        { src: 'reveal.js/plugin/notes/notes.js', async: true, callback: function () { Reveal.registerPlugin(RevealNotes) } }
-    ],
+    plugins: [RevealZoom, RevealNotes],
   });
-</script>
-<script>
+
   var dom = {};
   dom.slides = document.querySelector('.reveal .slides');
 
