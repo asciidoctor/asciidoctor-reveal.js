@@ -1,0 +1,415 @@
+.reveal div.right {
+  float: right
+}
+
+/* source blocks */
+.reveal .listingblock.stretch > .content {
+  height: 100%
+}
+
+.reveal .listingblock.stretch > .content > pre {
+  height: 100%
+}
+
+.reveal .listingblock.stretch > .content > pre > code {
+  height: 100%;
+  max-height: 100%
+}
+
+/* auto-animate feature */
+/* hide the scrollbar when auto-animating source blocks */
+.reveal pre[data-auto-animate-target] {
+  overflow: hidden;
+}
+
+.reveal pre[data-auto-animate-target] code {
+  overflow: hidden;
+}
+
+/* add a min width to avoid horizontal shift on line numbers */
+code.hljs .hljs-ln-line.hljs-ln-n {
+  min-width: 1.25em;
+}
+
+/* tables */
+table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+
+table {
+  margin-bottom: 1.25em;
+  border: solid 1px #dedede
+}
+
+table thead tr th, table thead tr td, table tfoot tr th, table tfoot tr td {
+  padding: .5em .625em .625em;
+  font-size: inherit;
+  text-align: left
+}
+
+table tr th, table tr td {
+  padding: .5625em .625em;
+  font-size: inherit
+}
+
+table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoot tr td {
+  display: table-cell;
+  line-height: 1.6
+}
+
+td.tableblock > .content {
+  margin-bottom: 1.25em
+}
+
+td.tableblock > .content > :last-child {
+  margin-bottom: -1.25em
+}
+
+table.tableblock, th.tableblock, td.tableblock {
+  border: 0 solid #dedede
+}
+
+table.grid-all > thead > tr > .tableblock, table.grid-all > tbody > tr > .tableblock {
+  border-width: 0 1px 1px 0
+}
+
+table.grid-all > tfoot > tr > .tableblock {
+  border-width: 1px 1px 0 0
+}
+
+table.grid-cols > * > tr > .tableblock {
+  border-width: 0 1px 0 0
+}
+
+table.grid-rows > thead > tr > .tableblock, table.grid-rows > tbody > tr > .tableblock {
+  border-width: 0 0 1px
+}
+
+table.grid-rows > tfoot > tr > .tableblock {
+  border-width: 1px 0 0
+}
+
+table.grid-all > * > tr > .tableblock:last-child, table.grid-cols > * > tr > .tableblock:last-child {
+  border-right-width: 0
+}
+
+table.grid-all > tbody > tr:last-child > .tableblock, table.grid-all > thead:last-child > tr > .tableblock, table.grid-rows > tbody > tr:last-child > .tableblock, table.grid-rows > thead:last-child > tr > .tableblock {
+  border-bottom-width: 0
+}
+
+table.frame-all {
+  border-width: 1px
+}
+
+table.frame-sides {
+  border-width: 0 1px
+}
+
+table.frame-topbot, table.frame-ends {
+  border-width: 1px 0
+}
+
+.reveal table th.halign-left, .reveal table td.halign-left {
+  text-align: left
+}
+
+.reveal table th.halign-right, .reveal table td.halign-right {
+  text-align: right
+}
+
+.reveal table th.halign-center, .reveal table td.halign-center {
+  text-align: center
+}
+
+.reveal table th.valign-top, .reveal table td.valign-top {
+  vertical-align: top
+}
+
+.reveal table th.valign-bottom, .reveal table td.valign-bottom {
+  vertical-align: bottom
+}
+
+.reveal table th.valign-middle, .reveal table td.valign-middle {
+  vertical-align: middle
+}
+
+table thead th, table tfoot th {
+  font-weight: bold
+}
+
+tbody tr th {
+  display: table-cell;
+  line-height: 1.6
+}
+
+tbody tr th, tbody tr th p, tfoot tr th, tfoot tr th p {
+  font-weight: bold
+}
+
+thead {
+  display: table-header-group
+}
+
+.reveal table.grid-none th, .reveal table.grid-none td {
+  border-bottom: 0 !important
+}
+
+/* kbd macro */
+kbd {
+  font-family: "Droid Sans Mono", "DejaVu Sans Mono", monospace;
+  display: inline-block;
+  color: rgba(0, 0, 0, .8);
+  font-size: .65em;
+  line-height: 1.45;
+  background: #f7f7f7;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, .2), 0 0 0 .1em white inset;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .2), 0 0 0 .1em #fff inset;
+  margin: 0 .15em;
+  padding: .2em .5em;
+  vertical-align: middle;
+  position: relative;
+  top: -.1em;
+  white-space: nowrap
+}
+
+.keyseq kbd:first-child {
+  margin-left: 0
+}
+
+.keyseq kbd:last-child {
+  margin-right: 0
+}
+
+/* callouts */
+.conum[data-value] {
+  display: inline-block;
+  color: #fff !important;
+  background: rgba(0, 0, 0, .8);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  text-align: center;
+  font-size: .75em;
+  width: 1.67em;
+  height: 1.67em;
+  line-height: 1.67em;
+  font-family: "Open Sans", "DejaVu Sans", sans-serif;
+  font-style: normal;
+  font-weight: bold
+}
+
+.conum[data-value] * {
+  color: #fff !important
+}
+
+.conum[data-value] + b {
+  display: none
+}
+
+.conum[data-value]:after {
+  content: attr(data-value)
+}
+
+pre .conum[data-value] {
+  position: relative;
+  top: -.125em
+}
+
+b.conum * {
+  color: inherit !important
+}
+
+.conum:not([data-value]):empty {
+  display: none
+}
+
+/* Callout list */
+.hdlist > table, .colist > table {
+  border: 0;
+  background: none
+}
+
+.hdlist > table > tbody > tr, .colist > table > tbody > tr {
+  background: none
+}
+
+td.hdlist1, td.hdlist2 {
+  vertical-align: top;
+  padding: 0 .625em
+}
+
+td.hdlist1 {
+  font-weight: bold;
+  padding-bottom: 1.25em
+}
+
+/* Disabled from Asciidoctor CSS because it caused callout list to go under the
+ * source listing when .stretch is applied (see #335)
+ * .literalblock+.colist,.listingblock+.colist{margin-top:-.5em} */
+.colist td:not([class]):first-child {
+  padding: .4em .75em 0;
+  line-height: 1;
+  vertical-align: top
+}
+
+.colist td:not([class]):first-child img {
+  max-width: none
+}
+
+.colist td:not([class]):last-child {
+  padding: .25em 0
+}
+
+/* Override Asciidoctor CSS that causes issues with reveal.js features */
+.reveal .hljs table {
+  border: 0
+}
+
+/* Callout list rows would have a bottom border with some reveal.js themes (see #335) */
+.reveal .colist > table th, .reveal .colist > table td {
+  border-bottom: 0
+}
+
+/* Fixes line height with Highlight.js source listing when linenums enabled (see #331) */
+.reveal .hljs table thead tr th, .reveal .hljs table tfoot tr th, .reveal .hljs table tbody tr td, .reveal .hljs table tr td, .reveal .hljs table tfoot tr td {
+  line-height: inherit
+}
+
+/* Columns layout */
+.columns .slide-content {
+  display: flex;
+}
+
+.columns.wrap .slide-content {
+  flex-wrap: wrap;
+}
+
+.columns.is-vcentered .slide-content {
+  align-items: center;
+}
+
+.columns .slide-content > .column {
+  display: block;
+  flex-basis: 0;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.columns .slide-content > .column > * {
+  padding: .75rem;
+}
+
+/* See #353 */
+.columns.wrap .slide-content > .column {
+  flex-basis: auto;
+}
+
+.columns .slide-content > .column.is-full {
+  flex: none;
+  width: 100%;
+}
+
+.columns .slide-content > .column.is-four-fifths {
+  flex: none;
+  width: 80%;
+}
+
+.columns .slide-content > .column.is-three-quarters {
+  flex: none;
+  width: 75%;
+}
+
+.columns .slide-content > .column.is-two-thirds {
+  flex: none;
+  width: 66.6666%;
+}
+
+.columns .slide-content > .column.is-three-fifths {
+  flex: none;
+  width: 60%;
+}
+
+.columns .slide-content > .column.is-half {
+  flex: none;
+  width: 50%;
+}
+
+.columns .slide-content > .column.is-two-fifths {
+  flex: none;
+  width: 40%;
+}
+
+.columns .slide-content > .column.is-one-third {
+  flex: none;
+  width: 33.3333%;
+}
+
+.columns .slide-content > .column.is-one-quarter {
+  flex: none;
+  width: 25%;
+}
+
+.columns .slide-content > .column.is-one-fifth {
+  flex: none;
+  width: 20%;
+}
+
+.columns .slide-content > .column.has-text-left {
+  text-align: left;
+}
+
+.columns .slide-content > .column.has-text-justified {
+  text-align: justify;
+}
+
+.columns .slide-content > .column.has-text-right {
+  text-align: right;
+}
+
+.columns .slide-content > .column.has-text-left {
+  text-align: left;
+}
+
+.columns .slide-content > .column.has-text-justified {
+  text-align: justify;
+}
+
+.columns .slide-content > .column.has-text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left !important
+}
+
+.text-right {
+  text-align: right !important
+}
+
+.text-center {
+  text-align: center !important
+}
+
+.text-justify {
+  text-align: justify !important
+}
+
+.footnotes {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 0.5em 0 0 0;
+  font-size: 0.65em;
+  margin-top: 4em;
+}
+
+.byline {
+  font-size:.8em
+}
+ul.byline {
+  list-style-type: none;
+}
+ul.byline li + li {
+  margin-top: 0.25em;
+}
