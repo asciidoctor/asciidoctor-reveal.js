@@ -52,6 +52,8 @@ jobs:
         run: bundle exec rubocop
       - name: Run tests
         run: bundle exec rake test
+      - name: Install reveal.js
+        run: npm ci
       - name: Run examples:convert
         run: bundle exec rake examples:convert
   build_js:
