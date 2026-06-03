@@ -51,7 +51,7 @@
   },
   "homepage": "https://github.com/asciidoctor/asciidoctor-reveal.js",
   "dependencies": {
-    "asciidoctor": "^4.0.0-alpha.5",
+    "asciidoctor": "^4.0.0-alpha.6",
     "reveal.js": "4.5.0"
   },
   "devDependencies": {

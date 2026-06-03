@@ -5,7 +5,7 @@
 // data-noescape, data-line-numbers, monokai theme, plugin docinfo).
 
 import { readFileSync } from 'node:fs'
-import { SyntaxHighlighterBase } from '@asciidoctor/core'
+import { SyntaxHighlighterBase } from 'asciidoctor'
 
 // REMIND: we cannot use Highlight.js 11+ because unescaped HTML support has been
 // removed (https://github.com/highlightjs/highlight.js/issues/2889). We use

@@ -7,7 +7,7 @@
 // Stored footnotes are plain objects { index, id, text } (the Ruby code uses
 // Asciidoctor::Document::Footnote, but only index/text are read back).
 
-import { Inline } from '@asciidoctor/core'
+import { Inline } from 'asciidoctor'
 
 // footnote index (initial) -> stored footnote { index, id, text }
 let slideFootnotesByIndex = new Map()

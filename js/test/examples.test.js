@@ -14,7 +14,7 @@ import { readdirSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { fileURLToPath } from 'node:url'
 import { dirname, join, resolve } from 'node:path'
-import { convertFile } from '@asciidoctor/core'
+import { convertFile } from 'asciidoctor'
 import { register } from '../src/index.js'
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
@@ -25,8 +25,6 @@ const REVEALJSDIR = 'node_modules/reveal.js'
 // differences are NOT in this converter — they are upstream Asciidoctor.js 4.0-alpha
 // bugs or third-party syntax highlighters provided by Asciidoctor core.
 const SKIP = {
-  'admonitions.adoc': "Asciidoctor.js 4.0-alpha drops caption='…' (textlabel becomes the boolean true)",
-  'admonitions-icons.adoc': "Asciidoctor.js 4.0-alpha drops caption='…' (textlabel becomes the boolean true)",
   'release-4.1.adoc': 'externalized footnote reuse depends on the alpha attribute-substitution timing',
   'source-coderay.adoc': 'third-party syntax highlighter provided by Asciidoctor core (only highlightjs is ported)',
   'source-prettify.adoc': 'third-party syntax highlighter provided by Asciidoctor core (only highlightjs is ported)',

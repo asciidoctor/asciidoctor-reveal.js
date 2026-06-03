@@ -12,7 +12,7 @@
 //   - node.option? → node.hasOption() ; node.has_role? → node.hasRole()
 //   - Ruby symbol keys → plain string keys.
 
-import { ConverterBase, Html5Converter, SafeMode } from '@asciidoctor/core'
+import { ConverterBase, Html5Converter, SafeMode } from 'asciidoctor'
 import { extname } from 'node:path'
 import { COMPATIBILITY } from './stylesheet.js'
 import { script as revealJsScript, stretchNestedElements } from './reveal-js-options.js'
@@ -152,27 +152,6 @@ function inlineTextContainer (node, content) {
     return `<span${attributes({ id: node.getId(), class: classes, ...da })}>${content}</span>`
   }
   return content
-}
-
-// Depth-first search for descendant nodes of the given `context` matching the
-// optional `filter`, including `node` itself (like Ruby AbstractNode#find_by).
-//
-// Implemented manually because Asciidoctor.js 4.0-alpha's findBy throws
-// ("Receiver must be an instance of class AbstractBlock") when the traversed
-// tree contains a description list.
-function safeFindBy (node, context, filter = null, acc = []) {
-  if (typeof node.getContext === 'function' && node.getContext() === context && (!filter || filter(node))) {
-    acc.push(node)
-  }
-  if (typeof node.getItems === 'function') {
-    for (const item of node.getItems()) {
-      const subs = Array.isArray(item) ? item.flat(Infinity) : [item]
-      for (const sub of subs) if (sub && typeof sub.getContext === 'function') safeFindBy(sub, context, filter, acc)
-    }
-  } else if (typeof node.getBlocks === 'function') {
-    for (const child of node.getBlocks()) if (child && typeof child.getContext === 'function') safeFindBy(child, context, filter, acc)
-  }
-  return acc
 }
 
 // Copied from asciidoctor html5 converter (private method).
@@ -340,7 +319,7 @@ export default class RevealJsConverter extends ConverterBase {
     } else {
       buf += `<h1>${node.getHeader().title}</h1>`
     }
-    const preamble = safeFindBy(node.getDocument(), 'preamble')
+    const preamble = node.getDocument().findBy({ context: 'preamble' })
     if (preamble && preamble.length > 0) {
       buf += `<div class="preamble">${await preamble[preamble.length - 1].content()}</div>`
     }
@@ -355,7 +334,7 @@ export default class RevealJsConverter extends ConverterBase {
     const titleless = title === '!'
     const hideTitle = titleless || node.hasOption('notitle') || node.hasOption('conceal')
 
-    const verticalSlides = safeFindBy(node, 'section', (section) => section.getLevel() === 2)
+    const verticalSlides = node.findBy({ context: 'section' }, (section) => section.getLevel() === 2)
 
     // extracting block image attributes to find an image to use as a background_image attribute
     let dataBackgroundImage = null
@@ -375,7 +354,7 @@ export default class RevealJsConverter extends ConverterBase {
       } else if (ctx === 'section') {
         // skip nested sections
       } else {
-        safeFindBy(block, 'image', (image) => ['background', 'canvas'].includes(image.getAttribute(1)), sectionImages)
+        sectionImages.push(...block.findBy({ context: 'image' }, (image) => ['background', 'canvas'].includes(image.getAttribute(1))))
       }
     }
     const bgImage = sectionImages[0]

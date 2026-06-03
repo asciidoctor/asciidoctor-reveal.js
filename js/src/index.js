@@ -1,13 +1,13 @@
 // Public entry point for the native JavaScript reveal.js converter.
 //
 // Usage:
-//   import asciidoctor from '@asciidoctor/core'
+//   import asciidoctor from 'asciidoctor'
 //   import { register } from '@asciidoctor/reveal.js-converter'
 //   register()
 //   const html = await asciidoctor.convert(input, { backend: 'revealjs', standalone: true })
 
 import { readFileSync } from 'node:fs'
-import { ConverterFactory, SyntaxHighlighter } from '@asciidoctor/core'
+import { ConverterFactory, SyntaxHighlighter } from 'asciidoctor'
 import RevealJsConverter from './converter.js'
 import HighlightJsAdapter from './highlightjs.js'
 
