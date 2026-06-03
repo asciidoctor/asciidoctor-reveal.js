@@ -424,9 +424,7 @@ export default class RevealJsConverter extends ConverterBase {
         if (content !== '') inner += `<div class="slide-content">${content}</div>`
       }
       inner += footnotes()
-      const buf = `<section${attrs}>${inner}</section>`
-      Footnotes.clearSlideFootnotes()
-      return buf
+      return `<section${attrs}>${inner}</section>`
     }
 
     // RENDERING

@@ -1,57 +1,70 @@
 // Port of the Footnotes module in lib/asciidoctor_revealjs/converter.rb
 //
-// Display footnotes per slide. Footnotes declared on a section title are
-// processed during parsing/substitution, so they are stored separately to be
-// displayed on the right slide/section.
+// Display footnotes per slide. Footnotes are numbered from 1 again on every
+// slide; a footnote referenced more than once on the same slide keeps its
+// number. Footnotes are bucketed by the section (slide) that contains them,
+// keyed by node identity, so the result does not depend on the order in which
+// Asciidoctor.js substitutes them.
+//
+// This independence matters with the Asciidoctor.js 4.0 core: footnotes inside
+// list items (and on section titles) are substituted eagerly, before any slide
+// is rendered, and the core's `index` attribute is not a reliable document-wide
+// identifier. Bucketing by the enclosing section and de-duplicating reused
+// footnotes by their id avoids relying on either.
 //
 // Stored footnotes are plain objects { index, id, text } (the Ruby code uses
 // Asciidoctor::Document::Footnote, but only index/text are read back).
 
 import { Inline } from 'asciidoctor'
 
-// footnote index (initial) -> stored footnote { index, id, text }
-let slideFootnotesByIndex = new Map()
-// section node (by identity) -> array of footnotes { index, id, text }
-const sectionFootnotes = new Map()
+// section node (by identity) -> array of footnotes { index, id, text } declared
+// on the section title.
+const titleFootnotes = new Map()
+// section node (by identity) -> array of footnotes { index, id, text } declared
+// in the section body.
+const bodyFootnotes = new Map()
 
 function isSection (node) {
   return node != null && typeof node.getContext === 'function' && node.getContext() === 'section'
 }
 
+// Walk up to the section (slide) that contains the footnote.
+function enclosingSection (node) {
+  let parent = node.getParent()
+  while (parent != null && !isSection(parent)) parent = parent.getParent()
+  return parent
+}
+
 export function slideFootnote (footnote) {
   const footnoteParent = footnote.getParent()
-  let inlineFootnote
-  // footnotes declared on the section title are processed during the
-  // parsing/substitution; store them to display them on the right slide/section.
+  // Footnotes declared on the section title are stored against that section so
+  // they show up on its slide.
   if (isSection(footnoteParent)) {
-    const sectionFn = sectionFootnotes.get(footnoteParent) || []
-    const footnoteIndex = sectionFn.length + 1
-    const attributes = { ...footnote.getAttributes(), index: footnoteIndex }
-    inlineFootnote = new Inline(footnoteParent, footnote.getContext(), footnote.getText(), { attributes })
-    sectionFn.push({ index: inlineFootnote.getAttribute('index'), id: inlineFootnote.getId(), text: inlineFootnote.getText() })
-    sectionFootnotes.set(footnoteParent, sectionFn)
-  } else {
-    let parent = footnote.getParent()
-    while (parent != null && !isSection(parent)) parent = parent.getParent()
-    // check if there is any footnote attached on the section title
-    const sectionFn = parent == null ? [] : (sectionFootnotes.get(parent) || [])
-    const initialIndex = footnote.getAttribute('index')
-    // reset the footnote numbering to 1 on each slide; reuse the same index when
-    // a footnote is used more than once.
-    const existingFootnote = slideFootnotesByIndex.get(initialIndex)
-    const slideIndex = existingFootnote ? existingFootnote.index : slideFootnotesByIndex.size + sectionFn.length + 1
-    const attributes = { ...footnote.getAttributes(), index: slideIndex }
-    inlineFootnote = new Inline(footnoteParent, footnote.getContext(), footnote.getText(), { attributes })
-    slideFootnotesByIndex.set(initialIndex, { index: inlineFootnote.getAttribute('index'), id: inlineFootnote.getId(), text: inlineFootnote.getText() })
+    const sectionFn = titleFootnotes.get(footnoteParent) || []
+    const index = sectionFn.length + 1
+    const inlineFootnote = new Inline(footnoteParent, footnote.getContext(), footnote.getText(), { attributes: { ...footnote.getAttributes(), index } })
+    sectionFn.push({ index, id: inlineFootnote.getId(), text: inlineFootnote.getText() })
+    titleFootnotes.set(footnoteParent, sectionFn)
+    return inlineFootnote
+  }
+
+  const section = enclosingSection(footnote)
+  const titleFn = section == null ? [] : (titleFootnotes.get(section) || [])
+  const bodyFn = section == null ? [] : (bodyFootnotes.get(section) || [])
+  // A footnote with an id can be referenced again on the same slide; reuse its
+  // number. A definition carries the id on `getId()`, a later reference carries
+  // it on `getTarget()`. Anonymous footnotes (neither) are always distinct.
+  const id = footnote.getId() || footnote.getTarget()
+  const existing = id ? bodyFn.find((fn) => fn.id === id) : null
+  const index = existing ? existing.index : titleFn.length + bodyFn.length + 1
+  const inlineFootnote = new Inline(footnoteParent, footnote.getContext(), footnote.getText(), { attributes: { ...footnote.getAttributes(), index } })
+  if (!existing && section != null) {
+    bodyFn.push({ index, id, text: inlineFootnote.getText() })
+    bodyFootnotes.set(section, bodyFn)
   }
   return inlineFootnote
 }
 
-export function clearSlideFootnotes () {
-  slideFootnotesByIndex = new Map()
-}
-
 export function slideFootnotes (section) {
-  const sectionFn = sectionFootnotes.get(section) || []
-  return [...sectionFn, ...slideFootnotesByIndex.values()]
+  return [...(titleFootnotes.get(section) || []), ...(bodyFootnotes.get(section) || [])]
 }
