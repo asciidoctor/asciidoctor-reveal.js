@@ -1,4 +1,5 @@
 import childProcess from 'node:child_process'
+import process from 'node:process'
 
 export function execSync (command, opts) {
   console.debug(command, opts)

@@ -2,6 +2,7 @@ import childProcess from 'node:child_process'
 import path from 'node:path'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import process from 'node:process'
 import { execSync } from './exec.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))

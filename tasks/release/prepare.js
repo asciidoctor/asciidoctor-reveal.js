@@ -2,6 +2,7 @@ import childProcess from 'node:child_process'
 import path from 'node:path'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import process from 'node:process'
 import { execSync } from './exec.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -43,8 +44,8 @@ if (process.env.DRY_RUN) {
 } else {
   writeFileSync(pkgPath, pkgUpdated)
 }
-// update version in lib/asciidoctor-revealjs/version.rb
-const versionRbPath =  path.join(projectRootDirectory, 'lib', 'asciidoctor-revealjs', 'version.rb')
+// update version in lib/asciidoctor_revealjs/version.rb
+const versionRbPath =  path.join(projectRootDirectory, 'lib', 'asciidoctor_revealjs', 'version.rb')
 const versionRbContent = readFileSync(versionRbPath, 'utf8')
 // RubyGems versions must use a slightly different pattern:
 // https://guides.rubygems.org/patterns/#prerelease-gems
@@ -63,9 +64,6 @@ if (process.env.DRY_RUN) {
 } else {
   writeFileSync(versionRbPath, versionRbUpdated)
 }
-execSync('bundle exec rake build', {cwd: projectRootDirectory})
-execSync('git add -f lib/asciidoctor-revealjs/converter.rb', {cwd: projectRootDirectory})
-
 // git commit and tag
 execSync(`git commit -a -m "Prepare ${releaseVersion} release"`, {cwd: projectRootDirectory})
 execSync(`git commit --allow-empty -m "Release ${releaseVersion}"`, {cwd: projectRootDirectory})
