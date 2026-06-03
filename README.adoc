@@ -1,5 +1,5 @@
 = Reveal.js converter for Asciidoctor
-Olivier Bilodeau <https://github.com/obilodeau[@obilodeau]>; Guillaume Grossetie <https://github.com/mogztter[@mogztter]>; Dan Allen <https://github.com/mojavelinux[@mojavelinux]>; Rahman Usta <https://github.com/rahmanusta[@rahmanusta]>; Charles Moulliard <https://github.com/cmoulliard[@cmoulliard]>
+Olivier Bilodeau <https://github.com/obilodeau[@obilodeau]>; Guillaume Grossetie <https://github.com/ggrossetie[@ggrossetie]>; Dan Allen <https://github.com/mojavelinux[@mojavelinux]>; Rahman Usta <https://github.com/rahmanusta[@rahmanusta]>; Charles Moulliard <https://github.com/cmoulliard[@cmoulliard]>
 ifdef::env-github,env-browser[]
 :toc: preamble
 :toclevels: 2

@@ -201,7 +201,7 @@ _presentation-docinfo-footer.html_
 ### Release meta
 
 * Released on: 2020-12-19
-* Released by: [Guillaume Grossetie](https://github.com/mogztter)
+* Released by: [Guillaume Grossetie](https://github.com/ggrossetie)
 
 [git tag](https://github.com/asciidoctor/asciidoctor-reveal.js/releases/tag/v4.1.0) |
 [full diff](https://github.com/asciidoctor/asciidoctor-reveal.js/compare/v4.0.1...v4.1.0) |
@@ -213,7 +213,7 @@ Thanks to the following people who contributed to this release:
 
 [Adrian Kosmaczewski](https://github.com/akosma),
 [Dan Allen](https://github.com/mojavelinux),
-[Guillaume Grossetie](https://github.com/mogztter),
+[Guillaume Grossetie](https://github.com/ggrossetie),
 [Olivier Bilodeau](https://github.com/obilodeau) and
 [Romain Quinio](https://github.com/rquinio).
 

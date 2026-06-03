@@ -1,5 +1,9 @@
-const fs = require('fs')
-const path = require('path')
+import { readFileSync, writeFileSync } from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import process from 'node:process'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const args = process.argv.slice(2)
 const releaseVersion = args[0]
@@ -11,7 +15,7 @@ if (!releaseVersion) {
 const projectRootDirectory = path.join(__dirname, '..', '..')
 
 const rx = new RegExp(`## ${releaseVersion}.*\\n(?<content>[\\s\\S]+?)\\n(?=## )`)
-const changelog = fs.readFileSync(path.join(projectRootDirectory, 'CHANGELOG.md'), 'utf8')
+const changelog = readFileSync(path.join(projectRootDirectory, 'CHANGELOG.md'), 'utf8')
 const changelogVersion = rx.exec(changelog)
 let content
 if (changelogVersion && changelogVersion.groups && changelogVersion.groups.content) {
@@ -20,4 +24,4 @@ if (changelogVersion && changelogVersion.groups && changelogVersion.groups.conte
   content = ''
   console.error(`Version ${releaseVersion} not found in CHANGELOG.md, release description will be empty!`)
 }
-fs.writeFileSync(path.join(projectRootDirectory, 'dist', 'changelog.md'), content, 'utf8')
+writeFileSync(path.join(projectRootDirectory, 'dist', 'changelog.md'), content, 'utf8')

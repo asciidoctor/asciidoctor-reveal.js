@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+
+import process from 'node:process'
+import { Options, Invoker } from 'asciidoctor/cli'
+import { register, getVersion } from '../src/index.js'
+
+process.title = 'asciidoctor-revealjs'
+
+// Default the backend to revealjs (parse() honours the option's `default`).
+class RevealJsOptions extends Options {
+  constructor () {
+    super()
+    this.addOption('backend', { ...this._definitions.backend, default: 'revealjs' })
+  }
+}
+
+class RevealJsInvoker extends Invoker {
+  version () {
+    return `Asciidoctor reveal.js ${getVersion()} using ${super.version()}`
+  }
+}
+
+register()
+const options = new RevealJsOptions().parse(process.argv)
+await new RevealJsInvoker(options).invoke()
