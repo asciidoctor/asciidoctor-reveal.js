@@ -1,8 +1,10 @@
-'use strict'
-const childProcess = require('child_process')
-const path = require('path')
-const fs = require('fs')
-const execModule = require('./exec.js')
+import childProcess from 'node:child_process'
+import path from 'node:path'
+import { readFileSync, writeFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+import { execSync } from './exec.js'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const PRERELEASE_VERSION_RX = /(?<version>[0-9]+\.[0-9]+\.[0-9]+)(?<preversion>-[a-z]+\.[0-9]+)?/
 
@@ -33,17 +35,17 @@ if (branchName !== 'master') {
 }
 // update version in package.json
 const pkgPath = path.join(projectRootDirectory, 'package.json')
-const asciidoctorRevealPkg = require(pkgPath)
+const asciidoctorRevealPkg = JSON.parse(readFileSync(pkgPath, 'utf8'))
 asciidoctorRevealPkg.version = releaseVersion
 const pkgUpdated = JSON.stringify(asciidoctorRevealPkg, null, 2).concat('\n')
 if (process.env.DRY_RUN) {
   console.debug(`Dry run! ${pkgPath} will be updated:\n${pkgUpdated}`)
 } else {
-  fs.writeFileSync(pkgPath, pkgUpdated)
+  writeFileSync(pkgPath, pkgUpdated)
 }
 // update version in lib/asciidoctor-revealjs/version.rb
 const versionRbPath =  path.join(projectRootDirectory, 'lib', 'asciidoctor-revealjs', 'version.rb')
-const versionRbContent = fs.readFileSync(versionRbPath, 'utf8')
+const versionRbContent = readFileSync(versionRbPath, 'utf8')
 // RubyGems versions must use a slightly different pattern:
 // https://guides.rubygems.org/patterns/#prerelease-gems
 let rubyReleaseVersion = releaseVersion
@@ -59,15 +61,15 @@ const versionRbUpdated = versionRbContent.replace(/VERSION = '([^']+)'/, `VERSIO
 if (process.env.DRY_RUN) {
   console.debug(`Dry run! ${versionRbPath} will be updated:\n${versionRbUpdated}`)
 } else {
-  fs.writeFileSync(versionRbPath, versionRbUpdated)
+  writeFileSync(versionRbPath, versionRbUpdated)
 }
-execModule.execSync('bundle exec rake build', {cwd: projectRootDirectory})
-execModule.execSync('git add -f lib/asciidoctor-revealjs/converter.rb', {cwd: projectRootDirectory})
+execSync('bundle exec rake build', {cwd: projectRootDirectory})
+execSync('git add -f lib/asciidoctor-revealjs/converter.rb', {cwd: projectRootDirectory})
 
 // git commit and tag
-execModule.execSync(`git commit -a -m "Prepare ${releaseVersion} release"`, {cwd: projectRootDirectory})
-execModule.execSync(`git commit --allow-empty -m "Release ${releaseVersion}"`, {cwd: projectRootDirectory})
-execModule.execSync(`git tag v${releaseVersion} -m "Version ${releaseVersion}"`, {cwd: projectRootDirectory})
+execSync(`git commit -a -m "Prepare ${releaseVersion} release"`, {cwd: projectRootDirectory})
+execSync(`git commit --allow-empty -m "Release ${releaseVersion}"`, {cwd: projectRootDirectory})
+execSync(`git tag v${releaseVersion} -m "Version ${releaseVersion}"`, {cwd: projectRootDirectory})
 
 console.info('To complete the release, you need to:')
 console.info('[ ] push changes upstream: `git push origin master --tags`')

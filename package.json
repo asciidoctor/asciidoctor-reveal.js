@@ -2,23 +2,27 @@
   "name": "@asciidoctor/reveal.js",
   "version": "5.3.0-dev",
   "description": "A reveal.js converter for Asciidoctor.js. Write your slides in AsciiDoc!",
-  "main": "dist/main.js",
+  "type": "module",
+  "main": "js/src/index.js",
+  "exports": "./js/src/index.js",
   "engines": {
-    "node": ">=16",
+    "node": ">=18",
     "npm": ">=8.0.0"
   },
   "bin": {
-    "asciidoctor-revealjs": "npm/asciidoctor-revealjs"
+    "asciidoctor-revealjs": "js/bin/asciidoctor-revealjs"
   },
   "files": [
-    "npm/asciidoctor-revealjs"
+    "js/bin",
+    "js/src",
+    "js/data"
   ],
   "scripts": {
-    "test": "node test/smoke.js",
-    "examples": "node npm/examples.js",
-    "release:description": "node npm/release/description.js",
-    "release:prepare": "node npm/release/prepare.js",
-    "release:next": "node npm/release/next.js",
+    "test": "node --test js/test/",
+    "examples": "node tasks/examples.js",
+    "release:description": "node tasks/release/description.js",
+    "release:prepare": "node tasks/release/prepare.js",
+    "release:next": "node tasks/release/next.js",
     "package": "npm i @asciidoctor/core && pkg -t node16-linux-x64,node16-macos-x64,node16-win-x64 package.json --out-path dist/"
   },
   "repository": {
@@ -39,7 +43,7 @@
   ],
   "authors": [
     "Olivier Bilodeau (https://github.com/obilodeau)",
-    "Guillaume Grossetie (https://github.com/mogztter)"
+    "Guillaume Grossetie (https://github.com/ggrossetie)"
   ],
   "license": "MIT",
   "bugs": {
@@ -47,16 +51,14 @@
   },
   "homepage": "https://github.com/asciidoctor/asciidoctor-reveal.js",
   "dependencies": {
-    "@asciidoctor/cli": "~4.0",
+    "asciidoctor": "^4.0.0-alpha.5",
     "reveal.js": "4.5.0"
   },
   "devDependencies": {
-    "@asciidoctor/core": "~3.0",
     "bestikk-log": "0.1.0",
-    "expect.js": "0.3.1",
     "pkg": "5.8.1"
   },
   "volta": {
-    "node": "16.20.1"
+    "node": "20.18.1"
   }
 }
