@@ -167,7 +167,7 @@ namespace :examples do
     FileUtils.rm_rf PUBLIC_DIR
     Dir.mkdir PUBLIC_DIR
     Dir.mkdir "#{PUBLIC_DIR}/reveal.js"
-    FileUtils.cp 'src/index.html', "#{PUBLIC_DIR}/index.html"
+    FileUtils.cp 'tasks/index.html', "#{PUBLIC_DIR}/index.html"
     FileUtils.cp_r 'node_modules/reveal.js/', PUBLIC_DIR.to_s
     FileUtils.cp_r 'examples/images/', PUBLIC_DIR.to_s
     FileUtils.cp 'examples/release-4.0.html', "#{PUBLIC_DIR}/release-4.0.html"
