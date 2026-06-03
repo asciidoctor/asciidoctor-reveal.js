@@ -74,7 +74,7 @@ jobs:
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: '4.0.5'
       - name: Configure Nokogiri installation (Linux)
         if: matrix.os == 'ubuntu-22.04'
         run: |

@@ -11,11 +11,11 @@ jobs:
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: '4.0.5'
       - name: Install Node
         uses: actions/setup-node@v6
         with:
-          node-version: '16'
+          node-version: '24'
       - name: Configure Nokogiri installation
         run: |
           bundle config --local build__nokogiri --use-system-libraries
