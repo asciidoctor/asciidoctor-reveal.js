@@ -13,24 +13,26 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04]
-        ruby: ['2.7', '3.0']
+        ruby: ['3.4']
         include:
           - os: ubuntu-22.04
             ruby: truffleruby-34.0.1
           - os: ubuntu-22.04
             ruby: jruby-9.4.14.0
           - os: macos-latest
-            ruby: '2.7'
-          - os: ubuntu-22.04
-            ruby: '2.7'
+            ruby: '3.4'
           - os: windows-latest
-            ruby: '2.7'
+            ruby: '3.4'
     runs-on: ${{ matrix.os }}
     env:
       JRUBY_OPTS: '-J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-Xss2m -Xcompile.invokedynamic=false'
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+      - name: Install Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -58,21 +60,19 @@ jobs:
         run: bundle exec rake examples:convert
   build_js:
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-22.04]
-        node-version: ['16', '18']
-        include:
-          - os: macos-latest
-            node-version: '16'
-          - os: windows-latest
-            node-version: '16'
+        os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v6
       - name: Install Node
         uses: actions/setup-node@v6
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 22
       - name: Install dependencies
         run: npm ci
-      # TODO: run examples and tests
+      - name: Run tests
+        run: npm test
+      - name: Build single executable
+        run: npm run build:sea
