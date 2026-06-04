@@ -4,7 +4,7 @@ namespace :examples do
   # The examples reference reveal.js assets relatively (reveal.js/dist/...), so a
   # local copy must live under examples/. That directory is gitignored, hence the
   # copy from node_modules on demand.
-  desc 'Copy reveal.js assets from node_modules into examples/ (run npm install first)'
+  desc 'Copy reveal.js assets from node_modules into examples/ (run `npm install` first)'
   task :assets do
     src = File.expand_path('node_modules/reveal.js', PROJECT_ROOT)
     dest = File.expand_path('examples/reveal.js', PROJECT_ROOT)
