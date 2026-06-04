@@ -5,6 +5,17 @@ namespace :examples do
   # release demos and copied verbatim into public/.
   extra_release_files = ['examples/a11y-dark.css'].freeze
 
+  # Short highlights shown on the landing page, keyed by release version.
+  # Add a new entry whenever a release-<version>.adoc demo is introduced; a
+  # version without an entry still gets a card, just without the bullet list.
+  release_highlights = {
+    '6.0' => ['Image lightbox', 'Full-screen website preview overlay', 'Powered by reveal.js 6.0'],
+    '5.2' => ['Step-by-step callout lists', 'Synchronised step-by-step syntax highlighting'],
+    '5.1' => ['Gradient slide backgrounds', 'Typesetting libraries (LaTeX math)'],
+    '4.1' => ['Steps and incremental reveal', 'Footnotes', 'Custom data attributes', 'Font Awesome icon sets', 'Built-in text alignments'],
+    '4.0' => ['Automatic source code highlighting', 'Easy grid layouts', 'Font Awesome integration', 'Background videos and includes']
+  }.freeze
+
   desc 'Build the public/ release showcase site (landing page and release demos)'
   task :publish do
     FileUtils.rm_rf PUBLIC_DIR
@@ -25,9 +36,29 @@ namespace :examples do
 
     extra_release_files.each { |f| FileUtils.cp f, "#{PUBLIC_DIR}/#{File.basename(f)}" }
 
-    # List releases on the landing page, most recent version first.
-    items = versions.sort_by { |v| Gem::Version.new(v) }.reverse.map do |version|
-      %(          <li><a href="./release-#{version}.html">Asciidoctor reveal.js #{version}</a></li>)
+    # Render one card per release on the landing page, most recent version
+    # first, tagging the latest release and listing its curated highlights.
+    sorted = versions.sort_by { |v| Gem::Version.new(v) }.reverse
+    latest = sorted.first
+    items = sorted.map do |version|
+      is_latest = version == latest
+      card_class = is_latest ? 'release-card release-card--latest' : 'release-card'
+      lines = ['        <div class="column is-half">']
+      lines << %(          <article class="#{card_class}">)
+      lines << '            <div class="release-card__head">'
+      lines << %(              <h2 class="release-card__title">Asciidoctor reveal.js #{version}</h2>)
+      lines << '              <span class="release-card__tag">Latest</span>' if is_latest
+      lines << '            </div>'
+      highlights = Array(release_highlights[version])
+      unless highlights.empty?
+        lines << '            <ul class="release-card__list">'
+        highlights.each { |h| lines << %(              <li>#{h}</li>) }
+        lines << '            </ul>'
+      end
+      lines << %(            <a class="release-card__link" href="./release-#{version}.html">View the demo <span aria-hidden="true">&rarr;</span></a>)
+      lines << '          </article>'
+      lines << '        </div>'
+      lines.join("\n")
     end.join("\n")
 
     index = File.read('tasks/index.html').sub('{{releases}}', items)

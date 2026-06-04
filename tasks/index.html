@@ -3,28 +3,216 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Asciidoctor reveal.js Examples</title>
+    <title>Asciidoctor reveal.js &mdash; What's New</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --brand: #e40046;
+        --brand-dark: #b30038;
+        --ink: #191919;
+        --doc-ink: #24262b;
+        --muted: #5d5d5d;
+        --border: #e1e1e1;
+        --border-strong: #c1c1c1;
+        --panel: #fafafa;
+        --link: #2c7fa2;
+        --link-hover: #08658c;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: var(--doc-ink);
+        background: #fff;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ---- masthead ---- */
+      .masthead { padding: 4rem 1.5rem 2.5rem; }
+
+      .masthead__eyebrow {
+        display: flex;
+        align-items: center;
+        gap: .55rem;
+        font-weight: 700;
+        font-size: .8rem;
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: var(--brand);
+        margin: 0 0 .9rem;
+      }
+      .masthead__eyebrow::before {
+        content: "";
+        width: 1.6rem;
+        height: 2px;
+        background: var(--brand);
+      }
+
+      .page-title {
+        font-family: 'Comfortaa', sans-serif;
+        font-weight: 700;
+        font-size: clamp(2rem, 5vw, 3.1rem);
+        line-height: 1.12;
+        letter-spacing: -.01em;
+        color: var(--ink);
+        margin: 0;
+      }
+
+      .page-sub {
+        max-width: 46rem;
+        margin: 1.1rem 0 0;
+        font-size: 1.12rem;
+        line-height: 1.6;
+        color: var(--muted);
+      }
+      .page-sub--note { margin-top: .45rem; font-size: 1rem; }
+      .page-sub em { font-style: italic; }
+      .page-sub a {
+        color: var(--link);
+        text-decoration: none;
+      }
+      .page-sub a:hover { color: var(--link-hover); text-decoration: underline; }
+
+      /* ---- release cards ---- */
+      .releases { padding-top: 1rem; }
+
+      .release-card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 1.4rem 1.5rem 1.3rem;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-top: 3px solid var(--border);
+        border-radius: 5px;
+        transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+      }
+      .release-card:hover {
+        border-color: var(--border-strong);
+        box-shadow: 0 6px 22px rgba(25, 25, 25, .08);
+        transform: translateY(-2px);
+      }
+      .release-card--latest { border-top-color: var(--brand); }
+      .release-card--latest:hover { border-top-color: var(--brand-dark); }
+
+      .release-card__head {
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        margin-bottom: 1.1rem;
+      }
+      .release-card__title {
+        font-family: 'Comfortaa', sans-serif;
+        font-weight: 700;
+        font-size: 1.2rem;
+        line-height: 1.2;
+        color: var(--ink);
+        margin: 0;
+      }
+      .release-card__tag {
+        flex: none;
+        font-size: .62rem;
+        font-weight: 700;
+        letter-spacing: .09em;
+        text-transform: uppercase;
+        color: #fff;
+        background: var(--brand);
+        padding: .22em .55em;
+        border-radius: 3px;
+      }
+
+      .release-card__list {
+        list-style: none;
+        margin: 0 0 1.3rem;
+        padding: 0;
+        flex: 1;
+      }
+      .release-card__list li {
+        position: relative;
+        padding-left: 1.3rem;
+        margin: .2rem 0;
+        line-height: 1.55;
+        color: var(--doc-ink);
+      }
+      .release-card__list li::before {
+        content: "";
+        position: absolute;
+        left: .15rem;
+        top: .58em;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--brand);
+      }
+
+      .release-card__link {
+        display: inline-flex;
+        align-items: center;
+        gap: .4rem;
+        align-self: flex-start;
+        margin-top: auto;
+        font-weight: 700;
+        color: var(--link);
+        text-decoration: none;
+      }
+      .release-card__link:hover { color: var(--link-hover); text-decoration: underline; }
+      .release-card__link span { transition: transform .2s ease; }
+      .release-card__link:hover span { transform: translateX(3px); }
+      /* Make the whole card clickable (stretched link) while keeping the
+         visible "View the demo" link. */
+      .release-card__link::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+      }
+
+      /* ---- footer ---- */
+      .page-foot {
+        margin-top: 2rem;
+        padding: 1.8rem 1.5rem 3rem;
+        border-top: 1px solid var(--border);
+        color: #8e8e8e;
+        font-size: .9rem;
+      }
+      .page-foot a { color: var(--link); text-decoration: none; }
+      .page-foot a:hover { text-decoration: underline; }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { transition: none !important; }
+      }
+    </style>
   </head>
   <body>
-  <section class="section">
+  <section class="masthead">
     <div class="container">
-      <h1 class="title">
-        Asciidoctor reveal.js Examples
-      </h1>
-      <p class="subtitle">
-        A reveal.js converter for Asciidoctor and Asciidoctor.js. Write your slides in <strong>AsciiDoc</strong>! <a href="https://asciidoctor.org" rel="noopener" target="_blank">https://asciidoctor.org</a>
+      <p class="masthead__eyebrow">What's new</p>
+      <h1 class="page-title">Asciidoctor reveal.js</h1>
+      <p class="page-sub">
+        A tour of the features introduced in each major and minor release.
+      </p>
+      <p class="page-sub page-sub--note">
+        Every demo is a reveal.js slide deck written in <em>AsciiDoc</em>. <a href="https://asciidoctor.org" rel="noopener" target="_blank">asciidoctor.org</a>
       </p>
     </div>
   </section>
-  <section>
+  <section class="section releases">
     <div class="container">
-      <div class="content">
-        <ul>
+      <div class="columns is-multiline">
 {{releases}}
-        </ul>
       </div>
     </div>
   </section>
+  <footer class="page-foot">
+    <div class="container">
+      Built with <a href="https://docs.asciidoctor.org/reveal.js-converter/latest/" rel="noopener" target="_blank">Asciidoctor reveal.js</a> &mdash; write your slides in AsciiDoc.
+    </div>
+  </footer>
   </body>
 </html>

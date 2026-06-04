@@ -6,7 +6,7 @@
 :imagesdir: images/
 // reveal.js config
 :customcss: release-6.0.css
-:revealjs_theme: moon
+:revealjs_theme: blood
 :revealjs_hash: true
 :revealjs_width: 1080
 

@@ -20,6 +20,7 @@ endif::[]
 :url-asciidoctorjs: https://github.com/asciidoctor/asciidoctor.js
 :url-revealjs-home: https://revealjs.com
 :url-documentation-site: https://docs.asciidoctor.org/reveal.js-converter/latest/
+:url-examples-site: https://asciidoctor-revealjs-examples.netlify.app/
 
 ifdef::env-github[]
 image:https://github.com/asciidoctor/asciidoctor-reveal.js/actions/workflows/ci.yml/badge.svg[Build Status,link=https://github.com/asciidoctor/asciidoctor-reveal.js/actions/workflows/ci.yml]
@@ -34,6 +35,11 @@ endif::[]
 == Documentation
 
 If you want to learn more about Asciidoctor reveal.js, please read the {url-documentation-site}[documentation].
+
+== What's new
+
+Take a tour of the features introduced in each major and minor release on the {url-examples-site}[demos site].
+Every demo is a reveal.js slide deck written in AsciiDoc.
 
 == Contributing
 
