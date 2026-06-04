@@ -7,6 +7,6 @@
 import { readFileSync } from 'node:fs'
 
 export const COMPATIBILITY = readFileSync(
-  new URL('../data/compatibility.css', import.meta.url),
+  new URL('../../data/compatibility.css', import.meta.url),
   'utf8'
 )

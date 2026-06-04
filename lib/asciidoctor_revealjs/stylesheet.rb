@@ -7,7 +7,8 @@
 module Asciidoctor
   module Revealjs
     module Stylesheet
-      COMPATIBILITY = File.read(File.join(__dir__, 'data', 'compatibility.css')).freeze
+      # Shared with the JavaScript implementation; see data/compatibility.css.
+      COMPATIBILITY = File.read(File.join(__dir__, '..', '..', 'data', 'compatibility.css')).freeze
     end
   end
 end

@@ -13,8 +13,9 @@ import { SyntaxHighlighterBase } from 'asciidoctor'
 const HIGHLIGHT_JS_VERSION = '10.7.3'
 
 // reveal.js highlight plugin source (bundled highlight.js code removed so the
-// latest version can be loaded from a CDN). Kept verbatim in a data file.
-const HIGHLIGHT_PLUGIN_SOURCE = readFileSync(new URL('../data/highlight-plugin.js', import.meta.url), 'utf8')
+// latest version can be loaded from a CDN). Kept verbatim in a data file shared
+// with the Ruby implementation (see data/highlight-plugin.js).
+const HIGHLIGHT_PLUGIN_SOURCE = readFileSync(new URL('../../data/highlight-plugin.js', import.meta.url), 'utf8')
 
 export default class HighlightJsAdapter extends SyntaxHighlighterBase {
   constructor (name, backend = 'html5', opts = {}) {
