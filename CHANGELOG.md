@@ -8,6 +8,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 ### Enhancements
 
   * Upgrade to reveal.js 6.0.1
+  * Image and video lightbox: add `data-preview-image`/`data-preview-video` (with optional `data-preview-fit`) to an image to open it full screen
   * Reimplement the converter in pure Ruby (drop the `asciidoctor-templates-compiler` Slim templates)
   * Port the converter to native Asciidoctor.js 4.0 (Node 18+, async convert handlers, validated byte-for-byte against the Ruby converter)
   * Update Asciidoctor to 4.0.0-alpha.6 and drop the workarounds that are no longer needed
@@ -18,6 +19,8 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Bump the Volta-pinned Node.js to 24.16.0
   * Improve the Renovate configuration for smaller, scheduled pull requests
   * Automate the release process via GitHub Actions, triggered from the Actions UI with a version input
+  * Auto-discover the release demos (`examples/release-*`) when publishing the showcase site
+  * Extract shared helpers for the release scripts
   * Add a workflow to begin the next development version after a final release
   * Mark GitHub releases as pre-releases automatically for pre-release versions
   * Replace the archived `actions/create-release` and `actions/upload-release-asset` actions with the GitHub CLI
