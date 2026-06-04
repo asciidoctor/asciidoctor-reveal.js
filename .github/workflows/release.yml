@@ -12,6 +12,7 @@ on:
 # job to create the GitHub release.
 permissions:
   contents: write
+  id-token: write
 
 jobs:
   # Bump the version, build, run the tests and, only if everything is green,
@@ -28,11 +29,11 @@ jobs:
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: '3.4'
       - name: Install Node
         uses: actions/setup-node@v6
         with:
-          node-version: 16
+          node-version: 22
       - name: Configure Nokogiri installation (Linux)
         run: |
           bundle config --local build__nokogiri --use-system-libraries
@@ -52,7 +53,6 @@ jobs:
         run: |
           bundle exec rake test
           bundle exec rake examples:convert
-          bundle exec rake build:js
           npm test
       # only reached when the tests above succeed
       - name: Push release commits and tag
@@ -66,28 +66,12 @@ jobs:
         with:
           ref: refs/tags/v${{ inputs.version }}
       - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '2.7'
-      - name: Install and build
-        run: |
-          bundle --jobs 3 --retry 3
-          bundle exec rake build
-      - name: Configure credentials
-        run: |
-          mkdir -p $HOME/.gem
-          touch $HOME/.gem/credentials
-          chmod 0600 $HOME/.gem/credentials
-          printf -- "---\n:rubygems_api_key: ${RUBYGEMS_API_KEY}" > $HOME/.gem/credentials
-        env:
-          RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
-      - name: Build gem
-        run: |
-          gem build asciidoctor-revealjs.gemspec
-      # the actual RubyGem version can be slightly different on prerelease, hence the wildcard
-      # see: https://guides.rubygems.org/patterns/#prerelease-gems
-      - name: Publish to rubygems.org
-        run: |
-          gem push asciidoctor-revealjs-*.gem
+      - name: Install dependencies
+        run: bundle --jobs 3 --retry 3
+      # Builds the gem and pushes it via RubyGems trusted publishing (OIDC);
+      # `rake release` skips re-tagging because the tag already exists.
+      - uses: rubygems/release-gem@v1
+
   publish_js:
     needs: publish_ruby
     runs-on: ubuntu-latest
@@ -97,31 +81,75 @@ jobs:
           ref: refs/tags/v${{ inputs.version }}
       - uses: actions/setup-node@v6
         with:
-          node-version: 16
+          node-version: 22
           registry-url: https://registry.npmjs.org/
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '2.7'
-      - name: Install and build
-        run: |
-          bundle --jobs 3 --retry 3
-          bundle exec rake build
-          bundle exec rake build:js
+      # npm trusted publishing (OIDC) requires npm >= 11.5.1; Node 22 ships an older npm.
+      - name: Update npm
+        run: npm install -g npm@latest
       - name: Install dependencies
-        run: |
-          npm ci
+        run: npm ci
       - name: Test
-        run: |
-          npm t
-      - name: Package and publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          npm publish
-          npm run package
-          npm run release:description ${{ inputs.version }}
-      # create the GitHub release and upload the platform binaries
-      # --prerelease is added automatically for versions carrying a pre-release suffix (e.g. 5.3.0-beta.1)
+        run: npm t
+      # Publishes via npm trusted publishing (OIDC) — no auth token required.
+      - name: Publish to npm
+        run: npm publish
+
+  # Build the Single Executable Application binary on a native runner per
+  # target. SEA cannot cross-compile, so each platform/architecture is built
+  # on its own runner and uploaded as an artifact.
+  build_binaries:
+    needs: prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            asset: asciidoctor-revealjs-linux-amd64
+          - os: ubuntu-24.04-arm
+            asset: asciidoctor-revealjs-linux-arm64
+          - os: macos-latest
+            asset: asciidoctor-revealjs-macos-arm64
+          - os: windows-latest
+            asset: asciidoctor-revealjs-win-amd64.exe
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: refs/tags/v${{ inputs.version }}
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm ci
+      - name: Build single executable
+        run: npm run build:sea
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset }}
+          path: dist/${{ matrix.asset }}
+          if-no-files-found: error
+
+  # Once npm, RubyGems and every binary are ready, gather the binaries and
+  # publish the GitHub release.
+  # --prerelease is added automatically for versions carrying a pre-release suffix (e.g. 5.3.0-beta.1)
+  publish_release:
+    needs: [publish_js, build_binaries]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: refs/tags/v${{ inputs.version }}
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Download binaries
+        uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Generate changelog
+        run: npm run release:description ${{ inputs.version }}
       - name: Create GitHub release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -130,6 +158,7 @@ jobs:
             --title "v${{ inputs.version }}" \
             --notes-file dist/changelog.md \
             ${{ contains(inputs.version, '-') && '--prerelease' || '' }} \
-            "dist/reveal-linux#asciidoctor-revealjs-linux" \
-            "dist/reveal-macos#asciidoctor-revealjs-macos" \
-            "dist/reveal-win.exe#asciidoctor-revealjs-win.exe"
+            dist/asciidoctor-revealjs-linux-amd64 \
+            dist/asciidoctor-revealjs-linux-arm64 \
+            dist/asciidoctor-revealjs-macos-arm64 \
+            dist/asciidoctor-revealjs-win-amd64.exe

@@ -1,6 +1,17 @@
 #!/usr/bin/env rake
 # frozen_string_literal: true
 
+require 'bundler/gem_tasks'
+
+# Drop `release:source_control_push` from `rake release`: the git tag is already
+# created and pushed by the release workflow's prepare step, so `rake release`
+# (invoked by rubygems/release-gem) should only build and push the gem.
+release_task = Rake::Task['release']
+release_task.clear_prerequisites
+release_task.clear_comments
+desc 'Build and push the gem to rubygems.org (the git tag is created by the release workflow)'
+task 'release' => %w[build release:guard_clean release:rubygem_push]
+
 require 'asciidoctor'
 require 'asciidoctor/doctest'
 require 'colorize'
