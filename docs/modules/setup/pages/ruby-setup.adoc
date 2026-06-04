@@ -46,19 +46,19 @@ gem 'asciidoctor-revealjs' # <.>
 
 . (Optional) Copy or clone reveal.js presentation framework
 
-  $ git clone -b 4.5.0 --depth 1 https://github.com/hakimel/reveal.js.git
+  $ git clone -b 6.0.1 --depth 1 https://github.com/hakimel/reveal.js.git
 +
 This step allows you to modify themes or view slides offline.
 
 == Rendering the AsciiDoc into slides
 
-. Create content in a file (*.adoc, *.ad, etc.).
+. Create content in a file (*.adoc, *.ad, etc...).
 See examples on the xref:converter:features.adoc[Features page] to get started.
 
 . Generate HTML presentation from the AsciiDoc source
 
   $ bundle exec asciidoctor-revealjs \
-    -a revealjsdir=https://cdn.jsdelivr.net/npm/reveal.js@4.5.0 \
+    -a revealjsdir=https://cdn.jsdelivr.net/npm/reveal.js@6.0.1 \
     presentation.adoc
 
 . If you did the optional step of having a local clone of reveal.js, you can convert the AsciiDoc source using:
@@ -89,6 +89,6 @@ The feature is activated with the `--template-dir` or `-T` option:
   $ bundle exec asciidoctor-revealjs -T templates presentation.adoc
 
 Any node not handled by a template provided in the directory specified on the command-line will fall back to the built-in conversion provided by your version of Asciidoctor reveal.js.
-Refer to our {url-project-repo}/blob/master/lib/asciidoctor-revealjs/converter.rb[converter^] for inspiration.
+Refer to our {url-project-repo}/blob/master/lib/asciidoctor_revealjs/converter.rb[converter^] for inspiration.
 
 This feature hasn't been ported to the JavaScript CLI (and API) or the standalone executables.

@@ -5,7 +5,7 @@ Short instructions that aim to help potential contributors.
 == Getting Started
 
 * Set up the Asciidoctor reveal.js plugin in xref:ruby-localversion[development mode]
-* Modify the converter, written in plain Ruby, in `lib/asciidoctor-revealjs/converter.rb`
+* Modify the converter, written in plain Ruby, in `lib/asciidoctor_revealjs/converter.rb`
 
 There is no build step: each AsciiDoc node is converted by a matching `convert_<node>` method.
 
@@ -72,7 +72,7 @@ Then run `asciidoctor-revealjs` from the command-line to generate your document 
 ----
 $ bundle exec asciidoctor-revealjs examples/video.adoc
 
-From: lib/asciidoctor-revealjs/converter.rb @ line ... :
+From: lib/asciidoctor_revealjs/converter.rb @ line ... :
 
 [1] pry(#<Asciidoctor::Section>)>
 ----
@@ -196,9 +196,9 @@ Makes triaging easier.
 
 === Test locally
 
-In order to test the Node package, you first need to build the converter into JavaScript and create a tarball of the project.
+The converter is written natively in JavaScript (in `js/src`), so there is no build step.
+In order to test the Node package, create a tarball of the project.
 
- $ bundle exec rake build:js
  $ npm pack
 
 That last command will produce a file named `asciidoctor-reveal.js-<version>.tgz` in the working directory.
@@ -228,12 +228,10 @@ Then open the Chrome Dev Tools and click on the Node logo in the top left corner
 
 == RubyGem package
 
-[[ruby-localversion]]
+[#ruby-localversion]
 === Test a local asciidoctor-revealjs version
 
-Compile the converter:
-
-  $ bundle exec rake build
+The converter is written in plain Ruby (in `lib/asciidoctor_revealjs/converter.rb`), so there is no build step.
 
 In a clean directory besides the `asciidoctor-reveal.js` repository, create the following `Gemfile` file:
 
@@ -249,18 +247,25 @@ Then run:
 
 == Update dependencies
 
-Update dependencies and test the package in both languages:
+Update one dependency at a time by bumping its version manually, then install it and run the tests.
+
+NOTE: Avoid `bundle update` and `npm update`: they may upgrade many (transitive) dependencies at once, which makes regressions much harder to track down.
+
+For a Ruby dependency, bump its version in `asciidoctor-revealjs.gemspec` (or in the `Gemfile`), then:
 
 [source,console]
 ----
-bundle update
-bundle exec rake build
+bundle install
+bundle exec rubocop
 bundle exec rake test
 bundle exec rake examples:convert
+----
 
+For a JavaScript dependency, bump its version in `package.json`, then:
+
+[source,console]
+----
 npm install
-npm update
-bundle exec rake build:js
 npm test
 npm run examples
 ----
@@ -278,15 +283,16 @@ You can get the list of all contributors using `git` (don't forget to replace `%
  $ git log %prev-version-tag%.. --format="%aN" --reverse | perl -e 'my %dedupe; while (<STDIN>) { print unless $dedupe{$_}++}' | sort
 ====
 
-. Make sure that the highlight plugin code embed in _lib/asciidoctor-revealjs/highlightjs.rb_ is up-to-date with the version of reveal.js
+. Make sure that the highlight plugin code embed in _lib/asciidoctor_revealjs/highlightjs.rb_ is up-to-date with the version of reveal.js
 . Make sure the changelog entry for the version you are about to release is committed and pushed to `master`.
 
 === Release
 
 The release is fully automated and triggered from GitHub Actions.
-We are using personal tokens to publish to rubygems.org and npmjs.com.
 
-The `RUBYGEMS_API_KEY` and `NPM_TOKEN` secrets are configured on GitHub.
+Both registries use trusted publishing (OIDC), so no API key or token needs to be configured:
+publishing to rubygems.org relies on https://guides.rubygems.org/trusted-publishing/[RubyGems trusted publishing]
+and publishing to npmjs.com relies on https://docs.npmjs.com/trusted-publishers[npm trusted publishers].
 See the `.github/workflows/release.yml` file for details.
 
 To trigger a release:
@@ -295,8 +301,8 @@ To trigger a release:
 . Click *Run workflow*, keep the `master` branch selected, and enter the version to release (e.g., `5.3.0` or `5.3.0-beta.1`).
 . Click *Run workflow*.
 
-The workflow bumps the version in _package.json_ and _lib/asciidoctor-revealjs/version.rb_, builds the project and runs the tests.
-Only if the tests pass does it commit, tag (`v%version%`) and push to `master`, then publish to rubygems.org and npmjs.com and create the GitHub release with the platform binaries.
+The workflow bumps the version in _package.json_ and _lib/asciidoctor_revealjs/version.rb_ and runs the tests.
+Only if the tests pass does it commit, tag (`v%version%`) and push to `master`, then publish to rubygems.org and npmjs.com and build the single executable binaries (one per platform) attached to the GitHub release.
 
 [NOTE]
 ====
@@ -326,7 +332,7 @@ also amend `WhenBackendIsRevealJs.java` in both `tests` and `itests` folders and
 This step is optional and should only be done after a *final* release (not after a pre-release such as `5.3.0-beta.1`).
 
 Trigger the https://github.com/asciidoctor/asciidoctor-reveal.js/actions/workflows/post-release.yml[Begin next development version workflow] from GitHub Actions.
-It bumps the minor version to the next `-dev` version (e.g., `5.3.0` -> `5.4.0-dev`) in _package.json_, _lib/asciidoctor-revealjs/version.rb_ and _docs/antora.yml_, then commits and pushes to `master`.
+It bumps the minor version to the next `-dev` version (e.g., `5.3.0` -> `5.4.0-dev`) in _package.json_, _lib/asciidoctor_revealjs/version.rb_ and _docs/antora.yml_, then commits and pushes to `master`.
 
 Alternatively, you can run it locally and follow the printed instructions:
 
