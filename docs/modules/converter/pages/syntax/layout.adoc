@@ -11,7 +11,7 @@ To add this class to an HTML element, you can assign a role to a block using the
 
     [.stretch]
 
-See link:{url-revealjs-doc}#stretching-elements[reveal.js documentation on stretching elements].
+See link:{url-revealjs-doc}/layout/[reveal.js documentation on stretching elements].
 
 == Vertical slides
 
@@ -26,9 +26,9 @@ Top slide
 This is a vertical sub-slide
 ....
 
-Slide 6 uses the vertical slide feature of `reveal.js`.
+Slide 6 uses the vertical slide feature of reveal.js.
 Slide 6.1 will be rendered vertically below Slide 6.
-Here is link:{url-revealjs-doc}#markup[the relevant reveal.js documentation^] on that topic.
+Here is link:{url-revealjs-doc}/vertical-slides/[the relevant reveal.js documentation^] on that topic.
 
 == Columns layout
 
@@ -41,7 +41,7 @@ Inspired by {url-bulma}[Bulma^], Asciidoctor reveal.js supports columns layout o
 
 [.column]
 --
-* **Edgar Allen Poe**
+* **Edgar Allan Poe**
 * Sheri S. Tepper
 * Bill Bryson
 --

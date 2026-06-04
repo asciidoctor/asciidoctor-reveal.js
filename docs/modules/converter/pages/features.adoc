@@ -26,25 +26,17 @@ A Great Story
 --
 ----
 
-In previous snippet we are creating a slide titled Slide One with bullets and another one titled Slide Two with centered text (reveal.js`' default behavior) with link:{url-revealjs-doc}#speaker-notes[speaker notes].
-Other syntax exists to create speaker notes, see `examples/speaker-notes.adoc`.
+In the previous snippet, we create a slide titled Slide One with bullets and another titled Slide Two with centered text (reveal.js`' default behavior) and link:{url-revealjs-doc}/speaker-view/[speaker notes].
+Other syntax exists to create speaker notes; see `examples/speaker-notes.adoc`.
 
 IMPORTANT: In order to generate a proper presentation, the source file _must_ contain a proper AsciiDoc document structure.
 This is especially important when configuring how Asciidoctor reveal.js should convert the document.
-The document properties must be set on the title slide for them to work. 
+The document properties must be set on the title slide for them to work.
 See xref:syntax/title.adoc[] for more information.
 
-Starting with reveal.js 3.5 speaker notes supports configurable layouts:
+Speaker notes support configurable layouts and are opened by pressing the `s` key:
+
 image:https://cloud.githubusercontent.com/assets/629429/21808439/b941eb52-d743-11e6-9936-44ef80c60580.gif[]
-
-Speaker notes are opened by pressing `s`.
-With reveal.js 3.5 they require a webserver to work.
-This limitation is not present in 3.6.
-You can get a Web server running quickly with:
-
- $ ruby -run -e httpd . -p 5000 -b 127.0.0.1
-
-Then use your browser to navigate to the URL \http://localhost:5000.
 
 == Slides without titles
 
@@ -66,12 +58,9 @@ To achieve the effect of hiding only the first slide's title, combine the `:noti
 
 Some content can be created with both slides and book in mind.
 
-To mark slides split points you can use preprocessor conditionals combined
-with a backend declaration.
-Breaking points are set using slides with no title `=== !` wrapped in a
-conditional: `ifdef::backend-revealjs[=== !]`.
-In the end, the whole document has to be compiled with the backend option:
-`-b revealjs`
+To mark slide split points, you can use preprocessor conditionals combined with a backend declaration.
+Breaking points are set using titleless slides (`=== !`) wrapped in a conditional: `ifdef::backend-revealjs[=== !]`.
+The whole document then has to be compiled with the backend option `-b revealjs`.
 
 For example:
 

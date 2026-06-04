@@ -2,15 +2,12 @@
 
 This feature is a wrapper of https://revealjs.com/auto-animate/[reveal.js auto-animate feature].
 
-Since your AsciiDoc file will be transformed into an HTML 5 presentation,
-You can define Asciidoctor attributes and options to configure the reveal.js auto-animate feature.
-Under the hood, these settings will be mapped to https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*[custom HTML data attributes].
+Since your AsciiDoc file is transformed into an HTML5 presentation, you can define Asciidoctor attributes and options to configure the reveal.js auto-animate feature.
+Under the hood, these settings are mapped to https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*[custom HTML data attributes].
 
-For boolean attributes which means `true` if you set it, or `false` if you omit it,
-you should use Asciidoctor options, such as: `%auto-animate`.
+For boolean settings (`true` when present, `false` when omitted), use Asciidoctor options, such as `%auto-animate`.
 
-For reveal.js settings which need to set specific values, you can use Asciidoctor attributes,
-such as: `auto-animate-easing=ease-in-out`.
+For settings that take a specific value, use Asciidoctor attributes, such as `auto-animate-easing=ease-in-out`.
 
 == Enable auto-animate
 
@@ -127,10 +124,10 @@ This animation...
 
 == Animation group
 
-You can separate groups of auto-animated slides, which will distinct from each other by using the `auto-animate-id` attribute.
-Auto animation occurs in adjacent slides of the same group or both don't have one.
+You can separate groups of auto-animated slides with the `auto-animate-id` attribute so that they stay distinct from one another.
+Auto-animation occurs between adjacent slides that share the same group, or that both have none.
 
-The `%auto-animate-restart` option will prevent auto-animate between the previous slide (even if they have the same id).
+The `%auto-animate-restart` option prevents auto-animation from the previous slide, even when they share the same id.
 
 The example below illustrates `auto-animate-restart` usage:
 

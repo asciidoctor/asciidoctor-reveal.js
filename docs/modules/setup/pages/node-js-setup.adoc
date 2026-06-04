@@ -8,7 +8,7 @@ First you must install and configure {url-nodejs-download}[Node] on your machine
 [#node-install]
 == Install
 
-We recommend to install the dependencies in a project directory, such as the directory where your AsciiDoc presentations are stored.
+We recommend installing the dependencies in a project directory, such as the directory where your AsciiDoc presentations are stored.
 If you don't have a `package.json` file in your project directory, you can create one to eliminate warnings during the installation using:
 
  $ npm init -y
@@ -93,4 +93,4 @@ To execute the script, open a terminal and type:
 
  $ node convert-slides.mjs
 
-You can open the `presentation.html` file in your browser and enjoy!
+You can now open the `presentation.html` file in your browser.

@@ -5,8 +5,8 @@
 
 By default, generated presentations will have the following built-in reveal.js plugins enabled:
 
-* `plugin/zoom/zoom.js`
-* `plugin/notes/notes.js`
+* `dist/plugin/zoom.js`
+* `dist/plugin/notes.js`
 
 All these plugins are part of the reveal.js distribution.
 
@@ -21,79 +21,95 @@ For example, to disable all the default plugins set the following document attri
 
 == Additional plugins
 
-Additional reveal.js plugins can be installed and activated using a xref:asciidoc:docinfo:index.adoc[docinfo file].
+Additional reveal.js plugins can be installed and activated using xref:asciidoc:docinfo:index.adoc[docinfo files].
 
-. Extract the plugin files in a directory
-. Create a docinfo file to load and register the plugin
+. Extract the plugin files into a directory
+. Load each plugin's script and stylesheet from a head docinfo file
+. Configure and initialize the plugins from a footer docinfo file
 . Add a `:docinfo:` attribute to enable docinfo
 
-Let's take an example where we want to use the https://github.com/denehyg/reveal.js-menu/tree/master[menu plugin] and the https://github.com/rajgoel/reveal.js-plugins/tree/master/chalkboard[chalkboard plugin].
-First, download the plugins from GitHub and extract the `menu` and `chalkboard` directory in a `revealjs-plugins` folder:
+Let's take an example where we want to use the https://github.com/rajgoel/reveal.js-plugins/tree/master/chalkboard[chalkboard plugin] and the https://github.com/rajgoel/reveal.js-plugins/tree/master/customcontrols[customcontrols plugin].
+First, download the plugins from GitHub and extract the `chalkboard` and `customcontrols` directories into a `reveal.js-plugins` folder:
 
 [source,console]
 ----
-$ tree revealjs-plugins -L 2
+$ tree reveal.js-plugins -L 2
 ----
 
 ....
-revealjs-plugins
+reveal.js-plugins
 ├── chalkboard
 │   ├── img
 │   ├── plugin.js
 │   ├── README.md
 │   └── style.css
-└── menu
-    ├── font-awesome
-    ├── LICENSE
-    ├── menu.css
-    ├── menu.esm.js
-    ├── menu.js
+└── customcontrols
     ├── plugin.js
-    └── README.md
+    ├── README.md
+    └── style.css
 
-4 directories, 9 files
+4 directories, 6 files
 ....
 
-Then, create a docinfo file named `<docname>-docinfo-footer.html` where `<docname>` is the name of your AsciiDoc file (i.e., `<docname>.adoc`):
+Loading a plugin happens in two steps: load its assets, then initialize it.
+
+First, load each plugin's script and stylesheet from a head docinfo file named `<docname>-docinfo-revealjs.html`, where `<docname>` is the name of your AsciiDoc file (here, `presentation.adoc`).
+The customcontrols plugin renders its buttons with https://fontawesome.com[Font Awesome^] icons, so load Font Awesome as well:
+
+.presentation-docinfo-revealjs.html
+[source,html]
+----
+<script src="Font-Awesome/js/all.min.js"></script> <!--.-->
+<link rel="stylesheet" href="Font-Awesome/css/all.min.css">
+<script src="reveal.js-plugins/customcontrols/plugin.js"></script> <!--.-->
+<link rel="stylesheet" href="reveal.js-plugins/customcontrols/style.css">
+<script src="reveal.js-plugins/chalkboard/plugin.js"></script> <!--.-->
+<link rel="stylesheet" href="reveal.js-plugins/chalkboard/style.css">
+----
+<.> Load Font Awesome, used by the customcontrols icons
+<.> Load the customcontrols plugin and its stylesheet
+<.> Load the chalkboard plugin and its stylesheet
+
+Then, configure and initialize the plugins from a footer docinfo file named `<docname>-docinfo-footer.html`.
+Each modern reveal.js plugin exposes an `init(Reveal)` function that you call once reveal.js is ready:
 
 .presentation-docinfo-footer.html
 [source,html]
 ----
-<script src="revealjs-plugins/menu/menu.js"></script> // <1>
-<link rel="stylesheet" href="revealjs-plugins/chalkboard/style.css"> // <2>
-<script src="revealjs-plugins/chalkboard/plugin.js"></script> // <2>
 <script>
   Reveal.configure({
-    menu: {
-      side: 'right',
-      openButton: false
-    },
-    keyboard: {
-      67: function() { RevealChalkboard.toggleNotesCanvas() },
-      66: function() { RevealChalkboard.toggleChalkboard() }
+    customcontrols: {
+      controls: [
+        { icon: '<i class="fa fa-pen-square"></i>',
+          title: 'Toggle chalkboard (B)',
+          action: 'RevealChalkboard.toggleChalkboard();' },
+        { icon: '<i class="fa fa-pen"></i>',
+          title: 'Toggle notes canvas (C)',
+          action: 'RevealChalkboard.toggleNotesCanvas();' }
+      ]
     }
-  }) // <3>
-  Reveal.registerPlugin(RevealMenu) // <4>
-  Reveal.registerPlugin(RevealChalkboard) // <5>
+  }) // <.>
+  RevealChalkboard.init(Reveal) // <.>
+  RevealCustomControls.init(Reveal) // <.>
 </script>
 ----
-<1> Load the menu plugin
-<2> Load the chalkboard plugin including a stylesheet
-<3> Configure the menu plugin and assign keyboard bindings to toggle the notes canvas and the chalkboard
-<4> Register the menu plugin
-<5> Register the chalkboard plugin
+<.> Configure the customcontrols to toggle the chalkboard and the notes canvas
+<.> Initialize the chalkboard plugin
+<.> Initialize the customcontrols plugin
 
-Please note that the file is named _presentation-docinfo-footer.html_ because our AsciiDoc file is named _presentation.adoc_:
+Finally, enable docinfo in your presentation so that both files are picked up:
 
 .presentation.adoc
 [source,adoc]
 ----
 = Third-party Plugins
-:docinfo: private // <1>
+:docinfo: private // <.>
 
 // ...
 ----
-<1> Enable docinfo and select the file named _presentation-docinfo-footer.html_
+<.> Enable private docinfo so the `presentation-docinfo-revealjs.html` and `presentation-docinfo-footer.html` files are included
+
+TIP: A complete, working example is available in {url-project-examples}/revealjs-plugins.adoc[revealjs-plugins.adoc] together with its docinfo files.
 
 [IMPORTANT]
 ====

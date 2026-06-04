@@ -13,86 +13,8 @@ There is no build step: each AsciiDoc node is converted by a matching `convert_<
 
  $ bundle exec asciidoctor-revealjs <source.adoc>
 
-The next section will provide further help on how to use `print` statements or a debugger to assist development.
-
-
-== Inspect the converter
-
-To understand what you have access to while converting a node you can inject some Ruby.
 Each `convert_<node>` method runs in the context of the node being converted (`self` is the node), so you can call node methods and inspect them directly.
-Two complementary approaches can be used to explore the context offered by Asciidoctor:
-
-* logging on the command line via print-like statements
-* jump into the context through an interactive debugger
-
-=== Print debugging information
-
-For example to see which attributes are available, you can print them by adding these lines inside the relevant `convert_<node>` method:
-
-----
-puts @document.attributes.inspect
-puts @attributes.inspect
-puts @document.methods
-----
-
-Other generally useful Ruby specific introspection:
-
-----
-puts instance_variables
-puts local_variables
-----
-
-One might find `pp` to produce better output (and in some cases not):
-
-----
-require 'pp'
-pp @document.attributes
-----
-
-=== Interactively debug the converter
-
-Pry is a powerful debugger for Ruby that features tab-completion.
-It is very useful to discover a complex object hierarchy like what Asciidoctor offers.
-
-==== Initial Setup
-
- $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
-
-==== Usage
-
-In order to be dropped into the debugger at a specific point, add the following two lines inside the relevant `convert_<node>` method:
-
-----
-require 'pry'
-binding.pry
-----
-
-Then run `asciidoctor-revealjs` from the command-line to generate your document and you'll be dropped in the debugger:
-
-----
-$ bundle exec asciidoctor-revealjs examples/video.adoc
-
-From: lib/asciidoctor_revealjs/converter.rb @ line ... :
-
-[1] pry(#<Asciidoctor::Section>)>
-----
-
-Then using commands like the following allows you to explore interactively Asciidoctor's API and object model with syntax highlighting:
-
-    [1] pry(#<Asciidoctor::Section>)> @document
-
-You can also query Asciidoctor's documentation:
-
-    [4] pry(#<Asciidoctor::Section>)> ? find_by
-
-If you install the `pry-byebug` gem you get additional debugging capabilities.
-See the gem's documentation for details.
-
-=== References
-
-* https://github.com/asciidoctor/asciidoctor.org/issues/80#issuecomment-145698579
-* https://pry.github.io
-* http://discuss.asciidoctor.org/Interactively-debugging-a-template-with-a-REPL-td4498.html
+The {url-asciidoctor-abstractnode-attr}[Asciidoctor API documentation] describes what is available on each node.
 
 == Manual Tests
 
@@ -101,13 +23,13 @@ You can render the tests files and then load them in a browser and check if `asc
 
 === Initial Setup
 
-Make sure to have a working version of `asciidoctor-reveals` this is usually
-done with `bundler`:
+Make sure to have a working version of `asciidoctor-revealjs`.
+This is usually done with Bundler:
 
  $ bundle config --local github.https true
  $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
-Go to `test/doctest` folder and install `reveal.js`:
+Go to the `test/doctest` folder and install reveal.js:
 
  $ cd test/doctest/
  $ git clone https://github.com/hakimel/reveal.js.git
@@ -120,10 +42,7 @@ From the project's root directory:
 
 === Open rendered files
 
-NOTE: Right now, https://github.com/asciidoctor/asciidoctor-doctest/issues/12[doctest issue #12] means that the generated examples will not be pretty.
-
 You can open the generated `.html` in `test/doctest/` in a Web browser.
-
 
 == Asciidoctor API's gotchas
 
@@ -146,19 +65,19 @@ That might be good for configuring transitions. For instance:
 However, there may be attributes that you don't want to inherit.
 If that's the case, you generally use the form:
 
-    attr('name', nil, false)
+[source,ruby]
+attr('name', nil, false)
 
 The second parameter value is the default attribute value, which is `nil` by default.
 
 Relevant documentation: {url-asciidoctor-abstractnode-attr}
-
 
 == Merge / Review policy
 
 Any non-trivial change should be integrated in master via a pull-request.
 This gives the community a chance to participate and helps write better code because it encourages people to review their own patches.
 
-Pull requests should come from personal forks in order not the clutter the upstream repository.
+Pull requests should come from personal forks in order not to clutter the upstream repository.
 
 === Wait time
 
@@ -169,22 +88,19 @@ If you don't get feedback, just merge after the sitting time frame.
 Larger changes should sit longer at around a week.
 Positive feedback or no feedback should be handled like for small changes.
 
-Breaking changes should sit until a prominent contributor comments on the changes.
-Ping `@mojavelinux` and `@obilodeau` if necessary.
+Breaking changes should sit until a maintainer has reviewed and approved them.
 
-Remember that this is a slower moving project since people are not designing slides everyday.
-Well, for most people.
+Remember that this is a slower-moving project, since people are not designing slides every day.
 
 === Work-in-progress pull-requests
 
-Letting know to the maintainers that you are working on a feature or a fix is useful.
-Early communication often times save time consuming mistakes or avoids duplicated effort.
+Letting the maintainers know that you are working on a feature or a fix is useful.
+Early communication often saves time-consuming mistakes or avoids duplicated effort.
 We encourage contributors to communicate with us early.
 
 Branches on forks of this project are not very visible to maintainers as much as pull requests (PR).
 For this reason we recommend to open a draft PR to let everyone know that you are working on a specific topic.
 Now, instead of prepending "`WIP`", we recommend using GitHub "`draft pull request`" feature instead.
-
 
 === "`needs review`" label
 
@@ -215,16 +131,6 @@ Now, install the dependencies from the tarball:
 NOTE: The relative portion of the last command is where you are installing the local `asciidoctor-reveal.js` version from.
 
 Then proceed as documented in the `README.adoc`.
-
-=== Debugging
-
-To debug the JavaScript application, just add `--node-arg=--inspect-brk` to the npx command to run the application.
-For example:
-
- $ npx --node-arg=--inspect-brk asciidoctor-revealjs -v presentation.adoc
-
-Then open the Chrome Dev Tools and click on the Node logo in the top left corner.
-
 
 == RubyGem package
 
@@ -324,7 +230,7 @@ In addition, you can submit pull requests to downstream project:
 * [ ] submit a pull request downstream to update Asciidoctor reveal.js version in the Asciidoctor Docker Container
 ** modify the `Dockerfile`, `tests/asciidoctor.bats`, `README.md` and `README.adoc` in: https://github.com/asciidoctor/docker-asciidoctor
 * [ ] submit a pull request downstream to update AsciidoctorJ reveal.js version
-** modify `gradle.properties` and `asciidoctorj-revealjs/gradle.properties`. if `reveal.js`version has been updated, +
+** modify `gradle.properties` and `asciidoctorj-revealjs/gradle.properties`. If the reveal.js version has been updated, +
 also amend `WhenBackendIsRevealJs.java` in both `tests` and `itests` folders and `README.adoc` in: https://github.com/asciidoctor/asciidoctorj-reveal.js
 
 === Prepare next version
@@ -338,6 +244,7 @@ Alternatively, you can run it locally and follow the printed instructions:
 
  $ npm run release:next
 
+[#maintenance-branch]
 === Maintenance branch
 
 You can (not must) create a maintenance branch from a tag.
@@ -349,7 +256,7 @@ Please use the following name convention: `\{major}.\{minor}.x` (e.g., `4.1.x`).
 
 === New major version
 
-In case of a new major version, you must follow the steps described for a <<_maintenance_branch,Maintenance branch>>.
+In case of a new major version, you must follow the steps described for a xref:maintenance-branch[Maintenance branch].
 
 
 == Ruby and asciidoctor-doctest tests
@@ -370,7 +277,7 @@ However, if you have all dependencies properly installed this command should run
 
 === Generating HTML test target
 
-Tests were bootstrapped by https://github.com/asciidoctor/asciidoctor-doctest/#generate-examples[generating them from asciidoctor-doctest's test corpus^] and current asciidoctor-revealjs' slim template engine.
+Tests were bootstrapped by https://github.com/asciidoctor/asciidoctor-doctest/#generate-examples[generating them from asciidoctor-doctest's test corpus^].
 This is done using the following command:
 
  $ bundle exec rake doctest:generate FORCE=y
@@ -396,7 +303,7 @@ Reach out to our Netlify integration contact to make sure that deployed branches
 
 === Integration Contact
 
-Main Contact: {url-gh-ggrosetie}[@ggrossetie^]
+Main Contact: {url-gh-ggrossetie}[@ggrossetie^]
 
 Also, in order to stay with a free plan, only the following people have control over our Netlify integration:
 {url-gh-ggrossetie}[@ggrossetie^],

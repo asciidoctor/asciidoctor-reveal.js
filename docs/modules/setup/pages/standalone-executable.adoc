@@ -13,7 +13,7 @@ The executables are built using the xref:node-js-setup.adoc[Node / JavaScript] t
 == Install
 
 * {url-project-repo}/releases[Download the executable] for your platform and make it executable with `chmod` or using the files properties' user interface.
-* Copy or clone the reveal.js presentation framework in the directory where you will build your slidedeck.
+* Copy or clone the reveal.js presentation framework into the directory where you will build your slide deck.
 Here we do a shallow clone of the repo:
 
   $ git clone -b 6.0.1 --depth 1 https://github.com/hakimel/reveal.js.git
@@ -55,6 +55,6 @@ To convert the sample presentation into slides, open a terminal and type:
 The above command will generate a file named [.path]_presentation.html_.
 You can open this file in a browser.
 
-TIP: Alternatively you can use `:revealjsdir: https://cdn.jsdelivr.net/npm/reveal.js` to avoid having to set up reveal.js locally.
-Just be aware that then if you have no access to internet then the presentation will not load properly.
-Also, when using jsDelivr, speaker notes will be served as plain text - instead of HTML - for https://www.jsdelivr.com/documentation#id-be-advised-that-you-must-include-file-extension-in-the-values-for-example-main-index--this-will-not-work-main-indexjs--this-is-the-correct-way-restrictions[security reasons] and thus will not work.
+TIP: Alternatively, you can use `:revealjsdir: https://cdn.jsdelivr.net/npm/reveal.js` to avoid setting up reveal.js locally.
+Just be aware that the presentation will not load without an internet connection.
+Also, when using jsDelivr, speaker notes are served as plain text instead of HTML for https://www.jsdelivr.com/documentation#id-be-advised-that-you-must-include-file-extension-in-the-values-for-example-main-index--this-will-not-work-main-indexjs--this-is-the-correct-way-restrictions[security reasons], so they will not work.

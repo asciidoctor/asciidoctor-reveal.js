@@ -29,7 +29,7 @@ image:https://api.netlify.com/api/v1/badges/facd68e7-9337-4b83-bcac-7262720a6915
 endif::[]
 
 // IMPORTANT: Changes made to this description should be sync'ed with the readme field in package.json.
-{url-project-repo}[Asciidoctor reveal.js] is a converter for {url-asciidoctor}[Asciidoctor] and {url-asciidoctorjs}[Asciidoctor.js] that transforms an AsciiDoc document into an HTML5 presentation designed to be executed by the {url-revealjs-home}[reveal.js] presentation framework.
+{url-project-repo}[Asciidoctor reveal.js] is a converter for {url-asciidoctor}[Asciidoctor] and {url-asciidoctorjs}[Asciidoctor.js] that transforms an AsciiDoc document into an HTML5 presentation powered by the {url-revealjs-home}[reveal.js] presentation framework.
 
 == Documentation
 
@@ -38,8 +38,8 @@ If you want to learn more about Asciidoctor reveal.js, please read the {url-docu
 == Contributing
 
 Interested in contributing?
-We are interested!
-Developer-focused documentation is {url-documentation-site}/project/hacking[over here].
+We'd love your help.
+Head over to the {url-documentation-site}/project/hacking[developer documentation] to get started.
 
 == Copyright and Licensing
 
