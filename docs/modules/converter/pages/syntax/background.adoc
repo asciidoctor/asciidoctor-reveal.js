@@ -8,7 +8,7 @@ See {url-project-repo}/blob/master/examples/background-color.adoc[background-col
 === Using AsciiDoc roles
 
 Using roles respects the AsciiDoc philosophy of separation of content and presentation.
-Colors are to be defined by CSS and the xref:custom-styles.adoc[`:customcss:` attribute] need to be used to specify the CSS file to load.
+Colors are defined in CSS, and the xref:custom-styles.adoc[`:customcss:` attribute] is used to specify the CSS file to load.
 To avoid clashing with existing reveal.js themes or CSS, a specific CSS class called `background` is expected to be present.
 Here is an example:
 
@@ -43,7 +43,7 @@ NOTE: The `canvas` keyword can be used instead of `background` for the same effe
 Is very yellow
 ----
 
-Slide Three applies the attribute link:{url-revealjs-doc}#slide-backgrounds[data-background-color] to the `reveal.js` <section> tag.
+Slide Three applies the link:{url-revealjs-doc}/backgrounds/[data-background-color] attribute to the reveal.js `<section>` tag.
 Anything accepted by CSS color formats works.
 
 
@@ -60,7 +60,7 @@ image::cover.jpg[background, size=cover]
 This will put `cover.jpg` as the slide's background image.
 It sets reveal.js`' `data-background-image` attribute.
 The `size` attribute is also supported.
-See the link:{url-revealjs-doc}#image-backgrounds[relevant reveal.js documentation] for details.
+See the link:{url-revealjs-doc}/backgrounds/[relevant reveal.js documentation] for details.
 
 NOTE: Background images file names are now relative to the `:imagesdir:` attribute if set.
 
@@ -98,7 +98,7 @@ For example:
 == Nice background!
 ----
 
-See link:{url-revealjs-doc}#video-backgrounds[the relevant reveal.js documentation] for details.
+See link:{url-revealjs-doc}/backgrounds/[the relevant reveal.js documentation] for details.
 Note that the `data-` prefix is not required in AsciiDoc files.
 
 
@@ -112,4 +112,4 @@ The background can be replaced with anything a browser can render in an iframe u
 == a youtube video
 ----
 
-See link:{url-revealjs-doc}#iframe-backgrounds[the relevant reveal.js documentation] for details.
+See link:{url-revealjs-doc}/backgrounds/[the relevant reveal.js documentation] for details.

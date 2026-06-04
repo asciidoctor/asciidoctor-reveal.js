@@ -63,7 +63,6 @@ print "$0: hello world\n"
 -----
 
 [NOTE]
-Alternatively, you can use {url-rouge}[Rouge], {url-coderay}[Coderay] or {url-pygment}[Pygments] as syntax highlighters,
-if you are using the Asciidoctor/Ruby/Bundler toolchain (not Asciidoctor.js/JavaScript/npm).
+Alternatively, you can use {url-rouge}[Rouge], {url-coderay}[Coderay], or {url-pygment}[Pygments] as syntax highlighters if you are using the Asciidoctor / Ruby / Bundler toolchain (not Asciidoctor.js / JavaScript / npm).
 Check the `examples/` directory for examples and notes about what needs to be done for them to work.
 They are considered unsupported by the Asciidoctor reveal.js project.

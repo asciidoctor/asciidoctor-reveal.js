@@ -10,6 +10,6 @@ The syntax is the standard xref:asciidoc:macros:audio-and-video.adoc#video-macro
 video::kZH9JtPBq7k[youtube, start=34, options=autoplay]
 ----
 
-By default videos are given as much space as possible.
+By default, videos are given as much space as possible.
 To override that behavior use the `width` and `height` named attributes.
 

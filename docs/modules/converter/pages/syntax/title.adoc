@@ -42,9 +42,9 @@ In addition to configuring document-wide settings, the title slide can also defi
 
 This converter supports changing the color, image, video, iframe and transitions of the title slide.
 
-Read {url-revealjs-doc}#slide-backgrounds[the reveal.js documentation] to understand what attributes can be set.
+Read {url-revealjs-doc}/backgrounds/[the reveal.js documentation] to understand what attributes can be set.
 Keep in mind that for a title slide, you must replace `data-` with `title-slide-` in the name of the attribute.
 
 See link:{url-project-examples}/title-slide-image.adoc[title-slide-image.adoc] for an example of using these attributes.
 
-The title slide also given an special `title` CSS class to help with template customization.
+The title slide is also given a special `title` CSS class to help with template customization.

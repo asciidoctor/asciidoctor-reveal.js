@@ -1,14 +1,14 @@
 = Steps
 
 Steps are used to highlight or incrementally reveal individual elements on a slide. +
-This is what _reveal.js_ calls {url-revealjs-home}/fragments[fragments].
+This is what reveal.js calls {url-revealjs-home}/fragments[fragments].
 Every element with the role `fragment` will be stepped through before moving on to the next slide.
 
 [IMPORTANT]
 ====
-While you can use the role _fragment_ on any elements,
-we recommend to use the _step_ option to declare a fragment (see below). +
-It will ensure better portability and avoid CSS conflicts when using another converter.
+While you can use the `fragment` role on any element,
+we recommend using the `step` option to declare a fragment (see below). +
+It ensures better portability and avoids CSS conflicts when using another converter.
 ====
 
 == Step option
@@ -127,7 +127,7 @@ NOTE: Multiple elements can appear at the same index.
 
 == Text and inline elements
 
-Since it's not possible to define attributes or options on text and inline elements, you can use the role _step_.
+Since it's not possible to define attributes or options on text and inline elements, you can use the `step` role.
 
 [source, asciidoc]
 ----
@@ -172,7 +172,7 @@ you can wrap a list block in an open block:
 
 In the above example, the title "Greek Alphabet" and all the list items will be revealed at once.
 
-And here's a another example where we apply the _step_ option on different elements:
+And here's another example where we apply the `step` option to different elements:
 
 [source, asciidoc]
 ----

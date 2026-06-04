@@ -1,5 +1,5 @@
 = Contributing
 
 Interested in contributing?
-We are interested!
-Developer-focused documentation is xref:hacking.adoc[over here].
+We'd love your help.
+Head over to the xref:hacking.adoc[developer documentation] to get started.

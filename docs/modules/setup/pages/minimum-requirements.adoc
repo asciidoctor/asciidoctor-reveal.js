@@ -1,13 +1,20 @@
 = Minimum Requirements
 
-Our requirements are expressed in our packages and by our dependencies.
-Basically, all you need is the package manager of the flavor of Asciidoctor reveal.js you are interested to run:
+The requirements depend on the toolchain you choose to run Asciidoctor reveal.js.
+In each case, all you need is the matching runtime, its package manager, and a compatible version of Asciidoctor.
 
-* With Ruby / Bundler: A {url-ruby-download}[recent Ruby^] and {url-bundler}[Bundler^]
-* With JavaScript (Node.js) / npm: a {url-nodejs-download}[recent Node.js^] environment
+[cols="1,2,2"]
+|===
+|Toolchain |Runtime |Asciidoctor
 
-If you need more details about our dependencies check out Asciidoctor dependencies:
+|Ruby / Bundler
+|{url-ruby-download}[Ruby^] >= 2.7 and {url-bundler}[Bundler^]
+|{url-asciidoctor}[Asciidoctor^] >= 2.0, < 3.0
 
-* With Ruby / Bundler: https://github.com/asciidoctor/asciidoctor/tree/v2.0.10#requirements[Asciidoctor^] 2.0.10
-* With JavaScript (Node.js) / npm: https://github.com/asciidoctor/asciidoctor.js/blob/v2.0.3/packages/core/package.json[Asciidoctor.js^] 2.0.3
+|JavaScript (Node.js) / npm
+|{url-nodejs-download}[Node.js^] >= 20 and npm >= 8
+|{url-asciidoctorjs}[Asciidoctor.js^] >= 4.0, < 5.0
+|===
+
+For the full mapping between Asciidoctor reveal.js, reveal.js, and Asciidoctor.js versions, see the xref:compatibility-matrix.adoc[].
 

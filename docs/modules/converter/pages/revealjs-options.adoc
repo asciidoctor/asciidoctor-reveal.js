@@ -2,19 +2,19 @@
 :navtitle: Config Options
 :experimental:
 
-Some attributes can be set at the top of the document that are specific to the `reveal.js` converter.
-They use the same name as in the `reveal.js` project except that they are prepended by `revealjs_` and case doesn't matter.
+A number of document-header attributes are specific to the reveal.js converter.
+They share the names used by the reveal.js project, except that they are prefixed with `revealjs_` and the case doesn't matter.
 They are applied in the {url-project-repo}/blob/master/lib/asciidoctor_revealjs/converter.rb[converter] (see `convert_document`).
 
-NOTE: Default settings are based on `reveal.js` default settings.
+NOTE: The defaults match the reveal.js defaults.
 
 [cols="1m,1,2"]
 |===
 |Attribute |Value(s) |Description
 
 |:revealjs_theme:
-|beige, *black*, league, night, serif, simple, sky, solarized, white
-|Chooses one of reveal.js`' link:{url-revealjs-doc}#theming[built-in themes].
+|beige, *black*, black-contrast, blood, dracula, league, moon, night, serif, simple, sky, solarized, white, white-contrast
+|Chooses one of reveal.js`' link:{url-revealjs-doc}/themes/[built-in themes].
 
 |:revealjs_customtheme:
 |<file\|URL>
@@ -28,10 +28,9 @@ Default is built-in [path]_lib/css/zenburn.css_.
 
 |:revealjsdir:
 |<file\|URL>
-|Overrides reveal.js directory.
-Example: ../reveal.js or
-https://cdn.jsdelivr.net/npm/reveal.js@4.5.0.
-Default is `reveal.js/` unless in a Node.js environment where it is `node_modules/reveal.js/`.
+|Overrides the reveal.js directory.
+Example: `../reveal.js` or `https://cdn.jsdelivr.net/npm/reveal.js@6.0.1`.
+Default is `reveal.js/`, unless in a Node.js environment where it is `node_modules/reveal.js/`.
 
 |:revealjs_controls:
 |*true*, false
@@ -110,7 +109,7 @@ print:: only show slide numbers when printing to PDF
 
 |:revealjs_navigationMode:
 |*default*, linear, grid
-|See link:{url-revealjs-doc}#navigation-mode[] for details
+|See link:{url-revealjs-doc}/config/[] for details
 
 |:revealjs_shuffle:
 |true, *false*
@@ -260,8 +259,8 @@ Defaults to *block*
 
 |:revealjs_width:
 |<pixels\|percentage unit>
-| Independent from the values, the aspect ratio will be preserved
-when scaled to fit different resolutions. Defaults to *960*
+|Regardless of the values, the aspect ratio is preserved when scaling to fit different resolutions.
+Defaults to *960*
 
 |:revealjs_height:
 |<pixels\|percentage unit>
@@ -284,6 +283,6 @@ Defaults to *1*
 |===
 
 If you want to build a custom theme or customize an existing one
-you should take a look at the {url-revealjs-gh}/css/theme/README.md[reveal.js theme documentation].
+you should take a look at the {url-revealjs-gh}/blob/6.0.1/css/theme/README.md[reveal.js theme documentation].
 
 Then, use the `revealjs_customtheme` AsciiDoc attribute to activate it.
