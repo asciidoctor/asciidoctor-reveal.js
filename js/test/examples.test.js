@@ -2,7 +2,7 @@
 // JavaScript converter and compared byte-for-byte against the Ruby converter
 // (the reference implementation, invoked through `bundle exec ruby`).
 //
-// Run with: node --test js/test/   (Node >= 18, Ruby/bundler available)
+// Run with: node --test js/test/   (Node >= 20, Ruby/bundler available)
 //
 // The whole suite is skipped when Ruby/bundler is unavailable. Individual
 // presentations that cannot match byte-for-byte (upstream 4.0-alpha bugs or

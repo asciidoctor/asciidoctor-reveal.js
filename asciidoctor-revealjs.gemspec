@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   rescue StandardError
     Dir['**/*']
   end
-  s.files = files.grep %r{^(?:(?:examples|lib)/.+|Gemfile|Rakefile|(?:CHANGELOG|LICENSE|README)\.adoc|#{s.name}\.gemspec)$}
+  s.files = files.grep %r{^(?:(?:data|examples|lib)/.+|Gemfile|Rakefile|(?:CHANGELOG|LICENSE|README)\.adoc|#{s.name}\.gemspec)$}
 
   s.executables = ['asciidoctor-revealjs']
   s.extra_rdoc_files = Dir['README.adoc', 'LICENSE.adoc', 'HACKING.adoc']

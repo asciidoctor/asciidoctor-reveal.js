@@ -5,7 +5,7 @@
 
 First you must install and configure {url-nodejs-download}[Node] on your machine.
 
-[[node-install]]
+[#node-install]
 == Install
 
 We recommend to install the dependencies in a project directory, such as the directory where your AsciiDoc presentations are stored.
@@ -16,6 +16,12 @@ If you don't have a `package.json` file in your project directory, you can creat
 You can now install the dependencies:
 
  $ npm i --save asciidoctor @asciidoctor/reveal.js
+
+[NOTE]
+====
+`asciidoctor` is a required peer dependency of `@asciidoctor/reveal.js`: the converter registers itself into _your_ Asciidoctor instance, so both packages must resolve to the same copy.
+Install it yourself (as shown above) and pick any release in the `>=4.0.0 <5.0.0` range — you can upgrade Asciidoctor.js within that range without waiting for a new release of the converter.
+====
 
 == Convert AsciiDoc into slides
 
@@ -32,9 +38,9 @@ The command should report the Asciidoctor CLI version in the terminal:
 
 [source,console]
 ----
-Asciidoctor reveal.js 4.1.0 using Asciidoctor.js 2.2.1 (Asciidoctor 2.0.12) [https://asciidoctor.org]
-Runtime Environment (node v14.11.0 on linux)
-CLI version 3.4.0
+Asciidoctor reveal.js 6.0.0 using Asciidoctor.js 4.0.0 (Asciidoctor 2.0.26) [https://asciidoctor.org]
+Runtime Environment (node v24.16.0 on linux)
+CLI version 4.0.0
 ----
 
 If you don't have an existing presentation, you can create a sample presentation named [.path]_presentation.adoc_:
@@ -56,7 +62,7 @@ To convert the sample presentation into slides, open a terminal and type:
 
  $ npx asciidoctor-revealjs presentation.adoc
 
-On windows, open PowerShell and type:
+On Windows, open PowerShell and type:
 
  $ .\node_modules\.bin\asciidoctor-revealjs.cmd presentation.adoc
 
@@ -65,24 +71,26 @@ You can open this file in a browser.
 
 === Using the JavaScript API
 
-Alternatively, you can use the JavaScript API to register the converter and convert a document:
+Alternatively, you can use the JavaScript API to register the converter and convert a document.
+Asciidoctor.js 4.0 is an ESM, native JavaScript package and its conversion functions are asynchronous, so use `import` and `await`:
 
-.convert-slides.js
+.convert-slides.mjs
 [source,javascript]
 ----
-// Load Asciidoctor.js and the reveal.js converter
-var asciidoctor = require('@asciidoctor/core')()
-var asciidoctorRevealjs = require('@asciidoctor/reveal.js')
-asciidoctorRevealjs.register()
+// Load Asciidoctor.js and register the reveal.js converter
+import { convertFile } from 'asciidoctor'
+import { register } from '@asciidoctor/reveal.js'
+
+register() // <1>
 
 // Convert the document 'presentation.adoc' using the reveal.js converter
-var options = { safe: 'safe', backend: 'revealjs' }
-asciidoctor.convertFile('presentation.adoc', options) // <1>
+await convertFile('presentation.adoc', { safe: 'safe', backend: 'revealjs' }) // <2>
 ----
-<1> Creates a file named `presentation.html` (in the directory where command is run)
+<1> Registers the `revealjs` (and `reveal.js`) backends and the highlight.js adapter
+<2> Creates a file named `presentation.html` (in the directory where the command is run)
 
 To execute the script, open a terminal and type:
 
- $ node convert-slides.js
+ $ node convert-slides.mjs
 
 You can open the `presentation.html` file in your browser and enjoy!

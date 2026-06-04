@@ -15,7 +15,7 @@
   "files": [
     "js/bin",
     "js/src",
-    "js/data"
+    "data"
   ],
   "scripts": {
     "test": "node --test js/test/**.test.js",
@@ -51,10 +51,13 @@
   },
   "homepage": "https://github.com/asciidoctor/asciidoctor-reveal.js",
   "dependencies": {
-    "asciidoctor": "^4.0.0-alpha.6",
     "reveal.js": "6.0.1"
   },
+  "peerDependencies": {
+    "asciidoctor": ">=4.0.0-alpha.6 <5.0.0"
+  },
   "devDependencies": {
+    "asciidoctor": "^4.0.0-alpha.6",
     "esbuild": "^0.28.0",
     "postject": "^1.0.0-alpha.6"
   },

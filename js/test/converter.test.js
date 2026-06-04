@@ -1,5 +1,5 @@
 // Smoke test for the native JavaScript reveal.js converter.
-// Run with: node --test js/test/   (Node >= 18)
+// Run with: node --test js/test/   (Node >= 20)
 
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
