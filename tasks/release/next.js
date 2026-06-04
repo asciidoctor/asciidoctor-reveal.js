@@ -1,92 +1,45 @@
-import childProcess from 'node:child_process'
 import path from 'node:path'
-import { readFileSync, writeFileSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
-import process from 'node:process'
-import { execSync } from './exec.js'
+import { readFileSync } from 'node:fs'
+import { projectRootDirectory, execSync, writeFile, ensureCleanMasterBranch } from './common.js'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-
+// Parse a version into its major/minor/patch numbers, ignoring any pre-release (.dev and -dev).
 const toSemVer = (version) => {
-  let semVer
-  if (typeof version === 'string') {
-    // ignore pre-release (.dev and -dev)
-    const fragments = version
-      .replace(/\.dev/g, '')
-      .replace(/-dev/g, '')
-      .split('.')
-    semVer = {
-      major: parseInt(fragments[0]),
-      minor: parseInt(fragments[1]),
-      patch: parseInt(fragments[2])
-    }
-  } else {
-    semVer = version
-  }
-  return semVer
+  const [major, minor, patch] = version
+    .replace(/\.dev/g, '')
+    .replace(/-dev/g, '')
+    .split('.')
+    .map((fragment) => parseInt(fragment))
+  return { major, minor, patch }
 }
-const projectRootDirectory = path.join(__dirname, '..', '..')
-try {
-  childProcess.execSync('git diff-index --quiet HEAD --', {cwd: projectRootDirectory})
-} catch (e) {
-  console.error('Git working directory not clean')
-  const status = childProcess.execSync('git status -s')
-  process.stdout.write(status)
-  process.exit(1)
-}
-const branchName = childProcess.execSync('git symbolic-ref --short HEAD', {cwd: projectRootDirectory}).toString('utf-8').trim()
-if (branchName !== 'master') {
-  console.error('Preparing next version must be performed on master branch')
-  process.exit(1)
-}
+
+ensureCleanMasterBranch('Preparing next version')
+
 // read current version from package.json
 const pkgPath = path.join(projectRootDirectory, 'package.json')
 const asciidoctorRevealPkg = JSON.parse(readFileSync(pkgPath, 'utf8'))
-// compute next version
 const currentVersion = asciidoctorRevealPkg.version
 const currentSemVer = toSemVer(currentVersion)
-// bump minor version
-const nextSemVer = {
-  major: currentSemVer.major,
-  minor: currentSemVer.minor + 1,
-  patch: currentSemVer.patch
-}
+
+// compute next version (bump minor)
+const nextSemVer = { major: currentSemVer.major, minor: currentSemVer.minor + 1, patch: currentSemVer.patch }
 const nextVersion = `${nextSemVer.major}.${nextSemVer.minor}.${nextSemVer.patch}-dev`
 
 // update version in package.json
 asciidoctorRevealPkg.version = nextVersion
-const pkgUpdated = JSON.stringify(asciidoctorRevealPkg, null, 2).concat('\n')
-if (process.env.DRY_RUN) {
-  console.debug(`Dry run! ${pkgPath} will be updated:\n${pkgUpdated}`)
-} else {
-  writeFileSync(pkgPath, pkgUpdated)
-}
+writeFile(pkgPath, JSON.stringify(asciidoctorRevealPkg, null, 2).concat('\n'))
 
-// update version in lib/asciidoctor-revealjs/version.rb
-const versionRbPath =  path.join(projectRootDirectory, 'lib', 'asciidoctor-revealjs', 'version.rb')
+// update version in lib/asciidoctor_revealjs/version.rb
+const versionRbPath = path.join(projectRootDirectory, 'lib', 'asciidoctor_revealjs', 'version.rb')
 const versionRbContent = readFileSync(versionRbPath, 'utf8')
-const versionRbUpdated = versionRbContent.replace(/VERSION = '([^']+)'/, `VERSION = '${nextVersion}'`)
-if (process.env.DRY_RUN) {
-  console.debug(`Dry run! ${versionRbPath} will be updated:\n${versionRbUpdated}`)
-} else {
-  writeFileSync(versionRbPath, versionRbUpdated)
-}
+writeFile(versionRbPath, versionRbContent.replace(/VERSION = '([^']+)'/, `VERSION = '${nextVersion}'`))
 
 // update version in docs/antora.yml
-const antoraYmlPath =  path.join(projectRootDirectory, 'docs', 'antora.yml')
+const antoraYmlPath = path.join(projectRootDirectory, 'docs', 'antora.yml')
 const antoraYmlContent = readFileSync(antoraYmlPath, 'utf8')
-const antoraYmlUpdated = antoraYmlContent.replace(/version: '([^']+)'/, `version: '${nextSemVer.major}.${nextSemVer.minor}'`)
-if (process.env.DRY_RUN) {
-  console.debug(`Dry run! ${antoraYmlPath} will be updated:\n${antoraYmlUpdated}`)
-} else {
-  writeFileSync(antoraYmlPath, antoraYmlUpdated)
-}
-
-// remove the converter (generated from the Slim templates) from the git tree (to avoid noise to the repo and `git status` noise)
-execSync('git rm --cached lib/asciidoctor-revealjs/converter.rb', {cwd: projectRootDirectory})
+writeFile(antoraYmlPath, antoraYmlContent.replace(/version: '([^']+)'/, `version: '${nextSemVer.major}.${nextSemVer.minor}'`))
 
 // git commit
-execSync(`git commit -a -m "Begin development on next release ${nextVersion}"`, {cwd: projectRootDirectory})
+execSync(`git commit -a -m "Begin development on next release ${nextVersion}"`, { cwd: projectRootDirectory })
 
 console.info('To complete, you need to:')
 console.info('[ ] push changes upstream: `git push origin master`')

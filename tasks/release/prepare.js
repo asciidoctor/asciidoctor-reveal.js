@@ -1,73 +1,40 @@
-import childProcess from 'node:child_process'
 import path from 'node:path'
-import { readFileSync, writeFileSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
+import { readFileSync } from 'node:fs'
 import process from 'node:process'
-import { execSync } from './exec.js'
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+import { projectRootDirectory, execSync, writeFile, requireVersion, ensureCleanMasterBranch } from './common.js'
 
 const PRERELEASE_VERSION_RX = /(?<version>[0-9]+\.[0-9]+\.[0-9]+)(?<preversion>-[a-z]+\.[0-9]+)?/
 
-const args = process.argv.slice(2)
-const releaseVersion = args[0]
-
-if (!releaseVersion) {
-  console.error('Release version is undefined, please specify a version `npm run release:prepare 1.0.0`')
-  process.exit(9)
-}
+const releaseVersion = requireVersion('release:prepare')
 console.log(`Release version: ${releaseVersion}`)
 if (process.env.DRY_RUN) {
   console.warn('Dry run! To perform the release, run the command again without DRY_RUN environment variable')
 }
-const projectRootDirectory = path.join(__dirname, '..', '..')
-try {
-  childProcess.execSync('git diff-index --quiet HEAD --', {cwd: projectRootDirectory})
-} catch (e) {
-  console.error('Git working directory not clean')
-  const status = childProcess.execSync('git status -s')
-  process.stdout.write(status)
-  process.exit(1)
-}
-const branchName = childProcess.execSync('git symbolic-ref --short HEAD', {cwd: projectRootDirectory}).toString('utf-8').trim()
-if (branchName !== 'master') {
-  console.error('Release must be performed on master branch')
-  process.exit(1)
-}
+ensureCleanMasterBranch('Release')
+
 // update version in package.json
 const pkgPath = path.join(projectRootDirectory, 'package.json')
 const asciidoctorRevealPkg = JSON.parse(readFileSync(pkgPath, 'utf8'))
 asciidoctorRevealPkg.version = releaseVersion
-const pkgUpdated = JSON.stringify(asciidoctorRevealPkg, null, 2).concat('\n')
-if (process.env.DRY_RUN) {
-  console.debug(`Dry run! ${pkgPath} will be updated:\n${pkgUpdated}`)
-} else {
-  writeFileSync(pkgPath, pkgUpdated)
-}
+writeFile(pkgPath, JSON.stringify(asciidoctorRevealPkg, null, 2).concat('\n'))
+
 // update version in lib/asciidoctor_revealjs/version.rb
-const versionRbPath =  path.join(projectRootDirectory, 'lib', 'asciidoctor_revealjs', 'version.rb')
-const versionRbContent = readFileSync(versionRbPath, 'utf8')
 // RubyGems versions must use a slightly different pattern:
 // https://guides.rubygems.org/patterns/#prerelease-gems
 let rubyReleaseVersion = releaseVersion
-const prereleaseVersionFound = PRERELEASE_VERSION_RX.exec(releaseVersion)
-if (prereleaseVersionFound &&
-  prereleaseVersionFound.groups &&
-  prereleaseVersionFound.groups.preversion &&
-  prereleaseVersionFound.groups.version) {
-  const rubyPrereleaseVersion = prereleaseVersionFound.groups.preversion.replace('-', '').replace('.', '');
-  rubyReleaseVersion = `${prereleaseVersionFound.groups.version}.${rubyPrereleaseVersion}`
+const prerelease = PRERELEASE_VERSION_RX.exec(releaseVersion)
+if (prerelease?.groups?.preversion && prerelease.groups.version) {
+  const rubyPrereleaseVersion = prerelease.groups.preversion.replace('-', '').replace('.', '')
+  rubyReleaseVersion = `${prerelease.groups.version}.${rubyPrereleaseVersion}`
 }
-const versionRbUpdated = versionRbContent.replace(/VERSION = '([^']+)'/, `VERSION = '${rubyReleaseVersion}'`)
-if (process.env.DRY_RUN) {
-  console.debug(`Dry run! ${versionRbPath} will be updated:\n${versionRbUpdated}`)
-} else {
-  writeFileSync(versionRbPath, versionRbUpdated)
-}
+const versionRbPath = path.join(projectRootDirectory, 'lib', 'asciidoctor_revealjs', 'version.rb')
+const versionRbContent = readFileSync(versionRbPath, 'utf8')
+writeFile(versionRbPath, versionRbContent.replace(/VERSION = '([^']+)'/, `VERSION = '${rubyReleaseVersion}'`))
+
 // git commit and tag
-execSync(`git commit -a -m "Prepare ${releaseVersion} release"`, {cwd: projectRootDirectory})
-execSync(`git commit --allow-empty -m "Release ${releaseVersion}"`, {cwd: projectRootDirectory})
-execSync(`git tag v${releaseVersion} -m "Version ${releaseVersion}"`, {cwd: projectRootDirectory})
+execSync(`git commit -a -m "Prepare ${releaseVersion} release"`, { cwd: projectRootDirectory })
+execSync(`git commit --allow-empty -m "Release ${releaseVersion}"`, { cwd: projectRootDirectory })
+execSync(`git tag v${releaseVersion} -m "Version ${releaseVersion}"`, { cwd: projectRootDirectory })
 
 console.info('To complete the release, you need to:')
 console.info('[ ] push changes upstream: `git push origin master --tags`')
