@@ -1,6 +1,6 @@
 = Compatibility Matrix
 
-[[revealjs-compatibility-matrix]]
+[#revealjs-compatibility-matrix]
 == reveal.js compatibility matrix
 
 We try as much as possible to be compatible with a broad range of reveal.js versions.
@@ -8,37 +8,44 @@ However, changes made by that project sometimes forces us to drop compatibility 
 This table tracks this compatibility.
 
 |===
-|Asciidoctor reveal.js version |reveal.js version
+|Asciidoctor reveal.js version |Compatible reveal.js versions
+
+|6.x
+|>= 6.0
+
+|5.2.x
+|>= 4.0, <= 5.0
 
 |4.x
-|3.9 - 3.8
+|>= 3.8, <= 3.9
 
-|3.x, 2.x, 1.x
-|3.7 - 3.0
-
-|Unversioned releases
-|2.x
 |===
 
 
-[[asciidoctorjs-compatibility-matrix]]
+[#asciidoctorjs-compatibility-matrix]
 == Asciidoctor.js compatibility matrix
 
 NOTE: This section is intended only for more advanced users who combine extensions or maintain slide decks over many releases and need to update their dependencies.
 
-Due to our Ruby to JavaScript conversion process, published npm packages have strict requirements with which version of Asciidoctor.js they are compatible with.
+Each npm package is tied to a specific major version of Asciidoctor.js, because major Asciidoctor.js releases can introduce breaking changes.
+
+Up to the 5.x line, the converter was written in Ruby and transpiled to JavaScript with Opal, so the npm package depended on the matching Opal-based Asciidoctor.js runtime.
+Asciidoctor.js 4.0 was rewritten in pure JavaScript, dropping Opal and the transpilation step altogether.
+That rewrite is a breaking change that is not compatible with earlier releases, so the 6.x line is written in native JavaScript and requires Asciidoctor.js 4.x.
+
 This table tracks this compatibility.
 
 |===
-|Asciidoctor reveal.js version |Asciidoctor.js version
+|Asciidoctor reveal.js version |Compatible Asciidoctor.js versions
+
+|6.x
+|>= 4.0, < 5.0
+
+|5.x
+|>= 3.0, < 4.0
 
 |3.x
-|2.x
+|>= 2.0, < 3.0
 
-|2.x
-|1.5.9
-
-|1.1.x
-|1.5.6-preview.4
 |===
 

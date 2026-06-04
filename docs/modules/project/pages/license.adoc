@@ -1,13 +1,13 @@
 = Copyright and Licensing
 :license-authors: Olivier Bilodeau, Charles Moulliard, Dan Allen
 
-Copyright (C) 2012-2020 {license-authors} and the Asciidoctor Project.
+Copyright (C) 2012-present {license-authors} and the Asciidoctor Project.
 Free use of this software is granted under the terms of the MIT License.
 
 .License
 [subs=+attributes]
 ....
-Copyright (C) 2012-2020 {license-authors} and the Asciidoctor Project
+Copyright (C) 2012-present {license-authors} and the Asciidoctor Project
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -20,6 +20,16 @@ class RevealJsInvoker extends Invoker {
   }
 }
 
-register()
-const options = new RevealJsOptions().parse(process.argv)
-await new RevealJsInvoker(options).invoke()
+// Wrapped in an async function (rather than top-level await) so this entry
+// point can be bundled to CommonJS for the Single Executable Application
+// build, where top-level await is not allowed.
+async function main () {
+  register()
+  const options = new RevealJsOptions().parse(process.argv)
+  await new RevealJsInvoker(options).invoke()
+}
+
+main().catch((error) => {
+  console.error(error)
+  process.exit(1)
+})

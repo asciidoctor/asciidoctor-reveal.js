@@ -6,7 +6,7 @@
   "main": "js/src/index.js",
   "exports": "./js/src/index.js",
   "engines": {
-    "node": ">=18",
+    "node": ">=20",
     "npm": ">=8.0.0"
   },
   "bin": {
@@ -18,12 +18,12 @@
     "js/data"
   ],
   "scripts": {
-    "test": "node --test js/test/",
+    "test": "node --test js/test/**.test.js",
     "examples": "node tasks/examples.js",
     "release:description": "node tasks/release/description.js",
     "release:prepare": "node tasks/release/prepare.js",
     "release:next": "node tasks/release/next.js",
-    "package": "npm i @asciidoctor/core && pkg -t node16-linux-x64,node16-macos-x64,node16-win-x64 package.json --out-path dist/"
+    "build:sea": "node tasks/sea/build.js"
   },
   "repository": {
     "type": "git",
@@ -55,7 +55,8 @@
     "reveal.js": "6.0.1"
   },
   "devDependencies": {
-    "pkg": "5.8.1"
+    "esbuild": "^0.28.0",
+    "postject": "^1.0.0-alpha.6"
   },
   "volta": {
     "node": "24.16.0"
