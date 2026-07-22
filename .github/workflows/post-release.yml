@@ -1,7 +1,7 @@
 name: Begin next development version
 
 # Run this manually after a final release (not after a pre-release) to bump the
-# minor version and switch master back to a -dev version, e.g. 5.3.0 -> 5.4.0-dev.
+# minor version and switch main back to a -dev version, e.g. 5.3.0 -> 5.4.0-dev.
 on:
   workflow_dispatch:
 
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
         with:
-          ref: master
+          ref: main
           fetch-depth: 0
       - name: Install Node
         uses: actions/setup-node@v6
@@ -30,4 +30,4 @@ jobs:
       - name: Begin next development version
         run: npm run release:next
       - name: Push
-        run: git push origin master
+        run: git push origin main

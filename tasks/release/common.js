@@ -38,8 +38,8 @@ export function requireVersion (script) {
   return releaseVersion
 }
 
-// Ensure the working directory is clean, and we are on the master branch or exit.
-export function ensureCleanMasterBranch (action) {
+// Ensure the working directory is clean, and we are on the main branch or exit.
+export function ensureCleanMainBranch (action) {
   try {
     childProcess.execSync('git diff-index --quiet HEAD --', { cwd: projectRootDirectory })
   } catch (e) {
@@ -48,8 +48,8 @@ export function ensureCleanMasterBranch (action) {
     process.exit(1)
   }
   const branchName = childProcess.execSync('git symbolic-ref --short HEAD', { cwd: projectRootDirectory }).toString('utf-8').trim()
-  if (branchName !== 'master') {
-    console.error(`${action} must be performed on master branch`)
+  if (branchName !== 'main') {
+    console.error(`${action} must be performed on main branch`)
     process.exit(1)
   }
 }

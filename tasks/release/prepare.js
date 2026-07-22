@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { readFileSync } from 'node:fs'
 import process from 'node:process'
-import { projectRootDirectory, execSync, writeFile, requireVersion, ensureCleanMasterBranch } from './common.js'
+import { projectRootDirectory, execSync, writeFile, requireVersion, ensureCleanMainBranch } from './common.js'
 
 const PRERELEASE_VERSION_RX = /(?<version>[0-9]+\.[0-9]+\.[0-9]+)(?<preversion>-[a-z]+\.[0-9]+)?/
 
@@ -10,7 +10,7 @@ console.log(`Release version: ${releaseVersion}`)
 if (process.env.DRY_RUN) {
   console.warn('Dry run! To perform the release, run the command again without DRY_RUN environment variable')
 }
-ensureCleanMasterBranch('Release')
+ensureCleanMainBranch('Release')
 
 // update version in package.json
 const pkgPath = path.join(projectRootDirectory, 'package.json')
@@ -37,4 +37,4 @@ execSync(`git commit --allow-empty -m "Release ${releaseVersion}"`, { cwd: proje
 execSync(`git tag v${releaseVersion} -m "Version ${releaseVersion}"`, { cwd: projectRootDirectory })
 
 console.info('To complete the release, you need to:')
-console.info('[ ] push changes upstream: `git push origin master --tags`')
+console.info('[ ] push changes upstream: `git push origin main --tags`')

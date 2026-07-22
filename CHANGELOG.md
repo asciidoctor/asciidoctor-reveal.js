@@ -1,9 +1,9 @@
 # Changelog
 
 This document provides a high-level view of the changes introduced in Asciidoctor reveal.js by release.
-For a detailed view of what has changed, refer to the [commit history](https://github.com/asciidoctor/asciidoctor-reveal.js/commits/master) on GitHub.
+For a detailed view of what has changed, refer to the [commit history](https://github.com/asciidoctor/asciidoctor-reveal.js/commits/main) on GitHub.
 
-## master (unreleased)
+## main (unreleased)
 
 ### Enhancements
 

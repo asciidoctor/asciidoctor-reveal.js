@@ -189,4 +189,4 @@ Including source code!
 * https://revealjs.com[reveal.js]
 * https://github.com/asciidoctor/asciidoctor/[Asciidoctor]
 * https://asciidoctor.org/docs/what-is-asciidoc/[What is AsciiDoc?]
-* https://github.com/asciidoctor/asciidoctor-reveal.js/raw/master/examples/release-4.0.adoc[This slide deck's AsciiDoc source]
+* https://github.com/asciidoctor/asciidoctor-reveal.js/raw/main/examples/release-4.0.adoc[This slide deck's AsciiDoc source]

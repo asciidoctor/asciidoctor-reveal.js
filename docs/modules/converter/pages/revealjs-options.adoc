@@ -4,7 +4,7 @@
 
 A number of document-header attributes are specific to the reveal.js converter.
 They share the names used by the reveal.js project, except that they are prefixed with `revealjs_` and the case doesn't matter.
-They are applied in the {url-project-repo}/blob/master/lib/asciidoctor_revealjs/converter.rb[converter] (see `convert_document`).
+They are applied in the {url-project-repo}/blob/main/lib/asciidoctor_revealjs/converter.rb[converter] (see `convert_document`).
 
 NOTE: The defaults match the reveal.js defaults.
 
