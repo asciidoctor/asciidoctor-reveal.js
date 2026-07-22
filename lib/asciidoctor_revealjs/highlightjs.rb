@@ -73,7 +73,8 @@ hljs.highlightAll();
 </script>)
         end
 
-        # this file was copied-pasted from https://raw.githubusercontent.com/hakimel/reveal.js/4.1.2/plugin/highlight/plugin.js
+        # this file was copied-pasted from https://raw.githubusercontent.com/hakimel/reveal.js/6.0.1/plugin/highlight/plugin.js
+        # (adapted from an ES module into a plain script, since it is inlined into the page)
         # please note that the bundled highlight.js code was removed so we can use the latest version from cdnjs.
         # Shared with the JavaScript implementation; see data/highlight-plugin.js.
         HIGHLIGHT_PLUGIN_SOURCE = File.read(File.join(__dir__, '..', '..', 'data', 'highlight-plugin.js')).freeze
