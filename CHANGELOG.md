@@ -13,6 +13,10 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Port the converter to native Asciidoctor.js 4.0 (Node 20+, async convert handlers, validated byte-for-byte against the Ruby converter)
   * Update Asciidoctor to 4.0.0-alpha.6 and drop the workarounds that are no longer needed
 
+### Bug Fixes
+
+  * Resync the embedded highlight.js plugin (`data/highlight-plugin.js`) with reveal.js 6.0.1; it was still the 4.1.2 version, which threw a `ReferenceError` (undefined `Plugin`) whenever a code block had more than one highlight step
+
 ### Build
 
   * Replace `bestikk-log` with plain `console` logging in the build tasks
