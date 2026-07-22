@@ -89,6 +89,6 @@ The feature is activated with the `--template-dir` or `-T` option:
   $ bundle exec asciidoctor-revealjs -T templates presentation.adoc
 
 Any node not handled by a template provided in the directory specified on the command-line will fall back to the built-in conversion provided by your version of Asciidoctor reveal.js.
-Refer to our {url-project-repo}/blob/master/lib/asciidoctor_revealjs/converter.rb[converter^] for inspiration.
+Refer to our {url-project-repo}/blob/main/lib/asciidoctor_revealjs/converter.rb[converter^] for inspiration.
 
 This feature hasn't been ported to the JavaScript CLI (and API) or the standalone executables.

@@ -45,4 +45,4 @@ image::asciidoctor-logo.svg[AsciiDoc website,height="220px",data-preview-link="h
 * https://revealjs.com[reveal.js]
 * https://github.com/asciidoctor/asciidoctor/[Asciidoctor]
 * https://asciidoc.org/[What is AsciiDoc?]
-* https://github.com/asciidoctor/asciidoctor-reveal.js/raw/master/examples/release-6.0.adoc[Source of this presentation (AsciiDoc)]
+* https://github.com/asciidoctor/asciidoctor-reveal.js/raw/main/examples/release-6.0.adoc[Source of this presentation (AsciiDoc)]

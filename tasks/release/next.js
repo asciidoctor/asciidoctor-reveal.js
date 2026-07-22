@@ -1,6 +1,6 @@
 import path from 'node:path'
 import { readFileSync } from 'node:fs'
-import { projectRootDirectory, execSync, writeFile, ensureCleanMasterBranch } from './common.js'
+import { projectRootDirectory, execSync, writeFile, ensureCleanMainBranch } from './common.js'
 
 // Parse a version into its major/minor/patch numbers, ignoring any pre-release (.dev and -dev).
 const toSemVer = (version) => {
@@ -12,7 +12,7 @@ const toSemVer = (version) => {
   return { major, minor, patch }
 }
 
-ensureCleanMasterBranch('Preparing next version')
+ensureCleanMainBranch('Preparing next version')
 
 // read current version from package.json
 const pkgPath = path.join(projectRootDirectory, 'package.json')
@@ -42,7 +42,7 @@ writeFile(antoraYmlPath, antoraYmlContent.replace(/version: '([^']+)'/, `version
 execSync(`git commit -a -m "Begin development on next release ${nextVersion}"`, { cwd: projectRootDirectory })
 
 console.info('To complete, you need to:')
-console.info('[ ] push changes upstream: `git push origin master`')
+console.info('[ ] push changes upstream: `git push origin main`')
 console.info(`[ ] create a branch from the latest tag: \`git checkout -b maint-${currentSemVer.major}.${currentSemVer.minor}.x v${currentVersion}\``)
 console.info(`[ ] push the maintenance branch: \`git push origin maint-${currentSemVer.major}.${currentSemVer.minor}.x\``)
 console.info(`[ ] update Antora playbook to add this branch: https://github.com/asciidoctor/docs.asciidoctor.org/edit/main/antora-playbook.yml`)

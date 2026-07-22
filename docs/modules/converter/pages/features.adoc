@@ -46,7 +46,7 @@ There are a few ways to have no titles on slides.
 * Adding the `notitle` option to your slide
 * Adding the `conceal` option to your slide
 
-See {url-project-repo}/blob/master/examples/concealed-slide-titles.adoc[concealed-slide-titles.adoc].
+See {url-project-repo}/blob/main/examples/concealed-slide-titles.adoc[concealed-slide-titles.adoc].
 
 NOTE: `conceal` and `notitle` have the advantage that the slide still has an id so it can be linked to.
 

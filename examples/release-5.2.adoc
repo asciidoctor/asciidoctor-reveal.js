@@ -46,4 +46,4 @@ Allow synchronized fragment display
 * https://revealjs.com[reveal.js]
 * https://github.com/asciidoctor/asciidoctor/[Asciidoctor]
 * https://asciidoc.org/[What is AsciiDoc?]
-* https://github.com/asciidoctor/asciidoctor-reveal.js/raw/master/examples/release-5.1.adoc[Source of this presentation (AsciiDoc)]
+* https://github.com/asciidoctor/asciidoctor-reveal.js/raw/main/examples/release-5.1.adoc[Source of this presentation (AsciiDoc)]

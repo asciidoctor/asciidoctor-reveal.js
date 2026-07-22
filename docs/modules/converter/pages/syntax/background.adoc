@@ -3,7 +3,7 @@
 == Background colors
 
 Background colors for slides can be specified by two means: a classic one and one using AsciiDoc roles.
-See {url-project-repo}/blob/master/examples/background-color.adoc[background-color.adoc] for more examples.
+See {url-project-repo}/blob/main/examples/background-color.adoc[background-color.adoc] for more examples.
 
 === Using AsciiDoc roles
 
