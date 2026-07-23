@@ -180,7 +180,7 @@ npm run examples
 
 === Prepare the release
 
-. Make sure that the changelog is up-to-date
+. Make sure that the changelog is up-to-date: all the entries for the upcoming release should be listed under the `## main (unreleased)` section of _CHANGELOG.md_
 +
 [TIP]
 ====
@@ -190,7 +190,7 @@ You can get the list of all contributors using `git` (don't forget to replace `%
 ====
 
 . Make sure that the highlight plugin code embed in _lib/asciidoctor_revealjs/highlightjs.rb_ is up-to-date with the version of reveal.js
-. Make sure the changelog entry for the version you are about to release is committed and pushed to `main`.
+. Make sure the changelog is committed and pushed to `main`.
 
 === Release
 
@@ -207,13 +207,13 @@ To trigger a release:
 . Click *Run workflow*, keep the `main` branch selected, and enter the version to release (e.g., `5.3.0` or `5.3.0-beta.1`).
 . Click *Run workflow*.
 
-The workflow bumps the version in _package.json_ and _lib/asciidoctor_revealjs/version.rb_ and runs the tests.
+The workflow bumps the version in _package.json_ and _lib/asciidoctor_revealjs/version.rb_, rolls the `## main (unreleased)` changelog section into a dated `## %version% (%date%)` section, and runs the tests.
 Only if the tests pass does it commit, tag (`v%version%`) and push to `main`, then publish to rubygems.org and npmjs.com and build the single executable binaries (one per platform) attached to the GitHub release.
 
 [NOTE]
 ====
 The `main` branch must allow the `github-actions[bot]` to push the release commits and tag.
-If branch protection rules reject the push, the release will fail at the *Push release commits and tag* step.
+If branch protection rules reject the push, the release will fail at the *Commit, tag and push* step.
 ====
 
 Once the https://github.com/asciidoctor/asciidoctor-reveal.js/actions?query=workflow%3Arelease[release workflow]
@@ -235,23 +235,25 @@ also amend `WhenBackendIsRevealJs.java` in both `tests` and `itests` folders and
 
 === Prepare next version
 
-This step is optional and should only be done after a *final* release (not after a pre-release such as `5.3.0-beta.1`).
+This step is optional, manual, and run locally — the next version isn't always a minor bump (it could be a patch or a breaking major release), so it's not computed automatically.
 
-Trigger the https://github.com/asciidoctor/asciidoctor-reveal.js/actions/workflows/post-release.yml[Begin next development version workflow] from GitHub Actions.
-It bumps the minor version to the next `-dev` version (e.g., `5.3.0` -> `5.4.0-dev`) in _package.json_, _lib/asciidoctor_revealjs/version.rb_ and _docs/antora.yml_, then commits and pushes to `main`.
+Pick the next `-dev` version (e.g., after releasing `5.3.0`, that's usually `5.4.0-dev`, but use `5.3.1-dev` or `6.0.0-dev` if that fits better), then:
 
-Alternatively, you can run it locally and follow the printed instructions:
+ $ node tasks/version.js next <version>
+ $ git commit -a -m "Begin development on next release <version>"
+ $ git push origin main
 
- $ npm run release:next
+This sets `<version>` in _package.json_ and _lib/asciidoctor_revealjs/version.rb_, and its major.minor in _docs/antora.yml_.
 
 [#maintenance-branch]
 === Maintenance branch
 
-You can (not must) create a maintenance branch from a tag.
-Please use the following name convention: `\{major}.\{minor}.x` (e.g., `4.1.x`).
+You can (not must) create a maintenance branch from a tag, only when needed (e.g., to backport a fix to a previous line).
+Use the same name convention as the other Asciidoctor repositories: `v\{major}.\{minor}.x` (e.g., `v4.1.x`).
 
 [%interactive]
-* [ ] push the maintenance branch: `git push origin 4.1.x`
+* [ ] create the branch from the release tag: `git checkout -b v4.1.x v4.1.0`
+* [ ] push the maintenance branch: `git push origin v4.1.x`
 * [ ] don't forget to update Antora playbook to add this branch: https://github.com/asciidoctor/docs.asciidoctor.org/edit/main/antora-playbook.yml
 
 === New major version

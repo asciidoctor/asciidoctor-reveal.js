@@ -15,9 +15,9 @@ permissions:
   id-token: write
 
 jobs:
-  # Bump the version, build, run the tests and, only if everything is green,
-  # commit + tag and push upstream. The tag stays local until the tests pass,
-  # so a failing build never leaks a release tag.
+  # Bump the version, run the tests and, only if everything is green,
+  # commit + tag and push upstream. Nothing is committed until the tests pass,
+  # so a failing build never leaks a release commit or tag.
   prepare:
     runs-on: ubuntu-latest
     steps:
@@ -46,17 +46,26 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-      # bumps package.json + version.rb, builds, then commits and tags locally
+      # bumps the version in package.json and version.rb, and rolls the changelog's
+      # "unreleased" section into a dated section for this version
       - name: Prepare release
-        run: npm run release:prepare ${{ inputs.version }}
+        run: |
+          node tasks/version.js release ${{ inputs.version }}
+          node tasks/changelog.js release ${{ inputs.version }}
       - name: Run tests
         run: |
           bundle exec rake test
           bundle exec rake examples:convert
           npm test
       # only reached when the tests above succeed
-      - name: Push release commits and tag
-        run: git push origin main --tags
+      - name: Commit, tag and push
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          git commit -a -m "Prepare $VERSION release"
+          git commit --allow-empty -m "Release $VERSION"
+          git tag "v$VERSION" -m "Version $VERSION"
+          git push origin main --tags
 
   publish_ruby:
     needs: prepare
@@ -158,7 +167,7 @@ jobs:
           path: dist
           merge-multiple: true
       - name: Generate changelog
-        run: npm run release:description ${{ inputs.version }}
+        run: node tasks/changelog.js notes ${{ inputs.version }} > dist/changelog.md
       - name: Create GitHub release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

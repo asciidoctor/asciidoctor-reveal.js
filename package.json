@@ -18,11 +18,8 @@
     "data"
   ],
   "scripts": {
-    "test": "node --test js/test/**.test.js",
+    "test": "node --test js/test/**.test.js tasks/test/**.test.js",
     "examples": "node tasks/examples.js",
-    "release:description": "node tasks/release/description.js",
-    "release:prepare": "node tasks/release/prepare.js",
-    "release:next": "node tasks/release/next.js",
     "build:sea": "node tasks/sea/build.js"
   },
   "repository": {

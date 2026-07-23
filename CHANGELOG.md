@@ -26,8 +26,8 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Improve the Renovate configuration for smaller, scheduled pull requests
   * Automate the release process via GitHub Actions, triggered from the Actions UI with a version input
   * Auto-discover the release demos (`examples/release-*`) when publishing the showcase site
-  * Extract shared helpers for the release scripts
-  * Add a workflow to begin the next development version after a final release
+  * Automate rolling the `## main (unreleased)` changelog section into a dated section and generating the GitHub release notes from it (`tasks/changelog.js`)
+  * Restructure the release scripts as flat, unit-tested `tasks/version.js` and `tasks/changelog.js` (mirroring the asciidoctor.js `tasks/` layout), replacing the `tasks/release/` directory and its shared `common.js` helper; the `git commit`/`tag`/`push` commands now run directly from the workflow steps instead of through a JS `execSync` wrapper, and the `DRY_RUN` mode and printed "to complete" manual checklists are gone now that the workflow handles it (the remaining manual steps — starting the next dev cycle, maintenance branch, downstream pull requests — are documented in `hacking.adoc`)
   * Mark GitHub releases as pre-releases automatically for pre-release versions
   * Replace the archived `actions/create-release` and `actions/upload-release-asset` actions with the GitHub CLI
   * Bump `actions/checkout` and `actions/setup-node` to their latest versions
