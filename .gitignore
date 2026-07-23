@@ -27,3 +27,4 @@ test/doctest/source-coderay.html
 test/doctest/source-pygments.html
 
 /public/
+/.claude/
