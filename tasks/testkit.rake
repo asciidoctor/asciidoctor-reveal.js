@@ -51,6 +51,11 @@ def run_testkit(expected:, converter:, converter_args: [], fixtures: nil, extra_
   sh testkit_cli, 'run',
      '--expected', expected,
      '--extension', 'html',
+     # The command is a fresh `bundle exec ...` process per case (no
+     # persistent worker), and JRuby/TruffleRuby's JVM startup alone can
+     # take several seconds — well past the CLI's 10s default — before a
+     # single line of the fixture is even converted.
+     '--timeout', '30000',
      *(fixtures ? ['--fixtures', fixtures] : []),
      *extra_args,
      '--', *converter, *converter_args, '{input}'
