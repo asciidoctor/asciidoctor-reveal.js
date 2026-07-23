@@ -15,7 +15,7 @@
 import { ConverterBase, Html5Converter, SafeMode } from 'asciidoctor'
 import { extname } from 'node:path'
 import { COMPATIBILITY } from './stylesheet.js'
-import { script as revealJsScript, stretchNestedElements } from './reveal-js-options.js'
+import { script as revealJsScript } from './reveal-js-options.js'
 import * as Footnotes from './footnotes.js'
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -505,10 +505,6 @@ export default class RevealJsConverter extends ConverterBase {
     }
     buf += `<ul${attributes({ class: checklist || node.getStyle() })}>${inner}</ul>`
     return `<div${attrs}>${buf}</div>`
-  }
-
-  convert_stretch_nested_elements (node) {
-    return stretchNestedElements(node)
   }
 
   async convert_admonition (node) {
