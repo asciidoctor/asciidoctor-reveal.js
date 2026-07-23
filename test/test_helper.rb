@@ -9,4 +9,3 @@ end
 
 require 'asciidoctor/doctest'
 require 'minitest/autorun'
-require 'tilt'
