@@ -1,23 +1,55 @@
 # frozen_string_literal: true
 
-namespace :examples do
-  # The examples reference reveal.js assets relatively (reveal.js/dist/...), so a
-  # local copy must live under examples/. That directory is gitignored, hence the
-  # copy from node_modules on demand.
-  desc 'Copy reveal.js assets from node_modules into examples/ (run `npm install` first)'
-  task :assets do
-    src = File.expand_path('node_modules/reveal.js', PROJECT_ROOT)
-    dest = File.expand_path('examples/reveal.js', PROJECT_ROOT)
-    raise "reveal.js not found at #{src}; run `npm install` first" unless Dir.exist?(src)
+require 'tmpdir'
 
-    FileUtils.rm_rf(dest)
-    FileUtils.cp_r(src, dest)
-    puts "Copied reveal.js assets to #{dest}"
+namespace :examples do
+  # The examples reference reveal.js and Font Awesome assets relatively
+  # (reveal.js/dist/..., Font-Awesome-6.7.2/js/...), so a local copy must live
+  # under examples/. That directory is gitignored, hence the copy from
+  # node_modules on demand. The Font Awesome directory name bakes in its
+  # version (matched by package.json's exact, non-caret pin) — bumping it
+  # means renaming its directory here too.
+  desc 'Copy reveal.js/Font Awesome assets from node_modules into examples/ (run `npm install` first)'
+  task :assets do
+    {
+      'reveal.js' => 'examples/reveal.js',
+      '@fortawesome/fontawesome-free' => 'examples/Font-Awesome-6.7.2'
+    }.each do |package, dest_relative|
+      src = File.expand_path("node_modules/#{package}", PROJECT_ROOT)
+      dest = File.expand_path(dest_relative, PROJECT_ROOT)
+      raise "#{package} not found at #{src}; run `npm install` first" unless Dir.exist?(src)
+
+      FileUtils.rm_rf(dest)
+      FileUtils.cp_r(src, dest)
+      puts "Copied #{package} to #{dest}"
+    end
+  end
+
+  # reveal.js-plugins@4.6.0 lists `npm` itself as a dependency (upstream
+  # packaging mistake), which drags in npm's entire internal tooling tree —
+  # dozens of vulnerable transitive deps for a plugin package that never
+  # touches any of it at runtime. Fetched via `npm pack` (downloads the
+  # tarball only, no dependency resolution) instead of a normal
+  # devDependency, to keep it out of package(-lock).json entirely.
+  desc 'Fetch reveal.js-plugins assets via `npm pack` into examples/ (bypasses its broken `npm` dependency)'
+  task 'assets:reveal-js-plugins' do
+    version = '4.6.0'
+    dest = File.expand_path("examples/reveal.js-plugins-#{version}", PROJECT_ROOT)
+    Dir.mktmpdir do |tmp|
+      sh 'npm', 'pack', "reveal.js-plugins@#{version}", '--pack-destination', tmp, '--silent'
+      tarball = Dir.glob(File.join(tmp, '*.tgz')).first
+      raise "npm pack did not produce a tarball in #{tmp}" unless tarball
+
+      sh 'tar', 'xzf', tarball, '-C', tmp
+      FileUtils.rm_rf(dest)
+      FileUtils.cp_r(File.join(tmp, 'package'), dest)
+    end
+    puts "Copied reveal.js-plugins to #{dest}"
   end
 
   # converted slides will be put in examples/ directory
   desc 'Convert every examples/*.adoc file into a browsable reveal.js presentation'
-  task convert: ['load-converter', :assets] do
+  task convert: ['load-converter', :assets, 'assets:reveal-js-plugins'] do
     Dir.glob('examples/*.adoc') do |f|
       print "Converting file #{f}... "
       out = Asciidoctor.convert_file f,
@@ -33,7 +65,7 @@ namespace :examples do
   end
 
   desc 'Serve the converted examples/ over HTTP at http://127.0.0.1:5000'
-  task serve: :assets do
+  task serve: [:assets, 'assets:reveal-js-plugins'] do
     # Minimal static file server built on the stdlib (no WEBrick / external gem).
     # Serves the examples/ directory and exposes an auto-generated index listing
     # every HTML page found there.
