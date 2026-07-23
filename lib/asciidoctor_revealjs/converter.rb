@@ -655,10 +655,6 @@ module Asciidoctor
         %(<div#{attrs}>#{buf}</div>)
       end
 
-      def convert_stretch_nested_elements(node, _opts = {})
-        Asciidoctor::Revealjs::RevealJsOptions.stretch_nested_elements_script(node)
-      end
-
       def convert_table(node, _opts = {})
         classes = ['tableblock', "frame-#{node.attr :frame, 'all'}", "grid-#{node.attr :grid, 'all'}", node.role, ('fragment' if step?(node))]
         styles = [("width:#{node.attr :tablepcwidth}%" unless node.option? 'autowidth'), ("float:#{node.attr :float}" if node.attr? :float)].compact.join('; ')

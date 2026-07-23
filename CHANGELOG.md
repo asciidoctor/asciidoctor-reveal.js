@@ -16,9 +16,12 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 ### Bug Fixes
 
   * Resync the embedded highlight.js plugin (`data/highlight-plugin.js`) with reveal.js 6.0.1; it was still the 4.1.2 version, which threw a `ReferenceError` (undefined `Plugin`) whenever a code block had more than one highlight step
+  * Remove the dead `convert_stretch_nested_elements` method in the Ruby converter, which called a non-existent `RevealJsOptions.stretch_nested_elements_script` method; it was never dispatched (no node has the `stretch_nested_elements` node name), so the bug was latent
 
 ### Build
 
+  * Remove `test/templates_test.rb`, a leftover from the pre-pure-Ruby converter that referenced the now-deleted `templates/slim` and `test/output/slim` directories and was never run by `rake test`; drop the matching unused `require 'tilt'` in `test/test_helper.rb`
+  * Add unit tests for `RevealJsOptions` and the `highlightjs` syntax highlighter adapter
   * Replace `bestikk-log` with plain `console` logging in the build tasks
   * Build the standalone CLI binaries with Node.js Single Executable Applications (SEA) instead of `pkg`, producing one binary per target (linux amd64, linux arm64, macOS arm64, win amd64) on native runners
   * Require Node.js 20+ (`engines`) and build the release artifacts on Node.js 22
