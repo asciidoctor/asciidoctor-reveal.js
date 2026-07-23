@@ -6,7 +6,6 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'asciidoctor-doctest', '2.0.0'
   gem 'minitest', '~> 5.25'
   gem 'rake', '~> 13.0.0'
   gem 'rubocop', '~> 1.86', require: false

@@ -13,7 +13,6 @@ desc 'Build and push the gem to rubygems.org (the git tag is created by the rele
 task 'release' => %w[build release:guard_clean release:rubygem_push]
 
 require 'asciidoctor'
-require 'asciidoctor/doctest'
 require 'colorize'
 require 'rake/testtask'
 

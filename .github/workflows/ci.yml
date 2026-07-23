@@ -21,11 +21,8 @@ jobs:
             ruby: jruby-9.4.14.0
           - os: macos-latest
             ruby: '3.4'
-          # Windows stays on Ruby 3.2: the pinned nokogiri 1.14.x (via
-          # asciidoctor-doctest) only ships a prebuilt x64-mingw-ucrt gem for
-          # Ruby >= 3.1, < 3.3, and it fails to build from source on Ruby 3.4.
           - os: windows-latest
-            ruby: '3.2'
+            ruby: '3.4'
     runs-on: ${{ matrix.os }}
     env:
       JRUBY_OPTS: '-J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-Xss2m -Xcompile.invokedynamic=false'
@@ -40,25 +37,17 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - name: Configure Nokogiri installation (Linux)
-        if: matrix.os == 'ubuntu-22.04'
-        run: |
-          bundle config --local build__nokogiri --use-system-libraries
-          sudo apt-get install libxslt1-dev
-      - name: Configure Nokogiri installation (macOS)
-        if: matrix.os == 'macos-latest'
-        run: bundle config --local build__nokogiri --use-system-libraries
       - name: Set JRUBY_OPTS
         if: matrix.jruby-opts
         run: echo 'JRUBY_OPTS=${{ matrix.jruby-opts }}' >> $GITHUB_ENV
       - name: Install dependencies
         run: bundle --jobs 3 --retry 3
+      - name: Install npm dependencies
+        run: npm ci
       - name: Run RuboCop
         run: bundle exec rubocop
       - name: Run tests
         run: bundle exec rake test
-      - name: Install reveal.js
-        run: npm ci
       - name: Run examples:convert
         run: bundle exec rake examples:convert
   build_js:
@@ -78,9 +67,8 @@ jobs:
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
       - name: Install dependencies
-        # The parity tests only need the asciidoctor runtime, so skip the
-        # development group: it pulls in nokogiri, which has no prebuilt gem for
-        # Ruby 3.4 on Windows and fails to build from source there.
+        # The parity tests only need the asciidoctor runtime, not the
+        # rubocop/testkit/etc. development group.
         run: |
           bundle config set --local without development
           bundle --jobs 3 --retry 3

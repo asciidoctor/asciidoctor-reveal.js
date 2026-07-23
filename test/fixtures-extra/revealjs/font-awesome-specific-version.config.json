@@ -1,0 +1,6 @@
+{
+  "select": [
+    "head link[rel=\"stylesheet\"]",
+    "div.slides"
+  ]
+}

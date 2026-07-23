@@ -18,18 +18,11 @@ build/
 /dist/
 /asciidoctor-reveal.js-*.tgz
 
-# Claude Code worktrees
-/.claude/
-
 # ruby stuff
 /.bundle/
 /Gemfile.lock
 
-# ignored tests
-# - coderay is unsupported on JRuby
-test/doctest/source-coderay.html
-# - pygments is unsupported on JRuby
-test/doctest/source-pygments.html
-
 /public/
+
+# Claude Code worktrees
 /.claude/

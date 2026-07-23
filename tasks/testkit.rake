@@ -1,48 +1,88 @@
 # frozen_string_literal: true
 
-# Experimental replacement for the `doctest:*` tasks in tasks/test.rake,
-# using asciidoc-testkit (https://github.com/ggrossetie/asciidoc-testkit,
-# not published yet — expected as a sibling checkout of the main repo, not
-# of whatever worktree this happens to run from) instead of the
-# asciidoctor-doctest gem.
+# Replaces the old `doctest:*` tasks (asciidoctor-doctest gem) with
+# asciidoc-testkit (https://github.com/ggrossetie/asciidoc-testkit), the
+# asciidoc-testkit-cli npm package (run `npm install` first).
 #
-# Only covers the 37 generic AsciiDoc-construct families asciidoc-testkit
-# ships as its shared input corpus (test/fixtures/<family>/<case>.html,
-# split from the equivalent test/doctest/<family>.html). The 56 reveal.js-
-# specific fixtures in test/doctest (background-color, custom-layout,
-# fragments, ...) are full presentations sourced from examples/*.adoc, a
-# different shape asciidoc-testkit's corpus doesn't cover — they still run
-# only through the existing `doctest:test` task for now.
+# Two separate invocations, not one, because asciidoc-testkit runs a single
+# fixed command for every case in a given invocation (no per-case converter
+# flags) — and these two groups of families need different converter flags:
+#
+# - the 37 generic AsciiDoc-construct families asciidoc-testkit ships as its
+#   bundled corpus (test/fixtures/<family>/<case>.html) are single-construct
+#   snippets, converted embedded (`-e`);
+# - the "revealjs" and "revealjs-examples" families
+#   (test/fixtures-revealjs/<family>/<case>.html) are full reveal.js
+#   presentations — converted standalone (no `-e`), so the title slide and
+#   the `<div class="slides">` wrapper are present, then narrowed down to the
+#   relevant fragment via each case's `<name>.config.json` sidecar (a
+#   `select` CSS selector list — see asciidoc-testkit's fragment-extraction
+#   docs). "revealjs" is test-only: cases that only exist to pin down a
+#   specific behavior (docinfo, slide numbers, syntax highlighters, ...),
+#   with no independent showcase value, living directly under
+#   test/fixtures-extra/revealjs/, not in examples/. "revealjs-examples" is
+#   *also* a real, browsable example (background-color, grid-layout, video,
+#   ...), supplied via --fixtures from test/fixtures-extra/revealjs-examples,
+#   a symlink to examples/ — that directory is also used by the showcase
+#   (tasks/examples.rake, tasks/publish.rake) and the JS/Ruby parity test
+#   (js/test/examples.test.js), so it's exposed as-is rather than duplicated.
+#   A file in examples/ with no matching
+#   test/fixtures-revealjs/revealjs-examples/<name>.html is simply skipped —
+#   that's how a pure showcase demo (release-*, auto-animate, ...) opts out.
+#   Each invocation's --expected root only holds the subdirectories it's
+#   responsible for, so the other invocation's families are silently skipped
+#   there rather than run with the wrong flag.
+#
+# Both invocations run through the input file itself (the {input} token, not
+# stdin), so a case that resolves file-relative references — docinfo files,
+# imagesdir, include:: — from its own directory sees exactly what it would
+# for a direct, non-testkit invocation.
 
-# The main repo root, even when running from a worktree nested arbitrarily
-# deep (e.g. .claude/worktrees/<branch>) — asciidoc-testkit is expected next
-# to *that*, not next to the current working directory.
-def main_repo_root
-  git_common_dir = `git rev-parse --path-format=absolute --git-common-dir`.strip
-  File.dirname(git_common_dir)
-end
+RUBY_CONVERTER = %w[bundle exec asciidoctor -r ./lib/asciidoctor_revealjs -b revealjs -S safe -o -].freeze
+JS_CONVERTER = %w[node js/bin/asciidoctor-revealjs -b revealjs -S safe -o -].freeze
 
 def testkit_cli
-  path = File.expand_path('../asciidoc-testkit/packages/cli/src/cli.js', main_repo_root)
-  abort "asciidoc-testkit not found at #{path} (expected as a sibling checkout of #{main_repo_root})" unless File.file?(path)
+  path = File.expand_path('../node_modules/.bin/asciidoc-testkit', __dir__)
+  abort "asciidoc-testkit-cli not found at #{path}; run `npm install` first" unless File.file?(path)
   path
 end
 
-def run_testkit(*extra_args)
-  sh 'node', testkit_cli, 'run',
-     '--expected', 'test/fixtures',
+def run_testkit(expected:, converter:, converter_args: [], fixtures: nil, extra_args: [])
+  sh testkit_cli, 'run',
+     '--expected', expected,
      '--extension', 'html',
+     *(fixtures ? ['--fixtures', fixtures] : []),
      *extra_args,
-     '--', 'bundle', 'exec', 'asciidoctor',
-     '-r', './lib/asciidoctor_revealjs', '-b', 'revealjs', '-S', 'safe', '-e', '-o', '-', '-'
+     '--', *converter, *converter_args, '{input}'
 end
 
-desc 'Run the asciidoc-testkit fixtures against the Ruby converter (experimental)'
+def run_testkit_generic(converter, *extra_args)
+  run_testkit(expected: 'test/fixtures', converter: converter, converter_args: ['-e'], extra_args: extra_args)
+end
+
+def run_testkit_revealjs(converter, *extra_args)
+  run_testkit(
+    expected: 'test/fixtures-revealjs',
+    converter: converter,
+    fixtures: 'test/fixtures-extra',
+    extra_args: extra_args
+  )
+end
+
+desc 'Run the asciidoc-testkit fixtures against the Ruby converter'
 task 'testkit:test' => 'load-converter' do
-  run_testkit
+  run_testkit_generic RUBY_CONVERTER
+  run_testkit_revealjs RUBY_CONVERTER
 end
 
-desc 'Regenerate the asciidoc-testkit expected fixtures from the current converter (experimental)'
+desc 'Regenerate the asciidoc-testkit expected fixtures from the current converter'
 task 'testkit:update' => 'load-converter' do
-  run_testkit '--update'
+  run_testkit_generic RUBY_CONVERTER, '--update'
+  run_testkit_revealjs RUBY_CONVERTER, '--update'
+end
+
+desc 'Run the asciidoc-testkit fixtures against the JS converter (parity check, no --update: the Ruby converter is the reference)'
+task 'testkit:test:js' do
+  run_testkit_generic JS_CONVERTER
+  run_testkit_revealjs JS_CONVERTER
 end

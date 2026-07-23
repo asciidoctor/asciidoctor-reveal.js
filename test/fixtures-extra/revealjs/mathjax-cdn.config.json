@@ -1,0 +1,6 @@
+{
+  "select": [
+    "head > link",
+    "div.slides"
+  ]
+}
