@@ -14,15 +14,27 @@ jobs:
       matrix:
         os: [ubuntu-22.04]
         ruby: ['3.4']
+        test_task: [test]
         include:
+          # JRuby/TruffleRuby run test:unit only (not the full test, which
+          # also runs the asciidoc-testkit corpus): these legs exist to catch
+          # Ruby-implementation compat bugs, not to re-validate fixture
+          # content, which the CRuby legs already do exhaustively — and the
+          # corpus's ~300 sequential `bundle exec` spawns (asciidoc-testkit
+          # has no persistent-worker mode yet) multiply JVM startup cost into
+          # a 10+ minute job.
           - os: ubuntu-22.04
             ruby: truffleruby-34.0.1
+            test_task: test:unit
           - os: ubuntu-22.04
             ruby: jruby-9.4.14.0
+            test_task: test:unit
           - os: macos-latest
             ruby: '3.4'
+            test_task: test
           - os: windows-latest
             ruby: '3.4'
+            test_task: test
     runs-on: ${{ matrix.os }}
     env:
       JRUBY_OPTS: '-J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-Xss2m -Xcompile.invokedynamic=false'
@@ -47,7 +59,7 @@ jobs:
       - name: Run RuboCop
         run: bundle exec rubocop
       - name: Run tests
-        run: bundle exec rake test
+        run: bundle exec rake ${{ matrix.test_task }}
       - name: Run examples:convert
         run: bundle exec rake examples:convert
   build_js:
