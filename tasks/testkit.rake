@@ -9,10 +9,10 @@
 # flags) — and these two groups of families need different converter flags:
 #
 # - the 37 generic AsciiDoc-construct families asciidoc-testkit ships as its
-#   bundled corpus (test/fixtures/<family>/<case>.html) are single-construct
+#   bundled corpus (test/expected/<family>/<case>.html) are single-construct
 #   snippets, converted embedded (`-e`);
 # - the "revealjs" and "revealjs-examples" families
-#   (test/fixtures-revealjs/<family>/<case>.html) are full reveal.js
+#   (test/expected-revealjs/<family>/<case>.html) are full reveal.js
 #   presentations — converted standalone (no `-e`), so the title slide and
 #   the `<div class="slides">` wrapper are present, then narrowed down to the
 #   relevant fragment via each case's `<name>.config.json` sidecar (a
@@ -27,11 +27,14 @@
 #   (tasks/examples.rake, tasks/publish.rake) and the JS/Ruby parity test
 #   (js/test/examples.test.js), so it's exposed as-is rather than duplicated.
 #   A file in examples/ with no matching
-#   test/fixtures-revealjs/revealjs-examples/<name>.html is simply skipped —
+#   test/expected-revealjs/revealjs-examples/<name>.html is simply skipped —
 #   that's how a pure showcase demo (release-*, auto-animate, ...) opts out.
 #   Each invocation's --expected root only holds the subdirectories it's
 #   responsible for, so the other invocation's families are silently skipped
-#   there rather than run with the wrong flag.
+#   there rather than run with the wrong flag. test/fixtures-extra holds
+#   input fixtures (matching asciidoc-testkit's own --fixtures flag);
+#   test/expected(-revealjs) holds the expected output we compare against —
+#   the two are deliberately named to not both start with "fixtures".
 #
 # Both invocations run through the input file itself (the {input} token, not
 # stdin), so a case that resolves file-relative references — docinfo files,
@@ -62,12 +65,12 @@ def run_testkit(expected:, converter:, converter_args: [], fixtures: nil, extra_
 end
 
 def run_testkit_generic(converter, *extra_args)
-  run_testkit(expected: 'test/fixtures', converter: converter, converter_args: ['-e'], extra_args: extra_args)
+  run_testkit(expected: 'test/expected', converter: converter, converter_args: ['-e'], extra_args: extra_args)
 end
 
 def run_testkit_revealjs(converter, *extra_args)
   run_testkit(
-    expected: 'test/fixtures-revealjs',
+    expected: 'test/expected-revealjs',
     converter: converter,
     fixtures: 'test/fixtures-extra',
     extra_args: extra_args

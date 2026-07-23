@@ -283,14 +283,16 @@ Then you can execute the full test suite (unit tests and the fixture corpus) wit
 
 `rake testkit:test` runs two invocations of asciidoc-testkit against the Ruby converter, since a converter flag it needs differs between them (see `tasks/testkit.rake` for the detail):
 
-* the bundled 37 generic AsciiDoc-construct families (`test/fixtures/<family>/<case>.html`), converted embedded;
-* the reveal.js-specific `revealjs` and `revealjs-examples` families (`test/fixtures-revealjs/<family>/<case>.html`), converted standalone and narrowed to the relevant fragment via each case's `<name>.config.json` `select` sidecar.
+* the bundled 37 generic AsciiDoc-construct families (`test/expected/<family>/<case>.html`), converted embedded;
+* the reveal.js-specific `revealjs` and `revealjs-examples` families (`test/expected-revealjs/<family>/<case>.html`), converted standalone and narrowed to the relevant fragment via each case's `<name>.config.json` `select` sidecar.
+
+`test/fixtures-extra/` holds the input side (matching asciidoc-testkit's own `--fixtures` flag); `test/expected(-revealjs)/` holds the expected output — deliberately not also named "fixtures", to keep the two apart at a glance.
 
 `rake testkit:update` regenerates the expected files from the current converter's output — review the diff before committing.
 
 === Custom tests
 
-Presentations in the `examples/` directory that are also regression tests (not pure showcase demos) have a matching expected file under `test/fixtures-revealjs/revealjs-examples/`.
+Presentations in the `examples/` directory that are also regression tests (not pure showcase demos) have a matching expected file under `test/expected-revealjs/revealjs-examples/`.
 Presentations that exist only to pin down a specific behavior, with no independent showcase value, live directly under `test/fixtures-extra/revealjs/` instead, so `examples/` stays a gallery of real presentations.
 
 
