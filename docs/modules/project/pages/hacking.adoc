@@ -277,6 +277,8 @@ Then you can execute the full test suite (unit tests and the fixture corpus) wit
 
  $ bundle exec rake test
 
+`bundle exec rake test:unit` runs just the unit tests, skipping the fixture corpus — useful on JRuby/TruffleRuby, where the corpus's hundreds of sequential `bundle exec` spawns turn a couple of minutes into ten or more.
+
 === Fixture corpus
 
 `rake testkit:test` runs two invocations of asciidoc-testkit against the Ruby converter, since a converter flag it needs differs between them (see `tasks/testkit.rake` for the detail):
