@@ -1,0 +1,10 @@
+<div class="listingblock"><div class="content"><pre class="highlight nowrap"><code class="language-java" data-lang="java">public class ApplicationConfigurationProvider extends HttpConfigurationProvider {
+
+   public Configuration getConfiguration(ServletContext context) {
+      return ConfigurationBuilder.begin()
+               .addRule()
+               .when(Direction.isInbound().and(Path.matches("/{path}")))
+               .perform(Log.message(Level.INFO, "Client requested path: {path}"))
+               .where("path").matches(".*");
+   }
+}</code></pre></div></div>

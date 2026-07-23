@@ -40,6 +40,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Fix `NoSuchMethodError` (`RubyFixnum.newFixnum`) in the JRuby test job by bumping JRuby from 9.4.2.0 to 9.4.14.0
   * Fix the TruffleRuby test job (psych 5.4.0 native build failure) by bumping TruffleRuby from 22.3.1 to 34.0.1
   * Upgrade `asciidoctor-doctest` to the released 2.0.0 (and relax the `minitest` constraint to `~> 5.25`)
+  * Experiment with [asciidoc-testkit](https://github.com/ggrossetie/asciidoc-testkit) (not published yet) as a possible language-agnostic replacement for `asciidoctor-doctest`: add `test/fixtures/<family>/<case>.html`, split from the equivalent `test/doctest/<family>.html`, and `rake testkit:test`/`testkit:update` tasks that run them against the Ruby converter. Covers the 37 generic AsciiDoc-construct families shared with the old corpus; doesn't yet replace `doctest:test`, which still separately covers the reveal.js-specific fixtures
 
 ## 5.2.0 (2024-02-12)
 
