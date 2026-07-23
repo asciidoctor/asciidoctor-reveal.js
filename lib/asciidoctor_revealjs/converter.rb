@@ -420,10 +420,6 @@ module Asciidoctor
         %(<div#{attrs}>#{buf}</div>)
       end
 
-      def convert_notes(node, _opts = {})
-        %(<aside class="notes">#{resolve_content(node)}</aside>)
-      end
-
       def convert_olist(node, _opts = {})
         attrs = attributes({ id: node.id, class: ['olist', node.style, node.role] }.merge(data_attrs(node.attributes)))
         buf = +''
@@ -520,10 +516,6 @@ module Asciidoctor
           buf << %(</div>)
         end
         %(<div#{attrs}>#{buf}</div>)
-      end
-
-      def convert_ruler(_node, _opts = {})
-        '<hr>'
       end
 
       def convert_section(node, _opts = {})
