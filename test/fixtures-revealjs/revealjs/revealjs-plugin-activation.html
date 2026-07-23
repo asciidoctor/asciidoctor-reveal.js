@@ -1,0 +1,230 @@
+<div class="slides"><section class="title" data-state="title"><h1>Default Plugins Changes</h1><p class="byline">
+  <span class="author">Author</span>
+  </p></section><section id="_slide_1"><h2>Slide 1</h2><div class="slide-content"><div class="paragraph"><p>Content 1</p></div></div></section>
+<section id="_slide_2"><h2>Slide 2</h2><div class="slide-content"><div class="paragraph"><p>Content 2</p></div></div></section></div>
+<script src="reveal.js/dist/reveal.js"></script>
+<script src="reveal.js/dist/plugin/notes.js"></script>
+<script>Array.prototype.slice.call(document.querySelectorAll('.slides section')).forEach(function(slide) {
+  if (slide.getAttribute('data-background-color')) return;
+  // user needs to explicitly say he wants CSS color to override otherwise we might break custom css or theme (#226)
+  if (!(slide.classList.contains('canvas') || slide.classList.contains('background'))) return;
+  var bgColor = getComputedStyle(slide).backgroundColor;
+  if (bgColor !== 'rgba(0, 0, 0, 0)' && bgColor !== 'transparent') {
+    slide.setAttribute('data-background-color', bgColor);
+    slide.style.backgroundColor = 'transparent';
+  }
+});
+
+// More info about config & dependencies:
+// - https://github.com/hakimel/reveal.js#configuration
+// - https://github.com/hakimel/reveal.js#dependencies
+Reveal.initialize({
+  // Display presentation control arrows
+  controls: true,
+  // Help the user learn the controls by providing hints, for example by
+  // bouncing the down arrow when they first encounter a vertical slide
+  controlsTutorial: true,
+  // Determines where controls appear, "edges" or "bottom-right"
+  controlsLayout: 'bottom-right',
+  // Visibility rule for backwards navigation arrows; "faded", "hidden"
+  // or "visible"
+  controlsBackArrows: 'faded',
+  // Display a presentation progress bar
+  progress: true,
+  // Display the page number of the current slide
+  slideNumber: false,
+  // Control which views the slide number displays on
+  showSlideNumber: 'all',
+  // Add the current slide number to the URL hash so that reloading the
+  // page/copying the URL will return you to the same slide
+  hash: false,
+  // Push each slide change to the browser history. Implies `hash: true`
+  history: false,
+  // Enable keyboard shortcuts for navigation
+  keyboard: true,
+  // Enable the slide overview mode
+  overview: true,
+  // Disables the default reveal.js slide layout so that you can use custom CSS layout
+  disableLayout: false,
+  // Vertical centering of slides
+  center: true,
+  // Enables touch navigation on devices with touch input
+  touch: true,
+  // Loop the presentation
+  loop: false,
+  // Change the presentation direction to be RTL
+  rtl: false,
+  // See https://github.com/hakimel/reveal.js/#navigation-mode
+  navigationMode: 'default',
+  // Randomizes the order of slides each time the presentation loads
+  shuffle: false,
+  // Turns fragments on and off globally
+  fragments: true,
+  // Flags whether to include the current fragment in the URL,
+  // so that reloading brings you to the same fragment position
+  fragmentInURL: false,
+  // Flags if the presentation is running in an embedded mode,
+  // i.e. contained within a limited portion of the screen
+  embedded: false,
+  // Flags if we should show a help overlay when the questionmark
+  // key is pressed
+  help: true,
+  // Flags if speaker notes should be visible to all viewers
+  showNotes: false,
+  // Global override for autolaying embedded media (video/audio/iframe)
+  // - null: Media will only autoplay if data-autoplay is present
+  // - true: All media will autoplay, regardless of individual setting
+  // - false: No media will autoplay, regardless of individual setting
+  autoPlayMedia: null,
+  // Global override for preloading lazy-loaded iframes
+  // - null: Iframes with data-src AND data-preload will be loaded when within
+  //   the viewDistance, iframes with only data-src will be loaded when visible
+  // - true: All iframes with data-src will be loaded when within the viewDistance
+  // - false: All iframes with data-src will be loaded only when visible
+  preloadIframes: null,
+  // Number of milliseconds between automatically proceeding to the
+  // next slide, disabled when set to 0, this value can be overwritten
+  // by using a data-autoslide attribute on your slides
+  autoSlide: 0,
+  // Stop auto-sliding after user input
+  autoSlideStoppable: true,
+  // Use this method for navigation when auto-sliding
+  autoSlideMethod: Reveal.navigateNext,
+  // Specify the average time in seconds that you think you will spend
+  // presenting each slide. This is used to show a pacing timer in the
+  // speaker view
+  defaultTiming: 120,
+  // Specify the total time in seconds that is available to
+  // present.  If this is set to a nonzero value, the pacing
+  // timer will work out the time available for each slide,
+  // instead of using the defaultTiming value
+  totalTime: 0,
+  // Specify the minimum amount of time you want to allot to
+  // each slide, if using the totalTime calculation method.  If
+  // the automated time allocation causes slide pacing to fall
+  // below this threshold, then you will see an alert in the
+  // speaker notes window
+  minimumTimePerSlide: 0,
+  // Enable slide navigation via mouse wheel
+  mouseWheel: false,
+  // Hide cursor if inactive
+  hideInactiveCursor: true,
+  // Time before the cursor is hidden (in ms)
+  hideCursorTime: 5000,
+  // Hides the address bar on mobile devices
+  hideAddressBar: true,
+  // Opens links in an iframe preview overlay
+  // Add `data-preview-link` and `data-preview-link="false"` to customise each link
+  // individually
+  previewLinks: false,
+  // Transition style (e.g., none, fade, slide, convex, concave, zoom)
+  transition: 'slide',
+  // Transition speed (e.g., default, fast, slow)
+  transitionSpeed: 'default',
+  // Transition style for full page slide backgrounds (e.g., none, fade, slide, convex, concave, zoom)
+  backgroundTransition: 'fade',
+  // Number of slides away from the current that are visible
+  viewDistance: 3,
+  // Number of slides away from the current that are visible on mobile
+  // devices. It is advisable to set this to a lower number than
+  // viewDistance in order to save resources.
+  mobileViewDistance: 3,
+  // Parallax background image (e.g., "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'")
+  parallaxBackgroundImage: '',
+  // Parallax background size in CSS syntax (e.g., "2100px 900px")
+  parallaxBackgroundSize: '',
+  // Number of pixels to move the parallax background per slide
+  // - Calculated automatically unless specified
+  // - Set to 0 to disable movement along an axis
+  parallaxBackgroundHorizontal: null,
+  parallaxBackgroundVertical: null,
+  // The display mode that will be used to show slides
+  display: 'block',
+
+  // The "normal" size of the presentation, aspect ratio will be preserved
+  // when the presentation is scaled to fit different resolutions. Can be
+  // specified using percentage units.
+  width: 960,
+  height: 700,
+
+  // Factor of the display size that should remain empty around the content
+  margin: 0.1,
+
+  // Bounds for smallest/largest possible scale to apply to content
+  minScale: 0.2,
+  maxScale: 1.5,
+
+  // PDF Export Options
+  // Put each fragment on a separate page
+  pdfSeparateFragments: true,
+  // For slides that do not fit on a page, max number of pages
+  pdfMaxPagesPerSlide: 1,
+
+  // Optional libraries used to extend on reveal.js
+  plugins: [RevealNotes],
+});
+
+var dom = {};
+dom.slides = document.querySelector('.reveal .slides');
+
+function getRemainingHeight(element, slideElement, height) {
+  height = height || 0;
+  if (element) {
+    var newHeight, oldHeight = element.style.height;
+    // Change the .stretch element height to 0 in order find the height of all
+    // the other elements
+    element.style.height = '0px';
+    // In Overview mode, the parent (.slide) height is set of 700px.
+    // Restore it temporarily to its natural height.
+    slideElement.style.height = 'auto';
+    newHeight = height - slideElement.offsetHeight;
+    // Restore the old height, just in case
+    element.style.height = oldHeight + 'px';
+    // Clear the parent (.slide) height. .removeProperty works in IE9+
+    slideElement.style.removeProperty('height');
+    return newHeight;
+  }
+  return height;
+}
+
+function layoutSlideContents(width, height) {
+  // Handle sizing of elements with the 'stretch' class
+  toArray(dom.slides.querySelectorAll('section .stretch')).forEach(function (element) {
+    // Determine how much vertical space we can use
+    var limit = 5; // hard limit
+    var parent = element.parentNode;
+    while (parent.nodeName !== 'SECTION' && limit > 0) {
+      parent = parent.parentNode;
+      limit--;
+    }
+    if (limit === 0) {
+      // unable to find parent, aborting!
+      return;
+    }
+    var remainingHeight = getRemainingHeight(element, parent, height);
+    // Consider the aspect ratio of media elements
+    if (/(img|video)/gi.test(element.nodeName)) {
+      var nw = element.naturalWidth || element.videoWidth, nh = element.naturalHeight || element.videoHeight;
+      var es = Math.min(width / nw, remainingHeight / nh);
+      element.style.width = (nw * es) + 'px';
+      element.style.height = (nh * es) + 'px';
+    } else {
+      element.style.width = width + 'px';
+      element.style.height = remainingHeight + 'px';
+    }
+  });
+}
+
+function toArray(o) {
+  return Array.prototype.slice.call(o);
+}
+
+Reveal.addEventListener('slidechanged', function () {
+  layoutSlideContents(960, 700)
+});
+Reveal.addEventListener('ready', function () {
+  layoutSlideContents(960, 700)
+});
+Reveal.addEventListener('resize', function () {
+  layoutSlideContents(960, 700)
+});</script>

@@ -1,0 +1,5 @@
+{
+  "select": [
+    "head link[rel=\"stylesheet\"]"
+  ]
+}

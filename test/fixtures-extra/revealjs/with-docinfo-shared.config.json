@@ -1,0 +1,6 @@
+{
+  "select": [
+    "head > *:last-child",
+    "div.slides > *:last-child"
+  ]
+}

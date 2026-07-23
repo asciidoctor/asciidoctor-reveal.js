@@ -1,0 +1,6 @@
+{
+  "select": [
+    "body > script",
+    "div.slides"
+  ]
+}

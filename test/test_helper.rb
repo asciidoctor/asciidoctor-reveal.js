@@ -7,5 +7,4 @@ else
   require 'asciidoctor_revealjs'
 end
 
-require 'asciidoctor/doctest'
 require 'minitest/autorun'

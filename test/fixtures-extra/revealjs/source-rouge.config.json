@@ -1,0 +1,6 @@
+{
+  "select": [
+    "div.slides",
+    "head style:last-of-type"
+  ]
+}

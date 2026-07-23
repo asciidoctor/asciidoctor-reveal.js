@@ -261,7 +261,7 @@ Use the same name convention as the other Asciidoctor repositories: `v\{major}.\
 In case of a new major version, you must follow the steps described for a xref:maintenance-branch[Maintenance branch].
 
 
-== Ruby and asciidoctor-doctest tests
+== Ruby and asciidoc-testkit tests
 
 === Running tests
 
@@ -269,25 +269,27 @@ We recommend tests to be run with a fresh installation of all dependencies in a 
 
  $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
-Then you can execute the tests with:
+The fixture corpus runs through https://github.com/ggrossetie/asciidoc-testkit[asciidoc-testkit^] (the `asciidoc-testkit-cli` npm package), so also install the JavaScript dependencies:
 
- $ bundle exec rake doctest
+ $ npm install
 
-However, if you have all dependencies properly installed this command should run the tests successfully:
+Then you can execute the full test suite (unit tests and the fixture corpus) with:
 
- $ rake doctest
+ $ bundle exec rake test
 
-=== Generating HTML test target
+=== Fixture corpus
 
-Tests were bootstrapped by https://github.com/asciidoctor/asciidoctor-doctest/#generate-examples[generating them from asciidoctor-doctest's test corpus^].
-This is done using the following command:
+`rake testkit:test` runs two invocations of asciidoc-testkit against the Ruby converter, since a converter flag it needs differs between them (see `tasks/testkit.rake` for the detail):
 
- $ bundle exec rake doctest:generate FORCE=y
+* the bundled 37 generic AsciiDoc-construct families (`test/fixtures/<family>/<case>.html`), converted embedded;
+* the reveal.js-specific `revealjs` and `revealjs-examples` families (`test/fixtures-revealjs/<family>/<case>.html`), converted standalone and narrowed to the relevant fragment via each case's `<name>.config.json` `select` sidecar.
+
+`rake testkit:update` regenerates the expected files from the current converter's output — review the diff before committing.
 
 === Custom tests
 
-Files in the `examples/` directory are used as tests.
-Resulting slides are kept in `test/doctest/`.
+Presentations in the `examples/` directory that are also regression tests (not pure showcase demos) have a matching expected file under `test/fixtures-revealjs/revealjs-examples/`.
+Presentations that exist only to pin down a specific behavior, with no independent showcase value, live directly under `test/fixtures-extra/revealjs/` instead, so `examples/` stays a gallery of real presentations.
 
 
 == Netlify Integration

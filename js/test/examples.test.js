@@ -26,9 +26,7 @@ const REVEALJSDIR = 'node_modules/reveal.js'
 // bugs or third-party syntax highlighters provided by Asciidoctor core.
 const SKIP = {
   'source-coderay.adoc': 'third-party syntax highlighter provided by Asciidoctor core (only highlightjs is ported)',
-  'source-prettify.adoc': 'third-party syntax highlighter provided by Asciidoctor core (only highlightjs is ported)',
-  'source-pygments.adoc': 'third-party syntax highlighter provided by Asciidoctor core (only highlightjs is ported)',
-  'source-rouge.adoc': 'third-party syntax highlighter provided by Asciidoctor core (only highlightjs is ported)'
+  'source-pygments.adoc': 'third-party syntax highlighter provided by Asciidoctor core (only highlightjs is ported)'
 }
 
 register()
