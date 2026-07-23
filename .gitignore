@@ -18,6 +18,9 @@ build/
 /dist/
 /asciidoctor-reveal.js-*.tgz
 
+# Claude Code worktrees
+/.claude/
+
 # ruby stuff
 /.bundle/
 /Gemfile.lock
