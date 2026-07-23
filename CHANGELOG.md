@@ -22,6 +22,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ### Build
 
+  * Stop committing the vendored `examples/Font-Awesome-6.7.2/` (~7MB) and `examples/reveal.js-plugins-4.6.0/` directories; fetch them on demand into the (gitignored) `examples/` directory instead, the same way `examples/reveal.js/` already is (`rake examples:assets`, now also copying `@fortawesome/fontawesome-free` from `node_modules`, plus a new `rake examples:assets:reveal-js-plugins` that fetches `reveal.js-plugins` via `npm pack` rather than a normal dependency, since that package lists `npm` itself as a dependency and would otherwise drag in npm's entire internal tooling tree — dozens of vulnerable transitive deps for a plugin package that never touches any of it at runtime)
   * Remove `test/templates_test.rb`, a leftover from the pre-pure-Ruby converter that referenced the now-deleted `templates/slim` and `test/output/slim` directories and was never run by `rake test`; drop the matching unused `require 'tilt'` in `test/test_helper.rb`
   * Add unit tests for `RevealJsOptions` and the `highlightjs` syntax highlighter adapter
   * Replace `bestikk-log` with plain `console` logging in the build tasks
