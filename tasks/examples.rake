@@ -1,6 +1,31 @@
 # frozen_string_literal: true
 
 require 'tmpdir'
+require 'rubygems/package'
+require 'zlib'
+
+# Extracts a .tar.gz (e.g. from `npm pack`) into dest_root using only Ruby
+# stdlib/rubygems — no external `tar` binary. GNU/BSD tar disagree on several
+# flags, and both misparse a Windows drive-letter path (`D:/...`) as a remote
+# host spec (`host:path`), so shelling out is more trouble than it's worth
+# for a one-off archive extraction.
+def extract_tar_gz(tarball, dest_root)
+  Zlib::GzipReader.open(tarball) do |gz|
+    Gem::Package::TarReader.new(gz) do |tar|
+      tar.each do |entry|
+        path = File.expand_path(entry.full_name, dest_root)
+        raise "refusing to extract '#{entry.full_name}' outside #{dest_root}" unless path.start_with?("#{dest_root}#{File::SEPARATOR}")
+
+        if entry.directory?
+          FileUtils.mkdir_p(path)
+        elsif entry.file?
+          FileUtils.mkdir_p(File.dirname(path))
+          File.binwrite(path, entry.read)
+        end
+      end
+    end
+  end
+end
 
 namespace :examples do
   # The examples reference reveal.js and Font Awesome assets relatively
@@ -40,7 +65,7 @@ namespace :examples do
       tarball = Dir.glob(File.join(tmp, '*.tgz')).first
       raise "npm pack did not produce a tarball in #{tmp}" unless tarball
 
-      sh 'tar', 'xzf', tarball, '-C', tmp
+      extract_tar_gz(tarball, tmp)
       FileUtils.rm_rf(dest)
       FileUtils.cp_r(File.join(tmp, 'package'), dest)
     end
