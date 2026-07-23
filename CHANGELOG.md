@@ -43,6 +43,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Reorganize `examples/`: presentations that only exist to pin down a specific behavior (docinfo, slide numbers, syntax highlighters, ...), with no independent showcase value, moved to `test/fixtures-extra/revealjs/` (the `revealjs` family above) — `examples/` now stays a gallery of real, browsable presentations, exposed to the test suite via `test/fixtures-extra/revealjs-examples`, a symlink (the `revealjs-examples` family)
   * CI: run Windows on Ruby 3.4 like every other platform, and drop the `Configure Nokogiri installation` steps on Linux/macOS — both were only there for `asciidoctor-doctest`'s `nokogiri` dependency, gone now
   * Add `rake testkit:test:js` to run the same asciidoc-testkit corpus against the JS converter (`js/bin/asciidoctor-revealjs`) for a Ruby/JS parity check that also covers the 37 generic AsciiDoc-construct families, unlike `js/test/examples.test.js`, which only covers `examples/`. Not wired into CI yet — it currently surfaces 24 pre-existing parity gaps (footnote numbering, the `icon:` macro rendering as `[name]` text instead of `<img>`, ...) that need triaging first
+  * Raise the asciidoc-testkit invocations' `--timeout` from the CLI's 10s default to 30s: each fixture case spawns a fresh `bundle exec asciidoctor` process (no persistent worker), and on JRuby/TruffleRuby the JVM startup alone can take several seconds — `revealjs/source-rouge` (which also loads the `rouge` gem) was timing out on both in CI
 
 ## 5.2.0 (2024-02-12)
 
