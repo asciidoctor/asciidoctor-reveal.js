@@ -41,3 +41,9 @@ icon:address-book[size=2x,set=far]
 
 .Solid
 icon:address-book[size=2x,set=fas]
+
+== Checklist
+
+* [x] checked
+* [ ] not checked
+* normal list item
