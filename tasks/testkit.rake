@@ -41,7 +41,14 @@
 # for a direct, non-testkit invocation.
 
 RUBY_CONVERTER = %w[bundle exec asciidoctor -r ./lib/asciidoctor_revealjs -b revealjs -S safe -o -].freeze
-JS_CONVERTER = %w[node js/bin/asciidoctor-revealjs -b revealjs -S safe -o -].freeze
+# `revealjsdir`'s default intentionally differs between the two converters
+# (`reveal.js/` outside Node, `node_modules/reveal.js/` in a Node.js
+# environment — see docs/modules/converter/pages/revealjs-options.adoc), so
+# the expected fixtures (generated through RUBY_CONVERTER, which never
+# overrides it) only match a JS conversion that pins the same value RUBY_CONVERTER
+# defaults to. Without this, every standalone case's `<script src>`/`<link href>`
+# would differ solely because of that default, independent of any real parity gap.
+JS_CONVERTER = %w[node js/bin/asciidoctor-revealjs -b revealjs -S safe -o - -a revealjsdir=reveal.js@].freeze
 
 def testkit_cli
   path = File.expand_path('../node_modules/.bin/asciidoc-testkit', __dir__)
