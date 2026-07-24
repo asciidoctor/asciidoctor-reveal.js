@@ -1,0 +1,9 @@
+= Release notes
+
+One AsciiDoc slide-deck per major/minor release, showcasing what's new.
+Published to https://asciidoctor-revealjs-examples.netlify.app/ on every commit to `main` (see `netlify.toml` and the `release_notes` rake tasks).
+
+== Preview locally
+
+    $ bundle exec rake release_notes:convert
+    $ bundle exec rake release_notes:serve

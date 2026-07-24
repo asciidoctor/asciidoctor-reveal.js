@@ -56,6 +56,7 @@ jobs:
         run: |
           bundle exec rake test
           bundle exec rake examples:convert
+          bundle exec rake release_notes:convert
           npm test
       # only reached when the tests above succeed
       - name: Commit, tag and push

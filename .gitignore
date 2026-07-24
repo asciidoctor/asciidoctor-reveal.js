@@ -1,15 +1,20 @@
 # root dir html files
 /*.html
 
+# release notes showcase (Netlify)
+/release-notes/*.html
+/release-notes/reveal.js/
+/release-notes/Font-Awesome-6.7.2/
+
 # test stuff
-/examples/*.html
-!/examples/docinfo*.html
-!/examples/*-docinfo-footer.html
-!/examples/*docinfo-revealjs.html
-/examples/reveal.js/
-/examples/Font-Awesome-6.7.2/
-/examples/reveal.js-plugins-4.6.0/
-/examples/node_modules
+/test/fixtures-extra/revealjs-examples/*.html
+!/test/fixtures-extra/revealjs-examples/docinfo*.html
+!/test/fixtures-extra/revealjs-examples/*-docinfo-footer.html
+!/test/fixtures-extra/revealjs-examples/*docinfo-revealjs.html
+/test/fixtures-extra/revealjs-examples/reveal.js/
+/test/fixtures-extra/revealjs-examples/Font-Awesome-6.7.2/
+/test/fixtures-extra/revealjs-examples/reveal.js-plugins-4.6.0/
+/test/fixtures-extra/revealjs-examples/node_modules
 
 # node stuff
 node_modules/

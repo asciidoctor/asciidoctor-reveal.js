@@ -20,15 +20,16 @@
 #   docs). "revealjs" is test-only: cases that only exist to pin down a
 #   specific behavior (docinfo, slide numbers, syntax highlighters, ...),
 #   with no independent showcase value, living directly under
-#   test/fixtures-extra/revealjs/, not in examples/. "revealjs-examples" is
-#   *also* a real, browsable example (background-color, grid-layout, video,
-#   ...), supplied via --fixtures from test/fixtures-extra/revealjs-examples,
-#   a symlink to examples/ — that directory is also used by the showcase
-#   (tasks/examples.rake, tasks/publish.rake) and the JS/Ruby parity test
-#   (js/test/examples.test.js), so it's exposed as-is rather than duplicated.
-#   A file in examples/ with no matching
-#   test/expected-revealjs/revealjs-examples/<name>.html is simply skipped —
-#   that's how a pure showcase demo (release-*, auto-animate, ...) opts out.
+#   test/fixtures-extra/revealjs/. "revealjs-examples" is *also* a real,
+#   browsable example (background-color, grid-layout, video, ...), supplied
+#   via --fixtures from test/fixtures-extra/revealjs-examples — that directory
+#   is also used by the local preview tooling (tasks/examples.rake) and the
+#   JS/Ruby parity test (js/test/examples.test.js), so it's exposed as-is
+#   rather than duplicated. A file in test/fixtures-extra/revealjs-examples/
+#   with no matching test/expected-revealjs/revealjs-examples/<name>.html is
+#   simply skipped — that's how a pure showcase demo (auto-animate, ...) opts
+#   out. The release-notes/ showcase (Netlify demos site) is a separate,
+#   unrelated directory not touched by this corpus at all.
 #   Each invocation's --expected root only holds the subdirectories it's
 #   responsible for, so the other invocation's families are silently skipped
 #   there rather than run with the wrong flag. test/fixtures-extra holds

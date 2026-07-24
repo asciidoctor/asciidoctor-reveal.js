@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
-namespace :examples do
+namespace :release_notes do
   # Extra assets (outside the release-*.{html,css} convention) shared by the
   # release demos and copied verbatim into public/.
-  extra_release_files = ['examples/a11y-dark.css'].freeze
+  #
+  # Hardcoded rather than reusing the RELEASE_NOTES_DIR constant from
+  # tasks/release_notes.rake: tasks/*.rake files are imported in alphabetical
+  # order (see Rakefile), and this file loads before that one.
+  extra_release_files = ['release-notes/a11y-dark.css'].freeze
 
   # Short highlights shown on the landing page, keyed by release version.
   # Add a new entry whenever a release-<version>.adoc demo is introduced; a
@@ -22,14 +26,15 @@ namespace :examples do
     Dir.mkdir PUBLIC_DIR
     Dir.mkdir "#{PUBLIC_DIR}/reveal.js"
     FileUtils.cp_r 'node_modules/reveal.js/', PUBLIC_DIR.to_s
-    FileUtils.cp_r 'examples/images/', PUBLIC_DIR.to_s
+    FileUtils.cp_r 'release-notes/images/', PUBLIC_DIR.to_s
 
-    # Discover every examples/release-<version>.html demo (and its optional
-    # matching .css), copy it over, and collect the version for the landing page.
-    versions = Dir.glob('examples/release-*.html').filter_map do |html|
+    # Discover every release-notes/release-<version>.html demo (and its
+    # optional matching .css), copy it over, and collect the version for the
+    # landing page.
+    versions = Dir.glob('release-notes/release-*.html').filter_map do |html|
       version = File.basename(html, '.html').delete_prefix('release-')
       FileUtils.cp html, "#{PUBLIC_DIR}/#{File.basename(html)}"
-      css = "examples/release-#{version}.css"
+      css = "release-notes/release-#{version}.css"
       FileUtils.cp css, "#{PUBLIC_DIR}/#{File.basename(css)}" if File.exist?(css)
       version
     end
