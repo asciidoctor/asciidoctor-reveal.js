@@ -1,5 +1,5 @@
 // Parity test: every presentation under the two example corpora
-// (test/fixtures-extra/revealjs-examples/ and release-notes/) is converted
+// (test/fixtures/standalone/ and release-notes/) is converted
 // with the native JavaScript converter and compared byte-for-byte against the
 // Ruby converter (the reference implementation, invoked through `bundle exec ruby`).
 //
@@ -19,7 +19,7 @@ import { convertFile } from 'asciidoctor'
 import { register } from '../src/index.js'
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
-const examplesDirs = ['test/fixtures-extra/revealjs-examples', 'release-notes']
+const examplesDirs = ['test/fixtures/standalone', 'release-notes']
 const REVEALJSDIR = 'node_modules/reveal.js'
 
 // Presentations whose output cannot match the Ruby converter byte-for-byte. These
@@ -27,7 +27,9 @@ const REVEALJSDIR = 'node_modules/reveal.js'
 // bugs or third-party syntax highlighters provided by Asciidoctor core.
 const SKIP = {
   'source-coderay.adoc': 'third-party syntax highlighter provided by Asciidoctor core (only highlightjs is ported)',
-  'source-pygments.adoc': 'third-party syntax highlighter provided by Asciidoctor core (only highlightjs is ported)'
+  'source-pygments.adoc': 'third-party syntax highlighter provided by Asciidoctor core (only highlightjs is ported)',
+  'source-prettify.adoc': 'third-party syntax highlighter provided by Asciidoctor core (only highlightjs is ported)',
+  'source-rouge.adoc': 'third-party syntax highlighter provided by Asciidoctor core (only highlightjs is ported)'
 }
 
 register()

@@ -3,7 +3,7 @@ import path from 'node:path'
 import { convertFile } from 'asciidoctor'
 import { register } from '../js/src/index.js'
 
-const examplesDir = 'test/fixtures-extra/revealjs-examples'
+const examplesDir = 'test/fixtures/standalone'
 
 console.log('examples')
 

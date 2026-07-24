@@ -1,1 +1,1 @@
-../../../../test/fixtures-extra/revealjs-examples/concealed-slide-titles.adoc
+../../../../test/fixtures/standalone/concealed-slide-titles.adoc
