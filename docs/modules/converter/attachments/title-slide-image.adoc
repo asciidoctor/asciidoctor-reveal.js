@@ -1,0 +1,1 @@
+../../../../test/fixtures-extra/revealjs-examples/title-slide-image.adoc

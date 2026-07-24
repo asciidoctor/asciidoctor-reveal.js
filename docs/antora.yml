@@ -10,7 +10,7 @@ asciidoc:
   attributes:
     url-project-repo: 'https://github.com/asciidoctor/asciidoctor-reveal.js'
     url-asciidoctorj-revealjs: 'https://github.com/asciidoctor/asciidoctorj-reveal.js'
-    url-project-examples: 'https://github.com/asciidoctor/asciidoctor-reveal.js/tree/main/examples'
+    url-project-examples: 'https://github.com/asciidoctor/asciidoctor-reveal.js/tree/main/test/fixtures-extra/revealjs-examples'
     url-asciidoctor: 'https://github.com/asciidoctor/asciidoctor'
     url-asciidoctorjs: 'https://github.com/asciidoctor/asciidoctor.js'
     url-revealjs-home: 'https://revealjs.com'

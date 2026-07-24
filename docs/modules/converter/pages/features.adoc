@@ -1,7 +1,7 @@
 = Write Your Presentation
 
 Let's see some examples of `revealjs` backend features.
-Additional examples can be found in the AsciiDoc files (.adoc) in `examples/`.
+Additional examples can be found in the AsciiDoc files (.adoc) in the {url-project-examples}[project's example corpus].
 
 == Basic presentation with speaker notes
 
@@ -27,7 +27,7 @@ A Great Story
 ----
 
 In the previous snippet, we create a slide titled Slide One with bullets and another titled Slide Two with centered text (reveal.js`' default behavior) and link:{url-revealjs-doc}/speaker-view/[speaker notes].
-Other syntax exists to create speaker notes; see `examples/speaker-notes.adoc`.
+Other syntax exists to create speaker notes; see xref:attachment$speaker-notes.adoc[speaker-notes.adoc].
 
 IMPORTANT: In order to generate a proper presentation, the source file _must_ contain a proper AsciiDoc document structure.
 This is especially important when configuring how Asciidoctor reveal.js should convert the document.
@@ -46,7 +46,7 @@ There are a few ways to have no titles on slides.
 * Adding the `notitle` option to your slide
 * Adding the `conceal` option to your slide
 
-See {url-project-repo}/blob/main/examples/concealed-slide-titles.adoc[concealed-slide-titles.adoc].
+See xref:attachment$concealed-slide-titles.adoc[concealed-slide-titles.adoc].
 
 NOTE: `conceal` and `notitle` have the advantage that the slide still has an id so it can be linked to.
 
