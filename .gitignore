@@ -7,14 +7,12 @@
 /release-notes/Font-Awesome-6.7.2/
 
 # test stuff
-/test/fixtures-extra/revealjs-examples/*.html
-!/test/fixtures-extra/revealjs-examples/docinfo*.html
-!/test/fixtures-extra/revealjs-examples/*-docinfo-footer.html
-!/test/fixtures-extra/revealjs-examples/*docinfo-revealjs.html
-/test/fixtures-extra/revealjs-examples/reveal.js/
-/test/fixtures-extra/revealjs-examples/Font-Awesome-6.7.2/
-/test/fixtures-extra/revealjs-examples/reveal.js-plugins-4.6.0/
-/test/fixtures-extra/revealjs-examples/node_modules
+/test/fixtures/standalone/*.html
+!/test/fixtures/standalone/*docinfo*.html
+/test/fixtures/standalone/reveal.js/
+/test/fixtures/standalone/Font-Awesome-6.7.2/
+/test/fixtures/standalone/reveal.js-plugins-4.6.0/
+/test/fixtures/standalone/node_modules
 
 # node stuff
 node_modules/

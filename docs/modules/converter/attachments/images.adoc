@@ -1,1 +1,1 @@
-../../../../test/fixtures-extra/revealjs-examples/images.adoc
+../../../../test/fixtures/standalone/images.adoc

@@ -283,17 +283,16 @@ Then you can execute the full test suite (unit tests and the fixture corpus) wit
 
 `rake testkit:test` runs two invocations of asciidoc-testkit against the Ruby converter, since a converter flag it needs differs between them (see `tasks/testkit.rake` for the detail):
 
-* the bundled 37 generic AsciiDoc-construct families (`test/expected/<family>/<case>.html`), converted embedded;
-* the reveal.js-specific `revealjs` and `revealjs-examples` families (`test/expected-revealjs/<family>/<case>.html`), converted standalone and narrowed to the relevant fragment via each case's `<name>.config.json` `select` sidecar.
+* the bundled 37 generic AsciiDoc-construct families (`test/expected-testkit/<family>/<case>.html`), converted embedded;
+* the project's own `standalone` family (`test/expected/standalone/<case>.html`), converted standalone and narrowed to the relevant fragment via each case's `<name>.config.json` `select` sidecar.
 
-`test/fixtures-extra/` holds the input side (matching asciidoc-testkit's own `--fixtures` flag); `test/expected(-revealjs)/` holds the expected output — deliberately not also named "fixtures", to keep the two apart at a glance.
+`test/fixtures/` holds the input side (matching asciidoc-testkit's own `--fixtures` flag); `test/expected(-testkit)/` holds the expected output — deliberately not also named "fixtures", to keep the two apart at a glance.
 
 `rake testkit:update` regenerates the expected files from the current converter's output — review the diff before committing.
 
 === Custom tests
 
-Presentations in `test/fixtures-extra/revealjs-examples/` that are also regression tests (not pure showcase demos) have a matching expected file under `test/expected-revealjs/revealjs-examples/`.
-Presentations that exist only to pin down a specific behavior, with no independent showcase value, live directly under `test/fixtures-extra/revealjs/` instead, so `test/fixtures-extra/revealjs-examples/` stays a gallery of real presentations.
+Presentations in `test/fixtures/standalone/` double as a browsable gallery of real presentations and as regression tests. A file with no matching expected file under `test/expected/standalone/` is simply not (yet) covered by a regression test — that's fine, it's still a valid example.
 
 The release notes showcase under `release-notes/` (see below) is a separate, unrelated directory: it is not part of this test corpus at all.
 

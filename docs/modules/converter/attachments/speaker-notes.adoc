@@ -1,1 +1,1 @@
-../../../../test/fixtures-extra/revealjs-examples/speaker-notes.adoc
+../../../../test/fixtures/standalone/speaker-notes.adoc

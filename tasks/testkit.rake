@@ -6,36 +6,34 @@
 #
 # Two separate invocations, not one, because asciidoc-testkit runs a single
 # fixed command for every case in a given invocation (no per-case converter
-# flags) — and these two groups of families need different converter flags:
+# flags) — and these two groups need different converter flags:
 #
 # - the 37 generic AsciiDoc-construct families asciidoc-testkit ships as its
-#   bundled corpus (test/expected/<family>/<case>.html) are single-construct
-#   snippets, converted embedded (`-e`);
-# - the "revealjs" and "revealjs-examples" families
-#   (test/expected-revealjs/<family>/<case>.html) are full reveal.js
-#   presentations — converted standalone (no `-e`), so the title slide and
-#   the `<div class="slides">` wrapper are present, then narrowed down to the
+#   bundled corpus (test/expected-testkit/<family>/<case>.html) are
+#   single-construct snippets, converted embedded (`-e`);
+# - the "standalone" family (test/expected/standalone/<case>.html,
+#   test/fixtures/standalone/<case>.adoc) are full reveal.js presentations —
+#   converted standalone (no `-e`), so the title slide and the
+#   `<div class="slides">` wrapper are present, then narrowed down to the
 #   relevant fragment via each case's `<name>.config.json` sidecar (a
 #   `select` CSS selector list — see asciidoc-testkit's fragment-extraction
-#   docs). "revealjs" is test-only: cases that only exist to pin down a
-#   specific behavior (docinfo, slide numbers, syntax highlighters, ...),
-#   with no independent showcase value, living directly under
-#   test/fixtures-extra/revealjs/. "revealjs-examples" is *also* a real,
-#   browsable example (background-color, grid-layout, video, ...), supplied
-#   via --fixtures from test/fixtures-extra/revealjs-examples — that directory
-#   is also used by the local preview tooling (tasks/examples.rake) and the
-#   JS/Ruby parity test (js/test/examples.test.js), so it's exposed as-is
-#   rather than duplicated. A file in test/fixtures-extra/revealjs-examples/
-#   with no matching test/expected-revealjs/revealjs-examples/<name>.html is
-#   simply skipped — that's how a pure showcase demo (auto-animate, ...) opts
-#   out. The release-notes/ showcase (Netlify demos site) is a separate,
-#   unrelated directory not touched by this corpus at all.
-#   Each invocation's --expected root only holds the subdirectories it's
+#   docs). test/fixtures/standalone/ doubles as a browsable gallery of real
+#   presentations (background-color, grid-layout, video, ...) — it's also
+#   used by the local preview tooling (tasks/examples.rake) and the JS/Ruby
+#   parity test (js/test/examples.test.js), so it's exposed as-is rather than
+#   duplicated. A file there with no matching
+#   test/expected/standalone/<name>.html is simply skipped, not run — that's
+#   how a case not (yet) covered by a regression test opts out. The
+#   release-notes/ showcase (Netlify demos site) is a separate, unrelated
+#   directory not touched by this corpus at all.
+#   Each invocation's --expected root only holds the family/families it's
 #   responsible for, so the other invocation's families are silently skipped
-#   there rather than run with the wrong flag. test/fixtures-extra holds
-#   input fixtures (matching asciidoc-testkit's own --fixtures flag);
-#   test/expected(-revealjs) holds the expected output we compare against —
-#   the two are deliberately named to not both start with "fixtures".
+#   there rather than run with the wrong flag — merging test/expected-testkit
+#   and test/expected into one directory would make the standalone invocation
+#   pick up the 37 generic families too and compare their standalone output
+#   against embedded-conversion expected HTML, failing all of them. Naming:
+#   "expected-testkit" is testkit's own bundled corpus; the project's own
+#   family gets the plain "expected"/"fixtures" names.
 #
 # Both invocations run through the input file itself (the {input} token, not
 # stdin), so a case that resolves file-relative references — docinfo files,
@@ -66,14 +64,14 @@ def run_testkit(expected:, converter:, converter_args: [], fixtures: nil, extra_
 end
 
 def run_testkit_generic(converter, *extra_args)
-  run_testkit(expected: 'test/expected', converter: converter, converter_args: ['-e'], extra_args: extra_args)
+  run_testkit(expected: 'test/expected-testkit', converter: converter, converter_args: ['-e'], extra_args: extra_args)
 end
 
-def run_testkit_revealjs(converter, *extra_args)
+def run_testkit_standalone(converter, *extra_args)
   run_testkit(
-    expected: 'test/expected-revealjs',
+    expected: 'test/expected',
     converter: converter,
-    fixtures: 'test/fixtures-extra',
+    fixtures: 'test/fixtures',
     extra_args: extra_args
   )
 end
@@ -81,17 +79,17 @@ end
 desc 'Run the asciidoc-testkit fixtures against the Ruby converter'
 task 'testkit:test' => 'load-converter' do
   run_testkit_generic RUBY_CONVERTER
-  run_testkit_revealjs RUBY_CONVERTER
+  run_testkit_standalone RUBY_CONVERTER
 end
 
 desc 'Regenerate the asciidoc-testkit expected fixtures from the current converter'
 task 'testkit:update' => 'load-converter' do
   run_testkit_generic RUBY_CONVERTER, '--update'
-  run_testkit_revealjs RUBY_CONVERTER, '--update'
+  run_testkit_standalone RUBY_CONVERTER, '--update'
 end
 
 desc 'Run the asciidoc-testkit fixtures against the JS converter (parity check, no --update: the Ruby converter is the reference)'
 task 'testkit:test:js' do
   run_testkit_generic JS_CONVERTER
-  run_testkit_revealjs JS_CONVERTER
+  run_testkit_standalone JS_CONVERTER
 end

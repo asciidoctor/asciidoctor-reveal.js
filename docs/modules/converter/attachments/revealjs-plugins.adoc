@@ -1,1 +1,1 @@
-../../../../test/fixtures-extra/revealjs/revealjs-plugins.adoc
+../../../../test/fixtures/standalone/revealjs-plugins.adoc

@@ -1,1 +1,1 @@
-../../../../test/fixtures-extra/revealjs-examples/background-color.adoc
+../../../../test/fixtures/standalone/background-color.adoc
