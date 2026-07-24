@@ -292,16 +292,18 @@ Then you can execute the full test suite (unit tests and the fixture corpus) wit
 
 === Custom tests
 
-Presentations in the `examples/` directory that are also regression tests (not pure showcase demos) have a matching expected file under `test/expected-revealjs/revealjs-examples/`.
-Presentations that exist only to pin down a specific behavior, with no independent showcase value, live directly under `test/fixtures-extra/revealjs/` instead, so `examples/` stays a gallery of real presentations.
+Presentations in `test/fixtures-extra/revealjs-examples/` that are also regression tests (not pure showcase demos) have a matching expected file under `test/expected-revealjs/revealjs-examples/`.
+Presentations that exist only to pin down a specific behavior, with no independent showcase value, live directly under `test/fixtures-extra/revealjs/` instead, so `test/fixtures-extra/revealjs-examples/` stays a gallery of real presentations.
+
+The release notes showcase under `release-notes/` (see below) is a separate, unrelated directory: it is not part of this test corpus at all.
 
 
 == Netlify Integration
 
-On every commit or PR, the {url-netlify}[Netlify^] service will convert some examples into slides and host the resulting pages on its platform where it will be visible by anyone.
+On every commit or PR, the {url-netlify}[Netlify^] service will convert the release notes (`release-notes/`) into slides and host the resulting pages on its platform where it will be visible by anyone.
 It hosts the converted HTML files, reveal.js framework and static content like images and CSS.
 This integration will allow us to preview PRs and demo features to users (source and converted result).
-See the `publish` rake task in `Rakefile` and the `netlify.toml` configuration file.
+See the `release_notes:publish` rake task in `tasks/publish.rake` and the `netlify.toml` configuration file.
 
 === Sensitive Data Accidentally Pushed Out
 

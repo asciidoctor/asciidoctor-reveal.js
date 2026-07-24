@@ -109,7 +109,7 @@ Finally, enable docinfo in your presentation so that both files are picked up:
 ----
 <.> Enable private docinfo so the `presentation-docinfo-revealjs.html` and `presentation-docinfo-footer.html` files are included
 
-TIP: A complete, working example is available in {url-project-examples}/revealjs-plugins.adoc[revealjs-plugins.adoc] together with its docinfo files.
+TIP: A complete, working example is available in xref:attachment$revealjs-plugins.adoc[revealjs-plugins.adoc] together with its xref:attachment$revealjs-plugins-docinfo-revealjs.html[head] and xref:attachment$revealjs-plugins-docinfo-footer.html[footer] docinfo files.
 
 [IMPORTANT]
 ====
