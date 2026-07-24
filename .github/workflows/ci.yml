@@ -64,6 +64,16 @@ jobs:
         run: bundle exec rake examples:convert
       - name: Run release_notes:convert
         run: bundle exec rake release_notes:convert
+      # JS/Ruby parity, checked once (OS-independent Node.js code) on the
+      # primary Linux/CRuby leg, which already has both toolchains installed.
+      # continue-on-error because 2 cases (source-prettify, source-rouge) are
+      # permanent, documented gaps — third-party Ruby-only syntax highlighters
+      # never ported to the JS converter — not something a future commit can
+      # regress-fix; a real regression would show as new failures beyond those.
+      - name: Run testkit:test:js (JS/Ruby parity)
+        if: matrix.os == 'ubuntu-22.04' && matrix.ruby == '3.4'
+        continue-on-error: true
+        run: bundle exec rake testkit:test:js
   build_js:
     strategy:
       fail-fast: false
