@@ -49,8 +49,12 @@ export function slideFootnote (footnote) {
   }
 
   const section = enclosingSection(footnote)
+  // Outside any section (embedded conversion, or content before the first
+  // slide), fall back to the document itself so these footnotes still get a
+  // stable bucket to dedupe against, instead of never being stored at all.
+  const bucketKey = section ?? footnote.getDocument()
   const titleFn = section == null ? [] : (titleFootnotes.get(section) || [])
-  const bodyFn = section == null ? [] : (bodyFootnotes.get(section) || [])
+  const bodyFn = bodyFootnotes.get(bucketKey) || []
   // A footnote with an id can be referenced again on the same slide; reuse its
   // number. A definition carries the id on `getId()`, a later reference carries
   // it on `getTarget()`. Anonymous footnotes (neither) are always distinct.
@@ -58,9 +62,9 @@ export function slideFootnote (footnote) {
   const existing = id ? bodyFn.find((fn) => fn.id === id) : null
   const index = existing ? existing.index : titleFn.length + bodyFn.length + 1
   const inlineFootnote = new Inline(footnoteParent, footnote.getContext(), footnote.getText(), { attributes: { ...footnote.getAttributes(), index } })
-  if (!existing && section != null) {
+  if (!existing) {
     bodyFn.push({ index, id, text: inlineFootnote.getText() })
-    bodyFootnotes.set(section, bodyFn)
+    bodyFootnotes.set(bucketKey, bodyFn)
   }
   return inlineFootnote
 }

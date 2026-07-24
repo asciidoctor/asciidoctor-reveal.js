@@ -685,7 +685,7 @@ export default class RevealJsConverter extends ConverterBase {
       case 'ref':
         return `<a${attributes({ id: node.getTarget(), ...dataAttrs(node.getAttributes()) })}></a>`
       case 'bibref':
-        return `<a${attributes({ id: node.getTarget(), ...dataAttrs(node.getAttributes()) })}></a>[${node.getTarget()}]`
+        return `<a${attributes({ id: node.getTarget(), ...dataAttrs(node.getAttributes()) })}></a>[${node.getTarget() ?? ''}]`
       default: {
         const attrs = attributes({ href: node.getTarget(), class: [node.getRole(), step(node) ? 'fragment' : null], target: node.getAttribute('window'), 'data-preview-link': boolDataAttr(node, 'preview'), ...dataAttrs(node.getAttributes()) })
         return `<a${attrs}>${node.getText()}</a>`
@@ -1065,7 +1065,7 @@ export default class RevealJsConverter extends ConverterBase {
         else if (node.hasAttribute('rotate')) iClass += ` fa-rotate-${node.getAttribute('rotate')}`
         const attrs = node.hasAttribute('title') ? ` title="${node.getAttribute('title')}"` : ''
         img = `<i class="${iClass}"${attrs}></i>`
-      } else if (icons) {
+      } else if (node.getDocument().hasAttribute('icons')) {
         let attrs = node.hasAttribute('width') ? ` width="${node.getAttribute('width')}"` : ''
         if (node.hasAttribute('height')) attrs += ` height="${node.getAttribute('height')}"`
         if (node.hasAttribute('title')) attrs += ` title="${node.getAttribute('title')}"`
