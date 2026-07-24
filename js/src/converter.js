@@ -212,7 +212,7 @@ export default class RevealJsConverter extends ConverterBase {
       if (!node.isNoheader()) {
         const headerDocinfo = await node.docinfo('header', '-revealjs.html')
         if (headerDocinfo) buf += headerDocinfo
-        if (node.hasHeader()) buf += await this.convert(node, 'title_slide')
+        if (node.hasHeader() && !node.isNotitle()) buf += await this.convert(node, 'title_slide')
       }
       buf += slidesContent ?? ''
       const footerDocinfo = await node.docinfo('footer', '-revealjs.html')

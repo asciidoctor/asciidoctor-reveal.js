@@ -862,7 +862,7 @@ module Asciidoctor
             unless (header_docinfo = node.docinfo :header, '-revealjs.html').empty?
               buf << header_docinfo.to_s
             end
-            buf << convert(node, 'title_slide') if node.header?
+            buf << convert(node, 'title_slide') if node.header? && !node.notitle
           end
           buf << slides_content.to_s
           unless (footer_docinfo = node.docinfo :footer, '-revealjs.html').empty?
