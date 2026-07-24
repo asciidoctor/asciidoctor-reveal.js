@@ -1,6 +1,7 @@
-// Parity test: every presentation in ../../examples is converted with the native
-// JavaScript converter and compared byte-for-byte against the Ruby converter
-// (the reference implementation, invoked through `bundle exec ruby`).
+// Parity test: every presentation under the two example corpora
+// (test/fixtures-extra/revealjs-examples/ and release-notes/) is converted
+// with the native JavaScript converter and compared byte-for-byte against the
+// Ruby converter (the reference implementation, invoked through `bundle exec ruby`).
 //
 // Run with: node --test js/test/   (Node >= 20, Ruby/bundler available)
 //
@@ -18,7 +19,7 @@ import { convertFile } from 'asciidoctor'
 import { register } from '../src/index.js'
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
-const examplesDir = join(repoRoot, 'examples')
+const examplesDirs = ['test/fixtures-extra/revealjs-examples', 'release-notes']
 const REVEALJSDIR = 'node_modules/reveal.js'
 
 // Presentations whose output cannot match the Ruby converter byte-for-byte. These
@@ -46,20 +47,24 @@ function rubyConvert (file) {
 }
 
 const haveRuby = rubyAvailable()
-const files = readdirSync(examplesDir).filter((f) => f.endsWith('.adoc')).sort()
 
-for (const filename of files) {
-  const reason = SKIP[filename] ?? (haveRuby ? null : 'Ruby/bundler is not available for the reference output')
-  test(`examples/${filename} matches the Ruby converter`, { skip: reason ?? false }, async () => {
-    const file = join(examplesDir, filename)
-    const expected = rubyConvert(file)
-    const actual = await convertFile(file, {
-      safe: 'safe',
-      backend: 'revealjs',
-      standalone: true,
-      to_file: false,
-      attributes: { revealjsdir: REVEALJSDIR }
+for (const examplesDir of examplesDirs) {
+  const absoluteDir = join(repoRoot, examplesDir)
+  const files = readdirSync(absoluteDir).filter((f) => f.endsWith('.adoc')).sort()
+
+  for (const filename of files) {
+    const reason = SKIP[filename] ?? (haveRuby ? null : 'Ruby/bundler is not available for the reference output')
+    test(`${examplesDir}/${filename} matches the Ruby converter`, { skip: reason ?? false }, async () => {
+      const file = join(absoluteDir, filename)
+      const expected = rubyConvert(file)
+      const actual = await convertFile(file, {
+        safe: 'safe',
+        backend: 'revealjs',
+        standalone: true,
+        to_file: false,
+        attributes: { revealjsdir: REVEALJSDIR }
+      })
+      assert.equal(actual, expected)
     })
-    assert.equal(actual, expected)
-  })
+  }
 }

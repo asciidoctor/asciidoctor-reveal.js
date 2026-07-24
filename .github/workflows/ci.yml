@@ -62,6 +62,8 @@ jobs:
         run: bundle exec rake ${{ matrix.test_task }}
       - name: Run examples:convert
         run: bundle exec rake examples:convert
+      - name: Run release_notes:convert
+        run: bundle exec rake release_notes:convert
   build_js:
     strategy:
       fail-fast: false
