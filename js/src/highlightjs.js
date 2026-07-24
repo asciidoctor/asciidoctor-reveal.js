@@ -66,11 +66,10 @@ export default class HighlightJsAdapter extends SyntaxHighlighterBase {
 <script src="${baseUrl}/highlight.min.js"></script>
 ${languages}
 <script>
-${HIGHLIGHT_PLUGIN_SOURCE}
 hljs.configure({
   ignoreUnescapedHTML: true,
 });
-hljs.highlightAll();
+${HIGHLIGHT_PLUGIN_SOURCE}
 </script>`
   }
 }

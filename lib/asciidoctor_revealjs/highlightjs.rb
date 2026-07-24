@@ -65,11 +65,10 @@ module Asciidoctor
     end.join
   end}
 <script>
-#{HIGHLIGHT_PLUGIN_SOURCE}
 hljs.configure({
   ignoreUnescapedHTML: true,
 });
-hljs.highlightAll();
+#{HIGHLIGHT_PLUGIN_SOURCE}
 </script>)
         end
 

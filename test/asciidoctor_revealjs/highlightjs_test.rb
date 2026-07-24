@@ -101,6 +101,36 @@ module Asciidoctor
         assert_includes html, 'languages/ruby.min.js'
         assert_includes html, 'languages/yaml.min.js'
       end
+
+      def test_docinfo_configures_hljs_before_registering_the_reveal_js_plugin
+        html = convert 'no code blocks here'
+
+        # The reveal.js `highlight` plugin highlights every code block as soon as
+        # it registers itself (Reveal.initialize() is already running by the time
+        # this docinfo footer script runs, so late plugin registration triggers
+        # highlighting immediately). hljs.configure({ ignoreUnescapedHTML: true })
+        # must therefore run before Reveal.registerPlugin('highlight', ...), not
+        # after: configuring hljs only after the plugin already highlighted every
+        # block (the previous order) corrupts the line-numbers/highlight-lines
+        # markup on every subsequent highlight pass, showing up as duplicated
+        # nested <span> wrappers and washed-out/ungraded syntax colors (#525).
+        configure_index = html.index('hljs.configure(')
+        register_plugin_index = html.index("Reveal.registerPlugin( 'highlight', Plugin )")
+
+        refute_nil configure_index
+        refute_nil register_plugin_index
+        assert_operator configure_index, :<, register_plugin_index
+      end
+
+      def test_docinfo_does_not_call_hljs_highlight_all
+        html = convert 'no code blocks here'
+
+        # hljs.highlightAll() is redundant: the registered reveal.js `highlight`
+        # plugin already highlights every "pre code" block itself
+        # (highlightOnLoad defaults to true), so calling it a second time here
+        # only adds confusion (see #525).
+        refute_includes html, 'hljs.highlightAll()'
+      end
     end
   end
 end
