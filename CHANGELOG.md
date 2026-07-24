@@ -15,6 +15,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ### Bug Fixes
 
+  * Stop dropping arbitrary `data-*` attributes set on a section or the title slide (Ruby and JS converters); previously only a fixed allowlist of `data-*` attributes (`data-background-*`, `data-transition`, `data-state`, `data-auto-animate-*`, ...) was rendered on the generated `<section>` element, which prevented using reveal.js plugins that rely on their own custom `data-*` attributes (#541)
   * Resync the embedded highlight.js plugin (`data/highlight-plugin.js`) with reveal.js 6.0.1; it was still the 4.1.2 version, which threw a `ReferenceError` (undefined `Plugin`) whenever a code block had more than one highlight step
   * Remove the dead `convert_stretch_nested_elements` method in the Ruby converter, which called a non-existent `RevealJsOptions.stretch_nested_elements_script` method; it was never dispatched (no node has the `stretch_nested_elements` node name), so the bug was latent
   * Fix the `asciidoctor-revealjs` Ruby CLI, which crashed with `LoadError: cannot load such file -- asciidoctor-revealjs` on every invocation; it required the hyphenated `asciidoctor-revealjs` instead of the actual `asciidoctor_revealjs` file/gem name

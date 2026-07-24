@@ -6,6 +6,7 @@
 :source-highlighter: highlight.js
 :revealjs_hash: true
 :experimental:
+:data-custom-attribute: enabled
 
 == Reference
 
@@ -243,3 +244,9 @@ Let's put some [#bookmark-b.concept.word]_emphasis_.
 ****
 Sidebars are used to visually separate auxiliary bits of content that supplement the main text.
 ****
+
+[data-my-plugin=enabled,data-foo=bar]
+== Section with custom data attributes
+
+Arbitrary `data-*` attributes set directly on a section are preserved on the
+generated `<section>` element, e.g. for third-party reveal.js plugins.
