@@ -1,0 +1,10 @@
+// .notitle-document
+// The document-level :notitle: attribute should hide the title slide entirely
+// :include: //div[@class="slides"]
+// :header_footer:
+= This Title Should Not Be Shown
+:notitle:
+
+== Slide one
+
+Content
