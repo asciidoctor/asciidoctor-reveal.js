@@ -490,8 +490,8 @@ export default class RevealJsConverter extends ConverterBase {
         markerChecked = '<input type="checkbox" data-item-complete="1" checked>'
         markerUnchecked = '<input type="checkbox" data-item-complete="0">'
       } else if (node.getDocument().hasAttribute('icons', 'font')) {
-        markerChecked = '<i class="icon-check"></i>'
-        markerUnchecked = '<i class="icon-check-empty"></i>'
+        markerChecked = '<i class="fa fa-check-square-o"></i>'
+        markerUnchecked = '<i class="fa fa-square-o"></i>'
       } else {
         // could use &#9745 (checked ballot) and &#9744 (ballot) w/o font instead
         markerChecked = '<input type="checkbox" data-item-complete="1" checked disabled>'

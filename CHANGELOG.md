@@ -16,6 +16,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 ### Bug Fixes
 
   * Honor the `:notitle:` document attribute (Ruby and JS converters); `convert_document` always rendered the title slide whenever the document had a header, regardless of `:notitle:` — every other title-related check (`[%notitle]` on a section, the embedded converter's own `<h1>`) already respected it, only the title slide dispatch didn't (#535)
+  * Fix checklist checkboxes being invisible when `:icons: font` is set (Ruby and JS converters); the checked/unchecked markers used the Font Awesome 3 class names (`icon-check`/`icon-check-empty`), which don't exist in Font Awesome 4/5/6 — replaced with the same `fa fa-check-square-o`/`fa fa-square-o` classes Asciidoctor's own html5 converter uses (#526)
   * Resync the embedded highlight.js plugin (`data/highlight-plugin.js`) with reveal.js 6.0.1; it was still the 4.1.2 version, which threw a `ReferenceError` (undefined `Plugin`) whenever a code block had more than one highlight step
   * Remove the dead `convert_stretch_nested_elements` method in the Ruby converter, which called a non-existent `RevealJsOptions.stretch_nested_elements_script` method; it was never dispatched (no node has the `stretch_nested_elements` node name), so the bug was latent
   * Fix the `asciidoctor-revealjs` Ruby CLI, which crashed with `LoadError: cannot load such file -- asciidoctor-revealjs` on every invocation; it required the hyphenated `asciidoctor-revealjs` instead of the actual `asciidoctor_revealjs` file/gem name

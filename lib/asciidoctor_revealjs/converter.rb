@@ -755,8 +755,8 @@ module Asciidoctor
             marker_checked = '<input type="checkbox" data-item-complete="1" checked>'
             marker_unchecked = '<input type="checkbox" data-item-complete="0">'
           elsif node.document.attr? :icons, 'font'
-            marker_checked = '<i class="icon-check"></i>'
-            marker_unchecked = '<i class="icon-check-empty"></i>'
+            marker_checked = '<i class="fa fa-check-square-o"></i>'
+            marker_unchecked = '<i class="fa fa-square-o"></i>'
           else
             # could use &#9745 (checked ballot) and &#9744 (ballot) w/o font instead
             marker_checked = '<input type="checkbox" data-item-complete="1" checked disabled>'
