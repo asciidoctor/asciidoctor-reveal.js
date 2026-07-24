@@ -85,6 +85,16 @@ function dataAttrs (nodeAttributes) {
   return result
 }
 
+// Merges arbitrary data- attributes from a node's attributes into a set of
+// already computed/known attributes, without letting the passthrough values
+// clobber the known ones (e.g. data-background-color computed from the
+// `background-color` shorthand attribute).
+function mergeKnownDataAttrs (known, nodeAttributes) {
+  const passthrough = dataAttrs(nodeAttributes)
+  for (const key of Object.keys(known)) delete passthrough[key]
+  return { ...known, ...passthrough }
+}
+
 // Whether the node should carry the reveal.js `fragment` class because it is
 // part of a step. Variant used by most block elements.
 function step (node) {
@@ -293,7 +303,7 @@ export default class RevealJsConverter extends ConverterBase {
   async convert_title_slide (node) {
     const bgImage = node.hasAttribute('title-slide-background-image') ? await node.imageUri(node.getAttribute('title-slide-background-image')) : null
     const bgVideo = node.hasAttribute('title-slide-background-video') ? node.mediaUri(node.getAttribute('title-slide-background-video')) : null
-    const attrs = attributes({
+    const attrs = attributes(mergeKnownDataAttrs({
       class: ['title', node.getRole()],
       'data-state': 'title',
       'data-transition': node.getAttribute('title-slide-transition'),
@@ -310,7 +320,7 @@ export default class RevealJsConverter extends ConverterBase {
       'data-background-repeat': node.getAttribute('title-slide-background-repeat'),
       'data-background-position': node.getAttribute('title-slide-background-position'),
       'data-background-transition': node.getAttribute('title-slide-background-transition')
-    })
+    }, node.getAttributes()))
     let buf = ''
     const titleObj = node.doctitle({ partition: true, use_fallback: true })
     if (titleObj.hasSubtitle()) {
@@ -382,7 +392,7 @@ export default class RevealJsConverter extends ConverterBase {
     }
 
     const section = async () => {
-      const attrs = attributes({
+      const attrs = attributes(mergeKnownDataAttrs({
         id: titleless ? null : node.getId(),
         class: node.getRoles(),
         'data-background-gradient': node.getAttribute('background-gradient'),
@@ -407,7 +417,7 @@ export default class RevealJsConverter extends ConverterBase {
         'data-auto-animate-duration': node.getAttribute('auto-animate-duration') || node.hasOption('auto-animate-duration'),
         'data-auto-animate-id': node.getAttribute('auto-animate-id'),
         'data-auto-animate-restart': node.hasAttribute('auto-animate-restart') || node.hasOption('auto-animate-restart')
-      })
+      }, node.getAttributes()))
       let inner = ''
       if (!hideTitle) inner += `<h2>${sectionTitle(node)}</h2>`
       if (parentSectionWithVerticalSlides) {

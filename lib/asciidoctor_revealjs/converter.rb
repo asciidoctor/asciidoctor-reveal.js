@@ -567,31 +567,31 @@ module Asciidoctor
 
         section = lambda do
           attrs = attributes({
-                               :id => (titleless ? nil : node.id),
-                               :class => node.roles,
-                               'data-background-gradient' => (node.attr 'background-gradient'),
-                               'data-transition' => (node.attr 'transition'),
-                               'data-transition-speed' => (node.attr 'transition-speed'),
-                               'data-background-color' => data_background_color,
-                               'data-background-image' => data_background_image,
-                               'data-background-size' => data_background_size || node.attr('background-size'),
-                               'data-background-repeat' => data_background_repeat || node.attr('background-repeat'),
-                               'data-background-transition' => data_background_transition || node.attr('background-transition'),
-                               'data-background-position' => data_background_position || node.attr('background-position'),
-                               'data-background-iframe' => (node.attr 'background-iframe'),
-                               'data-background-video' => data_background_video,
-                               'data-background-video-loop' => (node.attr? 'background-video-loop') || (node.option? 'loop'),
-                               'data-background-video-muted' => (node.attr? 'background-video-muted') || (node.option? 'muted'),
-                               'data-background-opacity' => (node.attr 'background-opacity'),
-                               'data-autoslide' => (node.attr 'autoslide'),
-                               'data-state' => (node.attr 'state'),
-                               'data-auto-animate' => (node.attr? 'auto-animate') || (node.option? 'auto-animate'),
-                               'data-auto-animate-easing' => (node.attr 'auto-animate-easing') || (node.option? 'auto-animate-easing'),
-                               'data-auto-animate-unmatched' => (node.attr 'auto-animate-unmatched') || (node.option? 'auto-animate-unmatched'),
-                               'data-auto-animate-duration' => (node.attr 'auto-animate-duration') || (node.option? 'auto-animate-duration'),
-                               'data-auto-animate-id' => (node.attr 'auto-animate-id'),
-                               'data-auto-animate-restart' => (node.attr? 'auto-animate-restart') || (node.option? 'auto-animate-restart')
-                             })
+            :id => (titleless ? nil : node.id),
+            :class => node.roles,
+            'data-background-gradient' => (node.attr 'background-gradient'),
+            'data-transition' => (node.attr 'transition'),
+            'data-transition-speed' => (node.attr 'transition-speed'),
+            'data-background-color' => data_background_color,
+            'data-background-image' => data_background_image,
+            'data-background-size' => data_background_size || node.attr('background-size'),
+            'data-background-repeat' => data_background_repeat || node.attr('background-repeat'),
+            'data-background-transition' => data_background_transition || node.attr('background-transition'),
+            'data-background-position' => data_background_position || node.attr('background-position'),
+            'data-background-iframe' => (node.attr 'background-iframe'),
+            'data-background-video' => data_background_video,
+            'data-background-video-loop' => (node.attr? 'background-video-loop') || (node.option? 'loop'),
+            'data-background-video-muted' => (node.attr? 'background-video-muted') || (node.option? 'muted'),
+            'data-background-opacity' => (node.attr 'background-opacity'),
+            'data-autoslide' => (node.attr 'autoslide'),
+            'data-state' => (node.attr 'state'),
+            'data-auto-animate' => (node.attr? 'auto-animate') || (node.option? 'auto-animate'),
+            'data-auto-animate-easing' => (node.attr 'auto-animate-easing') || (node.option? 'auto-animate-easing'),
+            'data-auto-animate-unmatched' => (node.attr 'auto-animate-unmatched') || (node.option? 'auto-animate-unmatched'),
+            'data-auto-animate-duration' => (node.attr 'auto-animate-duration') || (node.option? 'auto-animate-duration'),
+            'data-auto-animate-id' => (node.attr 'auto-animate-id'),
+            'data-auto-animate-restart' => (node.attr? 'auto-animate-restart') || (node.option? 'auto-animate-restart')
+          }.merge(data_attrs(node.attributes)) { |_key, known_value, _passthrough_value| known_value })
           inner = +''
           inner << %(<h2>#{section_title node}</h2>) unless hide_title
           if parent_section_with_vertical_slides
@@ -714,23 +714,23 @@ module Asciidoctor
         bg_image = node.attr?('title-slide-background-image') ? node.image_uri(node.attr('title-slide-background-image')) : nil
         bg_video = node.attr?('title-slide-background-video') ? node.media_uri(node.attr('title-slide-background-video')) : nil
         attrs = attributes({
-                             :class => ['title', node.role],
-                             'data-state' => 'title',
-                             'data-transition' => (node.attr 'title-slide-transition'),
-                             'data-transition-speed' => (node.attr 'title-slide-transition-speed'),
-                             'data-background' => (node.attr 'title-slide-background'),
-                             'data-background-size' => (node.attr 'title-slide-background-size'),
-                             'data-background-image' => bg_image,
-                             'data-background-video' => bg_video,
-                             'data-background-video-loop' => (node.attr 'title-slide-background-video-loop'),
-                             'data-background-video-muted' => (node.attr 'title-slide-background-video-muted'),
-                             'data-background-opacity' => (node.attr 'title-slide-background-opacity'),
-                             'data-background-iframe' => (node.attr 'title-slide-background-iframe'),
-                             'data-background-color' => (node.attr 'title-slide-background-color'),
-                             'data-background-repeat' => (node.attr 'title-slide-background-repeat'),
-                             'data-background-position' => (node.attr 'title-slide-background-position'),
-                             'data-background-transition' => (node.attr 'title-slide-background-transition')
-                           })
+          :class => ['title', node.role],
+          'data-state' => 'title',
+          'data-transition' => (node.attr 'title-slide-transition'),
+          'data-transition-speed' => (node.attr 'title-slide-transition-speed'),
+          'data-background' => (node.attr 'title-slide-background'),
+          'data-background-size' => (node.attr 'title-slide-background-size'),
+          'data-background-image' => bg_image,
+          'data-background-video' => bg_video,
+          'data-background-video-loop' => (node.attr 'title-slide-background-video-loop'),
+          'data-background-video-muted' => (node.attr 'title-slide-background-video-muted'),
+          'data-background-opacity' => (node.attr 'title-slide-background-opacity'),
+          'data-background-iframe' => (node.attr 'title-slide-background-iframe'),
+          'data-background-color' => (node.attr 'title-slide-background-color'),
+          'data-background-repeat' => (node.attr 'title-slide-background-repeat'),
+          'data-background-position' => (node.attr 'title-slide-background-position'),
+          'data-background-transition' => (node.attr 'title-slide-background-transition')
+        }.merge(data_attrs(node.attributes)) { |_key, known_value, _passthrough_value| known_value })
         buf = +''
         buf << if (title_obj = node.doctitle partition: true, use_fallback: true).subtitle?
                  %(<h1>#{slice_text node, title_obj.title, (header_slice = node.header.option? :slice)}</h1><h2>#{slice_text node, title_obj.subtitle, header_slice}</h2>)
