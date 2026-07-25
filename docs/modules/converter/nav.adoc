@@ -12,6 +12,7 @@
 ** xref:syntax/roles.adoc[]
 ** xref:syntax/data-attributes.adoc[]
 ** xref:syntax/footnotes.adoc[]
+** xref:syntax/diagrams.adoc[]
 ** xref:custom-styles.adoc[]
 ** xref:docinfo.adoc[]
 * Configure reveal.js

@@ -32,6 +32,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ### Documentation
 
+  * Document how to generate diagrams (PlantUML, Mermaid, Graphviz, ...) with the `asciidoctor-kroki` extension, for both Ruby and JavaScript; no reveal.js-specific setup needed, it produces a regular image (#366)
   * Clarify the Custom Styles doc page: `:customcss:` (and its `asciidoctor-revealjs.css` fallback) names a file the converter only links to, it never generates it — you have to author it yourself; also add a `revealjs_theme` vs. `revealjs_customtheme` vs. `customcss` comparison (pick a built-in theme vs. replace the theme entirely vs. layer extra overrides on top) (#513, #133)
   * Fix the documented default highlight.js theme (`revealjs-options.adoc` said the built-in [path]_lib/css/zenburn.css_, a leftover from the pre-pure-Ruby Slim templates; the actual default is reveal.js's own bundled [path]_dist/plugin/highlight/monokai.css_)
   * Fix two dead links to example presentations (`revealjs-plugins.adoc`'s doc page pointed at a file that never existed at that path; the roles page had the same stale pattern) by linking every example a doc page cites through an Antora `attachment$` resource (`docs/modules/converter/attachments/`, symlinked to the actual file under `test/fixtures/standalone/`) instead of a hand-typed `examples/` path or GitHub blob URL

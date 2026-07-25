@@ -1,0 +1,58 @@
+= Diagrams
+
+You can generate diagrams (PlantUML, Mermaid, Graphviz, and {url-kroki}[many others^]) directly from AsciiDoc source using {url-kroki-extension}[the Kroki extension for Asciidoctor^].
+It's a separate package, not bundled with this converter, but no reveal.js-specific setup is needed — it produces a regular image, which this converter already knows how to render (including xref:layout.adoc[stretch] and xref:background.adoc[background image] handling).
+
+== Ruby
+
+Install the `asciidoctor-kroki` gem, then require it alongside this converter:
+
+[source,console]
+----
+$ gem install asciidoctor-kroki
+----
+
+[source,console]
+----
+$ asciidoctor-revealjs -r asciidoctor-kroki presentation.adoc
+----
+
+Requiring the gem registers the extension globally, so any supported diagram type is available without further setup:
+
+[source,asciidoc]
+----
+== Sequence Diagram
+
+[plantuml,format=svg]
+....
+Alice -> Bob: Hello
+Bob -> Alice: Hi
+....
+----
+
+== JavaScript
+
+Install the `asciidoctor-kroki` npm package, then register it before converting:
+
+[source,console]
+----
+$ npm install asciidoctor-kroki
+----
+
+[source,js]
+----
+import { Extensions, convertFile } from 'asciidoctor'
+import kroki from 'asciidoctor-kroki'
+import { register } from '@asciidoctor/reveal.js'
+
+register()
+
+const registry = Extensions.create() // <.>
+kroki.register(registry)
+
+await convertFile('presentation.adoc', { backend: 'revealjs', extension_registry: registry }) // <.>
+----
+<.> Create a registry instance.
+<.> Pass it explicitly as `extension_registry` to the conversion call.
+
+Read {url-kroki-extension}[the Kroki extension documentation^] for the full list of supported diagram types and configuration options (e.g. pointing at a self-hosted Kroki server instead of the public `kroki.io` instance).
