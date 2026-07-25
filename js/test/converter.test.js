@@ -54,3 +54,17 @@ test('configures hljs before registering the reveal.js highlight plugin', async 
   assert.ok(configureIndex < registerPluginIndex, 'hljs.configure() must run before the plugin registers itself')
   assert.ok(!result.includes('hljs.highlightAll()'), 'hljs.highlightAll() is redundant, the reveal.js plugin already highlights every block')
 })
+
+test('html5 backend gets the plain built-in highlightjs behavior', async () => {
+  // Registering this adapter for 'highlightjs'/'highlight.js' overrides the built-in
+  // highlight.js syntax highlighter for every backend, not just revealjs - the
+  // SyntaxHighlighter registry has no notion of "per backend". Requiring this
+  // package must not change how any other backend renders source blocks (#489).
+  const source = '[source,ruby]\n----\nputs \'hi\'\n----'
+  const result = await convert(source, {
+    safe: 'safe', backend: 'html5', standalone: true, attributes: { 'source-highlighter': 'highlightjs' }
+  })
+
+  assert.ok(!result.includes('data-noescape'))
+  assert.ok(result.includes('<pre class="highlightjs highlight"><code class="language-ruby hljs" data-lang="ruby">'))
+})

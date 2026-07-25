@@ -131,6 +131,25 @@ module Asciidoctor
         # only adds confusion (see #525).
         refute_includes html, 'hljs.highlightAll()'
       end
+
+      def test_html5_backend_gets_the_plain_built_in_highlightjs_behavior
+        # Registering this adapter for 'highlightjs'/'highlight.js' overrides the
+        # built-in highlight.js syntax highlighter for every backend, not just
+        # revealjs - the SyntaxHighlighter registry has no notion of "per
+        # backend". Requiring this gem must not change how any other backend
+        # renders source blocks (see #489).
+        source = <<~ADOC
+          [source,ruby]
+          ----
+          puts 'hi'
+          ----
+        ADOC
+        with_lib = ::Asciidoctor.convert source, safe: :safe, backend: 'html5', header_footer: true,
+                                                 attributes: { 'source-highlighter' => 'highlightjs' }
+
+        refute_includes with_lib, 'data-noescape'
+        assert_includes with_lib, '<pre class="highlightjs highlight"><code class="language-ruby hljs" data-lang="ruby">'
+      end
     end
   end
 end

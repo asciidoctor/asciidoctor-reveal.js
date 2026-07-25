@@ -12,9 +12,16 @@ module Asciidoctor
         # We are using unescaped HTML in source blocks for callout.
         HIGHLIGHT_JS_VERSION = '10.7.3'
 
-        def initialize(*args)
+        # Registering under the 'highlightjs'/'highlight.js' name overrides the built-in
+        # highlight.js syntax highlighter for every backend, not just revealjs - the
+        # SyntaxHighlighter registry has no notion of "per backend". Delegate to the
+        # built-in adapter for any other backend, so this converter's reveal.js-specific
+        # markup (data-line-numbers, data-noescape, the reveal.js highlight plugin
+        # docinfo) only shows up when actually converting to revealjs. See #489.
+        def initialize(name, backend = 'html5', opts = {})
           super
           @name = @pre_class = 'highlightjs'
+          @delegate = ::Asciidoctor::SyntaxHighlighter::HighlightJsAdapter.new(name, backend, opts) unless %w[revealjs reveal.js].include?(backend)
         end
 
         # Convert between highlight notation formats
@@ -29,6 +36,8 @@ module Asciidoctor
         end
 
         def format(node, lang, opts)
+          return @delegate.format(node, lang, opts) if @delegate
+
           super(node, lang, (opts.merge transform: proc { |pre, code|
             code['class'] = %(language-#{lang || 'none'} hljs)
             code['data-noescape'] = true
@@ -46,10 +55,14 @@ module Asciidoctor
         end
 
         def docinfo?(location)
+          return @delegate.docinfo?(location) if @delegate
+
           location == :footer
         end
 
-        def docinfo(_location, doc, opts)
+        def docinfo(location, doc, opts)
+          return @delegate.docinfo(location, doc, opts) if @delegate
+
           revealjsdir = (doc.attr :revealjsdir, 'reveal.js')
           theme_href = if doc.attr? 'highlightjs-theme'
                          doc.attr 'highlightjs-theme'
