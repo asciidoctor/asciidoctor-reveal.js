@@ -12,6 +12,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Reimplement the converter in pure Ruby (drop the `asciidoctor-templates-compiler` Slim templates)
   * Port the converter to native Asciidoctor.js 4.0 (Node 20+, async convert handlers, validated byte-for-byte against the Ruby converter)
   * Update Asciidoctor to 4.0.0-alpha.6 and drop the workarounds that are no longer needed
+  * Style unstyled lists (`[unstyled]`/`[none]`/`[no-bullet]`/`[unnumbered]`) the same way `asciidoctor-default.css` does (no bullet, no left margin); the converter already emitted `<ul class="unstyled">` for these correctly, but nothing in the bundled stylesheet gave that class any effect (#77)
 
 ### Bug Fixes
 

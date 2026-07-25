@@ -33,6 +33,23 @@ module Asciidoctor
 
         refute_includes html, 'My Title'
       end
+
+      def test_unstyled_list_gets_the_asciidoctor_default_no_bullet_css
+        html = ::Asciidoctor.convert <<~ADOC, safe: :safe, backend: 'revealjs', header_footer: true
+          = Title
+
+          == Slide
+
+          [unstyled]
+          * one
+          * two
+        ADOC
+
+        assert_includes html, '<ul class="unstyled">'
+        assert_includes html, 'ul.unstyled, ol.unstyled {
+  margin-left: 0
+}'
+      end
     end
   end
 end

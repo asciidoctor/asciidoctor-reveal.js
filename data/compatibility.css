@@ -263,6 +263,20 @@ td.hdlist1 {
   padding: .25em 0
 }
 
+/* Unstyled lists (e.g. [unstyled], [none], [no-bullet]) — matches the
+ * asciidoctor-default.css convention (see #77) */
+ul.checklist, ul.none, ol.none, ul.no-bullet, ol.no-bullet, ol.unnumbered, ul.unstyled, ol.unstyled {
+  list-style-type: none
+}
+
+ul.no-bullet, ol.no-bullet, ol.unnumbered {
+  margin-left: .625em
+}
+
+ul.unstyled, ol.unstyled {
+  margin-left: 0
+}
+
 /* Override Asciidoctor CSS that causes issues with reveal.js features */
 .reveal .hljs table {
   border: 0
