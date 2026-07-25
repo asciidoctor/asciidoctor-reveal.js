@@ -60,6 +60,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Raise the asciidoc-testkit invocations' `--timeout` from the CLI's 10s default to 30s: each fixture case spawns a fresh `bundle exec asciidoctor` process (no persistent worker), and on JRuby/TruffleRuby the JVM startup alone can take several seconds — `standalone/source-rouge` (which also loads the `rouge` gem) was timing out on both in CI
   * Split `rake test` into `rake test:unit` (just the unit tests) plus the aggregate `rake test` (unit tests + the asciidoc-testkit corpus); CI now runs only `test:unit` on the JRuby/TruffleRuby legs, which turned a ~2 minute job into 10+ minutes there — those legs exist to catch Ruby-implementation compat bugs, not to re-validate fixture content, which the CRuby legs already do exhaustively
   * Add a `release_notes:{assets,convert,serve,publish}` rake namespace for `release-notes/` (renamed from `examples:*`/`examples:publish`), and repoint the remaining `examples:*` tasks, `tasks/examples.js` and the `.gitignore` build-artifact rules at `test/fixtures/standalone/`; factor the shared asset-copy/static-server logic used by both namespaces into `tasks/lib/rake_assets.rb`
+  * CI: run only `test:unit` (skipping the asciidoc-testkit corpus) and skip `examples:convert`/`release_notes:convert` on the `windows-latest` leg; process-spawn overhead on Windows made it by far the slowest job in the matrix, and both checks are already covered exhaustively by the Ubuntu/CRuby leg
 
 ## 5.2.0 (2024-02-12)
 
