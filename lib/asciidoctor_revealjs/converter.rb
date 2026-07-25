@@ -468,6 +468,8 @@ module Asciidoctor
         slevel = section_level node.sections.first
         buf = +%(<ol class="sectlevel#{slevel}">)
         node.sections.each do |sec|
+          next if sec.title == '!'
+
           buf << %(<li><a href="##{sec.id}">#{section_title sec}</a>)
           if (sec.level < toclevels) && (child_toc = convert(sec, 'outline'))
             buf << child_toc.to_s

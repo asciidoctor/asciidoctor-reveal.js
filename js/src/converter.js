@@ -866,6 +866,8 @@ export default class RevealJsConverter extends ConverterBase {
     const slevel = sectionLevel(node.getSections()[0])
     let buf = `<ol class="sectlevel${slevel}">`
     for (const sec of node.getSections()) {
+      if (sec.getTitle() === '!') continue
+
       buf += `<li><a href="#${sec.getId()}">${sectionTitle(sec)}</a>`
       let childToc
       if (sec.getLevel() < toclevels && (childToc = this.convert(sec, 'outline'))) {

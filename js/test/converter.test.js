@@ -68,3 +68,28 @@ test('html5 backend gets the plain built-in highlightjs behavior', async () => {
   assert.ok(!result.includes('data-noescape'))
   assert.ok(result.includes('<pre class="highlightjs highlight"><code class="language-ruby hljs" data-lang="ruby">'))
 })
+
+test('toc omits titleless slides', async () => {
+  const content = `= Example
+
+== !
+toc::[]
+
+== Slide 1
+
+content
+
+== Slide 2
+
+content
+
+=== Sub slide
+
+nested`
+
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs', standalone: false })
+
+  assert.ok(!result.includes('>!<'))
+  assert.ok(result.includes('<li><a href="#_slide_1">Slide 1</a></li>'))
+  assert.ok(result.includes('<li><a href="#_sub_slide">Sub slide</a></li>'))
+})

@@ -50,6 +50,31 @@ module Asciidoctor
   margin-left: 0
 }'
       end
+
+      def test_toc_omits_titleless_slides
+        html = convert <<~ADOC
+          = Example
+
+          == !
+          toc::[]
+
+          == Slide 1
+
+          content
+
+          == Slide 2
+
+          content
+
+          === Sub slide
+
+          nested
+        ADOC
+
+        refute_includes html, '>!<'
+        assert_includes html, '<li><a href="#_slide_1">Slide 1</a></li>'
+        assert_includes html, '<li><a href="#_sub_slide">Sub slide</a></li>'
+      end
     end
   end
 end
