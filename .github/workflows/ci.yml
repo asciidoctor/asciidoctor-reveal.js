@@ -32,9 +32,16 @@ jobs:
           - os: macos-latest
             ruby: '3.4'
             test_task: test
+          # Windows runs unit tests only (not the asciidoc-testkit corpus,
+          # nor examples/release-notes conversion): the same ~300 sequential
+          # `bundle exec` spawns that make the JRuby/TruffleRuby legs slow
+          # are even slower on Windows's process-spawn overhead, and this
+          # leg exists to catch Windows-specific path/line-ending bugs, not
+          # to re-validate fixture content already covered exhaustively by
+          # the Ubuntu/CRuby leg.
           - os: windows-latest
             ruby: '3.4'
-            test_task: test
+            test_task: test:unit
     runs-on: ${{ matrix.os }}
     env:
       JRUBY_OPTS: '-J-XX:+TieredCompilation -J-XX:TieredStopAtLevel=1 -J-Xss2m -Xcompile.invokedynamic=false'
@@ -61,8 +68,10 @@ jobs:
       - name: Run tests
         run: bundle exec rake ${{ matrix.test_task }}
       - name: Run examples:convert
+        if: matrix.os != 'windows-latest'
         run: bundle exec rake examples:convert
       - name: Run release_notes:convert
+        if: matrix.os != 'windows-latest'
         run: bundle exec rake release_notes:convert
       # JS/Ruby parity, checked once (OS-independent Node.js code) on the
       # primary Linux/CRuby leg, which already has both toolchains installed.
