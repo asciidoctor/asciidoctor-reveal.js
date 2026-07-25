@@ -719,6 +719,7 @@ module Asciidoctor
           'data-transition' => (node.attr 'title-slide-transition'),
           'data-transition-speed' => (node.attr 'title-slide-transition-speed'),
           'data-background' => (node.attr 'title-slide-background'),
+          'data-background-gradient' => (node.attr 'title-slide-background-gradient'),
           'data-background-size' => (node.attr 'title-slide-background-size'),
           'data-background-image' => bg_image,
           'data-background-video' => bg_video,

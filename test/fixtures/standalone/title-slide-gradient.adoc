@@ -1,0 +1,10 @@
+// .gradient
+// Use of the title-slide-background-gradient feature of reveal.js
+// :include: //div[@class="slides"]
+// :header_footer:
+= EPIC TITLE
+:title-slide-background-gradient: linear-gradient(to bottom, #283b95, #17b2c3)
+
+== Next slide
+
+Content

@@ -309,6 +309,7 @@ export default class RevealJsConverter extends ConverterBase {
       'data-transition': node.getAttribute('title-slide-transition'),
       'data-transition-speed': node.getAttribute('title-slide-transition-speed'),
       'data-background': node.getAttribute('title-slide-background'),
+      'data-background-gradient': node.getAttribute('title-slide-background-gradient'),
       'data-background-size': node.getAttribute('title-slide-background-size'),
       'data-background-image': bgImage,
       'data-background-video': bgVideo,
