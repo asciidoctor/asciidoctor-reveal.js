@@ -1,7 +1,4 @@
-// .revealjs-plugins
 // Use docinfo to load third party plugins
-// :include: //body/script | //div[@class="slides"]
-// :header_footer:
 = Custom Plugins
 Author
 :docinfo: private

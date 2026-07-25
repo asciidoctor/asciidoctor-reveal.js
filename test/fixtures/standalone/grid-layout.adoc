@@ -1,7 +1,4 @@
-// .grid-layout
 // Testing our columns roles
-// :include: //div[@class="slides"]
-// :header_footer:
 = Grid Layout
 :docinfo: private
 :source-highlighter: highlight.js

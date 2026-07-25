@@ -1,7 +1,4 @@
-// .source-highlightjs
 // Demonstration of source highlighting with highlight.js
-// :include: //div[@class="slides"]
-// :header_footer:
 = Source Code with Highlight.js
 :icons: font
 :source-highlighter: highlightjs

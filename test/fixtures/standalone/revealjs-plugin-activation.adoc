@@ -1,7 +1,4 @@
-// .revealjs-plugin-activation
 // Use of the revealjs_plugin_... attributes to enable and disable some revealjs plugins
-// :include: //body/script | //div[@class="slides"]
-// :header_footer:
 = Default Plugins Changes
 Author
 :revealjs_plugin_zoom: disabled

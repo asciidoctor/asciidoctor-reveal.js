@@ -1,6 +1,3 @@
-// .text-formatting
-// :include: //div[@class="slides"]
-// :header_footer:
 = Text Formatting and Punctuation
 
 == Emphasis

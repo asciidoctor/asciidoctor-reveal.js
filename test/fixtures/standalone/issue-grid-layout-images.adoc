@@ -1,7 +1,4 @@
-// .issue-grid-layout-images
 // Images would get shrunk before we added a flex-basis auto exception when columns wrap
-// :include: //div[@class="slides"]
-// :header_footer:
 = Grid Wrapping Tests
 :imagesdir: images/
 // reveal.js config

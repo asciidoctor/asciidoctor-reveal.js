@@ -1,7 +1,4 @@
-// .history
 // Enables reveal.js' browser history feature
-// :include: //body/script | //div[@class="slides"]
-// :header_footer:
 = History
 :backend: revealjs
 :revealjs_history: true

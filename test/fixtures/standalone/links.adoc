@@ -1,7 +1,4 @@
-// .links
 // Demonstration of reveal.js and AsciiDoc links
-// :include: //div[@class="slides"]
-// :header_footer:
 = Links
 :imagesdir: images/
 

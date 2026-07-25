@@ -1,7 +1,4 @@
-// .source-callouts
 // Demonstration of source callouts
-// :include: //div[@class="slides"]
-// :header_footer:
 = Source code callouts
 :icons: font
 :source-highlighter: highlightjs

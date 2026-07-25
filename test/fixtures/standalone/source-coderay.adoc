@@ -1,7 +1,4 @@
-// .source-coderay
 // Demonstration of source highlighting with coderay
-// :include: //div[@class="slides"]
-// :header_footer:
 = Source Code with Coderay
 :icons: font
 :source-highlighter: coderay

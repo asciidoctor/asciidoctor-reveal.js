@@ -1,6 +1,3 @@
-// .admonitions-font
-// :include: //div[@class="slides"]
-// :header_footer:
 = Admonitions
 :backend: revealjs
 :icons: font

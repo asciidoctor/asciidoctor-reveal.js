@@ -1,7 +1,4 @@
-// .revealjs-background-color
 // Demonstration of background color features of both reveal.js and what can be done with CSS.
-// :include: //div[@class="slides"]
-// :header_footer:
 = Colorful Presentation
 :backend: revealjs
 :customcss: background-color.css

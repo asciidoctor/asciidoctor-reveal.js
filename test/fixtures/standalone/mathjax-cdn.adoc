@@ -1,7 +1,4 @@
-// .mathjax-cdn
 // Demonstration of the Mathjax :mathjaxdir: attribute in action
-// :include: //head/link | //div[@class="slides"]
-// :header_footer:
 = MathJax
 :stem:
 :revealjsdir: https://cdn.jsdelivr.net/npm/reveal.js@4.1.1

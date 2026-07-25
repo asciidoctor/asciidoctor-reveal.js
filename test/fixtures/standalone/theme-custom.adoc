@@ -1,7 +1,4 @@
-// .theme-custom
 // Use of the revealjs_theme attribute to load a different revealjs theme
-// :include: //link[@rel="stylesheet"] | //body/script | //div[@class="slides"]
-// :header_footer:
 = OWASP Theme
 :customcss: theme-custom.css
 // reveal.js config

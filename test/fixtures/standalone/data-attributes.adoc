@@ -1,5 +1,3 @@
-// :include: //div[@class="slides"]
-// :header_footer:
 = Data attributes
 :stem:
 :icons: font

@@ -1,6 +1,3 @@
-// .steps
-// :include: //div[@class="slides"]
-// :header_footer:
 = Steps
 :revealjs_hash: true
 :revealjs_autoSlide: 2000

@@ -1,7 +1,4 @@
-// .source-emphasis
 // Demonstration of highlighting portions of source
-// :include: //div[@class="slides"]
-// :header_footer:
 = Source Code Emphasis
 :icons: font
 :source-highlighter: highlightjs

@@ -1,7 +1,4 @@
-// .source-pygments
 // Demonstration of source highlighting with pygments
-// :include: //div[@class="slides"]
-// :header_footer:
 = Source Code with Pygments
 :icons: font
 :source-highlighter: pygments

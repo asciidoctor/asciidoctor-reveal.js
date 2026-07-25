@@ -1,7 +1,4 @@
-// .hash
 // Enables reveal.js hash feature which is good to reload in-progress slides and doesn't push to browser history.
-// :include: //body/script | //div[@class="slides"]
-// :header_footer:
 = No History
 :backend: revealjs
 :revealjs_hash: true

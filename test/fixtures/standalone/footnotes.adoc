@@ -1,6 +1,3 @@
-// .footnotes
-// :include: //div[@class="slides"]
-// :header_footer:
 = Presentation
 Author Name
 :revealjs_theme: simple

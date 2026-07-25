@@ -1,7 +1,4 @@
-// .customcss
 // Use of the customcss attribute to load external CSS
-// :include: //head//link[@rel="stylesheet"]
-// :header_footer:
 = Custom CSS
 Author
 :customcss: customcss.css

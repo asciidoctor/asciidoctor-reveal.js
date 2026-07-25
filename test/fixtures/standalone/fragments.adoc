@@ -1,7 +1,4 @@
-// .revealjs-features
 // This example tests some of reveal.js' fragments features
-// :include: //body/script | //div[@class="slides"]
-// :header_footer:
 = Fragments
 :revealjs_history: true
 :revealjs_fragmentInURL: true

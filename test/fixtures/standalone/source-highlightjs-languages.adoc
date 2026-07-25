@@ -1,7 +1,4 @@
-// .source-highlightjs-languages
 // Demonstration of source highlighting with highlight.js using additional languages
-// :include: //div[@class="slides"] | //body/script
-// :header_footer:
 = Scilab Code with Highlight.js: using additional languages
 :source-highlighter: highlight.js
 :highlightjs-languages: yaml, scilab

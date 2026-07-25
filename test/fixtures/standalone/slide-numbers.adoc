@@ -1,7 +1,4 @@
-// .revealjs-slide-numbers
 // Demonstration of reveal.js slide numbers parameters. Introduced for tests.
-// :include: //div[@class="slides"]
-// :header_footer:
 = Title
 :revealjs_slidenumber:
 // TODO this is not automagically stringified
