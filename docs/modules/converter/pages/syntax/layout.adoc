@@ -72,6 +72,29 @@ If you do not specify a size, each column will have an equal width, no matter th
 * **Crystal**
 ....
 
+=== Wrapping columns
+
+By default, columns share the available width equally and never wrap onto a new row — content that doesn't fit is shrunk to stay within its column instead.
+That's usually what you want for text content, even when columns hold an uneven amount of it.
+
+Add the `wrap` class when you'd rather have each column size itself to its content's natural width, wrapping onto a new row if the columns don't all fit on one — useful for content that shouldn't be shrunk, such as images:
+
+[source,asciidoc]
+....
+[.columns.wrap]
+== Wrapping Columns
+
+[.column]
+image::wide-image-1.png[]
+
+[.column]
+image::wide-image-2.png[]
+....
+
+CAUTION: `wrap` changes how *every* column in that row sizes itself, not just the one that needs it.
+Adding it to a row of text columns (rather than images) usually produces the opposite of the default, equal-width behavior: each column claims as much width as its own content wants, which can push columns onto separate rows well before the slide is actually full.
+If you just want equal-width columns whose content shrinks to fit, leave `wrap` off — that's the default.
+
 If you want to change the size of a single column, you can use one of the following classes:
 
 * `is-three-quarters`
