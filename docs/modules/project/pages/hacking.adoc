@@ -18,31 +18,12 @@ The {url-asciidoctor-abstractnode-attr}[Asciidoctor API documentation] describes
 
 == Manual Tests
 
-In order to help troubleshoot issues and test syntax improvements, some minimalist AsciiDoc test files are provided.
-You can render the tests files and then load them in a browser and check if `asciidoctor-revealjs` behaves as expected.
+In order to help troubleshoot issues and test syntax improvements, `test/fixtures/standalone/` holds minimalist, real AsciiDoc presentations.
+You can convert them and load the result in a browser to check if `asciidoctor-revealjs` behaves as expected; see the "Custom tests" section further down.
 
-=== Initial Setup
+ $ bundle exec rake examples:convert
 
-Make sure to have a working version of `asciidoctor-revealjs`.
-This is usually done with Bundler:
-
- $ bundle config --local github.https true
- $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
-
-Go to the `test/doctest` folder and install reveal.js:
-
- $ cd test/doctest/
- $ git clone https://github.com/hakimel/reveal.js.git
-
-=== Render tests into .html
-
-From the project's root directory:
-
- $ bundle exec rake doctest::generate FORCE=yes
-
-=== Open rendered files
-
-You can open the generated `.html` in `test/doctest/` in a Web browser.
+The converted `.html` files are written next to their `.adoc` source in `test/fixtures/standalone/`, ready to open in a browser.
 
 == Asciidoctor API's gotchas
 

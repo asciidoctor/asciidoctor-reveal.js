@@ -1,4 +1,5 @@
 * xref:showcase.adoc[]
 * Project
+** xref:contributing.adoc[]
 ** xref:hacking.adoc[]
 ** xref:license.adoc[]

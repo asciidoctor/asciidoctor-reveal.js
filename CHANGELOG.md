@@ -36,6 +36,13 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ### Documentation
 
+  * Document collapsible example blocks (`[%collapsible]`, `[%collapsible%open]`, custom summary via the block title); the feature (#484) shipped with no corresponding syntax doc page
+  * Fix `hacking.adoc`'s "Manual Tests" section, which described a `test/doctest` workflow (`rake doctest::generate`) removed when the project switched to asciidoc-testkit; it now points at `test/fixtures/standalone/` and `rake examples:convert`, matching the rest of the page
+  * Document the `revealjs_minscale`/`revealjs_maxscale` options and the opt-in `revealjs_plugin_search` plugin toggle; all three were already implemented (Ruby and JS converters) but missing from `revealjs-options.adoc`/`revealjs-plugins.adoc`
+  * Clarify `compatibility-matrix.adoc`: the `6.x` row already describes the in-development `main` branch, which may still report an older `-dev` version number before that release is tagged
+  * Document the `text-left`/`text-right`/`text-center`/`text-justify` and `small` roles on `roles.adoc`; both were already supported (`data/compatibility.css`, Ruby and JS converters) but missing from the "list of supported roles"
+  * List `contributing.adoc` in the site navigation (`project/nav.adoc`); the page existed and was linked from `README.adoc` but wasn't reachable from the docs nav menu
+  * Document the 4th docinfo insertion point on `docinfo.adoc`: the plain, non-backend-specific `docinfo-footer.html` (no `-revealjs` suffix), which the converter also reads and inserts right before `</body>` (Ruby and JS converters), in addition to the three `-revealjs.html`-suffixed locations already documented
   * Document the `wrap` columns modifier (when to use it — content that shouldn't be shrunk, like images — and why adding it to a row of ordinary text columns usually produces the *opposite* of the default equal-width behavior); it was never mentioned on the Layout doc page, only usable by finding it in an example (#456)
   * Clarify that every piece of content on a `[.columns]` slide, including any introductory text before the columns themselves, must be wrapped in a `[.column]` block; content left unwrapped becomes a flex item of the row alongside the columns instead of spanning above them, which was a recurring point of confusion (#494)
   * Document how to generate diagrams (PlantUML, Mermaid, Graphviz, ...) with the `asciidoctor-kroki` extension, for both Ruby and JavaScript; no reveal.js-specific setup needed, it produces a regular image (#366)

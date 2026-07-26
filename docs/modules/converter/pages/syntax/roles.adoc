@@ -33,3 +33,8 @@ See xref:attachment$images.adoc[images.adoc] for examples.
 Here is a list of supported roles:
 
 right:: Will apply a `float: right` style to the affected block
+text-left:: Left-aligns the affected block's text
+text-right:: Right-aligns the affected block's text
+text-center:: Center-aligns the affected block's text
+text-justify:: Justifies the affected block's text
+small:: On a paragraph, wraps its content in `<small>` instead of `<p>`

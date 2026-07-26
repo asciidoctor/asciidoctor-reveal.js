@@ -270,6 +270,14 @@ Defaults to *960*
 |<percentage value>
 | Factor of the display size that should remain empty around the content. Defaults to *0.1*
 
+|:revealjs_minscale:
+|<number>
+| Smallest possible scale to apply to content. Defaults to *0.2*
+
+|:revealjs_maxscale:
+|<number>
+| Largest possible scale to apply to content. Defaults to *1.5*
+
 |:revealjs_pdfseparatefragments:
 |*true*, false
 |In PDF export, put each fragment on a separate page.

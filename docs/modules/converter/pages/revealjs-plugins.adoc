@@ -19,6 +19,13 @@ For example, to disable all the default plugins set the following document attri
 :revealjs_plugin_notes: disabled
 ----
 
+reveal.js also ships a `dist/plugin/search.js` plugin, disabled by default.
+Set `revealjs_plugin_search` to `enabled` to turn it on:
+
+----
+:revealjs_plugin_search: enabled
+----
+
 == Additional plugins
 
 Additional reveal.js plugins can be installed and activated using xref:asciidoc:docinfo:index.adoc[docinfo files].

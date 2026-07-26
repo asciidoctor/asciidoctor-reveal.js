@@ -17,6 +17,9 @@ head:: `docinfo-revealjs.html`
 header:: `docinfo-header-revealjs.html`
 footer:: `docinfo-footer-revealjs.html`
 
+In addition to the `footer` location above, the converter also reads the plain, non-backend-specific `docinfo-footer.html` (no `-revealjs` suffix) if present, inserting it right before `</body>`, after the reveal.js initialization script.
+This is the same file Asciidoctor's other converters (e.g., `html5`) read for their own footer docinfo, so content placed there is shared across backends instead of being reveal.js-specific.
+
 For example, let's say you want to embed a tweet into your slide deck.
 You might inject the shared embedding JavaScript using a footer docinfo file:
 

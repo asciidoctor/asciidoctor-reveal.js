@@ -1,0 +1,41 @@
+= Collapsible Blocks
+
+An xref:asciidoc:blocks:example.adoc[example block] with the `collapsible` option is rendered as a native HTML `<details>`/`<summary>` disclosure widget instead of a regular example block.
+This lets you hide content behind a toggle that the audience can click to reveal.
+
+[source, asciidoc]
+----
+[%collapsible]
+====
+Hidden content.
+====
+----
+
+By default, the block starts collapsed and shows "Details" as its summary.
+
+== Custom summary
+
+Give the block a title to use it as the summary instead of "Details":
+
+[source, asciidoc]
+----
+[%collapsible]
+.Custom summary
+====
+Hidden content.
+====
+----
+
+== Start expanded
+
+Add the `open` option to start the block expanded:
+
+[source, asciidoc]
+----
+[%collapsible%open]
+====
+Visible content.
+====
+----
+
+NOTE: A plain example block (without `collapsible`) is unaffected by this feature and keeps rendering as a regular `.exampleblock` `<div>`.

@@ -1,5 +1,8 @@
 = Compatibility Matrix
 
+NOTE: This page documents released versions.
+The `main` branch (and this documentation) is currently developing what will become the `6.x` line below (native JavaScript, reveal.js 6, Asciidoctor.js 4) — a package installed straight from `main` before that release is tagged may still report an older `-dev` version number, but already follows the `6.x` row's compatibility.
+
 [#revealjs-compatibility-matrix]
 == reveal.js compatibility matrix
 
