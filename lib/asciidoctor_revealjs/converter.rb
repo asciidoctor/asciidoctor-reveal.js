@@ -674,10 +674,11 @@ module Asciidoctor
             node.columns.each { |col| buf << %(<col style="width:#{col.attr :colpcwidth}%">) }
           end
           buf << '</colgroup>'
+          rowstep = node.option? 'rowstep'
           %i[head foot body].reject { |tblsec| node.rows[tblsec].empty? }.each do |tblsec|
             buf << %(<t#{tblsec}>)
             node.rows[tblsec].each do |row|
-              buf << '<tr>'
+              buf << %(<tr#{attributes(class: ('fragment' if rowstep && tblsec == :body))}>)
               row.each do |cell|
                 # store reference of content in advance to resolve attribute assignments in cells
                 cell_content = if tblsec == :head

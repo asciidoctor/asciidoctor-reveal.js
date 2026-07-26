@@ -119,3 +119,30 @@ Some content
 
   assert.ok(result.includes('<div class="openblock custom"><div class="content">'))
 })
+
+test('table rowstep option applies fragment to each body row', async () => {
+  const content = `[%rowstep,cols="1,1",options=header]
+|===
+|Name |Category
+
+|Firefox |Browser
+|Chrome |Browser
+|===`
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs', standalone: false })
+
+  assert.ok(result.includes('<thead><tr><th'))
+  assert.ok(!result.includes('<thead><tr class="fragment">'))
+  assert.equal(result.split('<tr class="fragment">').length - 1, 2)
+})
+
+test('table without rowstep option has plain rows', async () => {
+  const content = `[cols="1,1",options=header]
+|===
+|Name |Category
+
+|Firefox |Browser
+|===`
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs', standalone: false })
+
+  assert.ok(!result.includes('class="fragment"'))
+})

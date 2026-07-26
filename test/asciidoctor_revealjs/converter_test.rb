@@ -123,6 +123,35 @@ module Asciidoctor
 
         assert_includes html, '<div class="openblock custom"><div class="content">'
       end
+
+      def test_table_rowstep_option_applies_fragment_to_each_body_row
+        html = convert <<~ADOC
+          [%rowstep,cols="1,1",options=header]
+          |===
+          |Name |Category
+
+          |Firefox |Browser
+          |Chrome |Browser
+          |===
+        ADOC
+
+        assert_includes html, '<thead><tr><th'
+        refute_includes html, '<thead><tr class="fragment">'
+        assert_equal 2, html.scan('<tr class="fragment">').length
+      end
+
+      def test_table_without_rowstep_option_has_plain_rows
+        html = convert <<~ADOC
+          [cols="1,1",options=header]
+          |===
+          |Name |Category
+
+          |Firefox |Browser
+          |===
+        ADOC
+
+        refute_includes html, 'class="fragment"'
+      end
     end
   end
 end

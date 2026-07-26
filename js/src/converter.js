@@ -956,12 +956,13 @@ export default class RevealJsConverter extends ConverterBase {
         for (const col of node.columns) buf += `<col style="width:${col.getAttribute('colpcwidth')}%">`
       }
       buf += '</colgroup>'
+      const rowstep = node.hasOption('rowstep')
       const sections = [['head', node.rows.head], ['foot', node.rows.foot], ['body', node.rows.body]]
       for (const [tblsec, rows] of sections) {
         if (!rows || rows.length === 0) continue
         buf += `<t${tblsec}>`
         for (const row of rows) {
-          buf += '<tr>'
+          buf += `<tr${attributes({ class: rowstep && tblsec === 'body' ? 'fragment' : null })}>`
           for (const cell of row) {
             let cellContent
             if (tblsec === 'head') cellContent = cell.text

@@ -136,6 +136,24 @@ The [.step.highlight-red]#greatest glory in living# lies not in never falling, b
 
 In the above example, we will highlight in red "greatest glory in living" and then "rising every time we fall".
 
+== Tables
+
+The `step` option on a table applies `fragment` to the whole `<table>`, revealing every row at once.
+Use the `rowstep` option instead to apply `fragment` to each body row individually, revealing the table one row at a time:
+
+[source, asciidoc]
+----
+[%rowstep,cols="1,1",options=header]
+|===
+|Name |Category
+
+|Firefox |Browser
+|Chrome |Browser
+|===
+----
+
+`rowstep` only affects body rows — the header row (if any) is always shown.
+
 == Limitations and workarounds
 
 === Description lists

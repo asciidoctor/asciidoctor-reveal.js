@@ -13,6 +13,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Port the converter to native Asciidoctor.js 4.0 (Node 20+, async convert handlers, validated byte-for-byte against the Ruby converter)
   * Update Asciidoctor to 4.0.0-alpha.6 and drop the workarounds that are no longer needed
   * Style unstyled lists (`[unstyled]`/`[none]`/`[no-bullet]`/`[unnumbered]`) the same way `asciidoctor-default.css` does (no bullet, no left margin); the converter already emitted `<ul class="unstyled">` for these correctly, but nothing in the bundled stylesheet gave that class any effect (#77)
+  * Add a `rowstep` option for tables (Ruby and JS converters); `step` already applied `fragment` to the whole `<table>` at once, but there was no way to reveal a table's body rows one at a time — `rowstep` applies `fragment` to each body row individually instead, leaving the header row always visible (#493)
 
 ### Bug Fixes
 
