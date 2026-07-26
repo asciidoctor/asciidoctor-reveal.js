@@ -34,6 +34,10 @@ Here is link:{url-revealjs-doc}/vertical-slides/[the relevant reveal.js document
 
 Inspired by {url-bulma}[Bulma^], Asciidoctor reveal.js supports columns layout out-of-the-box:
 
+CAUTION: Every piece of content on a `[.columns]` slide needs to be inside a `[.column]` block — including any introductory text before the columns themselves.
+Content that isn't wrapped in `[.column]` still becomes a flex item of the row (since the columns layout applies to the slide's content as a whole), so it ends up squeezed alongside the columns instead of spanning the full width above them.
+To get a full-width row above the columns, wrap that content in `[.column.is-full]` (see the size classes below) and add the `wrap` class (see xref:#_wrapping_columns[]) to the slide so the `is-full` row and the columns below it can each get their own row instead of competing for the same one.
+
 [source,asciidoc]
 ....
 [.columns]
