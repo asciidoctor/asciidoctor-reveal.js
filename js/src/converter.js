@@ -30,6 +30,10 @@ const STEM_EQNUMS_VALID_VALUES = [STEM_EQNUMS_NONE, STEM_EQNUMS_AMS, 'all']
 
 const MATHJAX_VERSION = '3.2.0'
 
+// reveal.js layout utility classes (https://revealjs.com/layout/) that style
+// their *direct* children, e.g. `.r-stack > *`. See convert_open.
+const REVEALJS_LAYOUT_ROLES = ['r-stack', 'r-hstack', 'r-vstack']
+
 // Asciidoctor core math delimiters (Asciidoctor::INLINE/BLOCK_MATH_DELIMITERS).
 const INLINE_MATH_DELIMITERS = { asciimath: ['\\$', '\\$'], latexmath: ['\\(', '\\)'] }
 const BLOCK_MATH_DELIMITERS = { asciimath: ['\\$', '\\$'], latexmath: ['\\[', '\\]'] }
@@ -855,7 +859,10 @@ export default class RevealJsConverter extends ConverterBase {
     const attrs = attributes({ id: node.getId(), class: ['openblock', node.getStyle() === 'open' ? null : node.getStyle(), node.getRole(), step(node) ? 'fragment' : null], ...dataAttrs(node.getAttributes()) })
     let buf = ''
     if (node.hasTitle()) buf += `<div class="title">${node.getTitle()}</div>`
-    buf += `<div class="content">${await node.content()}</div>`
+    // reveal.js's r-stack/r-hstack/r-vstack layout utilities style their *direct*
+    // children (e.g. `.r-stack > *` for absolute stacking); the usual .content
+    // wrapper would put a block's content one level too deep for them to apply.
+    buf += node.getRoles().some((role) => REVEALJS_LAYOUT_ROLES.includes(role)) ? (await node.content()) ?? '' : `<div class="content">${await node.content()}</div>`
     return `<div${attrs}>${buf}</div>`
   }
 

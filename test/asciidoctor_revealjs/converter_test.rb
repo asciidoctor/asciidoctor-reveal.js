@@ -95,6 +95,34 @@ module Asciidoctor
   text-align: right
 }'
       end
+
+      def test_r_stack_open_block_does_not_wrap_content_in_a_content_div
+        # reveal.js's .r-stack CSS targets *direct* children (`.r-stack > *`) to
+        # stack them on top of each other; the usual .content wrapper would put
+        # each image one level too deep for that selector to reach (#520).
+        html = convert <<~ADOC
+          [.r-stack]
+          --
+          image::before.png[]
+
+          image::after.png[]
+          --
+        ADOC
+
+        assert_includes html, '<div class="openblock r-stack"><div class="imageblock">'
+        refute_includes html, '<div class="openblock r-stack"><div class="content">'
+      end
+
+      def test_normal_open_block_still_gets_a_content_div
+        html = convert <<~ADOC
+          [.custom]
+          --
+          Some content
+          --
+        ADOC
+
+        assert_includes html, '<div class="openblock custom"><div class="content">'
+      end
     end
   end
 end

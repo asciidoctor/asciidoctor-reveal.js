@@ -93,3 +93,29 @@ nested`
   assert.ok(result.includes('<li><a href="#_slide_1">Slide 1</a></li>'))
   assert.ok(result.includes('<li><a href="#_sub_slide">Sub slide</a></li>'))
 })
+
+test('r-stack open block does not wrap content in a content div', async () => {
+  // reveal.js's .r-stack CSS targets *direct* children (`.r-stack > *`) to stack
+  // them on top of each other; the usual .content wrapper would put each image
+  // one level too deep for that selector to reach (#520).
+  const content = `[.r-stack]
+--
+image::before.png[]
+
+image::after.png[]
+--`
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs', standalone: false })
+
+  assert.ok(result.includes('<div class="openblock r-stack"><div class="imageblock">'))
+  assert.ok(!result.includes('<div class="openblock r-stack"><div class="content">'))
+})
+
+test('normal open block still gets a content div', async () => {
+  const content = `[.custom]
+--
+Some content
+--`
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs', standalone: false })
+
+  assert.ok(result.includes('<div class="openblock custom"><div class="content">'))
+})

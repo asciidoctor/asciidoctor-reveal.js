@@ -13,6 +13,37 @@ To add this class to an HTML element, you can assign a role to a block using the
 
 See link:{url-revealjs-doc}/layout/[reveal.js documentation on stretching elements].
 
+== Stacking elements
+
+reveal.js can also stack elements on top of each other with the `r-stack` class, and lay them out horizontally or vertically with `r-hstack`/`r-vstack` — handy for flipping through a sequence of images (e.g. a "before"/"after" pair) that occupy the same spot on the slide.
+Apply the class to an open block wrapping the elements to stack:
+
+[source,asciidoc]
+....
+[.r-stack]
+--
+image::before.png[]
+
+image::after.png[]
+--
+....
+
+Combine with the `step` option on each element (see xref:fragment.adoc[]) to flip from one to the next instead of showing them all stacked at once:
+
+[source,asciidoc]
+....
+[.r-stack]
+--
+[%step]
+image::before.png[]
+
+[%step]
+image::after.png[]
+--
+....
+
+See link:{url-revealjs-doc}/layout/[reveal.js documentation on stacking elements].
+
 == Vertical slides
 
 [source,asciidoc]

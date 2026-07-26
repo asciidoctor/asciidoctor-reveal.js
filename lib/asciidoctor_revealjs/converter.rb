@@ -24,6 +24,10 @@ module Asciidoctor
 
       MATHJAX_VERSION = '3.2.0'
 
+      # reveal.js layout utility classes (https://revealjs.com/layout/) that style
+      # their *direct* children, e.g. `.r-stack > *`. See convert_open.
+      REVEALJS_LAYOUT_ROLES = %w[r-stack r-hstack r-vstack].freeze
+
       # Footnotes
       module Footnotes
         module_function
@@ -456,7 +460,14 @@ module Asciidoctor
                                class: ['openblock', (node.style == 'open' ? nil : node.style), node.role, ('fragment' if step?(node))] }.merge(data_attrs(node.attributes)))
           buf = +''
           buf << %(<div class="title">#{node.title}</div>) if node.title?
-          buf << %(<div class="content">#{node.content}</div>)
+          # reveal.js's r-stack/r-hstack/r-vstack layout utilities style their *direct*
+          # children (e.g. `.r-stack > *` for absolute stacking); the usual .content
+          # wrapper would put a block's content one level too deep for them to apply.
+          buf << if (REVEALJS_LAYOUT_ROLES & node.roles).empty?
+                   %(<div class="content">#{node.content}</div>)
+                 else
+                   node.content.to_s
+                 end
           %(<div#{attrs}>#{buf}</div>)
         end
       end
