@@ -75,6 +75,26 @@ module Asciidoctor
         assert_includes html, '<li><a href="#_slide_1">Slide 1</a></li>'
         assert_includes html, '<li><a href="#_sub_slide">Sub slide</a></li>'
       end
+
+      def test_quoteblock_attribution_gets_the_asciidoctor_default_right_alignment_css
+        html = ::Asciidoctor.convert <<~ADOC, safe: :safe, backend: 'revealjs', header_footer: true
+          = Title
+
+          == Slide
+
+          [quote,Author]
+          ____
+          Quoted text.
+          ____
+        ADOC
+
+        assert_includes html, '<div class="attribution">'
+        assert_includes html, '.reveal .quoteblock .attribution {
+  margin-top: .75em;
+  margin-right: .5ex;
+  text-align: right
+}'
+      end
     end
   end
 end

@@ -277,6 +277,29 @@ ul.unstyled, ol.unstyled {
   margin-left: 0
 }
 
+/* Block quote/verse attribution — matches the asciidoctor-default.css
+ * convention. Needed because reveal.js's own core CSS sets
+ * `.reveal .slides { text-align: center }`, which otherwise centers the
+ * attribution (and leaves it visually identical to the quoted text) since
+ * this converter doesn't ship any quoteblock/verseblock CSS of its own
+ * (see #506) */
+.reveal .quoteblock .attribution, .reveal .verseblock .attribution {
+  font-size: .9375em;
+  font-style: italic
+}
+
+.reveal .quoteblock .attribution {
+  margin-top: .75em;
+  margin-right: .5ex;
+  text-align: right
+}
+
+.reveal .verseblock .attribution {
+  margin-top: 1.25rem;
+  margin-left: .5ex;
+  text-align: left
+}
+
 /* Override Asciidoctor CSS that causes issues with reveal.js features */
 .reveal .hljs table {
   border: 0
