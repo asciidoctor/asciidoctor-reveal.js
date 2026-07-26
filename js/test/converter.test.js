@@ -146,3 +146,45 @@ test('table without rowstep option has plain rows', async () => {
 
   assert.ok(!result.includes('class="fragment"'))
 })
+
+test('collapsible example block renders as a details element', async () => {
+  const content = `[%collapsible]
+====
+Hidden content.
+====`
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs', standalone: false })
+
+  assert.ok(result.includes('<details><summary class="title">Details</summary><div class="content">'))
+  assert.ok(!result.includes('exampleblock'))
+})
+
+test('collapsible example block uses its title as the summary', async () => {
+  const content = `[%collapsible]
+.Custom summary
+====
+Hidden content.
+====`
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs', standalone: false })
+
+  assert.ok(result.includes('<summary class="title">Custom summary</summary>'))
+})
+
+test('collapsible example block with open option starts expanded', async () => {
+  const content = `[%collapsible%open]
+====
+Visible content.
+====`
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs', standalone: false })
+
+  assert.ok(result.includes('<details open>'))
+})
+
+test('non-collapsible example block is unaffected', async () => {
+  const content = `====
+Regular content.
+====`
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs', standalone: false })
+
+  assert.ok(result.includes('<div class="exampleblock">'))
+  assert.ok(!result.includes('<details'))
+})

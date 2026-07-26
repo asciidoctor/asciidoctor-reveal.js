@@ -300,6 +300,54 @@ ul.unstyled, ol.unstyled {
   text-align: left
 }
 
+/* Collapsible blocks ([%collapsible]) — matches the asciidoctor-default.css
+ * convention; reveal.js ships no CSS for <details>/<summary> at all (see #484) */
+details {
+  margin-bottom: 1.25em;
+  margin-left: 1.25rem
+}
+
+details > summary {
+  cursor: pointer;
+  display: block;
+  position: relative;
+  line-height: 1.6;
+  margin-bottom: .625rem;
+  outline: none;
+  -webkit-tap-highlight-color: transparent
+}
+
+details > summary::-webkit-details-marker {
+  display: none
+}
+
+details > summary::before {
+  content: "";
+  border: solid transparent;
+  border-left: solid;
+  border-width: .3em 0 .3em .5em;
+  position: absolute;
+  top: .5em;
+  left: -1.25rem;
+  transform: translateX(15%)
+}
+
+details[open] > summary::before {
+  border: solid transparent;
+  border-top: solid;
+  border-width: .5em .3em 0;
+  transform: translateY(15%)
+}
+
+details > summary::after {
+  content: "";
+  width: 1.25rem;
+  height: 1em;
+  position: absolute;
+  top: .3em;
+  left: -1.25rem
+}
+
 /* Override Asciidoctor CSS that causes issues with reveal.js features */
 .reveal .hljs table {
   border: 0

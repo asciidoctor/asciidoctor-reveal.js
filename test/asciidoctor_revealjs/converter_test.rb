@@ -152,6 +152,52 @@ module Asciidoctor
 
         refute_includes html, 'class="fragment"'
       end
+
+      def test_collapsible_example_block_renders_as_a_details_element
+        html = convert <<~ADOC
+          [%collapsible]
+          ====
+          Hidden content.
+          ====
+        ADOC
+
+        assert_includes html, '<details><summary class="title">Details</summary><div class="content">'
+        refute_includes html, 'exampleblock'
+      end
+
+      def test_collapsible_example_block_uses_its_title_as_the_summary
+        html = convert <<~ADOC
+          [%collapsible]
+          .Custom summary
+          ====
+          Hidden content.
+          ====
+        ADOC
+
+        assert_includes html, '<summary class="title">Custom summary</summary>'
+      end
+
+      def test_collapsible_example_block_with_open_option_starts_expanded
+        html = convert <<~ADOC
+          [%collapsible%open]
+          ====
+          Visible content.
+          ====
+        ADOC
+
+        assert_includes html, '<details open>'
+      end
+
+      def test_non_collapsible_example_block_is_unaffected
+        html = convert <<~ADOC
+          ====
+          Regular content.
+          ====
+        ADOC
+
+        assert_includes html, '<div class="exampleblock">'
+        refute_includes html, '<details'
+      end
     end
   end
 end

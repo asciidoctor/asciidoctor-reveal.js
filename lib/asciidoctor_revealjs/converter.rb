@@ -254,6 +254,13 @@ module Asciidoctor
       end
 
       def convert_example(node, _opts = {})
+        if node.option? 'collapsible'
+          attrs = attributes({ id: node.id, class: [node.role, ('fragment' if step?(node))],
+                               open: (true if node.option? 'open') }.merge(data_attrs(node.attributes)))
+          summary = node.title? ? %(<summary class="title">#{node.title}</summary>) : '<summary class="title">Details</summary>'
+          return %(<details#{attrs}>#{summary}<div class="content">#{node.content}</div></details>)
+        end
+
         attrs = attributes({ id: node.id, class: ['exampleblock', node.role, ('fragment' if step?(node))] }.merge(data_attrs(node.attributes)))
         buf = +''
         buf << %(<div class="title">#{node.captioned_title}</div>) if node.title?

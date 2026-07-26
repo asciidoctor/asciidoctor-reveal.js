@@ -666,6 +666,12 @@ export default class RevealJsConverter extends ConverterBase {
   }
 
   async convert_example (node) {
+    if (node.hasOption('collapsible')) {
+      const attrs = attributes({ id: node.getId(), class: [node.getRole(), step(node) ? 'fragment' : null], open: node.hasOption('open') ? true : null, ...dataAttrs(node.getAttributes()) })
+      const summary = node.hasTitle() ? `<summary class="title">${node.getTitle()}</summary>` : '<summary class="title">Details</summary>'
+      return `<details${attrs}>${summary}<div class="content">${await node.content()}</div></details>`
+    }
+
     const attrs = attributes({ id: node.getId(), class: ['exampleblock', node.getRole(), step(node) ? 'fragment' : null], ...dataAttrs(node.getAttributes()) })
     let buf = ''
     if (node.hasTitle()) buf += `<div class="title">${node.getCaptionedTitle()}</div>`
