@@ -51,12 +51,12 @@
     "reveal.js": "6.0.1"
   },
   "peerDependencies": {
-    "asciidoctor": ">=4.0.0-alpha.6 <5.0.0"
+    "asciidoctor": ">=4.0.0 <5.0.0"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "6.7.2",
     "asciidoc-testkit-cli": "^0.1.2",
-    "asciidoctor": "^4.0.0-alpha.6",
+    "asciidoctor": ">=4.0.0 <5.0.0",
     "esbuild": "^0.28.0",
     "postject": "^1.0.0-alpha.6"
   },
