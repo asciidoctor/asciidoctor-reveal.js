@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: main
           fetch-depth: 0
@@ -72,7 +72,7 @@ jobs:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: refs/tags/v${{ inputs.version }}
       - uses: ruby/setup-ruby@v1
@@ -86,7 +86,7 @@ jobs:
     needs: publish_ruby
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: refs/tags/v${{ inputs.version }}
       - uses: actions/setup-node@v6
@@ -132,7 +132,7 @@ jobs:
             asset: asciidoctor-revealjs-win-amd64.exe
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: refs/tags/v${{ inputs.version }}
       - uses: actions/setup-node@v6
@@ -156,7 +156,7 @@ jobs:
     needs: [publish_js, build_binaries]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: refs/tags/v${{ inputs.version }}
       - uses: actions/setup-node@v6
