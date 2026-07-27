@@ -116,9 +116,9 @@ TIP: A complete, working example is available in xref:attachment$revealjs-plugin
 By default, docinfo files are searched for in the same folder as the document file.
 If you want to keep them anywhere else, set the docinfodir attribute to their location.
 
-Please read xref:asciidoc:docinfo:index.adoc#resolving[] if you want to learn more.
+Please read xref:asciidoc:docinfo:index.adoc#resolving[Locating docinfo files] if you want to learn more.
 ====
 
 Read https://revealjs.com/plugins/[the relevant reveal.js documentation] to understand more about reveal.js plugins.
-A {url-revealjs-gh}/wiki/Plugins,-Tools-and-Hardware[list of existing reveal.js plugins] is also maintained upstream.
+A https://github.com/hakimel/reveal.js/wiki/Plugins,-Tools-and-Hardware[list of existing reveal.js plugins] is also maintained upstream.
 
