@@ -16,19 +16,13 @@ Powered by https://revealjs.com[reveal.js] 6.0
 
 == Image lightbox
 
-Click the picture to open it in a full-screen lightbox icon:hand-pointer[set=far]
+Click the picture to open it in a full-screen lightbox icon:search-plus[set=fas]
 
 image::cute-cat-1.jpg[A cute cat,height="320px",data-preview-image="images/cute-cat-1.jpg"]
 
-== Fit the lightbox to the slide
-
-Use `data-preview-fit` to control how the preview is scaled.
-
-image::70s.jpg[Seventies vibe,height="320px",data-preview-image="images/70s.jpg",data-preview-fit="contain"]
-
 == Website preview
 
-Open a link in a full-screen iframe overlay icon:hand-pointer[set=far]
+Open a link in a full-screen iframe overlay icon:search-plus[set=fas]
 
 https://docs.asciidoctor.org/[Open the Asciidoctor docs,preview=true]
 
@@ -37,6 +31,28 @@ https://docs.asciidoctor.org/[Open the Asciidoctor docs,preview=true]
 Click the image to preview a website icon:hand-pointer[set=far]
 
 image::asciidoctor-logo.svg[AsciiDoc website,height="220px",data-preview-link="https://asciidoc.org/"]
+
+== Collapsible blocks
+
+Click to reveal hidden content icon:hand-pointer[set=far]
+
+[%collapsible]
+.Click to expand
+====
+Content hidden behind a toggle, rendered as a native `<details>`/`<summary>` widget.
+====
+
+== Reveal a table row by row
+
+Use `rowstep` to apply `fragment` to each body row individually
+
+[%rowstep,cols="1,1",options=header]
+|===
+|Name |Category
+
+|Firefox |Browser
+|Chrome |Browser
+|===
 
 [transition=fade,transition-speed=slow]
 == Learn More!
