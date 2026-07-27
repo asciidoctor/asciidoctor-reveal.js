@@ -613,6 +613,7 @@ module Asciidoctor
             'data-auto-animate-restart' => (node.attr? 'auto-animate-restart') || (node.option? 'auto-animate-restart')
           }.merge(data_attrs(node.attributes)) { |_key, known_value, _passthrough_value| known_value })
           inner = +''
+          inner << docinfo_content(node.document, '-revealjs.html', :'slide-header')
           inner << %(<h2>#{section_title node}</h2>) unless hide_title
           if parent_section_with_vertical_slides
             unless (blocks = node.blocks - vertical_slides).empty?
@@ -624,6 +625,7 @@ module Asciidoctor
             end
           end
           inner << footnotes.call
+          inner << docinfo_content(node.document, '-revealjs.html', :'slide-footer')
           buf = %(<section#{attrs}>#{inner}</section>)
           Footnotes.clear_slide_footnotes
           buf
@@ -881,15 +883,11 @@ module Asciidoctor
         slides = lambda do
           buf = +''
           unless node.noheader
-            unless (header_docinfo = node.docinfo :header, '-revealjs.html').empty?
-              buf << header_docinfo.to_s
-            end
+            buf << docinfo_content(node, '-revealjs.html', :'slides-header')
             buf << convert(node, 'title_slide') if node.header? && !node.notitle
           end
           buf << slides_content.to_s
-          unless (footer_docinfo = node.docinfo :footer, '-revealjs.html').empty?
-            buf << footer_docinfo.to_s
-          end
+          buf << docinfo_content(node, '-revealjs.html', :'slides-footer')
           buf
         end
 
@@ -949,19 +947,17 @@ module Asciidoctor
         if node.attr? :customcss
           buf << %(<link#{attributes(rel: 'stylesheet', href: ((customcss = node.attr :customcss).empty? ? 'asciidoctor-revealjs.css' : customcss))}>)
         end
-        unless (docinfo_head = node.docinfo :head, '-revealjs.html').empty?
-          buf << docinfo_head.to_s
-        end
-        buf << %(</head><body><div class="reveal"><div class="slides">)
+        buf << docinfo_content(node, '-revealjs.html', :head)
+        buf << %(</head><body>)
+        buf << docinfo_content(node, '-revealjs.html', :header, :'body-header')
+        buf << %(<div class="reveal"><div class="slides">)
         # Any section element inside of this container is displayed as a slide
         buf << slides.call
         buf << %(</div></div>)
         buf << Asciidoctor::Revealjs::RevealJsOptions.script(node, revealjsdir)
 
         buf << (syntax_hl.docinfo :footer, node, cdn_base_url: cdn_base, linkcss: linkcss, self_closing_tag_slash: '/').to_s if syntax_hl&.docinfo? :footer
-        unless (docinfo_content = (node.docinfo :footer, '.html')).empty?
-          buf << docinfo_content.to_s
-        end
+        buf << docinfo_content(node, '-revealjs.html', :footer, :'body-footer')
         buf << '</body></html>'
         buf
       end
@@ -1063,6 +1059,12 @@ module Asciidoctor
       # the content_model equals `:simple`.
       def resolve_content(node)
         node.content_model == :simple ? %(<p>#{node.content}</p>) : node.content
+      end
+
+      # Concatenates the docinfo content for one or more locations (e.g. an alias pair
+      # like :header and :'body-header'), all sharing the same suffix.
+      def docinfo_content(doc, suffix, *locations)
+        locations.reduce(+'') { |buf, location| buf << doc.docinfo(location, suffix).to_s }
       end
 
       # Copied from asciidoctor/lib/asciidoctor/converter/html5.rb (method is private)

@@ -5,6 +5,10 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## main (unreleased)
 
+### Breaking Changes
+
+  * Redefine docinfo `header`/`footer` to match every other Asciidoctor converter (first/last child of `<body>`) instead of first/last child of `.slides`; the previous meaning is still available under its own name, `slides-header`/`slides-footer`. Also fixes the unsuffixed, generic `docinfo-footer.html` leaking into `revealjs` output at the (now redefined) `footer` position — only the backend-suffixed `docinfo-footer-revealjs.html` is read there. Adds two entirely new per-slide locations, `slide-header`/`slide-footer`, injected into every slide (horizontal and vertical). See the [migration guide](https://docs.asciidoctor.org/reveal.js-converter/latest/converter/migrating-to-v6.html) and the [docinfo page](https://docs.asciidoctor.org/reveal.js-converter/latest/converter/docinfo.html) (#466, #510, #364, #489)
+
 ### Enhancements
 
   * Upgrade to reveal.js 6.0.1
@@ -42,7 +46,6 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Clarify `compatibility-matrix.adoc`: the `6.x` row already describes the in-development `main` branch, which may still report an older `-dev` version number before that release is tagged
   * Document the `text-left`/`text-right`/`text-center`/`text-justify` and `small` roles on `roles.adoc`; both were already supported (`data/compatibility.css`, Ruby and JS converters) but missing from the "list of supported roles"
   * List `contributing.adoc` in the site navigation (`project/nav.adoc`); the page existed and was linked from `README.adoc` but wasn't reachable from the docs nav menu
-  * Document the 4th docinfo insertion point on `docinfo.adoc`: the plain, non-backend-specific `docinfo-footer.html` (no `-revealjs` suffix), which the converter also reads and inserts right before `</body>` (Ruby and JS converters), in addition to the three `-revealjs.html`-suffixed locations already documented
   * Document the `wrap` columns modifier (when to use it — content that shouldn't be shrunk, like images — and why adding it to a row of ordinary text columns usually produces the *opposite* of the default equal-width behavior); it was never mentioned on the Layout doc page, only usable by finding it in an example (#456)
   * Clarify that every piece of content on a `[.columns]` slide, including any introductory text before the columns themselves, must be wrapped in a `[.column]` block; content left unwrapped becomes a flex item of the row alongside the columns instead of spanning above them, which was a recurring point of confusion (#494)
   * Document how to generate diagrams (PlantUML, Mermaid, Graphviz, ...) with the `asciidoctor-kroki` extension, for both Ruby and JavaScript; no reveal.js-specific setup needed, it produces a regular image (#366)

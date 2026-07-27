@@ -1,0 +1,11 @@
+// Demonstrates every docinfo insertion location this converter defines
+= Docinfo Locations
+:docinfo: private
+
+== Slide 1
+
+Content 1
+
+== Slide 2
+
+Content 2

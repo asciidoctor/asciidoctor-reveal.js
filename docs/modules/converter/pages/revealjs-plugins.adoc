@@ -77,10 +77,10 @@ The customcontrols plugin renders its buttons with https://fontawesome.com[Font 
 <.> Load the customcontrols plugin and its stylesheet
 <.> Load the chalkboard plugin and its stylesheet
 
-Then, configure and initialize the plugins from a footer docinfo file named `<docname>-docinfo-footer.html`.
+Then, configure and initialize the plugins from a footer docinfo file named `<docname>-docinfo-footer-revealjs.html`.
 Each modern reveal.js plugin exposes an `init(Reveal)` function that you call once reveal.js is ready:
 
-.presentation-docinfo-footer.html
+.presentation-docinfo-footer-revealjs.html
 [source,html]
 ----
 <script>
@@ -114,9 +114,9 @@ Finally, enable docinfo in your presentation so that both files are picked up:
 
 // ...
 ----
-<.> Enable private docinfo so the `presentation-docinfo-revealjs.html` and `presentation-docinfo-footer.html` files are included
+<.> Enable private docinfo so the `presentation-docinfo-revealjs.html` and `presentation-docinfo-footer-revealjs.html` files are included
 
-TIP: A complete, working example is available in xref:attachment$revealjs-plugins.adoc[revealjs-plugins.adoc] together with its xref:attachment$revealjs-plugins-docinfo-revealjs.html[head] and xref:attachment$revealjs-plugins-docinfo-footer.html[footer] docinfo files.
+TIP: A complete, working example is available in xref:attachment$revealjs-plugins.adoc[revealjs-plugins.adoc] together with its xref:attachment$revealjs-plugins-docinfo-revealjs.html[head] and xref:attachment$revealjs-plugins-docinfo-footer-revealjs.html[footer] docinfo files.
 
 [IMPORTANT]
 ====

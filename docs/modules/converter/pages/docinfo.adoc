@@ -5,25 +5,94 @@
 It's possible to inject supplemental content into the output document using xref:asciidoctor::docinfo.adoc[docinfo files].
 This core feature of AsciiDoc has been adapted to work with the reveal.js converter.
 
-Currently, there are three insertion locations for docinfo content in a reveal.js document:
+[IMPORTANT]
+====
+`header`/`footer` changed meaning in v6.
+If you have an existing `docinfo-header-revealjs.html` or `docinfo-footer-revealjs.html` (or the private, per-document equivalents), see xref:migrating-to-v6.adoc#docinfo[the migration guide] to find out whether you need to rename it.
+====
 
-head:: content is inserted after the last child of the `<head>` element
-header:: content is inserted before the first child of the `<div class="slides">` element (before the slides)
-footer:: content is inserted after the last child of the `<div class="slides">` element (after the slides)
+== Insertion locations
 
-The content you want to insert goes into a sibling file of the slide deck document with the following filename patterns:
+Here's every insertion location this converter defines, in document order:
 
-head:: `docinfo-revealjs.html`
-header:: `docinfo-header-revealjs.html`
-footer:: `docinfo-footer-revealjs.html`
+[source,html]
+----
+<html>
+  <head>
+    ...
+    <!-- [1] head -->
+  </head>
+  <body>
+    <!-- [2] header (alias: body-header) -->
+    <div class="reveal">
+      <div class="slides">
+        <!-- [3] slides-header -->
+        <section>
+          <!-- [4] slide-header -->
+          ...slide content...
+          <!-- [5] slide-footer -->
+        </section>
+        <!-- [4]/[5] repeat for every slide, horizontal and vertical -->
+        <!-- [6] slides-footer -->
+      </div>
+    </div>
+    <script>/* Reveal.initialize(...) */</script>
+    <!-- [7] footer (alias: body-footer) -->
+  </body>
+</html>
+----
 
-In addition to the `footer` location above, the converter also reads the plain, non-backend-specific `docinfo-footer.html` (no `-revealjs` suffix) if present, inserting it right before `</body>`, after the reveal.js initialization script.
-This is the same file Asciidoctor's other converters (e.g., `html5`) read for their own footer docinfo, so content placed there is shared across backends instead of being reveal.js-specific.
+[cols="1,3,2"]
+|===
+|# |Location |Filename
 
-For example, let's say you want to embed a tweet into your slide deck.
-You might inject the shared embedding JavaScript using a footer docinfo file:
+|1
+|`head` +
+content is inserted just before `</head>`
+|`docinfo-revealjs.html`
 
-.src/docinfo-footer-revealjs.html
+|2
+|`header` (alias `body-header`) +
+content is inserted right after `<body>`, before the `.reveal` element
+|`docinfo-header-revealjs.html` (`docinfo-body-header-revealjs.html`)
+
+|3
+|`slides-header` +
+content is inserted before the first slide (or before the title slide, if any)
+|`docinfo-slides-header-revealjs.html`
+
+|4
+|`slide-header` +
+content is inserted as the first child of *every* slide's `<section>`, horizontal and vertical alike
+|`docinfo-slide-header-revealjs.html`
+
+|5
+|`slide-footer` +
+content is inserted as the last child of *every* slide's `<section>`, horizontal and vertical alike
+|`docinfo-slide-footer-revealjs.html`
+
+|6
+|`slides-footer` +
+content is inserted after the last slide, still inside `.slides`
+|`docinfo-slides-footer-revealjs.html`
+
+|7
+|`footer` (alias `body-footer`) +
+content is inserted just before `</body>`, after reveal.js is initialized
+|`docinfo-footer-revealjs.html` (`docinfo-body-footer-revealjs.html`)
+|===
+
+`header`/`footer` are named to match Asciidoctor's own HTML5 converter, where `header`/`footer` also mean "first/last child of `<body>`" — so a docinfo file written for the `html5` backend is inserted at the same conceptual position when you switch to `revealjs`.
+The `body-header`/`body-footer` aliases exist only to spell that out explicitly when it helps readability; both names resolve to the exact same insertion point, and content from both files is included if you happen to provide both.
+
+`slide-header`/`slide-footer` apply to *every* slide, so they're best suited to something you want repeated on each slide (a running footer with a URL or license notice, a per-slide watermark) rather than one-off content.
+
+== Example
+
+Let's say you want to embed a tweet into your slide deck.
+You might inject the shared embedding JavaScript once, right after the last slide, using a `slides-footer` docinfo file:
+
+.src/docinfo-slides-footer-revealjs.html
 [source,html]
 ----
 <script src="https://platform.twitter.com/widgets.js"></script>
@@ -36,3 +105,7 @@ You then need to set the following document attribute in the AsciiDoc header:
 ----
 
 When this attribute is defined, the converter will automatically read the docinfo file(s) and insert the contents into the specified location in the output document.
+
+By default, docinfo files are searched for in the same folder as the document file.
+If you want to keep them anywhere else, set the `docinfodir` attribute to their location.
+Please read xref:asciidoc:docinfo:index.adoc#resolving[Locating docinfo files] if you want to learn more.

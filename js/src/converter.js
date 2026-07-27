@@ -142,6 +142,14 @@ async function resolveContent (node) {
   return node.getContentModel() === 'simple' ? `<p>${await node.content()}</p>` : await node.content()
 }
 
+// Concatenates the docinfo content for one or more locations (e.g. an alias pair
+// like 'header' and 'body-header'), all sharing the same suffix.
+async function docinfoContent (doc, suffix, ...locations) {
+  let buf = ''
+  for (const location of locations) buf += (await doc.docinfo(location, suffix)) ?? ''
+  return buf
+}
+
 // Copied from asciidoctor html5 converter (private method).
 function encodeAttributeValue (val) {
   return val.includes('"') ? val.replaceAll('"', '&quot;') : val
@@ -214,13 +222,11 @@ export default class RevealJsConverter extends ConverterBase {
     const slides = async () => {
       let buf = ''
       if (!node.isNoheader()) {
-        const headerDocinfo = await node.docinfo('header', '-revealjs.html')
-        if (headerDocinfo) buf += headerDocinfo
+        buf += await docinfoContent(node, '-revealjs.html', 'slides-header')
         if (node.hasHeader() && !node.isNotitle()) buf += await this.convert(node, 'title_slide')
       }
       buf += slidesContent ?? ''
-      const footerDocinfo = await node.docinfo('footer', '-revealjs.html')
-      if (footerDocinfo) buf += footerDocinfo
+      buf += await docinfoContent(node, '-revealjs.html', 'slides-footer')
       return buf
     }
 
@@ -287,9 +293,10 @@ export default class RevealJsConverter extends ConverterBase {
       const customcss = node.getAttribute('customcss')
       buf += `<link${attributes({ rel: 'stylesheet', href: customcss === '' ? 'asciidoctor-revealjs.css' : customcss })}>`
     }
-    const docinfoHead = await node.docinfo('head', '-revealjs.html')
-    if (docinfoHead) buf += docinfoHead
-    buf += '</head><body><div class="reveal"><div class="slides">'
+    buf += await docinfoContent(node, '-revealjs.html', 'head')
+    buf += '</head><body>'
+    buf += await docinfoContent(node, '-revealjs.html', 'header', 'body-header')
+    buf += '<div class="reveal"><div class="slides">'
     // Any section element inside of this container is displayed as a slide
     buf += await slides()
     buf += '</div></div>'
@@ -298,8 +305,7 @@ export default class RevealJsConverter extends ConverterBase {
     if (syntaxHl && syntaxHl.hasDocinfo('footer')) {
       buf += syntaxHl.docinfo('footer', node, { cdn_base_url: cdnBase, linkcss, self_closing_tag_slash: '/' }) ?? ''
     }
-    const docinfoContent = await node.docinfo('footer', '.html')
-    if (docinfoContent) buf += docinfoContent
+    buf += await docinfoContent(node, '-revealjs.html', 'footer', 'body-footer')
     buf += '</body></html>'
     return buf
   }
@@ -424,6 +430,7 @@ export default class RevealJsConverter extends ConverterBase {
         'data-auto-animate-restart': node.hasAttribute('auto-animate-restart') || node.hasOption('auto-animate-restart')
       }, node.getAttributes()))
       let inner = ''
+      inner += await docinfoContent(node.getDocument(), '-revealjs.html', 'slide-header')
       if (!hideTitle) inner += `<h2>${sectionTitle(node)}</h2>`
       if (parentSectionWithVerticalSlides) {
         const blocks = node.getBlocks().filter((block) => !verticalSlides.includes(block))
@@ -439,6 +446,7 @@ export default class RevealJsConverter extends ConverterBase {
         if (content !== '') inner += `<div class="slide-content">${content}</div>`
       }
       inner += footnotes()
+      inner += await docinfoContent(node.getDocument(), '-revealjs.html', 'slide-footer')
       return `<section${attrs}>${inner}</section>`
     }
 

@@ -1,0 +1,13 @@
+{
+  "select": [
+    "#docinfo-head-marker",
+    "#docinfo-header-marker",
+    "#docinfo-body-header-marker",
+    "#docinfo-slides-header-marker",
+    ".docinfo-slide-header-marker",
+    ".docinfo-slide-footer-marker",
+    "#docinfo-slides-footer-marker",
+    "#docinfo-footer-marker",
+    "#docinfo-body-footer-marker"
+  ]
+}

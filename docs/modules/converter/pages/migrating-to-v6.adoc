@@ -1,0 +1,65 @@
+= Migrating from v5 to v6
+:navtitle: Migrating to v6
+
+v6 carries a few breaking changes.
+None of them require touching your slide content — at most, renaming a docinfo file or two.
+
+[#docinfo]
+== Docinfo `header`/`footer` now match the html5 converter
+
+In every other Asciidoctor converter (`html5`, `docbook5`, ...), a docinfo `header` is inserted right after `<body>` and a docinfo `footer` right before `</body>`.
+Before v6, this converter's `header`/`footer` meant something else entirely: the first/last child of `<div class="slides">`, one level deeper and inside the slides container specifically.
+
+v6 redefines `header`/`footer` to match every other converter, and gives the position they used to mean a new, more specific name: `slides-header`/`slides-footer`.
+
+[cols="1,2"]
+|===
+|If you have this file... |...it now behaves like this
+
+|`docinfo-header-revealjs.html` +
+(or `<docname>-docinfo-header-revealjs.html`)
+|Content moves from *just inside* `.slides` to *just inside* `<body>`, before `.reveal` even starts.
+Rename it to `docinfo-slides-header-revealjs.html` to keep the exact same behavior.
+
+|`docinfo-footer-revealjs.html` +
+(or `<docname>-docinfo-footer-revealjs.html`)
+|Content moves from *just inside* `.slides` (after the last slide) to *just inside* `</body>`, after reveal.js has initialized.
+Rename it to `docinfo-slides-footer-revealjs.html` to keep the exact same behavior.
+|===
+
+If you never had a `docinfo-header-revealjs.html`/`docinfo-footer-revealjs.html` file, this change doesn't affect you.
+
+A second, related fix: a *footer* docinfo file with no backend suffix (plain `docinfo-footer.html`, or `<docname>-docinfo-footer.html`) used to be picked up by the `revealjs` backend too, at the new `footer` position — even though that file is meant for the `html5` backend (the unsuffixed convention exists for backwards compatibility with single-slot converters).
+That cross-backend leak is fixed in v6: only `docinfo-footer-revealjs.html` (suffixed) is read at the `footer` position now.
+If you were relying on an unsuffixed `docinfo-footer.html` to inject something into your reveal.js presentation (for example, to configure and initialize a reveal.js plugin after `Reveal.initialize()` runs — see xref:revealjs-plugins.adoc[]), rename it to `docinfo-footer-revealjs.html`.
+
+xref:docinfo.adoc[] documents the full set of insertion locations, including two entirely new ones — `slide-header`/`slide-footer`, injected into *every* slide — that didn't exist before v6.
+
+== Embedded conversion wraps the title in a proper title slide
+
+Converting with `header_footer: false` (or `--no-header-footer`) and `showtitle` used to render the document title as a bare `<h1>My Title</h1>`, outside of any `<section>`.
+It's now wrapped the same way the standalone converter already wraps it:
+
+[source,html]
+----
+<section class="title" data-state="title"><h1>My Title</h1></section>
+----
+
+If you embed this fragment as-is on a page (e.g. via a static site generator) and styled that bare `<h1>` directly, update your selector to target `section.title h1` (or `[data-state="title"] h1`) instead.
+
+== `:notitle:` now suppresses the title slide
+
+`:notitle:` was silently ignored by the title slide — every other place that checks it (a `[%notitle]` option on a section, the embedded converter's own heading) already did, only the standalone title slide dispatch didn't.
+It now behaves consistently: setting `:notitle:` on a document with a title removes its title slide, the same way it already removed `<h2>` headings on sections marked `[%notitle]`.
+
+If you had `:notitle:` set on a presentation and still expected to see the title slide, remove the attribute.
+
+== JavaScript converter: Node.js 20+ and Asciidoctor.js 4.0
+
+The JavaScript converter is now a native port targeting the Asciidoctor.js 4.0 API (async convert handlers), instead of running through the Slim-templates compiler on top of Asciidoctor.js 2.x/3.x.
+This raises two minimum versions:
+
+* Node.js 20 or later
+* `asciidoctor` (the npm package) `>=4.0.0-alpha.6 <5.0.0`
+
+The Ruby gem's `asciidoctor` dependency is unaffected (`>= 2.0.0, < 3.0.0`).

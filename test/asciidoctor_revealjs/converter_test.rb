@@ -9,6 +9,19 @@ module Asciidoctor
         ::Asciidoctor.convert source, safe: :safe, backend: 'revealjs', header_footer: false, attributes: attributes
       end
 
+      # Registers a docinfo_processor extension at +location+ that inserts +marker+, scoped
+      # to this single conversion (no docinfo file on disk, no attributes/document required).
+      def convert_standalone(source, locations_to_markers = {}, attributes = {})
+        ::Asciidoctor.convert source, safe: :safe, backend: 'revealjs', header_footer: true, attributes: attributes,
+                                      extensions: proc {
+                                        locations_to_markers.each do |location, marker|
+                                          docinfo_processor location: location do
+                                            process { marker }
+                                          end
+                                        end
+                                      }
+      end
+
       def test_embedded_title_is_wrapped_in_a_title_slide_section_not_a_bare_h1
         html = convert <<~ADOC, 'showtitle' => ''
           = My Title
@@ -74,6 +87,61 @@ module Asciidoctor
         refute_includes html, '>!<'
         assert_includes html, '<li><a href="#_slide_1">Slide 1</a></li>'
         assert_includes html, '<li><a href="#_sub_slide">Sub slide</a></li>'
+      end
+
+      def test_header_and_body_header_alias_land_just_inside_body_before_the_reveal_div
+        html = convert_standalone <<~ADOC, header: '<div id="header"></div>', 'body-header': '<div id="body-header"></div>'
+          = Title
+
+          == Slide
+
+          Content
+        ADOC
+
+        assert_includes html, '<body><div id="header"></div><div id="body-header"></div><div class="reveal">'
+      end
+
+      def test_footer_and_body_footer_alias_land_just_inside_body_after_reveal_initialize
+        html = convert_standalone <<~ADOC, footer: '<div id="footer"></div>', 'body-footer': '<div id="body-footer"></div>'
+          = Title
+
+          == Slide
+
+          Content
+        ADOC
+
+        assert_match(%r{Reveal\.initialize.*</script><div id="footer"></div><div id="body-footer"></div></body>}m, html)
+      end
+
+      def test_slides_header_and_slides_footer_land_at_the_boundaries_of_the_slides_div
+        html = convert_standalone <<~ADOC, 'slides-header': '<div id="slides-header"></div>', 'slides-footer': '<div id="slides-footer"></div>'
+          = Title
+
+          == Slide
+
+          Content
+        ADOC
+
+        assert_includes html, '<div class="slides"><div id="slides-header"></div><section class="title"'
+        assert_includes html, '</section><div id="slides-footer"></div></div></div>'
+      end
+
+      def test_slide_header_and_slide_footer_land_in_every_section
+        html = convert_standalone <<~ADOC, 'slide-header': '<div class="slide-header"></div>', 'slide-footer': '<div class="slide-footer"></div>'
+          = Title
+
+          == Slide one
+
+          Content 1
+
+          == Slide two
+
+          Content 2
+        ADOC
+
+        assert_equal 2, html.scan('<div class="slide-header"></div>').length
+        assert_equal 2, html.scan('<div class="slide-footer"></div>').length
+        assert_includes html, '<section id="_slide_one"><div class="slide-header"></div><h2>Slide one</h2>'
       end
 
       def test_quoteblock_attribution_gets_the_asciidoctor_default_right_alignment_css
