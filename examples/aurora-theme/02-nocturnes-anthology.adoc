@@ -1,0 +1,90 @@
+= Nocturnes: A Small Anthology
+Curated by Elena Voss <elena@nocturnes.example>
+:revealjs_customtheme: aurora-light.css
+:revealjsdir: ../../node_modules/reveal.js
+:revealjs_width: 1280
+:revealjs_height: 720
+:revealjs_transition: fade
+
+== A Note on This Collection
+
+Six short pieces, gathered over three years of insomnia and one very slow train.
+Read them the way you'd read a room at midnight — slowly, and without turning on every light.
+
+[.violet.background]
+== I. Night Walks
+
+== Night Walks
+
+[verse, Elena Voss, Nocturnes, 2019]
+____
+The city exhales its neon breath,
+and I follow the wet pavement home.
+Every window a small yellow sun
+that isn't mine to keep warm.
+____
+
+== On Translation
+
+Translation carries loss and invention in equal measure.footnote:[Translations by E. Voss, first published in the 2019 chapbook alongside the originals.]
+Here is the same stanza, twice — press the space bar to flip between them.
+
+[.r-stack]
+--
+[verse.fade-in-then-out%step, Aurélie Bonnet, Marée]
+____
+La lune tire la mer par la manche,
+et la mer, docile, la suit.
+Nous aussi, nous partons sans bruit
+quand quelque chose nous appelle.
+____
+
+[verse%step, Aurélie Bonnet, "Tide (transl. E. Voss)"]
+____
+The moon tugs the sea by its sleeve,
+and the sea, obedient, follows.
+We too leave without a sound
+when something calls us on.
+____
+--
+
+[.cyan.background]
+== II. Letters
+
+== Letters Never Sent
+
+[verse, Elena Voss, Nocturnes, 2019]
+____
+I write you every night I don't call,
+fold the pages into a drawer
+that is slowly becoming a person
+made entirely of things unsaid.
+____
+
+== On Reading in the Dark
+
+[quote, Tomas Rehn, On Reading in the Dark (2020)]
+____
+We read at night not to see more clearly, but to let the sentence become the only light in the room.
+____
+
+[.gold.background]
+== III. Coda
+
+== Coda
+
+[verse, Elena Voss, Nocturnes, 2019]
+____
+Not every light needs to arrive somewhere.
+Some of them just want to be seen
+leaving.
+____
+
+[.ink.background%notitle]
+== !
+
+[.text-center]
+Six poems. +
+One quiet hour.
+
+[.badge]#Fin#

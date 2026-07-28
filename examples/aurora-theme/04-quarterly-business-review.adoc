@@ -1,0 +1,143 @@
+= Q3 Business Review: Aurora Cloud
+Finance & Strategy <fpna@aurora.dev>
+:revealjs_customtheme: aurora.css
+:revealjsdir: ../../node_modules/reveal.js
+:revealjs_width: 1280
+:revealjs_height: 720
+:icons: font
+
+[.columns]
+== The Headline
+
+[.column]
+[.stat]
+--
+[.stat-value]
+$42.6M
+
+[.stat-label]
+ARR, end of quarter
+
+[.stat-delta.good]
++18% QoQ
+--
+
+[.column]
+[.stat]
+--
+[.stat-value]
+128%
+
+[.stat-label]
+Net revenue retention
+
+[.stat-delta.good]
++9 pts YoY
+--
+
+[.column]
+[.stat]
+--
+[.stat-value]
+2.3%
+
+[.stat-label]
+Monthly logo churn
+
+[.stat-delta.good]
+−0.6 pts QoQ
+--
+
+[.column]
+[.stat]
+--
+[.stat-value]
+61
+
+[.stat-label]
+Net Promoter Score
+
+[.stat-delta.good]
++7 pts YoY
+--
+
+== Where Growth Came From
+
+[cols="2,2,2,2",opts=header]
+|===
+|Segment |ARR |Share |YoY growth
+
+|Enterprise |$21.4M |50% |+34%
+|Mid-market |$14.9M |35% |+22%
+|SMB |$6.3M |15% |+4%
+|===
+
+== Efficiency Metrics
+
+[.kpi-bar]
+[.kpi-label]#Gross margin# [.bar.p-80]#78%#
+
+[.kpi-bar]
+[.kpi-label]#Rule of 40# [.bar.p-60]#61#
+
+[.kpi-bar]
+[.kpi-label]#Sales efficiency# [.bar.p-45]#0.45×#
+
+[.kpi-bar]
+[.kpi-label]#Support CSAT# [.bar.p-90]#92%#
+
+== Competitive Landscape
+
+[cols="2,2,2,2",opts=header]
+|===
+| |Aurora Cloud |Competitor A |Competitor B
+
+|Time to first value |&lt; 1 day |~3 days |~1 week
+|Enterprise SSO |Included |Add-on |Add-on
+|Public status page |Yes |Yes |No
+|===
+
+== Customer Voice
+
+[quote, Priya Natarajan, VP Engineering at Fenwick Robotics]
+____
+Aurora's dashboards told us about a regional outage four minutes before our own monitoring did.
+____
+
+[.gold.background]
+== Risks & Watch Items
+
+== Risks on the Radar
+
+[%step]
+* SMB churn ticked up after the March price change
+* Two enterprise renewals slip into next quarter
+* Support headcount hasn't kept pace with seat growth
+
+[WARNING]
+If SMB churn doesn't stabilize by next quarter, it starts to weigh on blended NRR.
+
+== Roadmap
+
+[.timeline]
+* Q4 — SSO for all mid-market plans, not just Enterprise
+* Q4 — Usage-based add-on pricing pilot with 12 design partners
+* Q1 — Regional data residency, EU first, then APAC
+* Q1 — Self-serve upgrade flow, cutting sales-assisted deals by ~20%
+
+== Methodology
+
+[%collapsible]
+.How these numbers are calculated
+====
+ARR is annualized from committed contract value at quarter close, excluding one-time services revenue.
+Net revenue retention includes expansion, contraction, and churn from the cohort of customers active exactly one year prior.footnote:[Finance methodology doc, rev. 14 — ask #finance-questions for the latest version.]
+====
+
+== Recap
+
+[.badge]#Reviewed & approved#
+
+* Growth is healthy and broad-based; SMB is the segment to watch
+* Efficiency metrics are trending toward Rule-of-40 territory
+* Roadmap bets on self-serve and regional expansion next

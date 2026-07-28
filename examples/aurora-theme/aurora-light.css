@@ -1,0 +1,67 @@
+/*!
+ * Aurora Light — the light variant of the Aurora theme
+ *
+ * This file changes nothing but tokens: it imports aurora.css unmodified,
+ * then redeclares the :root custom properties for a light, paper-like
+ * mood (white cards on a soft violet-tinted canvas, deep jewel-tone
+ * accents for readable text/links) instead of Aurora's default dark,
+ * glowing one. Every component rule in aurora.css keeps working as-is,
+ * because they all read colors through these custom properties rather
+ * than hardcoding them — this file is the proof.
+ *
+ * Usage (in an AsciiDoc document):
+ *   :revealjs_customtheme: aurora-light.css
+ */
+
+@import url('aurora.css');
+
+:root {
+	/* -- Raw palette -- */
+	--aurora-bg: #f6f5fb;
+	--aurora-surface: #ffffff;
+	--aurora-surface-2: #ece9f6;
+	--aurora-border: rgba(20, 18, 40, 0.1);
+	--aurora-border-strong: rgba(20, 18, 40, 0.2);
+
+	--aurora-ink: #14162a;
+	--aurora-mist: #5b5f7a;
+	--aurora-faint: #9498b0;
+	--aurora-emphasis: #0a0d18;
+
+	/* Deeper than the dark theme's neon violet/cyan — pastel accents don't
+	   have enough contrast to work as text/links on a light background. */
+	--aurora-violet: #6c38f5;
+	--aurora-cyan: #0891b2;
+	--aurora-coral: #d64545;
+	--aurora-lime: #4f8a1c;
+	--aurora-gold: #b5760a;
+
+	--aurora-gradient-soft: linear-gradient(135deg, rgba(108, 56, 245, 0.1), rgba(8, 145, 178, 0.1));
+	--aurora-gradient-text: linear-gradient(100deg, #7a3ff0, var(--aurora-cyan));
+
+	--aurora-mood-violet: #ece3ff;
+	--aurora-mood-cyan: #dff4f7;
+	--aurora-mood-coral: #fbe4e2;
+	--aurora-mood-lime: #e9f3dd;
+	--aurora-mood-gold: #faedd7;
+	--aurora-mood-ink-glow: rgba(108, 56, 245, 0.14);
+
+	--aurora-shadow: 0 24px 60px -22px rgba(20, 18, 40, 0.18);
+	--aurora-shadow-sm: 0 10px 26px -14px rgba(20, 18, 40, 0.14);
+
+	/* --------------------------------------------------------------------
+	   A handful of --r-* tokens compose raw values (gradients, rgba mixes)
+	   rather than resolving a single --aurora-* token, so they need an
+	   explicit override too — everything else in aurora.css's :root block
+	   (--r-link-color, --r-heading-color, --r-selection-background-color,
+	   …) already resolves through the tokens above and needs no override.
+	   -------------------------------------------------------------------- */
+	--r-background: radial-gradient(1200px 640px at 90% -8%, rgba(108, 56, 245, 0.1), transparent 60%),
+		radial-gradient(1000px 560px at -8% 108%, rgba(8, 145, 178, 0.08), transparent 58%), var(--aurora-bg);
+
+	--r-link-color-dark: #066f85;
+	--r-link-color-hover: #0bb4d6;
+
+	--r-overlay-element-bg-color: 255, 255, 255;
+	--r-overlay-element-fg-color: 20, 18, 40;
+}

@@ -1,0 +1,237 @@
+= Ship a Rate Limiter: A Hands-On Workshop
+Aurora Systems Team <workshop@aurora.dev>
+:revealjs_customtheme: aurora.css
+:revealjsdir: ../../node_modules/reveal.js
+:revealjs_width: 1280
+:revealjs_height: 720
+:revealjs_transition: slide
+:source-highlighter: highlight.js
+:icons: font
+
+== Why rate limit at all?
+
+Every API eventually meets a client that means well and a client that doesn't.
+
+[%step]
+* A retry loop without back-off can turn a blip into an outage
+* A single noisy tenant can starve everyone else on the same box
+* Your database doesn't care whose query knocked it over
+
+[.violet.background]
+== Choosing an Algorithm
+
+Three strategies. One clear winner for bursty traffic.
+
+== Three Common Strategies
+
+Token bucket is the strategy most CDNs and API gateways settle on.footnote:[See Cloudflare's 2021 engineering blog post comparing fixed-window, sliding-log and token-bucket limiters under bursty load.]
+
+[cols="2,2,3",opts=header]
+|===
+|Strategy |Memory |Burst handling
+
+|Fixed window
+|O(1) per key
+|Poor — allows 2x burst at window edges
+
+|Sliding log
+|O(n) per key
+|Precise — but expensive at scale
+
+|Token bucket
+|O(1) per key
+|Good — bounded burst, smooth refill
+|===
+
+=== Fixed Window
+
+Simplest to implement, cheapest to store — one counter and a timestamp per key.
+The catch: a client can burn its whole quota in the last second of one window, then again in the first second of the next.
+
+=== Token Bucket
+
+A bucket holds up to `capacity` tokens and refills at `refillRate` tokens/second.
+Every request costs one token; no tokens, no request.
+Bursts are allowed up to the bucket's capacity, then throttled smoothly.
+
+== Implementing Token Bucket
+
+Watch the highlighted lines step through: setup, then refill, then the allow/deny decision.
+
+[source%linenums,js,highlight="1..3|5..9|11..13"]
+----
+function createTokenBucket(capacity, refillRate) {
+  let tokens = capacity
+  let last = Date.now()
+
+  return function allow() {
+    const now = Date.now()
+    const elapsed = (now - last) / 1000
+    tokens = Math.min(capacity, tokens + elapsed * refillRate)
+    last = now
+
+    if (tokens < 1) return false
+    tokens -= 1
+    return true
+  }
+}
+----
+
+[%auto-animate]
+== Refactor to a Class
+
+A closure works, but a class makes the bucket's state easier to inspect and unit-test in isolation.
+
+[source%linenums,js,data-id=bucket]
+----
+function createTokenBucket(capacity, refillRate) {
+  let tokens = capacity
+  let last = Date.now()
+
+  return function allow() {
+    const now = Date.now()
+    tokens = Math.min(capacity, tokens + (now - last) / 1000 * refillRate)
+    last = now
+    if (tokens < 1) return false
+    tokens -= 1
+    return true
+  }
+}
+----
+
+[%auto-animate]
+== Refactor to a Class
+
+[source%linenums,js,data-id=bucket]
+----
+class TokenBucket {
+  #tokens
+  #last = Date.now()
+
+  constructor(capacity, refillRate) {
+    this.capacity = capacity
+    this.refillRate = refillRate
+    this.#tokens = capacity
+  }
+
+  allow() {
+    const now = Date.now()
+    this.#tokens = Math.min(this.capacity, this.#tokens + (now - this.#last) / 1000 * this.refillRate)
+    this.#last = now
+    if (this.#tokens < 1) return false
+    this.#tokens -= 1
+    return true
+  }
+}
+----
+
+== Config as Code
+
+[source%linenums,yaml]
+----
+rate_limiter:
+  algorithm: token_bucket
+  capacity: 50
+  refill_rate: 10      # tokens per second
+  scope: per_client
+  headers:
+    remaining: X-RateLimit-Remaining
+    reset: X-RateLimit-Reset
+----
+
+== Ship It
+
+[source,bash]
+----
+npm run build
+docker build -t aurora/rate-limiter:1.4.0 .
+docker push aurora/rate-limiter:1.4.0
+kubectl rollout restart deployment/rate-limiter
+kubectl rollout status deployment/rate-limiter --timeout=90s
+----
+
+[.columns]
+== Before vs. After
+
+[.column]
+--
+*Before*
+
+* No limiter — periodic outages under load
+* p95 latency: 640ms
+* On-call pages: ~6/week
+--
+
+[.column]
+--
+*After*
+
+[.kpi-bar]
+[.kpi-label]#Latency, p95# [.bar.p-35]#−63%#
+
+[.kpi-bar]
+[.kpi-label]#On-call pages# [.bar.p-15]#−83%#
+--
+
+== Common Gotchas
+
+[%step]
+* Off-by-one errors at the edge of the refill window
+* Forgetting to clamp tokens at `capacity`
+* [.highlight-red]#Sharing one bucket across every client#
+* Not persisting bucket state across restarts or deploys
+
+== Watch Out For These
+
+[WARNING,step=1]
+Clocks drift across replicas — don't trust a single `Date.now()` in a distributed limiter.
+
+[IMPORTANT,step=2]
+A limiter with zero burst allowance rejects perfectly reasonable traffic spikes.
+
+[TIP,step=3]
+Return a `Retry-After` header so well-behaved clients back off instead of hammering you.
+
+== Try It Yourself
+
+Build `allow()` so it rejects a burst of 60 requests but fully recovers within 5 seconds.
+
+[%collapsible]
+.Reveal the reference solution
+====
+[source%linenums,js]
+----
+class TokenBucket {
+  #tokens
+  #last = Date.now()
+
+  constructor(capacity, refillRate) {
+    this.capacity = capacity
+    this.refillRate = refillRate
+    this.#tokens = capacity
+  }
+
+  allow() {
+    const now = Date.now()
+    this.#tokens = Math.min(this.capacity, this.#tokens + (now - this.#last) / 1000 * this.refillRate)
+    this.#last = now
+    if (this.#tokens < 1) return false
+    this.#tokens -= 1
+    return true
+  }
+}
+----
+====
+
+== Recap
+
+[.badge]#Workshop complete#
+
+* Token bucket balances burstiness and fairness
+* Auto-animate makes refactors easy to narrate live
+* Ship the config, alert on your `429` rate — not just on 5xx
+
+[quote, Priya N., Workshop mentor]
+____
+The best rate limiter is the one your on-call engineer can explain in one sentence.
+____
