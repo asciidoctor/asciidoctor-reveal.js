@@ -1,0 +1,117 @@
+= How the Immune System Works
+Aurora Learning Lab <learn@aurora.dev>
+:revealjs_customtheme: aurora.css
+:revealjsdir: ../../node_modules/reveal.js
+:revealjs_width: 1280
+:revealjs_height: 720
+:icons: font
+
+== What We'll Cover
+
+[%step]
+* The two lines of defense your body keeps on standby
+* The five cell types doing most of the work
+* What actually happens, minute by minute, during a response
+* A few myths worth retiring
+
+[.cyan.background]
+== Part 1: The Basics
+
+== Two Lines of Defense
+
+[cols="2,3,3",opts=header]
+|===
+|
+|Innate immunity
+|Adaptive immunity
+
+|Speed
+|Minutes
+|Days (first time)
+
+|Specificity
+|General-purpose
+|Tailored to the exact pathogen
+
+|Memory
+|None
+|Yes — lasts years to decades
+|===
+
+== Meet the Cells
+
+Neutrophils:: First responders; engulf and destroy pathogens within minutes.
+Macrophages:: Larger scavenger cells; clean up debris and recruit reinforcements.
+Dendritic cells:: Messengers that carry pathogen fragments to the nearest lymph node.
+B cells:: Produce antibodies tailored to one specific pathogen.
+T cells:: Coordinate the response and destroy infected cells directly.
+
+=== Macrophages, Closer Up
+
+A macrophage is part scavenger, part alarm system.
+It swallows debris and dead cells, then displays fragments of whatever it found on its own surface — a signal that recruits the adaptive immune system if the threat looks unfamiliar.
+
+=== T Cells, Closer Up
+
+Helper T cells coordinate — they release signals that activate B cells and other immune cells.
+Killer T cells execute — they find infected cells displaying suspicious fragments and destroy them directly.
+
+== How a Response Unfolds
+
+[%step]
+. A pathogen breaches skin or mucosa
+. Innate cells (neutrophils, macrophages) respond within minutes
+. Dendritic cells carry pathogen fragments to a lymph node
+. B and T cells matching that fragment multiply rapidly
+. Antibodies neutralize the pathogen; killer T cells clear infected cells
+. Memory B and T cells persist, ready for next time
+
+[.violet.background]
+== Part 2: Check Yourself
+
+== Check Your Understanding
+
+[%collapsible]
+.Why don't we get sick from a flu vaccine itself?
+====
+Most flu vaccines contain inactivated virus or just a viral protein — there's no live virus able to replicate and cause illness.
+Soreness or a mild fever is your immune system responding to training, not to infection.
+====
+
+[%collapsible]
+.Can your immune system "remember" too much and overreact?
+====
+Yes — that overreaction is roughly what happens in autoimmune conditions and severe allergies: the adaptive immune system responds to something that isn't actually a threat.
+====
+
+[%collapsible]
+.Why do some vaccines need a booster and others don't?
+====
+It depends on how strong and how long-lived the memory response is to that specific antigen.
+Some pathogens produce very durable memory cells after one exposure; others fade faster or mutate enough that the original memory stops matching well.
+====
+
+== Common Misconceptions
+
+[NOTE]
+Antibiotics do nothing against viruses — they target bacterial machinery that viruses simply don't have.
+
+[WARNING]
+"Boosting" your immune system isn't always good: an overactive response is what causes much of the damage in severe infections.
+
+[TIP]
+A fever isn't the illness — it's your body raising the temperature to make it harder for many pathogens to replicate.
+
+== Further Reading
+
+* Innate vs. adaptive immunity, a primer.footnote:primer[Janeway's Immunobiology, 9th edition, chapter 1.]
+* How memory B cells persist for decades.footnote:[Slifka & Ahmed, "Long-lived plasma cells: a mechanism for maintaining persistent antibody production," Current Opinion in Immunology, 1998.]
+* Revisit that same primer.footnote:primer[]
+
+== Recap
+
+[.badge]#Course complete#
+
+* Innate immunity buys time; adaptive immunity wins the fight and remembers it
+* Five cell types, one coordinated response
+* Fevers and vaccine soreness are signs the system is working, not failing

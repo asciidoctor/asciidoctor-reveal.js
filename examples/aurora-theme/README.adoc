@@ -1,0 +1,178 @@
+= Aurora — a token-based reveal.js theme
+:source-highlighter: highlight.js
+
+Aurora is a dark, gradient-accented reveal.js theme built entirely from CSS custom properties (design tokens), so it can be restyled without touching component rules.
+It ships as a single stylesheet, `aurora.css`, plus four presentations that exercise a different cluster of AsciiDoc/reveal.js features each, to prove the theme holds together across very different content: a technical workshop, a literary anthology, an educational mini-course, and a business review.
+
+== Using it
+
+Point `:revealjs_customtheme:` at the stylesheet from your document header:
+
+[source,asciidoc]
+----
+= My Presentation
+:revealjs_customtheme: aurora.css
+:revealjs_width: 1280
+:revealjs_height: 720
+----
+
+`revealjs_customtheme` *replaces* the theme entirely (as opposed to `:revealjs_theme:`, which picks one of reveal.js's own built-in themes, or `:customcss:`, which layers small overrides on top of whichever theme is active — see the project's xref:../../docs/modules/converter/pages/custom-styles.adoc[custom-styles documentation]).
+
+== Light variant
+
+`aurora-light.css` is a light, paper-like variation of the theme — white cards on a soft violet-tinted canvas, deeper jewel-tone accents for readable text/links — produced by changing *only* the tokens in xref:#token-reference[section 1]: it `@import`s `aurora.css` unmodified and redeclares the `:root` custom properties. Every component rule keeps working as-is, because none of them hardcode a color.
+
+[source,asciidoc]
+----
+:revealjs_customtheme: aurora-light.css
+----
+
+CAUTION: This retheme covers reveal.js chrome and every component in this file, but *not* code syntax highlighting — that's a separate stylesheet (`:highlightjs-theme:`, defaulting to reveal.js's bundled `monokai.css`), outside the CSS cascade this theme controls. Pair `aurora-light.css` with a light `highlight.js` theme, e.g. `:highlightjs-theme: https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.3/styles/github.min.css`, or code blocks will keep the dark Monokai palette on a white card.
+
+== The four decks
+
+[cols="1,3",opts=header]
+|===
+|File |What it demonstrates
+
+|`01-workshop-rate-limiter.adoc`
+|Multi-language code (JS/YAML/shell) with line numbers, progressive `highlight=` steps, auto-animate, columns, collapsible solutions, ordered admonition steps.
+
+|`02-nocturnes-anthology.adoc`
+|`verse`/`quote` blocks, footnote citations, `.r-stack` translations, mood backgrounds, large-type minimal slides.
+
+|`03-immune-system-101.adoc`
+|Comparison tables, definition lists, collapsible glossary/FAQ, a `%step` process walkthrough, footnotes.
+
+|`04-quarterly-business-review.adoc`
+|`.stat` KPI tiles, `.kpi-bar` progress bars, metrics/roadmap tables, a collapsible methodology appendix.
+|===
+
+Convert any of them with the project's own CLI (run from the repository root):
+
+[source,shell]
+----
+node js/bin/asciidoctor-revealjs -b revealjs examples/aurora-theme/01-workshop-rate-limiter.adoc
+----
+
+Each deck already sets `:revealjsdir: ../../node_modules/reveal.js` in its header, so the output resolves reveal.js's assets from the repository's own install.
+
+[#token-reference]
+== Token reference
+
+Every color, font, radius and shadow in the theme is declared once, at the top of `aurora.css`, under `:root`.
+Override any of them — in a `:customcss:` file loaded after the theme, or by editing `aurora.css` directly — to rebrand the whole deck.
+
+=== Palette
+
+[cols="2m,2m,3",opts=header]
+|===
+|Token |Default |Role
+
+|--aurora-bg |#0a0d18 |Page background
+|--aurora-surface |#141a2e |Elevated panels: code blocks, tables' hover state, admonitions, collapsibles, stat tiles
+|--aurora-surface-2 |#1c2440 |Secondary surface: KPI bar track
+|--aurora-ink |#eef0fa |Primary text
+|--aurora-mist |#99a2c3 |Secondary text (labels, attributions, captions)
+|--aurora-faint |#5b6488 |Tertiary text (line numbers, byline)
+|--aurora-violet |#7c5cff |Gradient start; selection color
+|--aurora-cyan |#22d3ee |Gradient end; link color; default admonition/collapsible accent
+|--aurora-coral |#ff6b6b |Semantic: caution, `highlight-red`, stat deltas trending down
+|--aurora-lime |#a8e063 |Semantic: tip, `highlight-green`, stat deltas trending up
+|--aurora-gold |#ffb020 |Semantic: warning
+|===
+
+`--aurora-gradient`, `--aurora-gradient-soft` and `--aurora-gradient-text` are derived from `--aurora-violet`/`--aurora-cyan` — the theme's signature motif (a soft glow behind every slide, a short rule above every title, the code line-highlight, table header underline, stat-tile numbers, progress bar, timeline rail).
+Change the two source colors and the whole motif follows.
+
+=== Type
+
+[cols="2m,3",opts=header]
+|===
+|Token |Default
+
+|--aurora-font-display |'Space Grotesk' — headings, stat values, badges
+|--aurora-font-body |'Inter' — body text
+|--aurora-font-code |'JetBrains Mono' — code, line numbers, KPI values
+|===
+
+Fonts are loaded via `@import` from Google Fonts at the top of `aurora.css`. Self-hosting: download the font files and replace the `@import` with local `@font-face` rules.
+
+=== Shape & elevation
+
+`--aurora-radius-sm` (8px), `--aurora-radius` (14px), `--aurora-radius-lg` (24px, currently unused — reserved for larger custom panels), `--aurora-shadow`/`--aurora-shadow-sm`.
+
+=== reveal.js's own tokens
+
+Aurora also sets every `--r-*` custom property reveal.js's built-in themes expose (`--r-background`, `--r-heading-font`, `--r-link-color`, `--r-code-font`, …) so it plugs into reveal.js exactly like `black.css` or `white.css` would.
+You can override at either level: the raw `--aurora-*` tokens (recommended — keeps the signature motif consistent), or the `--r-*` contract directly for a one-off tweak.
+
+== Bonus components
+
+A handful of extra content patterns are included, styled purely through CSS classes applied via AsciiDoc's role syntax — the same technique the project already documents for `.stretch`, `.columns`/`.column`, and `.red.background` (see xref:../../docs/modules/converter/pages/syntax/roles.adoc[] and xref:../../docs/modules/converter/pages/syntax/background.adoc[]). No converter changes required.
+
+=== Stat tiles
+
+An open block with the `stat` role, containing role-tagged paragraphs:
+
+[source,asciidoc]
+----
+[.stat]
+--
+[.stat-value]
+94%
+
+[.stat-label]
+Customer retention
+
+[.stat-delta.good]
++4.2 pts YoY
+--
+----
+
+Use `.stat-delta.good` or `.stat-delta.bad` to color the delta — based on whether the change is welcome news, not on whether the number went up or down (a falling churn rate is `.good`; a falling NPS is `.bad`). Place several `[.stat]` blocks inside `[.columns]` for a KPI row.
+
+=== KPI bars
+
+A paragraph with the `kpi-bar` role, containing a `kpi-label` span and a `bar` span. The bar's fill is picked with a `.p-NN` class (5% steps, `p-5` … `p-100`):
+
+[source,asciidoc]
+----
+[.kpi-bar]
+[.kpi-label]#Activation rate# [.bar.p-72]#72%#
+----
+
+NOTE: `.p-NN` only ships in 5% steps — round to the nearest step (e.g. use `.p-70` for 72%).
+
+=== Badges
+
+An inline role span:
+
+[source,asciidoc]
+----
+[.badge]#New#
+----
+
+=== Timelines
+
+An unordered list with the `timeline` role:
+
+[source,asciidoc]
+----
+[.timeline]
+* Kick-off — discovery workshop
+* Beta — first ten customers
+* GA — public launch
+----
+
+=== Mood backgrounds
+
+Named background-color roles keyed to the palette, for use with the `background`/`canvas` classes (see xref:../../docs/modules/converter/pages/syntax/background.adoc[]):
+
+[source,asciidoc]
+----
+[.violet.background]
+== A slide with a violet backdrop
+----
+
+Available: `violet`, `cyan`, `coral`, `lime`, `gold`, `ink` (the last is a subtle radial echo of the default background, for a section break that stays close to the base theme).

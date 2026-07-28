@@ -1,0 +1,1088 @@
+/*!
+ * Aurora — a token-based theme for reveal.js
+ *
+ * A dark, gradient-accented theme built entirely from CSS custom properties.
+ * Restyle it by overriding the tokens in section 1 — nothing below that point
+ * should need to change for a rebrand (new palette, new type, new radii).
+ *
+ * Usage (in an AsciiDoc document):
+ *   :revealjs_customtheme: aurora.css
+ *
+ * See README.adoc in this directory for the full token reference and the
+ * bonus content components (.stat, .kpi-bar, .badge, .timeline).
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ==========================================================================
+   1. Design tokens — override these to restyle the theme
+   ========================================================================== */
+
+:root {
+	/* -- Raw palette -- */
+	--aurora-bg: #0a0d18;
+	--aurora-surface: #141a2e;
+	--aurora-surface-2: #1c2440;
+	--aurora-border: rgba(255, 255, 255, 0.09);
+	--aurora-border-strong: rgba(255, 255, 255, 0.16);
+
+	--aurora-ink: #eef0fa;
+	--aurora-mist: #99a2c3;
+	--aurora-faint: #5b6488;
+	/* Emphasis text (bold, card/summary titles, table headers) sits a step
+	   brighter than --aurora-ink on a dark background; a theme variant that
+	   flips the background (e.g. a light mode) needs to flip this too, so
+	   it's its own token rather than a literal #fff sprinkled through
+	   section 2-14's component rules. */
+	--aurora-emphasis: #ffffff;
+
+	--aurora-violet: #7c5cff;
+	--aurora-cyan: #22d3ee;
+	--aurora-coral: #ff6b6b;
+	--aurora-lime: #a8e063;
+	--aurora-gold: #ffb020;
+
+	--aurora-gradient: linear-gradient(135deg, var(--aurora-violet), var(--aurora-cyan));
+	--aurora-gradient-soft: linear-gradient(135deg, rgba(124, 92, 255, 0.18), rgba(34, 211, 238, 0.18));
+	--aurora-gradient-text: linear-gradient(100deg, #b9a8ff, var(--aurora-cyan));
+
+	/* Mood backgrounds (section 13) — deliberately their own tokens rather
+	   than reusing --aurora-violet/etc directly, since a background needs a
+	   flat, muted tone while the accent colors stay vivid for text/gradients. */
+	--aurora-mood-violet: #241a4d;
+	--aurora-mood-cyan: #0d3b45;
+	--aurora-mood-coral: #4a1f22;
+	--aurora-mood-lime: #2c3a1c;
+	--aurora-mood-gold: #4a3110;
+	--aurora-mood-ink-glow: rgba(124, 92, 255, 0.28);
+
+	/* -- Type -- */
+	--aurora-font-display: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
+	--aurora-font-body: 'Inter', -apple-system, sans-serif;
+	--aurora-font-code: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+	/* -- Shape & elevation -- */
+	--aurora-radius-sm: 8px;
+	--aurora-radius: 14px;
+	--aurora-radius-lg: 24px;
+	--aurora-shadow: 0 24px 60px -22px rgba(0, 0, 0, 0.65);
+	--aurora-shadow-sm: 0 10px 26px -14px rgba(0, 0, 0, 0.55);
+
+	/* --------------------------------------------------------------------
+	   Map the raw tokens onto reveal.js's own custom-property contract.
+	   Everything below this block consumes --r-* (or --aurora-* directly
+	   for things reveal.js has no contract for), never raw hex values.
+	   -------------------------------------------------------------------- */
+
+	--r-background: radial-gradient(1200px 640px at 90% -8%, rgba(124, 92, 255, 0.32), transparent 60%),
+		radial-gradient(1000px 560px at -8% 108%, rgba(34, 211, 238, 0.22), transparent 58%), var(--aurora-bg);
+	--r-background-color: var(--aurora-bg);
+
+	--r-main-font: var(--aurora-font-body);
+	--r-main-font-size: 30px;
+	--r-main-color: var(--aurora-ink);
+
+	--r-block-margin: 22px;
+
+	--r-heading-margin: 0 0 0.5em 0;
+	--r-heading-font: var(--aurora-font-display);
+	--r-heading-color: var(--aurora-ink);
+	--r-heading-line-height: 1.15;
+	--r-heading-letter-spacing: -0.01em;
+	--r-heading-text-transform: none;
+	--r-heading-text-shadow: none;
+	--r-heading-font-weight: 600;
+	--r-heading1-text-shadow: none;
+
+	--r-heading1-size: 2.6em;
+	--r-heading2-size: 1.65em;
+	--r-heading3-size: 1.2em;
+	--r-heading4-size: 0.95em;
+
+	--r-code-font: var(--aurora-font-code);
+
+	--r-link-color: var(--aurora-cyan);
+	--r-link-color-dark: #17a2bd;
+	--r-link-color-hover: #7fe9fb;
+
+	--r-selection-background-color: var(--aurora-violet);
+	--r-selection-color: #fff;
+
+	--r-overlay-element-bg-color: 15, 19, 36;
+	--r-overlay-element-fg-color: 255, 255, 255;
+}
+
+/* ==========================================================================
+   2. Structural base
+   Fills in what reveal.js expects every theme to provide (sizing, spacing,
+   list/table/code structure) — adapted from reveal.js's own theme template
+   so nothing is left unstyled, then themed with the tokens above.
+   ========================================================================== */
+
+.reveal-viewport {
+	background: var(--r-background);
+	background-color: var(--r-background-color);
+}
+
+.reveal {
+	font-family: var(--r-main-font);
+	font-size: var(--r-main-font-size);
+	font-weight: 400;
+	color: var(--r-main-color);
+}
+
+.reveal ::selection {
+	color: var(--r-selection-color);
+	background: var(--r-selection-background-color);
+	text-shadow: none;
+}
+
+.reveal ::-moz-selection {
+	color: var(--r-selection-color);
+	background: var(--r-selection-background-color);
+	text-shadow: none;
+}
+
+.reveal .slides section,
+.reveal .slides section > section {
+	line-height: 1.4;
+	font-weight: inherit;
+}
+
+/* -- Headings -- */
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+	margin: var(--r-heading-margin);
+	color: var(--r-heading-color);
+	font-family: var(--r-heading-font);
+	font-weight: var(--r-heading-font-weight);
+	line-height: var(--r-heading-line-height);
+	letter-spacing: var(--r-heading-letter-spacing);
+	text-transform: var(--r-heading-text-transform);
+	text-shadow: var(--r-heading-text-shadow);
+	word-wrap: break-word;
+}
+
+.reveal h1 {
+	font-size: var(--r-heading1-size);
+}
+.reveal h2 {
+	font-size: var(--r-heading2-size);
+}
+.reveal h3 {
+	font-size: var(--r-heading3-size);
+}
+.reveal h4 {
+	font-size: var(--r-heading4-size);
+}
+
+.reveal h1:last-child,
+.reveal h2:last-child,
+.reveal h3:last-child,
+.reveal h4:last-child {
+	margin-bottom: 0;
+}
+
+/* Signature: a short gradient rule above every slide title — the same
+   motif reappears at other scales throughout this file (code line
+   highlight, blockquote/admonition border, stat tiles, progress bar).
+   reveal.js centers slide content by default (`.reveal .slides` sets
+   `text-align: center`, inherited by the heading text) — center the bar
+   the same way, via margin auto on a fixed width, rather than left-aligning
+   it and fighting the convention every other reveal.js theme follows. */
+.reveal .slides section:not(.title) > h2::before,
+.reveal .slides section:not(.title) > h3::before {
+	content: '';
+	display: block;
+	width: 56px;
+	height: 5px;
+	margin: 0 auto 0.6em;
+	border-radius: 999px;
+	background: var(--aurora-gradient);
+}
+.reveal .slides section:not(.title) > h3::before {
+	width: 40px;
+	height: 4px;
+}
+
+/* -- Body text & inline -- */
+
+.reveal p {
+	margin: var(--r-block-margin) 0;
+	line-height: 1.5;
+}
+
+.reveal img,
+.reveal video,
+.reveal iframe {
+	max-width: 95%;
+	max-height: 95%;
+	border-radius: var(--aurora-radius-sm);
+}
+
+.reveal strong,
+.reveal b {
+	font-weight: 700;
+	color: var(--aurora-emphasis);
+}
+
+.reveal em {
+	font-style: italic;
+}
+
+.reveal ol,
+.reveal dl,
+.reveal ul {
+	display: inline-block;
+	text-align: left;
+	margin: 0 0 0 1em;
+}
+
+.reveal ol {
+	list-style-type: decimal;
+}
+.reveal ul {
+	list-style-type: disc;
+}
+.reveal ul ul {
+	list-style-type: circle;
+}
+.reveal ul ul ul {
+	list-style-type: square;
+}
+.reveal ul li::marker {
+	color: var(--aurora-cyan);
+}
+
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+	display: block;
+	margin-left: 40px;
+}
+
+.reveal li {
+	margin: 0.35em 0;
+}
+
+.reveal dt {
+	font-weight: 700;
+	color: var(--aurora-emphasis);
+}
+
+.reveal dd {
+	margin-left: 40px;
+	color: var(--aurora-mist);
+}
+
+.reveal sup {
+	vertical-align: super;
+	font-size: smaller;
+}
+.reveal sub {
+	vertical-align: sub;
+	font-size: smaller;
+}
+
+.reveal small {
+	display: inline-block;
+	font-size: 0.6em;
+	line-height: 1.3em;
+	vertical-align: top;
+	color: var(--aurora-mist);
+}
+.reveal small * {
+	vertical-align: top;
+}
+
+/* -- Links -- */
+
+.reveal a {
+	color: var(--r-link-color);
+	text-decoration: none;
+	background-image: linear-gradient(var(--aurora-cyan), var(--aurora-cyan));
+	background-position: 0 100%;
+	background-repeat: no-repeat;
+	background-size: 0% 1px;
+	transition: color 0.15s ease, background-size 0.2s ease;
+}
+.reveal a:hover {
+	color: var(--r-link-color-hover);
+	background-size: 100% 1px;
+}
+
+.reveal .controls {
+	color: var(--r-link-color);
+}
+
+.reveal .progress {
+	background: rgba(255, 255, 255, 0.08);
+	color: var(--aurora-violet);
+}
+.reveal .progress span {
+	background: var(--aurora-gradient);
+}
+
+@media print {
+	.backgrounds {
+		background-color: var(--r-background-color);
+	}
+}
+
+/* ==========================================================================
+   3. Title slide
+   ========================================================================== */
+
+.reveal .slides section.title {
+	text-align: left;
+}
+
+.reveal .slides section.title h1 {
+	font-size: 2.9em;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	color: var(--aurora-ink);
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+	.reveal .slides section.title h1,
+	.reveal .stat-value {
+		background: var(--aurora-gradient-text);
+		background-clip: text;
+		-webkit-background-clip: text;
+		color: transparent;
+	}
+}
+
+.reveal .slides section.title h2 {
+	margin-top: 0.2em;
+	font-family: var(--aurora-font-body);
+	font-size: 1.05em;
+	font-weight: 400;
+	color: var(--aurora-mist);
+	text-transform: none;
+	letter-spacing: 0;
+}
+
+.reveal .slides section.title h2::before {
+	content: none;
+}
+
+.reveal .slides section.title .preamble {
+	margin-top: 0.8em;
+	max-width: 30em;
+	color: var(--aurora-mist);
+	font-size: 0.6em;
+}
+
+.reveal .slides section.title::before {
+	content: '';
+	display: block;
+	width: 72px;
+	height: 6px;
+	margin-bottom: 0.9em;
+	border-radius: 999px;
+	background: var(--aurora-gradient);
+}
+
+/* Author byline generated by the converter */
+.reveal .slides section.title ul.byline,
+.reveal .slides section.title .byline {
+	margin-top: 1.6em;
+	font-size: 0.55em;
+	color: var(--aurora-faint);
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+}
+
+/* ==========================================================================
+   4. Blockquote / verse / pull-quotes
+   ========================================================================== */
+
+/* Only the outer .quoteblock/.verseblock wrapper gets the gradient rule —
+   `.quoteblock` wraps a plain nested <blockquote> (see convert_quote), so
+   including bare `blockquote` here doubled the border on quote blocks. */
+.reveal .quoteblock,
+.reveal .verseblock {
+	position: relative;
+	width: 82%;
+	margin: var(--r-block-margin) auto;
+	padding: 0.4em 0 0.4em 1.4em;
+	text-align: left;
+	border-left: 3px solid transparent;
+	border-image: var(--aurora-gradient) 1;
+	background: transparent;
+	box-shadow: none;
+}
+
+.reveal blockquote p,
+.reveal .quoteblock p,
+.reveal .verseblock pre {
+	font-family: var(--aurora-font-display);
+	font-weight: 500;
+	font-size: 0.92em;
+	font-style: normal;
+	line-height: 1.5;
+	color: var(--aurora-ink);
+	white-space: pre-wrap;
+}
+
+.reveal blockquote p:first-child,
+.reveal blockquote p:last-child,
+.reveal .quoteblock p:first-child,
+.reveal .quoteblock p:last-child {
+	display: block;
+}
+
+.reveal q {
+	font-style: italic;
+}
+
+.reveal .quoteblock .attribution,
+.reveal .verseblock .attribution {
+	color: var(--aurora-mist);
+	font-family: var(--aurora-font-body);
+}
+
+.reveal .quoteblock .attribution cite,
+.reveal .verseblock .attribution cite {
+	color: var(--aurora-faint);
+}
+
+/* Neutralize the code-panel styling that section 5 applies to bare <pre>
+   elements — verse content is a <pre class="content"> for whitespace
+   preservation, not a code sample. */
+.reveal .verseblock pre {
+	width: auto;
+	margin: 0;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	overflow: visible;
+	background: transparent;
+}
+
+/* ==========================================================================
+   5. Code blocks
+   ========================================================================== */
+
+.reveal pre {
+	display: block;
+	position: relative;
+	width: 92%;
+	margin: var(--r-block-margin) auto;
+	text-align: left;
+	font-size: 0.52em;
+	font-family: var(--r-code-font);
+	line-height: 1.35em;
+	word-wrap: break-word;
+	border-radius: var(--aurora-radius);
+	box-shadow: var(--aurora-shadow);
+	border: 1px solid var(--aurora-border);
+	overflow: hidden;
+}
+
+.reveal code {
+	font-family: var(--r-code-font);
+	text-transform: none;
+	tab-size: 2;
+}
+
+.reveal pre code {
+	display: block;
+	padding: 1.1em 1.2em;
+	overflow: auto;
+	max-height: 480px;
+	word-wrap: normal;
+	background: var(--aurora-surface) !important;
+	border-radius: var(--aurora-radius);
+}
+
+.reveal .code-wrapper {
+	white-space: normal;
+}
+.reveal .code-wrapper code {
+	white-space: pre;
+}
+
+/* Line numbers gutter (reveal.js highlight plugin) */
+.reveal .hljs-ln {
+	border-collapse: collapse;
+}
+.reveal .hljs-ln-numbers {
+	user-select: none;
+	text-align: right;
+	color: var(--aurora-faint);
+	border-right: 1px solid var(--aurora-border);
+	padding-right: 0.9em !important;
+	width: 1%;
+}
+.reveal .hljs-ln-code {
+	padding-left: 0.9em !important;
+}
+
+/* Signature, at code scale: the currently stepped-through line(s) get a
+   gradient highlight band instead of dimming everything else — all code
+   stays fully readable, the active line(s) just stand out more. */
+.reveal .has-highlights .hljs-ln-line {
+	transition: background 0.2s ease;
+}
+.reveal .has-highlights .hljs-ln-line.highlight-line {
+	background: var(--aurora-gradient-soft);
+	box-shadow: inset 3px 0 0 0 var(--aurora-cyan);
+}
+
+/* ==========================================================================
+   6. Tables
+   ========================================================================== */
+
+.reveal table {
+	margin: var(--r-block-margin) auto;
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 0.65em;
+}
+
+.reveal table.tableblock,
+.reveal th.tableblock,
+.reveal td.tableblock {
+	border-color: var(--aurora-border);
+}
+
+.reveal table th {
+	font-family: var(--aurora-font-display);
+	font-weight: 600;
+	color: var(--aurora-emphasis);
+	font-size: 0.85em;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	border-bottom: 2px solid transparent;
+	border-image: var(--aurora-gradient) 1;
+}
+
+.reveal table th,
+.reveal table td {
+	text-align: left;
+	padding: 0.55em 0.9em;
+	border-bottom: 1px solid var(--aurora-border);
+}
+
+.reveal table th[align='center'],
+.reveal table td[align='center'] {
+	text-align: center;
+}
+.reveal table th[align='right'],
+.reveal table td[align='right'] {
+	text-align: right;
+}
+
+.reveal table tbody tr:last-child th,
+.reveal table tbody tr:last-child td {
+	border-bottom: none;
+}
+
+/* Scoped to real content tables — admonitions/collapsibles use plain
+   <table> too, as a layout aid, and shouldn't pick up a row-hover effect. */
+.reveal table.tableblock tbody tr:hover td {
+	background: rgba(255, 255, 255, 0.03);
+}
+
+/* ==========================================================================
+   7. Admonitions
+   ========================================================================== */
+
+/* Renders as <div class="admonitionblock note"><table><tr>
+     <td class="icon">…</td><td class="content">…</td>
+   </tr></table></div> — the icon cell holds either a text label (default),
+   an <img> (:icons: <dir>), or a Font Awesome <i> (:icons: font). */
+.reveal .admonitionblock {
+	position: relative;
+	margin: var(--r-block-margin) auto;
+	width: 88%;
+	padding: 0.9em 1.2em;
+	text-align: left;
+	background: var(--aurora-surface);
+	border: 1px solid var(--aurora-border);
+	border-left: 4px solid var(--aurora-cyan);
+	border-radius: var(--aurora-radius-sm);
+	font-size: 0.7em;
+	box-shadow: var(--aurora-shadow-sm);
+}
+
+/* The compatibility stylesheet the converter always injects sets a generic
+   `table { border: solid 1px #dedede; margin-bottom: 1.25em }` (see
+   data/compatibility.css) — reset it here, this table is a layout aid, not
+   content. */
+.reveal .admonitionblock table {
+	width: 100%;
+	margin: 0;
+	border: 0;
+	border-collapse: collapse;
+}
+.reveal .admonitionblock table tr,
+.reveal .admonitionblock table td {
+	border: 0;
+	padding: 0;
+	background: none;
+}
+
+.reveal .admonitionblock td.icon {
+	width: 1%;
+	white-space: nowrap;
+	vertical-align: top;
+	padding-right: 1em;
+}
+
+.reveal .admonitionblock td.icon .title {
+	font-family: var(--aurora-font-display);
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	font-size: 0.85em;
+	color: var(--aurora-cyan);
+	white-space: nowrap;
+}
+
+.reveal .admonitionblock td.icon .fa {
+	font-size: 1.5em;
+	color: var(--aurora-cyan);
+}
+
+.reveal .admonitionblock td.content {
+	vertical-align: top;
+}
+
+.reveal .admonitionblock td.content > .title {
+	font-family: var(--aurora-font-display);
+	font-weight: 600;
+	color: var(--aurora-emphasis);
+	margin-bottom: 0.3em;
+}
+
+.reveal .admonitionblock td.content > :first-child {
+	margin-top: 0;
+}
+.reveal .admonitionblock td.content > :last-child {
+	margin-bottom: 0;
+}
+
+.reveal .admonitionblock.tip {
+	border-left-color: var(--aurora-lime);
+}
+.reveal .admonitionblock.tip td.icon .title,
+.reveal .admonitionblock.tip td.icon .fa {
+	color: var(--aurora-lime);
+}
+
+.reveal .admonitionblock.warning {
+	border-left-color: var(--aurora-gold);
+}
+.reveal .admonitionblock.warning td.icon .title,
+.reveal .admonitionblock.warning td.icon .fa {
+	color: var(--aurora-gold);
+}
+
+.reveal .admonitionblock.important {
+	border-left-color: var(--aurora-violet);
+}
+.reveal .admonitionblock.important td.icon .title,
+.reveal .admonitionblock.important td.icon .fa {
+	color: var(--aurora-violet);
+}
+
+.reveal .admonitionblock.caution {
+	border-left-color: var(--aurora-coral);
+}
+.reveal .admonitionblock.caution td.icon .title,
+.reveal .admonitionblock.caution td.icon .fa {
+	color: var(--aurora-coral);
+}
+
+/* ==========================================================================
+   8. Collapsible blocks (<details>/<summary>)
+   ========================================================================== */
+
+.reveal details {
+	width: 88%;
+	margin: var(--r-block-margin) auto;
+	padding: 0.7em 1.1em;
+	text-align: left;
+	background: var(--aurora-surface);
+	border: 1px solid var(--aurora-border);
+	border-radius: var(--aurora-radius-sm);
+	font-size: 0.6em;
+}
+
+.reveal details[open] {
+	border-color: var(--aurora-border-strong);
+}
+
+.reveal details > summary.title {
+	font-family: var(--aurora-font-display);
+	font-weight: 600;
+	color: var(--aurora-emphasis);
+	list-style: none;
+	padding-left: 1.1em;
+}
+
+/* The compatibility stylesheet positions the marker at `left: -1.25rem`,
+   relative to the summary's own edge — meant for the un-padded default
+   summary, it reads as stranded near the card border once the summary
+   has its own left padding. Pull it in, right next to the text. */
+.reveal details > summary::before,
+.reveal details > summary::after {
+	left: 0.1em;
+}
+.reveal details > summary::before {
+	border-left-color: var(--aurora-cyan);
+}
+.reveal details[open] > summary::before {
+	border-top-color: var(--aurora-cyan);
+}
+
+.reveal details > .content {
+	margin-top: 0.6em;
+	padding-top: 0.6em;
+	border-top: 1px solid var(--aurora-border);
+	color: var(--aurora-mist);
+}
+
+.reveal details > .content > :first-child {
+	margin-top: 0;
+}
+.reveal details > .content > :last-child {
+	margin-bottom: 0;
+}
+
+/* ==========================================================================
+   9. Example / sidebar blocks
+   ========================================================================== */
+
+.reveal .exampleblock,
+.reveal .sidebarblock {
+	width: 88%;
+	margin: var(--r-block-margin) auto;
+	padding: 0.9em 1.2em;
+	text-align: left;
+	background: var(--aurora-surface);
+	border: 1px solid var(--aurora-border);
+	border-radius: var(--aurora-radius-sm);
+	font-size: 0.6em;
+}
+
+/* ==========================================================================
+   10. Footnotes
+   ========================================================================== */
+
+.reveal .footnotes {
+	border-top: 1px solid var(--aurora-border);
+	color: var(--aurora-mist);
+}
+
+.reveal .footnoteref,
+.reveal sup.footnote {
+	color: var(--aurora-cyan);
+}
+
+/* ==========================================================================
+   11. Frame helper & layout utilities
+   ========================================================================== */
+
+.reveal .r-frame {
+	border: 4px solid var(--aurora-border-strong);
+	border-radius: var(--aurora-radius-sm);
+	box-shadow: var(--aurora-shadow-sm);
+}
+.reveal a .r-frame {
+	transition: all 0.15s linear;
+}
+.reveal a:hover .r-frame {
+	border-color: var(--aurora-cyan);
+	box-shadow: 0 0 24px rgba(34, 211, 238, 0.35);
+}
+
+/* ==========================================================================
+   12. Fragment / step styles
+   Recolor the built-in highlight-* fragment styles to the aurora palette
+   instead of literal red/green/blue.
+   ========================================================================== */
+
+.reveal .highlight-red,
+.reveal .highlight-current-red.current-fragment {
+	color: var(--aurora-coral) !important;
+}
+.reveal .highlight-green,
+.reveal .highlight-current-green.current-fragment {
+	color: var(--aurora-lime) !important;
+}
+.reveal .highlight-blue,
+.reveal .highlight-current-blue.current-fragment {
+	color: var(--aurora-cyan) !important;
+}
+
+/* ==========================================================================
+   13. Background color role (see docs: syntax/background.adoc)
+   A handful of named moods, keyed to the palette, for section/canvas
+   backgrounds — e.g. [.violet.background] == Slide
+   ========================================================================== */
+
+section.violet.background,
+section.violet.canvas {
+	background-color: var(--aurora-mood-violet);
+}
+section.cyan.background,
+section.cyan.canvas {
+	background-color: var(--aurora-mood-cyan);
+}
+section.coral.background,
+section.coral.canvas {
+	background-color: var(--aurora-mood-coral);
+}
+section.lime.background,
+section.lime.canvas {
+	background-color: var(--aurora-mood-lime);
+}
+section.gold.background,
+section.gold.canvas {
+	background-color: var(--aurora-mood-gold);
+}
+section.ink.background,
+section.ink.canvas {
+	background-color: var(--aurora-bg);
+	background-image: radial-gradient(900px 500px at 50% 30%, var(--aurora-mood-ink-glow), transparent 60%);
+}
+
+/* ==========================================================================
+   14. Bonus components — riding on AsciiDoc roles, same pattern the project
+   already documents for .stretch/.columns/.red.background (see README.adoc)
+   ========================================================================== */
+
+/* -- Stat tiles: an open block with the `stat` role, containing three
+   role-tagged paragraphs — see README.adoc for the exact markup. */
+.reveal .stat {
+	padding: 1em 1.2em;
+	background: var(--aurora-surface);
+	border: 1px solid var(--aurora-border);
+	border-radius: var(--aurora-radius);
+	box-shadow: var(--aurora-shadow-sm);
+	text-align: left;
+}
+
+.reveal .stat > .content {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2em;
+}
+
+.reveal .stat .content > p {
+	margin: 0;
+}
+
+.reveal .stat-value {
+	font-family: var(--aurora-font-display);
+	font-size: 2em;
+	font-weight: 700;
+	line-height: 1;
+	color: var(--aurora-ink);
+}
+
+.reveal .stat-label {
+	font-size: 0.5em;
+	color: var(--aurora-mist);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.reveal .stat-delta {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3em;
+	font-size: 0.42em;
+	font-weight: 600;
+	margin-top: 0.2em;
+}
+/* .good/.bad reflect whether the change is welcome news, not the arrow's
+   direction — a falling churn number is `.good`, a falling NPS is `.bad`. */
+.reveal .stat-delta.good {
+	color: var(--aurora-lime);
+}
+.reveal .stat-delta.bad {
+	color: var(--aurora-coral);
+}
+
+/* -- KPI bars: [.kpi-bar]\n[.kpi-label]#Label# [.bar.p-70]#70%# --
+   `.p-NN` (5% steps, p-0..p-100) paints the fill as a hard-stop gradient on
+   a single element — no nested markup needed.
+   A paragraph's inline content is always wrapped in its own <p> (see
+   convert_paragraph), so the flex row lives on that inner <p>, not on the
+   `.kpi-bar` div itself. */
+.reveal .kpi-bar {
+	width: 88%;
+	margin: 0.5em auto;
+	font-size: 0.55em;
+	text-align: left;
+}
+
+.reveal .kpi-bar > p {
+	display: flex;
+	align-items: center;
+	gap: 0.8em;
+	margin: 0;
+}
+
+.reveal .kpi-bar .kpi-label {
+	flex: 0 0 32%;
+	color: var(--aurora-mist);
+}
+
+.reveal .kpi-bar .bar {
+	flex: 1;
+	display: block;
+	height: 24px;
+	line-height: 24px;
+	padding-right: 0.7em;
+	text-align: right;
+	font-family: var(--aurora-font-code);
+	color: var(--aurora-emphasis);
+	border-radius: 999px;
+	overflow: hidden;
+	background: var(--aurora-surface-2);
+}
+
+.reveal .kpi-bar .bar.p-5 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 5%, var(--aurora-surface-2) 5%);
+}
+.reveal .kpi-bar .bar.p-10 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 10%, var(--aurora-surface-2) 10%);
+}
+.reveal .kpi-bar .bar.p-15 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 15%, var(--aurora-surface-2) 15%);
+}
+.reveal .kpi-bar .bar.p-20 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 20%, var(--aurora-surface-2) 20%);
+}
+.reveal .kpi-bar .bar.p-25 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 25%, var(--aurora-surface-2) 25%);
+}
+.reveal .kpi-bar .bar.p-30 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 30%, var(--aurora-surface-2) 30%);
+}
+.reveal .kpi-bar .bar.p-35 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 35%, var(--aurora-surface-2) 35%);
+}
+.reveal .kpi-bar .bar.p-40 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 40%, var(--aurora-surface-2) 40%);
+}
+.reveal .kpi-bar .bar.p-45 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 45%, var(--aurora-surface-2) 45%);
+}
+.reveal .kpi-bar .bar.p-50 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 50%, var(--aurora-surface-2) 50%);
+}
+.reveal .kpi-bar .bar.p-55 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 55%, var(--aurora-surface-2) 55%);
+}
+.reveal .kpi-bar .bar.p-60 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 60%, var(--aurora-surface-2) 60%);
+}
+.reveal .kpi-bar .bar.p-65 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 65%, var(--aurora-surface-2) 65%);
+}
+.reveal .kpi-bar .bar.p-70 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 70%, var(--aurora-surface-2) 70%);
+}
+.reveal .kpi-bar .bar.p-75 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 75%, var(--aurora-surface-2) 75%);
+}
+.reveal .kpi-bar .bar.p-80 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 80%, var(--aurora-surface-2) 80%);
+}
+.reveal .kpi-bar .bar.p-85 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 85%, var(--aurora-surface-2) 85%);
+}
+.reveal .kpi-bar .bar.p-90 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 90%, var(--aurora-surface-2) 90%);
+}
+.reveal .kpi-bar .bar.p-95 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 95%, var(--aurora-surface-2) 95%);
+}
+.reveal .kpi-bar .bar.p-100 {
+	background: linear-gradient(90deg, var(--aurora-violet) 0%, var(--aurora-cyan) 100%);
+}
+
+/* -- Badges/pills: [.badge]#New# -- */
+.reveal .badge {
+	display: inline-block;
+	padding: 0.15em 0.7em;
+	font-size: 0.5em;
+	font-family: var(--aurora-font-display);
+	font-weight: 600;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	border-radius: 999px;
+	background: var(--aurora-gradient-soft);
+	border: 1px solid var(--aurora-border-strong);
+	color: var(--aurora-cyan);
+}
+
+/* -- Timeline: [.timeline]\n* Milestone one\n* Milestone two --
+   Renders as <div class="ulist timeline"><ul>...</ul></div>; the div carries
+   the rail, the ul is reset to a plain block list.
+   Rail and dots are positioned in px, not em: the rail lives on `.timeline`
+   (full-size font) while the dots live on `.timeline li` (font-size: 0.75em)
+   — the same em value means a different absolute distance in each context,
+   which is what threw the rail and dots out of alignment. */
+.reveal .timeline {
+	position: relative;
+	width: 90%;
+	margin: var(--r-block-margin) auto;
+	padding-left: 28px;
+	text-align: left;
+	display: block;
+}
+
+.reveal .timeline ul {
+	display: block;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.reveal .timeline::before {
+	content: '';
+	position: absolute;
+	left: 9px;
+	top: 6px;
+	bottom: 6px;
+	width: 2px;
+	background: var(--aurora-gradient);
+}
+
+.reveal .timeline li {
+	position: relative;
+	margin: 0 0 0.9em 0;
+	font-size: 0.75em;
+}
+
+.reveal .timeline li p {
+	margin: 0;
+}
+
+.reveal .timeline li::before {
+	content: '';
+	position: absolute;
+	left: -23px;
+	top: 0.3em;
+	width: 10px;
+	height: 10px;
+	box-sizing: border-box;
+	border-radius: 50%;
+	background: var(--aurora-bg);
+	border: 2px solid var(--aurora-cyan);
+}
