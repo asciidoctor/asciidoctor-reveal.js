@@ -23,7 +23,7 @@ Or
 * Information
 ....
 
-See xref:asciidoc:attributes:roles.adoc[Asciidoctor's documentation] for more details.
+See xref:asciidoc:attributes:role.adoc[Asciidoctor's documentation] for more details.
 
 .Image-specific note
 In addition to the xref:asciidoc:macros:image-position.adoc#positioning-attributes[existing attributes] used to position images, roles can be used as well.
