@@ -41,3 +41,11 @@ A statement.footnote:[Do you even...?]
 == Next Topic
 
 A statement.footnote:[Still here?]
+
+== Deeply Nested Footnote
+
+=== Sub Slide
+
+==== Deep
+
+A statement rendered inline (not as its own slide).footnote:[Buried three levels deep.]

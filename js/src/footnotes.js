@@ -28,10 +28,18 @@ function isSection (node) {
   return node != null && typeof node.getContext === 'function' && node.getContext() === 'section'
 }
 
+// Levels 1/2 render as an actual <section> slide; level 3+ renders inline as a
+// dynamic <h3>/<h4>/... heading (see convert_section), so it never calls
+// slideFootnotes() itself. A footnote bucketed against one of those would be
+// stored but never read back, so walk past them to the enclosing slide.
+function isSlideSection (node) {
+  return isSection(node) && node.getLevel() <= 2
+}
+
 // Walk up to the section (slide) that contains the footnote.
 function enclosingSection (node) {
   let parent = node.getParent()
-  while (parent != null && !isSection(parent)) parent = parent.getParent()
+  while (parent != null && !isSlideSection(parent)) parent = parent.getParent()
   return parent
 }
 

@@ -1,0 +1,8 @@
+= Inline SVG with a self link
+:imagesdir: images/
+
+== Inline SVG, link=self
+
+An inline SVG (`opts=inline`) never sets the resolved `src` the `link=self` shorthand would point to, so it must not be wrapped in a link.
+
+image::sample.svg[Embedded,300,opts=inline,link=self]
