@@ -1,6 +1,6 @@
 = Collapsible Blocks
 
-An xref:asciidoc:blocks:example.adoc[example block] with the `collapsible` option is rendered as a native HTML `<details>`/`<summary>` disclosure widget instead of a regular example block.
+An xref:asciidoc:blocks:example-blocks.adoc[example block] with the xref:asciidoc:blocks:collapsible.adoc[`collapsible` option] is rendered as a native HTML `<details>`/`<summary>` disclosure widget instead of a regular example block.
 This lets you hide content behind a toggle that the audience can click to reveal.
 
 [source, asciidoc]

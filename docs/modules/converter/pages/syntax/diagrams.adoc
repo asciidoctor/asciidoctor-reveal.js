@@ -1,7 +1,7 @@
 = Diagrams
 
 You can generate diagrams (PlantUML, Mermaid, Graphviz, and {url-kroki}[many others^]) directly from AsciiDoc source using {url-kroki-extension}[the Kroki extension for Asciidoctor^].
-It's a separate package, not bundled with this converter, but no reveal.js-specific setup is needed — it produces a regular image, which this converter already knows how to render (including xref:layout.adoc[stretch] and xref:background.adoc[background image] handling).
+It's a separate package, not bundled with this converter, but no reveal.js-specific setup is needed — it produces a regular image, which this converter already knows how to render (including xref:syntax/layout.adoc[stretch] and xref:syntax/background.adoc[background image] handling).
 
 == Ruby
 

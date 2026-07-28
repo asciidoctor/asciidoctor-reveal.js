@@ -28,7 +28,7 @@ image::after.png[]
 --
 ....
 
-Combine with the `step` option on each element (see xref:fragment.adoc[]) to flip from one to the next instead of showing them all stacked at once:
+Combine with the `step` option on each element (see xref:syntax/fragment.adoc[]) to flip from one to the next instead of showing them all stacked at once:
 
 [source,asciidoc]
 ....
