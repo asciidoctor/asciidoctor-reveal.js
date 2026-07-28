@@ -849,10 +849,6 @@ export default class RevealJsConverter extends ConverterBase {
     return `<div${attrs}>${buf}</div>`
   }
 
-  async convert_notes (node) {
-    return `<aside class="notes">${await resolveContent(node)}</aside>`
-  }
-
   async convert_open (node) {
     if (node.getStyle() === 'abstract') {
       if (node.getParent() === node.getDocument() && node.getDocument().getDoctype() === 'book') {
@@ -925,10 +921,6 @@ export default class RevealJsConverter extends ConverterBase {
       buf += '</div>'
     }
     return `<div${attrs}>${buf}</div>`
-  }
-
-  convert_ruler () {
-    return '<hr>'
   }
 
   async convert_sidebar (node) {
@@ -1145,7 +1137,11 @@ export default class RevealJsConverter extends ConverterBase {
   imgLink (node, src, content) {
     if (node.hasAttribute('link')) {
       let hrefAttrVal = node.getAttribute('link')
-      if (hrefAttrVal === 'self') hrefAttrVal = src
+      if (hrefAttrVal === 'self') {
+        // no src to link to (e.g. an inline SVG never sets it) - leave the content unwrapped
+        if (!src) return content
+        hrefAttrVal = src
+      }
       let dataPreviewAttr = ''
       const linkPreviewValue = boolDataAttr(node, 'link_preview')
       if (linkPreviewValue) dataPreviewAttr = ` data-preview-link="${linkPreviewValue === true ? '' : linkPreviewValue}"`
