@@ -95,8 +95,16 @@ task 'testkit:update' => 'load-converter' do
   run_testkit_standalone RUBY_CONVERTER, '--update'
 end
 
+# Ruby-only syntax highlighters (provided by Asciidoctor core, only highlightjs is
+# ported to the JS converter) — ignored here rather than compared, since the JS
+# converter can never match this output.
+JS_HIGHLIGHTER_IGNORES = %w[
+  standalone/source-prettify
+  standalone/source-rouge
+].flat_map { |name| ['--ignore', "#{name}:third-party syntax highlighter provided by Asciidoctor core (only highlightjs is ported)"] }.freeze
+
 desc 'Run the asciidoc-testkit fixtures against the JS converter (parity check, no --update: the Ruby converter is the reference)'
 task 'testkit:test:js' do
   run_testkit_generic JS_CONVERTER
-  run_testkit_standalone JS_CONVERTER
+  run_testkit_standalone JS_CONVERTER, *JS_HIGHLIGHTER_IGNORES
 end
