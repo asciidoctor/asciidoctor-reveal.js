@@ -8,8 +8,9 @@
  * Usage (in an AsciiDoc document):
  *   :revealjs_customtheme: aurora.css
  *
- * See README.adoc in this directory for the full token reference and the
- * bonus content components (.stat, .kpi-bar, .badge, .timeline).
+ * See examples/aurora-theme/README.adoc in the asciidoctor-reveal.js
+ * repository for the full token reference and the bonus content
+ * components (.stat, .kpi-bar, .badge, .timeline).
  */
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');

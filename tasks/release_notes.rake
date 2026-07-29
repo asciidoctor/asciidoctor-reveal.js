@@ -12,6 +12,15 @@ namespace :release_notes do
   desc "Copy reveal.js/Font Awesome assets from node_modules into #{RELEASE_NOTES_DIR}/ (run `npm install` first)"
   task :assets do
     copy_node_module_assets(RELEASE_NOTES_DIR, PROJECT_ROOT)
+
+    # Aurora ships as part of this repo (data/themes/), not a node_modules
+    # dependency, but the same "local copy so the static server can serve it"
+    # constraint applies, so mirror it into RELEASE_NOTES_DIR/themes/.
+    themes_src = File.expand_path('data/themes', PROJECT_ROOT)
+    themes_dest = File.expand_path("#{RELEASE_NOTES_DIR}/themes", PROJECT_ROOT)
+    FileUtils.rm_rf(themes_dest)
+    FileUtils.cp_r(themes_src, themes_dest)
+    puts "Copied data/themes to #{themes_dest}"
   end
 
   # converted slides will be put in the RELEASE_NOTES_DIR directory

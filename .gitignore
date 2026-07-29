@@ -5,6 +5,7 @@
 /release-notes/*.html
 /release-notes/reveal.js/
 /release-notes/Font-Awesome-6.7.2/
+/release-notes/themes/
 
 # test stuff
 /test/fixtures/standalone/*.html

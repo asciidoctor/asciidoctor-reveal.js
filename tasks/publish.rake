@@ -13,7 +13,7 @@ namespace :release_notes do
   # Add a new entry whenever a release-<version>.adoc demo is introduced; a
   # version without an entry still gets a card, just without the bullet list.
   release_highlights = {
-    '6.0' => ['Image lightbox', 'Full-screen website preview overlay', 'Powered by reveal.js 6.0'],
+    '6.0' => ['Image lightbox', 'Full-screen website preview overlay', 'Powered by reveal.js 6.0', 'New: the Aurora custom theme'],
     '5.2' => ['Step-by-step callout lists', 'Synchronised step-by-step syntax highlighting'],
     '5.1' => ['Gradient slide backgrounds', 'Typesetting libraries (LaTeX math)'],
     '4.1' => ['Steps and incremental reveal', 'Footnotes', 'Custom data attributes', 'Font Awesome icon sets', 'Built-in text alignments'],
@@ -27,6 +27,7 @@ namespace :release_notes do
     Dir.mkdir "#{PUBLIC_DIR}/reveal.js"
     FileUtils.cp_r 'node_modules/reveal.js/', PUBLIC_DIR.to_s
     FileUtils.cp_r 'release-notes/images/', PUBLIC_DIR.to_s
+    FileUtils.cp_r 'release-notes/themes/', PUBLIC_DIR.to_s
 
     # Discover every release-notes/release-<version>.html demo (and its
     # optional matching .css), copy it over, and collect the version for the

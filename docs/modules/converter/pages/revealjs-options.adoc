@@ -294,3 +294,5 @@ If you want to build a custom theme or customize an existing one
 you should take a look at the {url-revealjs-gh}/blob/6.0.1/css/theme/README.md[reveal.js theme documentation].
 
 Then, use the `revealjs_customtheme` AsciiDoc attribute to activate it.
+
+TIP: The `@asciidoctor/reveal.js` npm package bundles a ready-made custom theme, Aurora, under `data/themes/` (`aurora.css` and a light variant, `aurora-light.css`) — see the {url-project-repo}/blob/main/examples/aurora-theme/README.adoc[Aurora README] for the token reference and usage.

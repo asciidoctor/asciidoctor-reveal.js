@@ -6,7 +6,7 @@
 :imagesdir: images/
 // reveal.js config
 :customcss: release-6.0.css
-:revealjs_theme: blood
+:revealjs_customtheme: themes/aurora.css
 :revealjs_hash: true
 :revealjs_width: 1080
 
@@ -54,6 +54,43 @@ Use `rowstep` to apply `fragment` to each body row individually
 |Chrome |Browser
 |===
 
+[.violet.background]
+== A new look: Aurora [.badge]#New#
+
+== One stylesheet, two moods
+
+This deck itself is themed with *Aurora* — a dark, gradient-accented custom theme for reveal.js, built entirely from CSS custom properties. Restyling it means overriding tokens, not editing component rules.
+
+[.timeline]
+* `aurora.css` — the dark theme powering this deck
+* `aurora-light.css` — a light variant, same tokens, different values
+* Ships in `data/themes/`, part of the `@asciidoctor/reveal.js` npm package — no copying required
+
+See the https://github.com/asciidoctor/asciidoctor-reveal.js/blob/main/examples/aurora-theme/README.adoc[Aurora README] for the full token reference and four example decks.
+
+[.columns]
+== By the numbers
+
+[.column]
+[.stat]
+--
+[.stat-value]
+1
+
+[.stat-label]
+Stylesheet — every color, font and radius lives in one `:root` block
+--
+
+[.column]
+[.stat]
+--
+[.stat-value]
+2
+
+[.stat-label]
+Moods included — dark (this deck) and a light, paper-like variant
+--
+
 [transition=fade,transition-speed=slow]
 == Learn More!
 
@@ -61,4 +98,4 @@ Use `rowstep` to apply `fragment` to each body row individually
 * https://revealjs.com[reveal.js]
 * https://github.com/asciidoctor/asciidoctor/[Asciidoctor]
 * https://asciidoc.org/[What is AsciiDoc?]
-* https://github.com/asciidoctor/asciidoctor-reveal.js/raw/main/examples/release-6.0.adoc[Source of this presentation (AsciiDoc)]
+* https://github.com/asciidoctor/asciidoctor-reveal.js/raw/main/release-notes/release-6.0.adoc[Source of this presentation (AsciiDoc)]
