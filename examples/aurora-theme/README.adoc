@@ -2,19 +2,21 @@
 :source-highlighter: highlight.js
 
 Aurora is a dark, gradient-accented reveal.js theme built entirely from CSS custom properties (design tokens), so it can be restyled without touching component rules.
-It ships as a single stylesheet, `aurora.css`, plus four presentations that exercise a different cluster of AsciiDoc/reveal.js features each, to prove the theme holds together across very different content: a technical workshop, a literary anthology, an educational mini-course, and a business review.
+It ships as a single stylesheet, `aurora.css`, plus four presentations in this directory that exercise a different cluster of AsciiDoc/reveal.js features each, to prove the theme holds together across very different content: a technical workshop, a literary anthology, an educational mini-course, and a business review.
 
 == Using it
 
-Point `:revealjs_customtheme:` at the stylesheet from your document header:
+Aurora's stylesheets live in xref:../../data/themes/[`data/themes/`] and are published as part of the `@asciidoctor/reveal.js` npm package (see the `files` entry in link:../../package.json[]), so any project that depends on it already has them on disk — no copying required. Point `:revealjs_customtheme:` at the stylesheet from your document header:
 
 [source,asciidoc]
 ----
 = My Presentation
-:revealjs_customtheme: aurora.css
+:revealjs_customtheme: node_modules/@asciidoctor/reveal.js/data/themes/aurora.css
 :revealjs_width: 1280
 :revealjs_height: 720
 ----
+
+The four decks in this directory instead reference `../../data/themes/aurora.css` (relative to the repository root), since they're run from a checkout rather than an installed package.
 
 `revealjs_customtheme` *replaces* the theme entirely (as opposed to `:revealjs_theme:`, which picks one of reveal.js's own built-in themes, or `:customcss:`, which layers small overrides on top of whichever theme is active — see the project's xref:../../docs/modules/converter/pages/custom-styles.adoc[custom-styles documentation]).
 
@@ -24,7 +26,7 @@ Point `:revealjs_customtheme:` at the stylesheet from your document header:
 
 [source,asciidoc]
 ----
-:revealjs_customtheme: aurora-light.css
+:revealjs_customtheme: node_modules/@asciidoctor/reveal.js/data/themes/aurora-light.css
 ----
 
 CAUTION: This retheme covers reveal.js chrome and every component in this file, but *not* code syntax highlighting — that's a separate stylesheet (`:highlightjs-theme:`, defaulting to reveal.js's bundled `monokai.css`), outside the CSS cascade this theme controls. Pair `aurora-light.css` with a light `highlight.js` theme, e.g. `:highlightjs-theme: https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.3/styles/github.min.css`, or code blocks will keep the dark Monokai palette on a white card.

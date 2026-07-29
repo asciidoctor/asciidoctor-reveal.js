@@ -1,6 +1,6 @@
 = Ship a Rate Limiter: A Hands-On Workshop
 Aurora Systems Team <workshop@aurora.dev>
-:revealjs_customtheme: aurora.css
+:revealjs_customtheme: ../../data/themes/aurora.css
 :revealjsdir: ../../node_modules/reveal.js
 :revealjs_width: 1280
 :revealjs_height: 720

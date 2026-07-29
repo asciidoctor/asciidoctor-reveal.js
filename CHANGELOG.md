@@ -11,7 +11,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ### Enhancements
 
-  * Add Aurora, a token-based custom theme (`examples/aurora-theme/aurora.css`), plus four example decks (technical workshop, literary anthology, educational mini-course, business review) exercising it across a broad mix of AsciiDoc/reveal.js features (code with line numbers and progressive highlight steps, auto-animate, columns, collapsible blocks, verse/quote, footnotes, background roles); every color/font/radius is a CSS custom property, so the theme can be restyled by overriding tokens instead of editing rules. Also ships `aurora-light.css`, a light variant that changes nothing but those tokens — see `examples/aurora-theme/README.adoc`
+  * Add Aurora, a token-based custom theme, shipped as part of the npm package under `data/themes/aurora.css` (and a light variant, `data/themes/aurora-light.css`, that changes nothing but tokens), plus four example decks in `examples/aurora-theme/` (technical workshop, literary anthology, educational mini-course, business review) exercising it across a broad mix of AsciiDoc/reveal.js features (code with line numbers and progressive highlight steps, auto-animate, columns, collapsible blocks, verse/quote, footnotes, background roles); every color/font/radius is a CSS custom property, so the theme can be restyled by overriding tokens instead of editing rules — see `examples/aurora-theme/README.adoc`
   * Upgrade to reveal.js 6.0.1
   * Image and video lightbox: add `data-preview-image`/`data-preview-video` (with optional `data-preview-fit`) to an image to open it full screen
   * Reimplement the converter in pure Ruby (drop the `asciidoctor-templates-compiler` Slim templates)

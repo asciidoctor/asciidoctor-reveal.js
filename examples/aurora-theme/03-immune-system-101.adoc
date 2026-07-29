@@ -1,6 +1,6 @@
 = How the Immune System Works
 Aurora Learning Lab <learn@aurora.dev>
-:revealjs_customtheme: aurora.css
+:revealjs_customtheme: ../../data/themes/aurora.css
 :revealjsdir: ../../node_modules/reveal.js
 :revealjs_width: 1280
 :revealjs_height: 720

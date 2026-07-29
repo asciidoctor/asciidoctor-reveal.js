@@ -1,6 +1,6 @@
 = Nocturnes: A Small Anthology
 Curated by Elena Voss <elena@nocturnes.example>
-:revealjs_customtheme: aurora-light.css
+:revealjs_customtheme: ../../data/themes/aurora-light.css
 :revealjsdir: ../../node_modules/reveal.js
 :revealjs_width: 1280
 :revealjs_height: 720

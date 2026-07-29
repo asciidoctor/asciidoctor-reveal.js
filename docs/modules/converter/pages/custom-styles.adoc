@@ -42,3 +42,5 @@ These three attributes all affect a presentation's appearance, but at different 
 `:revealjs_customtheme:`:: *Replaces* the theme stylesheet entirely with a file or URL of your own, instead of picking one of the built-in themes. Use this when you're authoring (or reusing) a full theme, not just tweaking one. See xref:revealjs-options.adoc[].
 `:customcss:`:: *Adds* an extra stylesheet on top of whichever theme is active (built-in or custom), loaded after it. Use this for small, presentation-specific overrides — you don't need a whole theme just to change a heading's margin.
 
+TIP: Looking for a ready-made custom theme? The `@asciidoctor/reveal.js` npm package bundles one, Aurora, under `data/themes/` — see {url-project-repo}/blob/main/examples/aurora-theme/README.adoc[the Aurora README] and xref:revealjs-options.adoc[].
+

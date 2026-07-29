@@ -1,6 +1,6 @@
 = Q3 Business Review: Aurora Cloud
 Finance & Strategy <fpna@aurora.dev>
-:revealjs_customtheme: aurora.css
+:revealjs_customtheme: ../../data/themes/aurora.css
 :revealjsdir: ../../node_modules/reveal.js
 :revealjs_width: 1280
 :revealjs_height: 720
