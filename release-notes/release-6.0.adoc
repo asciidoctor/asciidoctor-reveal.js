@@ -22,13 +22,13 @@ image::cute-cat-1.jpg[A cute cat,height="320px",data-preview-image="images/cute-
 
 == Website preview
 
-Open a link in a full-screen iframe overlay icon:search-plus[set=fas]
+Open a link in a full-screen iframe overlay icon:hand-pointer[set=far]
 
 https://docs.asciidoctor.org/[Open the Asciidoctor docs,preview=true]
 
 == Image as a website preview
 
-Click the image to preview a website icon:hand-pointer[set=far]
+Click the image to preview a website icon:search-plus[set=fas]
 
 image::asciidoctor-logo.svg[AsciiDoc website,height="220px",data-preview-link="https://asciidoc.org/"]
 
@@ -90,6 +90,21 @@ Stylesheet — every color, font and radius lives in one `:root` block
 [.stat-label]
 Moods included — dark (this deck) and a light, paper-like variant
 --
+
+== Customize
+
+No component CSS to touch — the whole palette, type and shape system is a set of tokens. Override a couple of them with `:customcss:` and the motif follows everywhere it appears.
+
+[source%linenums,css]
+----
+:root {
+  --aurora-violet: #16a34a; // <1>
+  --aurora-cyan: #facc15;   // <1>
+}
+----
+<1> Recolors the title rule, code line-highlight, table header underline, stat values, progress bars and timeline rail — every place the gradient motif shows up
+
+That's the same trick `aurora-light.css` uses to flip the whole deck from dark to light: same component rules, different token values. See the https://github.com/asciidoctor/asciidoctor-reveal.js/blob/main/examples/aurora-theme/README.adoc#token-reference[full token reference] for the rest of the palette.
 
 [transition=fade,transition-speed=slow]
 == Learn More!
