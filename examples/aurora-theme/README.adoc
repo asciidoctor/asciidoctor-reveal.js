@@ -6,7 +6,7 @@ It ships as a single stylesheet, `aurora.css`, plus four presentations in this d
 
 == Using it
 
-Aurora's stylesheets live in xref:../../data/themes/[`data/themes/`] and are published as part of the `@asciidoctor/reveal.js` npm package (see the `files` entry in link:../../package.json[]), so any project that depends on it already has them on disk — no copying required. Point `:revealjs_customtheme:` at the stylesheet from your document header:
+Aurora's stylesheets live in link:../../data/themes/[`data/themes/`] and are published as part of both distributions of this project — the `@asciidoctor/reveal.js` npm package (see the `files` entry in link:../../package.json[]) and the `asciidoctor-revealjs` RubyGem (see the file filter in link:../../asciidoctor-revealjs.gemspec[]) — so any project that depends on either one already has them on disk, no copying required. Point `:revealjs_customtheme:` at the stylesheet from your document header:
 
 [source,asciidoc]
 ----
@@ -17,6 +17,24 @@ Aurora's stylesheets live in xref:../../data/themes/[`data/themes/`] and are pub
 ----
 
 The four decks in this directory instead reference `../../data/themes/aurora.css` (relative to the repository root), since they're run from a checkout rather than an installed package.
+
+=== From the Ruby gem
+
+The gem has no `node_modules`-style install directory to reference by a fixed relative path, so resolve the installed gem's location first:
+
+[source,shell]
+----
+$ bundle exec ruby -e "puts Gem::Specification.find_by_name('asciidoctor-revealjs').gem_dir"
+----
+
+Then point `:revealjs_customtheme:` at `data/themes/aurora.css` inside that directory, either directly on the command line:
+
+[source,shell]
+----
+$ bundle exec asciidoctor-revealjs -a revealjs_customtheme="$(bundle exec ruby -e "puts Gem::Specification.find_by_name('asciidoctor-revealjs').gem_dir")/data/themes/aurora.css" presentation.adoc
+----
+
+or by copying `data/themes/aurora.css` next to your document — the same approach the xref:../../docs/modules/setup/pages/ruby-setup.adoc[Ruby setup guide] already uses for reveal.js itself, since the gem doesn't install it as a project-relative dependency the way npm does.
 
 `revealjs_customtheme` *replaces* the theme entirely (as opposed to `:revealjs_theme:`, which picks one of reveal.js's own built-in themes, or `:customcss:`, which layers small overrides on top of whichever theme is active — see the project's xref:../../docs/modules/converter/pages/custom-styles.adoc[custom-styles documentation]).
 

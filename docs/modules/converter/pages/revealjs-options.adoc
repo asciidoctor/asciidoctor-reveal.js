@@ -295,4 +295,4 @@ you should take a look at the {url-revealjs-gh}/blob/6.0.1/css/theme/README.md[r
 
 Then, use the `revealjs_customtheme` AsciiDoc attribute to activate it.
 
-TIP: The `@asciidoctor/reveal.js` npm package bundles a ready-made custom theme, Aurora, under `data/themes/` (`aurora.css` and a light variant, `aurora-light.css`) — see the {url-project-repo}/blob/main/examples/aurora-theme/README.adoc[Aurora README] for the token reference and usage.
+TIP: Both distributions of this project — the `@asciidoctor/reveal.js` npm package and the `asciidoctor-revealjs` RubyGem — bundle a ready-made custom theme, Aurora, under `data/themes/` (`aurora.css` and a light variant, `aurora-light.css`) — see the {url-project-repo}/blob/main/examples/aurora-theme/README.adoc[Aurora README] for the token reference and usage.
