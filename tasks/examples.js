@@ -3,7 +3,7 @@ import path from 'node:path'
 import { convertFile } from 'asciidoctor'
 import { register } from '../js/src/index.js'
 
-const examplesDir = 'test/fixtures/standalone'
+const examplesDir = 'test/converter-testkit/fixtures/standalone'
 
 console.log('examples')
 

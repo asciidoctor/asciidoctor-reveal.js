@@ -18,12 +18,12 @@ The {url-asciidoctor-abstractnode-attr}[Asciidoctor API documentation] describes
 
 == Manual Tests
 
-In order to help troubleshoot issues and test syntax improvements, `test/fixtures/standalone/` holds minimalist, real AsciiDoc presentations.
+In order to help troubleshoot issues and test syntax improvements, `test/converter-testkit/fixtures/standalone/` holds minimalist, real AsciiDoc presentations.
 You can convert them and load the result in a browser to check if `asciidoctor-revealjs` behaves as expected; see the "Custom tests" section further down.
 
  $ bundle exec rake examples:convert
 
-The converted `.html` files are written next to their `.adoc` source in `test/fixtures/standalone/`, ready to open in a browser.
+The converted `.html` files are written next to their `.adoc` source in `test/converter-testkit/fixtures/standalone/`, ready to open in a browser.
 
 == Asciidoctor API's gotchas
 
@@ -264,16 +264,16 @@ Then you can execute the full test suite (unit tests and the fixture corpus) wit
 
 `rake testkit:test` runs two invocations of asciidoc-converter-testkit against the Ruby converter, since a converter flag it needs differs between them (see `tasks/testkit.rake` for the detail):
 
-* the bundled 37 generic AsciiDoc-construct families (`test/expected-testkit/<family>/<case>.html`), converted embedded;
-* the project's own `standalone` family (`test/expected/standalone/<case>.html`), converted standalone and narrowed to the relevant fragment via each case's `<name>.config.json` `select` sidecar.
+* the bundled 37 generic AsciiDoc-construct families (`test/converter-testkit/expected/generic/<family>/<case>.html`), converted embedded;
+* the project's own `standalone` family (`test/converter-testkit/expected/standalone/<case>.html`), converted standalone and narrowed to the relevant fragment via each case's `<name>.config.json` `select` sidecar.
 
-`test/fixtures/` holds the input side (matching asciidoc-converter-testkit's own `--fixtures` flag); `test/expected(-testkit)/` holds the expected output — deliberately not also named "fixtures", to keep the two apart at a glance.
+Everything under `test/converter-testkit/` belongs to the asciidoc-converter-testkit corpus: `fixtures/` holds the input side (matching asciidoc-converter-testkit's own `--fixtures` flag); `expected/` holds the expected output — deliberately not also named "fixtures", to keep the two apart at a glance.
 
 `rake testkit:update` regenerates the expected files from the current converter's output — review the diff before committing.
 
 === Custom tests
 
-Presentations in `test/fixtures/standalone/` double as a browsable gallery of real presentations and as regression tests. A file with no matching expected file under `test/expected/standalone/` is simply not (yet) covered by a regression test — that's fine, it's still a valid example.
+Presentations in `test/converter-testkit/fixtures/standalone/` double as a browsable gallery of real presentations and as regression tests. A file with no matching expected file under `test/converter-testkit/expected/standalone/` is simply not (yet) covered by a regression test — that's fine, it's still a valid example.
 
 The release notes showcase under `release-notes/` (see below) is a separate, unrelated directory: it is not part of this test corpus at all.
 

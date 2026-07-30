@@ -5,7 +5,7 @@ require 'rubygems/package'
 require 'zlib'
 require_relative 'lib/rake_assets'
 
-EXAMPLES_DIR = 'test/fixtures/standalone'
+EXAMPLES_DIR = 'test/converter-testkit/fixtures/standalone'
 
 # Extracts a .tar.gz (e.g. from `npm pack`) into dest_root using only Ruby
 # stdlib/rubygems — no external `tar` binary. GNU/BSD tar disagree on several
