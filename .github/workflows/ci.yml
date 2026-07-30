@@ -17,10 +17,10 @@ jobs:
         test_task: [test]
         include:
           # JRuby/TruffleRuby run test:unit only (not the full test, which
-          # also runs the asciidoc-testkit corpus): these legs exist to catch
+          # also runs the asciidoc-converter-testkit corpus): these legs exist to catch
           # Ruby-implementation compat bugs, not to re-validate fixture
           # content, which the CRuby legs already do exhaustively — and the
-          # corpus's ~300 sequential `bundle exec` spawns (asciidoc-testkit
+          # corpus's ~300 sequential `bundle exec` spawns (asciidoc-converter-testkit
           # has no persistent-worker mode yet) multiply JVM startup cost into
           # a 10+ minute job.
           - os: ubuntu-22.04
@@ -32,7 +32,7 @@ jobs:
           - os: macos-latest
             ruby: '3.4'
             test_task: test
-          # Windows runs unit tests only (not the asciidoc-testkit corpus,
+          # Windows runs unit tests only (not the asciidoc-converter-testkit corpus,
           # nor examples/release-notes conversion): the same ~300 sequential
           # `bundle exec` spawns that make the JRuby/TruffleRuby legs slow
           # are even slower on Windows's process-spawn overhead, and this
