@@ -242,7 +242,7 @@ Use the same name convention as the other Asciidoctor repositories: `v\{major}.\
 In case of a new major version, you must follow the steps described for a xref:maintenance-branch[Maintenance branch].
 
 
-== Ruby and asciidoc-testkit tests
+== Ruby and asciidoc-converter-testkit tests
 
 === Running tests
 
@@ -250,7 +250,7 @@ We recommend tests to be run with a fresh installation of all dependencies in a 
 
  $ bundle --path=.bundle/gems --binstubs=.bundle/.bin
 
-The fixture corpus runs through https://github.com/ggrossetie/asciidoc-testkit[asciidoc-testkit^] (the `asciidoc-testkit-cli` npm package), so also install the JavaScript dependencies:
+The fixture corpus runs through https://github.com/ggrossetie/asciidoc-converter-testkit[asciidoc-converter-testkit^] (the `asciidoc-converter-testkit-cli` npm package), so also install the JavaScript dependencies:
 
  $ npm install
 
@@ -262,12 +262,12 @@ Then you can execute the full test suite (unit tests and the fixture corpus) wit
 
 === Fixture corpus
 
-`rake testkit:test` runs two invocations of asciidoc-testkit against the Ruby converter, since a converter flag it needs differs between them (see `tasks/testkit.rake` for the detail):
+`rake testkit:test` runs two invocations of asciidoc-converter-testkit against the Ruby converter, since a converter flag it needs differs between them (see `tasks/testkit.rake` for the detail):
 
 * the bundled 37 generic AsciiDoc-construct families (`test/expected-testkit/<family>/<case>.html`), converted embedded;
 * the project's own `standalone` family (`test/expected/standalone/<case>.html`), converted standalone and narrowed to the relevant fragment via each case's `<name>.config.json` `select` sidecar.
 
-`test/fixtures/` holds the input side (matching asciidoc-testkit's own `--fixtures` flag); `test/expected(-testkit)/` holds the expected output — deliberately not also named "fixtures", to keep the two apart at a glance.
+`test/fixtures/` holds the input side (matching asciidoc-converter-testkit's own `--fixtures` flag); `test/expected(-testkit)/` holds the expected output — deliberately not also named "fixtures", to keep the two apart at a glance.
 
 `rake testkit:update` regenerates the expected files from the current converter's output — review the diff before committing.
 

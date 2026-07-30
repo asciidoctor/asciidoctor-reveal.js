@@ -88,6 +88,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Split `rake test` into `rake test:unit` (just the unit tests) plus the aggregate `rake test` (unit tests + the asciidoc-testkit corpus); CI now runs only `test:unit` on the JRuby/TruffleRuby legs, which turned a ~2 minute job into 10+ minutes there — those legs exist to catch Ruby-implementation compat bugs, not to re-validate fixture content, which the CRuby legs already do exhaustively
   * Add a `release_notes:{assets,convert,serve,publish}` rake namespace for `release-notes/` (renamed from `examples:*`/`examples:publish`), and repoint the remaining `examples:*` tasks, `tasks/examples.js` and the `.gitignore` build-artifact rules at `test/fixtures/standalone/`; factor the shared asset-copy/static-server logic used by both namespaces into `tasks/lib/rake_assets.rb`
   * CI: run only `test:unit` (skipping the asciidoc-testkit corpus) and skip `examples:convert`/`release_notes:convert` on the `windows-latest` leg; process-spawn overhead on Windows made it by far the slowest job in the matrix, and both checks are already covered exhaustively by the Ubuntu/CRuby leg
+  * Bump `asciidoc-testkit-cli` to `asciidoc-converter-testkit-cli` 0.1.4; the tool was renamed upstream to [asciidoc-converter-testkit](https://github.com/ggrossetie/asciidoc-converter-testkit) (same invocation contract, `node_modules/.bin/asciidoc-testkit` is now `node_modules/.bin/asciidoc-converter-testkit`)
 
 ## 5.2.0 (2024-02-12)
 

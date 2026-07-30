@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 # Replaces the old `doctest:*` tasks (asciidoctor-doctest gem) with
-# asciidoc-testkit (https://github.com/ggrossetie/asciidoc-testkit), the
-# asciidoc-testkit-cli npm package (run `npm install` first).
+# asciidoc-converter-testkit (https://github.com/ggrossetie/asciidoc-converter-testkit), the
+# asciidoc-converter-testkit-cli npm package (run `npm install` first).
 #
-# Two separate invocations, not one, because asciidoc-testkit runs a single
+# Two separate invocations, not one, because asciidoc-converter-testkit runs a single
 # fixed command for every case in a given invocation (no per-case converter
 # flags) — and these two groups need different converter flags:
 #
-# - the 37 generic AsciiDoc-construct families asciidoc-testkit ships as its
+# - the 37 generic AsciiDoc-construct families asciidoc-converter-testkit ships as its
 #   bundled corpus (test/expected-testkit/<family>/<case>.html) are
 #   single-construct snippets, converted embedded (`-e`);
 # - the "standalone" family (test/expected/standalone/<case>.html,
@@ -16,7 +16,7 @@
 #   converted standalone (no `-e`), so the title slide and the
 #   `<div class="slides">` wrapper are present, then narrowed down to the
 #   relevant fragment via each case's `<name>.config.json` sidecar (a
-#   `select` CSS selector list — see asciidoc-testkit's fragment-extraction
+#   `select` CSS selector list — see asciidoc-converter-testkit's fragment-extraction
 #   docs). test/fixtures/standalone/ doubles as a browsable gallery of real
 #   presentations (background-color, grid-layout, video, ...) — it's also
 #   used by the local preview tooling (tasks/examples.rake) and the JS/Ruby
@@ -51,8 +51,8 @@ RUBY_CONVERTER = %w[bundle exec asciidoctor -r ./lib/asciidoctor_revealjs -b rev
 JS_CONVERTER = %w[node js/bin/asciidoctor-revealjs -b revealjs -S safe -o - -a revealjsdir=reveal.js@].freeze
 
 def testkit_cli
-  path = File.expand_path('../node_modules/.bin/asciidoc-testkit', __dir__)
-  abort "asciidoc-testkit-cli not found at #{path}; run `npm install` first" unless File.file?(path)
+  path = File.expand_path('../node_modules/.bin/asciidoc-converter-testkit', __dir__)
+  abort "asciidoc-converter-testkit-cli not found at #{path}; run `npm install` first" unless File.file?(path)
   path
 end
 
@@ -83,13 +83,13 @@ def run_testkit_standalone(converter, *extra_args)
   )
 end
 
-desc 'Run the asciidoc-testkit fixtures against the Ruby converter'
+desc 'Run the asciidoc-converter-testkit fixtures against the Ruby converter'
 task 'testkit:test' => 'load-converter' do
   run_testkit_generic RUBY_CONVERTER
   run_testkit_standalone RUBY_CONVERTER
 end
 
-desc 'Regenerate the asciidoc-testkit expected fixtures from the current converter'
+desc 'Regenerate the asciidoc-converter-testkit expected fixtures from the current converter'
 task 'testkit:update' => 'load-converter' do
   run_testkit_generic RUBY_CONVERTER, '--update'
   run_testkit_standalone RUBY_CONVERTER, '--update'
@@ -103,7 +103,7 @@ JS_HIGHLIGHTER_IGNORES = %w[
   standalone/source-rouge
 ].flat_map { |name| ['--ignore', "#{name}:third-party syntax highlighter provided by Asciidoctor core (only highlightjs is ported)"] }.freeze
 
-desc 'Run the asciidoc-testkit fixtures against the JS converter (parity check, no --update: the Ruby converter is the reference)'
+desc 'Run the asciidoc-converter-testkit fixtures against the JS converter (parity check, no --update: the Ruby converter is the reference)'
 task 'testkit:test:js' do
   run_testkit_generic JS_CONVERTER
   run_testkit_standalone JS_CONVERTER, *JS_HIGHLIGHTER_IGNORES
