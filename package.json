@@ -1,6 +1,6 @@
 {
   "name": "@asciidoctor/reveal.js",
-  "version": "6.0.0-beta.1",
+  "version": "6.0.0-beta.2",
   "description": "A reveal.js converter for Asciidoctor.js. Write your slides in AsciiDoc!",
   "type": "module",
   "main": "js/src/index.js",

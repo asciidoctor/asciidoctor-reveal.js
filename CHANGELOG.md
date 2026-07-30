@@ -5,6 +5,8 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## main (unreleased)
 
+## 6.0.0-beta.2 (2026-07-30)
+
 ### Bug Fixes
 
   * Fix the `Release` GitHub Actions workflow failing on `npm publish` for prerelease versions (npm requires an explicit `--tag` for those); the npm dist-tag is now derived from the branch the release is run from — `testing` from `main`, `latest-<major>-<minor>` (e.g. `latest-5-2`) from a maintenance branch like `5.2.x` — and the workflow now checks out and pushes back to that branch instead of always assuming `main`, so releasing from a maintenance branch works too
