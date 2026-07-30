@@ -26,7 +26,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          ref: main
           fetch-depth: 0
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
@@ -68,7 +67,7 @@ jobs:
           git commit -a -m "Prepare $VERSION release"
           git commit --allow-empty -m "Release $VERSION"
           git tag "v$VERSION" -m "Version $VERSION"
-          git push origin main --tags
+          git push origin "HEAD:${{ github.ref_name }}" --tags
 
   publish_ruby:
     needs: prepare
@@ -111,9 +110,26 @@ jobs:
           npm ci
       - name: Test
         run: npm t
+      # npm refuses to publish without an explicit --tag when the version is a
+      # prerelease, and defaulting to "latest" would be wrong for maintenance
+      # branches anyway. Releases from main get the "testing" dist-tag;
+      # releases from a maintenance branch like "5.2.x" get "latest-5-2" so
+      # `npm install pkg@latest` never resolves to an older maintenance line.
+      - name: Determine npm dist-tag
+        id: npm_tag
+        run: |
+          REF_NAME="${{ github.ref_name }}"
+          if [ "$REF_NAME" = "main" ]; then
+            echo "tag=testing" >> "$GITHUB_OUTPUT"
+          elif [[ "$REF_NAME" =~ ^([0-9]+)\.([0-9]+)\.x$ ]]; then
+            echo "tag=latest-${BASH_REMATCH[1]}-${BASH_REMATCH[2]}" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::Cannot determine npm dist-tag for branch '$REF_NAME'"
+            exit 1
+          fi
       # Publishes via npm trusted publishing (OIDC) — no auth token required.
       - name: Publish to npm
-        run: npm publish
+        run: npm publish --tag ${{ steps.npm_tag.outputs.tag }}
 
   # Build the Single Executable Application binary on a native runner per
   # target. SEA cannot cross-compile, so each platform/architecture is built
