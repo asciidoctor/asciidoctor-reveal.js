@@ -8,12 +8,12 @@
 /release-notes/themes/
 
 # test stuff
-/test/fixtures/standalone/*.html
-!/test/fixtures/standalone/*docinfo*.html
-/test/fixtures/standalone/reveal.js/
-/test/fixtures/standalone/Font-Awesome-6.7.2/
-/test/fixtures/standalone/reveal.js-plugins-4.6.0/
-/test/fixtures/standalone/node_modules
+/test/converter-testkit/fixtures/standalone/*.html
+!/test/converter-testkit/fixtures/standalone/*docinfo*.html
+/test/converter-testkit/fixtures/standalone/reveal.js/
+/test/converter-testkit/fixtures/standalone/Font-Awesome-6.7.2/
+/test/converter-testkit/fixtures/standalone/reveal.js-plugins-4.6.0/
+/test/converter-testkit/fixtures/standalone/node_modules
 
 # example decks (regenerate via the CLI, see examples/aurora-theme/README.adoc)
 /examples/aurora-theme/*.html

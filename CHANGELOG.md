@@ -11,6 +11,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ### Enhancements
 
+  * Regroup the asciidoc-converter-testkit corpus under `test/converter-testkit/` (`fixtures/standalone/`, `expected/generic/`, `expected/standalone/`, moved from `test/fixtures/standalone/`, `test/expected-testkit/`, `test/expected/standalone/`), so everything belonging to that corpus is identifiable at a glance instead of living directly under `test/` alongside the unrelated Ruby unit tests
   * Add Aurora, a token-based custom theme, shipped as part of both the npm package and the RubyGem under `data/themes/aurora.css` (and a light variant, `data/themes/aurora-light.css`, that changes nothing but tokens), plus four example decks in `examples/aurora-theme/` (technical workshop, literary anthology, educational mini-course, business review) exercising it across a broad mix of AsciiDoc/reveal.js features (code with line numbers and progressive highlight steps, auto-animate, columns, collapsible blocks, verse/quote, footnotes, background roles); every color/font/radius is a CSS custom property, so the theme can be restyled by overriding tokens instead of editing rules — see `examples/aurora-theme/README.adoc`
   * Upgrade to reveal.js 6.0.1
   * Image and video lightbox: add `data-preview-image`/`data-preview-video` (with optional `data-preview-fit`) to an image to open it full screen

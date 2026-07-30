@@ -3,7 +3,7 @@
 Minimal AsciiDoc slide-decks to showcase reveal.js' features, doubling as regression tests where useful — this is why some metadata (AsciiDoc comments `//`) is present.
 
 They form the `standalone` family of the asciidoc-converter-testkit fixture corpus (see `tasks/testkit.rake`): converted as full reveal.js presentations, as opposed to the generic AsciiDoc-construct corpus (bundled with asciidoc-converter-testkit itself), which is converted embedded.
-A file here with no matching `test/expected/standalone/<name>.html` is not (yet) covered by a regression test.
+A file here with no matching `test/converter-testkit/expected/standalone/<name>.html` is not (yet) covered by a regression test.
 
 == Preview examples (ruby)
 
@@ -14,4 +14,4 @@ A file here with no matching `test/expected/standalone/<name>.html` is not (yet)
     $ bundle exec rake build:converter:opal
     $ npm run examples
 
-Make sure you have a link between `test/fixtures/standalone/node_modules/` and `node_modules/` where reveal.js is installed.
+Make sure you have a link between `test/converter-testkit/fixtures/standalone/node_modules/` and `node_modules/` where reveal.js is installed.

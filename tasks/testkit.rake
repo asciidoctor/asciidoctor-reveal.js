@@ -9,31 +9,33 @@
 # flags) — and these two groups need different converter flags:
 #
 # - the 37 generic AsciiDoc-construct families asciidoc-converter-testkit ships as its
-#   bundled corpus (test/expected-testkit/<family>/<case>.html) are
+#   bundled corpus (test/converter-testkit/expected/generic/<family>/<case>.html) are
 #   single-construct snippets, converted embedded (`-e`);
-# - the "standalone" family (test/expected/standalone/<case>.html,
-#   test/fixtures/standalone/<case>.adoc) are full reveal.js presentations —
+# - the "standalone" family (test/converter-testkit/expected/standalone/<case>.html,
+#   test/converter-testkit/fixtures/standalone/<case>.adoc) are full reveal.js presentations —
 #   converted standalone (no `-e`), so the title slide and the
 #   `<div class="slides">` wrapper are present, then narrowed down to the
 #   relevant fragment via each case's `<name>.config.json` sidecar (a
 #   `select` CSS selector list — see asciidoc-converter-testkit's fragment-extraction
-#   docs). test/fixtures/standalone/ doubles as a browsable gallery of real
+#   docs). test/converter-testkit/fixtures/standalone/ doubles as a browsable gallery of real
 #   presentations (background-color, grid-layout, video, ...) — it's also
 #   used by the local preview tooling (tasks/examples.rake) and the JS/Ruby
 #   parity test (js/test/examples.test.js), so it's exposed as-is rather than
 #   duplicated. A file there with no matching
-#   test/expected/standalone/<name>.html is simply skipped, not run — that's
+#   test/converter-testkit/expected/standalone/<name>.html is simply skipped, not run — that's
 #   how a case not (yet) covered by a regression test opts out. The
 #   release-notes/ showcase (Netlify demos site) is a separate, unrelated
 #   directory not touched by this corpus at all.
 #   Each invocation's --expected root only holds the family/families it's
 #   responsible for, so the other invocation's families are silently skipped
-#   there rather than run with the wrong flag — merging test/expected-testkit
-#   and test/expected into one directory would make the standalone invocation
+#   there rather than run with the wrong flag — a single shared --expected root
+#   covering both generic/ and standalone/ would make the standalone invocation
 #   pick up the 37 generic families too and compare their standalone output
 #   against embedded-conversion expected HTML, failing all of them. Naming:
-#   "expected-testkit" is testkit's own bundled corpus; the project's own
-#   family gets the plain "expected"/"fixtures" names.
+#   everything under test/converter-testkit/ belongs to the asciidoc-converter-testkit
+#   corpus — fixtures/ is the input side (matching its own `--fixtures` flag),
+#   expected/generic/ is testkit's own bundled corpus, expected/standalone/ is
+#   the project's own family.
 #
 # Both invocations run through the input file itself (the {input} token, not
 # stdin), so a case that resolves file-relative references — docinfo files,
@@ -71,14 +73,19 @@ def run_testkit(expected:, converter:, converter_args: [], fixtures: nil, extra_
 end
 
 def run_testkit_generic(converter, *extra_args)
-  run_testkit(expected: 'test/expected-testkit', converter: converter, converter_args: ['-e'], extra_args: extra_args)
+  run_testkit(
+    expected: 'test/converter-testkit/expected/generic',
+    converter: converter,
+    converter_args: ['-e'],
+    extra_args: extra_args
+  )
 end
 
 def run_testkit_standalone(converter, *extra_args)
   run_testkit(
-    expected: 'test/expected',
+    expected: 'test/converter-testkit/expected',
     converter: converter,
-    fixtures: 'test/fixtures',
+    fixtures: 'test/converter-testkit/fixtures',
     extra_args: extra_args
   )
 end
