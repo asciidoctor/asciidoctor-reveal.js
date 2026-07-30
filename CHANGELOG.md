@@ -5,6 +5,8 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## main (unreleased)
 
+## 6.0.0-beta.1 (2026-07-30)
+
 ### Breaking Changes
 
   * Redefine docinfo `header`/`footer` to match every other Asciidoctor converter (first/last child of `<body>`) instead of first/last child of `.slides`; the previous meaning is still available under its own name, `slides-header`/`slides-footer`. Also fixes the unsuffixed, generic `docinfo-footer.html` leaking into `revealjs` output at the (now redefined) `footer` position — only the backend-suffixed `docinfo-footer-revealjs.html` is read there. Adds two entirely new per-slide locations, `slide-header`/`slide-footer`, injected into every slide (horizontal and vertical). See the [migration guide](https://docs.asciidoctor.org/reveal.js-converter/latest/converter/migrating-to-v6.html) and the [docinfo page](https://docs.asciidoctor.org/reveal.js-converter/latest/converter/docinfo.html) (#466, #510, #364, #489)
