@@ -8,6 +8,8 @@ on:
         required: true
         type: string
 
+run-name: Release ${{ inputs.version }} by @${{ github.actor }}
+
 # Allow the prepare job to push the release commits and tag, and the publish
 # job to create the GitHub release.
 permissions:
