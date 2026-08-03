@@ -49,7 +49,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Install Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Install Ruby
@@ -91,7 +91,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Install Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 22
       # The JS parity tests compare the converter output byte-for-byte against
