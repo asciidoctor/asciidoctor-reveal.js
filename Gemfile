@@ -9,7 +9,7 @@ group :development do
   gem 'minitest', '~> 5.25'
   gem 'rake', '~> 13.4.0'
   gem 'rubocop', '~> 1.86', require: false
-  gem 'rubocop-minitest', '~> 0.39.1'
+  gem 'rubocop-minitest', '~> 0.40.0'
   gem 'rubocop-rake', '~> 0.7.1'
   if RUBY_ENGINE != 'jruby'
     gem 'irb'
