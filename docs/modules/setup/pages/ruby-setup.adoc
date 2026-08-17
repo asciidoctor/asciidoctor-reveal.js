@@ -41,8 +41,8 @@ gem 'asciidoctor-revealjs' # <.>
 
 . Install the gems into the project using Bundler
 
-  $ bundle config --local path .bundle/gems
-  $ bundle
+  $ bundle config set --local path .bundle/gems
+  $ bundle install
 
 . (Optional) Copy or clone reveal.js presentation framework
 
