@@ -5,6 +5,8 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## main (unreleased)
 
+  * The required development tools are now installed using `mise` and not `volta`. File `mise.toml` contains configuration information to be used by `mise`.
+
 ## 6.0.0-beta.2 (2026-07-30)
 
 ### Bug Fixes
