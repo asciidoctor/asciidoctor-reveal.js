@@ -5,6 +5,10 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## main (unreleased)
 
+### Enhancements
+
+  * Update to reveal.js 6.0.2
+
 ### Build
 
   * Pin Node.js and Ruby with mise (`mise.toml`) instead of Volta and `.ruby-version`, and use these versions in the GitHub Actions workflows
