@@ -59,5 +59,11 @@
     "asciidoctor": ">=4.0.0 <5.0.0",
     "esbuild": "0.28.0",
     "postject": "1.0.0-alpha.6"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "24.22.0"
+    }
   }
 }
