@@ -23,6 +23,7 @@ asciidoc:
     url-pygment: 'https://pygments.org'
     url-coderay: 'http://coderay.rubychan.de'
     url-bundler: 'https://bundler.io'
+    url-mise: 'https://mise.jdx.dev'
     url-highlightjs: 'https://highlightjs.org'
     url-bulma: 'https://bulma.io'
     url-gh-pages: 'https://pages.github.com'

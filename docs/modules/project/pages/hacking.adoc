@@ -4,6 +4,20 @@ Short instructions that aim to help potential contributors.
 
 == Getting Started
 
+=== Tool versions
+
+The versions of Node.js and Ruby used to develop the project are pinned in the `mise.toml` file at the root of the repository.
+The GitHub Actions workflows read the same file, so you get the same versions as the CI.
+
+We recommend using {url-mise}[mise^] to install and activate these versions.
+From the root of the repository, run:
+
+ $ mise install
+
+If you manage your tools differently, make sure to use the versions declared in `mise.toml`.
+
+=== Development workflow
+
 * Set up the Asciidoctor reveal.js plugin in xref:ruby-localversion[development mode]
 * Modify the converter, written in plain Ruby, in `lib/asciidoctor_revealjs/converter.rb`
 

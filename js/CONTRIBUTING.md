@@ -36,6 +36,8 @@ per-slide footnote state must be mutated in document order, so vertical slides/b
 
 ## Test
 
+The Node.js and Ruby versions are pinned in `../mise.toml`; we recommend [mise](https://mise.jdx.dev) to install them (`mise install`).
+
 ```sh
 npm test            # node --test js/test/  (Node >= 20)
 ```
