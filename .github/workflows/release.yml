@@ -29,12 +29,10 @@ jobs:
           fetch-depth: 0
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.4.10'
       - name: Install Node
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version-file: mise.toml
       - name: Configure Nokogiri installation (Linux)
         run: |
           bundle config --local build__nokogiri --use-system-libraries
@@ -92,13 +90,13 @@ jobs:
           ref: refs/tags/v${{ inputs.version }}
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version-file: mise.toml
           registry-url: https://registry.npmjs.org/
       # The JS parity tests compare the converter output byte-for-byte against
       # the Ruby reference converter, so the Ruby toolchain is required too.
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
-      # npm trusted publishing (OIDC) requires npm >= 11.5.1; Node 22 ships an older npm.
+      # npm trusted publishing (OIDC) requires npm >= 11.5.1, which the bundled npm may predate.
       - name: Update npm
         run: npm install -g npm@latest
       - name: Install dependencies
@@ -155,13 +153,13 @@ jobs:
           ref: refs/tags/v${{ inputs.version }}
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version-file: mise.toml
       - name: Install dependencies
         run: npm ci
       - name: Build single executable
         run: npm run build:sea
       - name: Upload binary
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.asset }}
           path: dist/${{ matrix.asset }}
@@ -179,9 +177,9 @@ jobs:
           ref: refs/tags/v${{ inputs.version }}
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version-file: mise.toml
       - name: Download binaries
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: dist
           merge-multiple: true

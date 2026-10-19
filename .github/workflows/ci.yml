@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04]
-        ruby: ['3.4']
+        ruby: ['mise.toml']
         test_task: [test]
         include:
           # JRuby/TruffleRuby run test:unit only (not the full test, which
@@ -30,7 +30,7 @@ jobs:
             ruby: jruby-9.4.14.0
             test_task: test:unit
           - os: macos-latest
-            ruby: '3.4'
+            ruby: 'mise.toml'
             test_task: test
           # Windows runs unit tests only (not the asciidoc-converter-testkit corpus,
           # nor examples/release-notes conversion): the same ~300 sequential
@@ -40,7 +40,7 @@ jobs:
           # to re-validate fixture content already covered exhaustively by
           # the Ubuntu/CRuby leg.
           - os: windows-latest
-            ruby: '3.4'
+            ruby: 'mise.toml'
             test_task: test:unit
     runs-on: ${{ matrix.os }}
     env:
@@ -51,7 +51,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version-file: mise.toml
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -63,7 +63,10 @@ jobs:
         run: bundle --jobs 3 --retry 3
       - name: Install npm dependencies
         run: npm ci
+      # RuboCop crashes on TruffleRuby (Lint/MissingCopEnableDirective), and
+      # lint results don't depend on the Ruby implementation anyway.
       - name: Run RuboCop
+        if: ${{ !startsWith(matrix.ruby, 'truffleruby') }}
         run: bundle exec rubocop
       - name: Run tests
         run: bundle exec rake ${{ matrix.test_task }}
@@ -80,7 +83,7 @@ jobs:
       # converter) are excluded via --ignore in tasks/testkit.rake, so this
       # can fail the build on any other (real) regression.
       - name: Run testkit:test:js (JS/Ruby parity)
-        if: matrix.os == 'ubuntu-22.04' && matrix.ruby == '3.4'
+        if: matrix.os == 'ubuntu-22.04' && matrix.ruby == 'mise.toml'
         run: bundle exec rake testkit:test:js
   build_js:
     strategy:
@@ -93,7 +96,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version-file: mise.toml
       # The JS parity tests compare the converter output byte-for-byte against
       # the Ruby reference converter, so the Ruby toolchain is required too.
       - name: Install Ruby

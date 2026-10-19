@@ -5,6 +5,11 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## main (unreleased)
 
+### Build
+
+  * Pin Node.js and Ruby with mise (`mise.toml`) instead of Volta and `.ruby-version`, and use these versions in the GitHub Actions workflows
+  * Bump `actions/upload-artifact` to v7 and `actions/download-artifact` to v8
+
 ## 6.0.0-beta.2 (2026-07-30)
 
 ### Bug Fixes
