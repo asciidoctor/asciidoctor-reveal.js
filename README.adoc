@@ -45,7 +45,7 @@ Every demo is a reveal.js slide deck written in AsciiDoc.
 
 Interested in contributing?
 We'd love your help.
-Head over to the {url-documentation-site}/project/hacking[developer documentation] to get started.
+Head over to the {url-documentation-site}project/hacking/[developer documentation] to get started.
 
 == Copyright and Licensing
 

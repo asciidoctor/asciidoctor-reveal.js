@@ -244,12 +244,14 @@ This sets `<version>` in _package.json_ and _lib/asciidoctor_revealjs/version.rb
 === Maintenance branch
 
 You can (not must) create a maintenance branch from a tag, only when needed (e.g., to backport a fix to a previous line).
-Use the same name convention as the other Asciidoctor repositories: `v\{major}.\{minor}.x` (e.g., `v4.1.x`).
+Name it `\{major}.\{minor}.x`, without a `v` prefix (e.g., `5.2.x`): the release workflow only accepts `main` or a branch matching this pattern, and derives the npm dist-tag from it (`latest-5-2` for `5.2.x`).
 
 [%interactive]
-* [ ] create the branch from the release tag: `git checkout -b v4.1.x v4.1.0`
-* [ ] push the maintenance branch: `git push origin v4.1.x`
+* [ ] create the branch from the release tag: `git checkout -b 5.2.x v5.2.0`
+* [ ] push the maintenance branch: `git push origin 5.2.x`
 * [ ] don't forget to update Antora playbook to add this branch: https://github.com/asciidoctor/docs.asciidoctor.org/edit/main/antora-playbook.yml
+
+To release from a maintenance branch, select it instead of `main` when you run the release workflow.
 
 === New major version
 
