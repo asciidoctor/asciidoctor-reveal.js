@@ -16,7 +16,7 @@ The executables are built using the xref:node-js-setup.adoc[Node / JavaScript] t
 * Copy or clone the reveal.js presentation framework into the directory where you will build your slide deck.
 Here we do a shallow clone of the repo:
 
-  $ git clone -b 6.0.1 --depth 1 https://github.com/hakimel/reveal.js.git
+  $ git clone -b 6.0.2 --depth 1 https://github.com/hakimel/reveal.js.git
 
 == Convert AsciiDoc into slides
 
@@ -55,6 +55,6 @@ To convert the sample presentation into slides, open a terminal and type:
 The above command will generate a file named [.path]_presentation.html_.
 You can open this file in a browser.
 
-TIP: Alternatively, you can use `:revealjsdir: https://cdn.jsdelivr.net/npm/reveal.js` to avoid setting up reveal.js locally.
+TIP: Alternatively, you can use `:revealjsdir: https://cdn.jsdelivr.net/npm/reveal.js@6.0.2` to avoid setting up reveal.js locally.
 Just be aware that the presentation will not load without an internet connection.
 Also, when using jsDelivr, speaker notes are served as plain text instead of HTML for https://www.jsdelivr.com/documentation#id-be-advised-that-you-must-include-file-extension-in-the-values-for-example-main-index--this-will-not-work-main-indexjs--this-is-the-correct-way-restrictions[security reasons], so they will not work.
