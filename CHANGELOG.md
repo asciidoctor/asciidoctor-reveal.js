@@ -9,6 +9,10 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
   * Update to reveal.js 6.0.2
 
+### Bug Fixes
+
+  * Number the footnotes of a slide in document order in the JavaScript converter, like the Ruby converter; a footnote in a list item or table cell was numbered ahead of the footnotes in the paragraphs above it, and a footnote defined above a reference in a list item or table cell was listed with its id instead of its text
+
 ### Build
 
   * Pin Node.js and Ruby with mise (`mise.toml`) instead of Volta and `.ruby-version`, and use these versions in the GitHub Actions workflows

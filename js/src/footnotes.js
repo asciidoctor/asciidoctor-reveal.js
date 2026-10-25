@@ -24,6 +24,14 @@ const titleFootnotes = new Map()
 // in the section body.
 const bodyFootnotes = new Map()
 
+// A footnote in the body of a slide first gets a placeholder as its number, because
+// list item and table cell text is substituted before the slides are converted. The
+// placeholders are replaced by the real numbers in the order they appear in the slide
+// (see resolveSlideFootnotes), which is the document order.
+const PLACEHOLDER_MARK = '\u0001\u0001'
+const PLACEHOLDER_RX = /\u0001\u0001slide-fn:\d+\u0001\u0001/g
+let placeholderSeq = 0
+
 function isSection (node) {
   return node != null && typeof node.getContext === 'function' && node.getContext() === 'section'
 }
@@ -68,13 +76,39 @@ export function slideFootnote (footnote) {
   // it on `getTarget()`. Anonymous footnotes (neither) are always distinct.
   const id = footnote.getId() || footnote.getTarget()
   const existing = id ? bodyFn.find((fn) => fn.id === id) : null
-  const index = existing ? existing.index : titleFn.length + bodyFn.length + 1
+  let index
+  if (existing) index = existing.index
+  else if (section == null) index = titleFn.length + bodyFn.length + 1
+  else index = `${PLACEHOLDER_MARK}slide-fn:${placeholderSeq++}${PLACEHOLDER_MARK}`
   const inlineFootnote = new Inline(footnoteParent, footnote.getContext(), footnote.getText(), { attributes: { ...footnote.getAttributes(), index } })
   if (!existing) {
     bodyFn.push({ index, id, text: inlineFootnote.getText() })
     bodyFootnotes.set(bucketKey, bodyFn)
+  } else if (footnote.getId()) {
+    // A reference in a list item or table cell is substituted before the definition
+    // above it, so the entry was created with the fallback text; use the definition's.
+    existing.text = inlineFootnote.getText()
   }
   return inlineFootnote
+}
+
+// Number the footnotes of the slide in the order their placeholders appear in its HTML,
+// after the footnotes declared on its title, and return the HTML with the numbers.
+export function resolveSlideFootnotes (section, html) {
+  const bodyFn = bodyFootnotes.get(section) || []
+  const numbers = new Map()
+  let next = (titleFootnotes.get(section) || []).length + 1
+  const resolved = html.replace(PLACEHOLDER_RX, (placeholder) => {
+    if (!numbers.has(placeholder)) numbers.set(placeholder, next++)
+    return String(numbers.get(placeholder))
+  })
+  for (const fn of bodyFn) {
+    if (typeof fn.index !== 'string') continue
+    if (!numbers.has(fn.index)) numbers.set(fn.index, next++)
+    fn.index = numbers.get(fn.index)
+  }
+  bodyFn.sort((a, b) => a.index - b.index)
+  return resolved
 }
 
 export function slideFootnotes (section) {
