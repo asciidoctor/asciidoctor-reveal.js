@@ -13,6 +13,8 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
   * Number the footnotes of a slide in document order in the JavaScript converter, like the Ruby converter; a footnote in a list item or table cell was numbered ahead of the footnotes in the paragraphs above it, and a footnote defined above a reference in a list item or table cell was listed with its id instead of its text
   * Fix the Ruby converter failing with `undefined method 'nil_or_empty?' for :arabic:Symbol` on an ordered list whose style is derived from its marker (e.g., `1.`, `a.` or `i)`), and emit the `type` attribute on these lists like the JS converter does
+  * Number the footnotes outside of a slide (embedded document, deck without sections, preamble) and in AsciiDoc table cells in document order in the JavaScript converter, like the Ruby converter; the footnotes listed at the end of an embedded document no longer leak Asciidoctor.js core placeholders (e.g., `_footnote_\x01\x01fn:0\x01\x01`) or duplicate numbers, and a footnote in an AsciiDoc table cell is now listed on its slide
+  * Fix a memory leak in the JavaScript converter: the footnote state was kept in module-level maps, so every converted document stayed in memory; it is now attached to the document and released with it
 
 ### Build
 
@@ -20,6 +22,8 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Bump `actions/upload-artifact` to v7 and `actions/download-artifact` to v8
   * Merge `CHANGELOG.md` with Git's `union` merge driver (`.gitattributes`), so a local merge or rebase keeps the entries of both sides instead of stopping on a conflict
   * Publish a final release from `main` to npm under the `latest` dist-tag instead of `testing`, which is now only used for prereleases (e.g. `6.0.0-beta.2`)
+  * Bump the Asciidoctor.js development dependency to 4.1.1 (`package-lock.json`); the supported range (`>=4.0.0 <5.0.0`) is unchanged
+  * Package `CHANGELOG.md` in the RubyGem (the gemspec looked for a nonexistent `CHANGELOG.adoc`) and remove the nonexistent `HACKING.adoc` from its `extra_rdoc_files`
 
 ## 6.0.0-beta.2 (2026-07-30)
 

@@ -224,3 +224,75 @@ Paragraph.footnote:x[Definition]
 
   assert.ok(result.includes('<div class="footnotes"><div class="footnote">1. Definition</div></div>'))
 })
+
+test('numbers the footnotes of an embedded document without sections in document order', async () => {
+  // List item and table cell text is substituted before the paragraph above them.
+  const content = `Para footnote:[p]
+
+* item footnote:[li]
+
+|===
+|cell footnote:[c]
+|===`
+
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs', standalone: false })
+
+  assert.ok(result.includes('<p>Para <sup class="footnote">[<span class="footnote" title="View footnote.">1</span>]</sup></p>'))
+  assert.ok(result.includes('<li><p>item <sup class="footnote">[<span class="footnote" title="View footnote.">2</span>]</sup></p></li>'))
+  assert.ok(result.includes('<p class="tableblock">cell <sup class="footnote">[<span class="footnote" title="View footnote.">3</span>]</sup></p>'))
+  assert.ok(result.includes('<div id="footnotes"><hr><div class="footnote" id="_footnote_1"><a href="#_footnoteref_1">1</a>. p</div><div class="footnote" id="_footnote_2"><a href="#_footnoteref_2">2</a>. li</div><div class="footnote" id="_footnote_3"><a href="#_footnoteref_3">3</a>. c</div></div>'))
+  assert.ok(!result.includes('\u0001'), 'no footnote placeholder leaks into the output')
+})
+
+test('numbers the footnotes of a deck without sections in document order', async () => {
+  // The block title is substituted before the paragraph above it.
+  const content = `= Deck
+
+Para footnote:[p]
+
+.Title footnote:[t]
+----
+code
+----`
+
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs', standalone: true })
+
+  assert.ok(result.includes('<p>Para <sup class="footnote">[<span class="footnote" title="View footnote.">1</span>]</sup></p>'))
+  assert.ok(result.includes('<div class="title">Title <sup class="footnote">[<span class="footnote" title="View footnote.">2</span>]</sup></div>'))
+  assert.ok(!result.includes('\u0001'), 'no footnote placeholder leaks into the output')
+})
+
+test('lists the footnotes of an AsciiDoc table cell on its slide', async () => {
+  // AsciiDoc table cells are converted before the slides.
+  const content = `= Deck
+
+== Slide
+
+Para footnote:[p]
+
+|===
+a|cell footnote:[x]
+|===`
+
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs', standalone: true })
+
+  assert.ok(result.includes('<p>cell <sup class="footnote">[<span class="footnote" title="View footnote.">2</span>]</sup></p></div><div id="footnotes"><hr><div class="footnote" id="_footnote_2"><a href="#_footnoteref_2">2</a>. x</div></div>'))
+  assert.ok(result.includes('<div class="footnotes"><div class="footnote">1. p</div><div class="footnote">2. x</div></div></section>'))
+  assert.ok(!result.includes('\u0001'), 'no footnote placeholder leaks into the output')
+})
+
+test('numbers the footnotes listed at the end of an embedded deck across slides', async () => {
+  const content = `== First
+
+One footnote:[one]
+
+== Second
+
+* item footnote:[two]`
+
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs', standalone: false })
+
+  assert.ok(result.includes('<li><p>item <sup class="footnote">[<span class="footnote" title="View footnote.">1</span>]</sup></p></li>'))
+  assert.ok(result.includes('<div class="footnotes"><div class="footnote">1. two</div></div></section>'))
+  assert.ok(result.includes('<div id="footnotes"><hr><div class="footnote" id="_footnote_1"><a href="#_footnoteref_1">1</a>. one</div><div class="footnote" id="_footnote_2"><a href="#_footnoteref_2">2</a>. two</div></div>'))
+})
