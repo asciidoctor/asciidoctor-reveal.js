@@ -445,6 +445,7 @@ export default class RevealJsConverter extends ConverterBase {
         const content = chomp(await node.content())
         if (content !== '') inner += `<div class="slide-content">${content}</div>`
       }
+      inner = Footnotes.resolveSlideFootnotes(node, inner)
       inner += footnotes()
       inner += await docinfoContent(node.getDocument(), '-revealjs.html', 'slide-footer')
       return `<section${attrs}>${inner}</section>`
