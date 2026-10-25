@@ -47,6 +47,12 @@ module Asciidoctor
         refute_includes html, 'My Title'
       end
 
+      def test_ordered_list_styled_by_its_marker
+        assert_includes convert('1. one'), '<div class="olist arabic"><ol class="arabic"><li><p>one</p></li></ol></div>'
+        assert_includes convert('a. two'), '<div class="olist loweralpha"><ol class="loweralpha" type="a"><li><p>two</p></li></ol></div>'
+        assert_includes convert('I) three'), '<div class="olist upperroman"><ol class="upperroman" type="I"><li><p>three</p></li></ol></div>'
+      end
+
       def test_unstyled_list_gets_the_asciidoctor_default_no_bullet_css
         html = ::Asciidoctor.convert <<~ADOC, safe: :safe, backend: 'revealjs', header_footer: true
           = Title

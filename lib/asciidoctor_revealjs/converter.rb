@@ -432,7 +432,9 @@ module Asciidoctor
       end
 
       def convert_olist(node, _opts = {})
-        attrs = attributes({ id: node.id, class: ['olist', node.style, node.role] }.merge(data_attrs(node.attributes)))
+        # The style is a Symbol (e.g., :loweralpha) when it's derived from the list marker
+        style = node.style&.to_s
+        attrs = attributes({ id: node.id, class: ['olist', style, node.role] }.merge(data_attrs(node.attributes)))
         buf = +''
         buf << %(<div class="title">#{node.title}</div>) if node.title?
         inner = +''
@@ -441,7 +443,7 @@ module Asciidoctor
           li << item.content.to_s if item.blocks?
           inner << %(<li#{attributes(class: ('fragment' if step_or_role?(node)))}>#{li}</li>)
         end
-        buf << %(<ol#{attributes(class: node.style, start: (node.attr :start), type: node.list_marker_keyword)}>#{inner}</ol>)
+        buf << %(<ol#{attributes(class: style, start: (node.attr :start), type: node.list_marker_keyword(style))}>#{inner}</ol>)
         %(<div#{attrs}>#{buf}</div>)
       end
 
