@@ -19,3 +19,31 @@ include::example$data-attributes.adoc[tags=video]
 -----
 
 Data attributes can be combined with custom JavaScript code to create more dynamic presentations.
+
+[#lightbox]
+== Image and video lightbox
+
+reveal.js 6 can open an image or a video in a full-screen lightbox when you click on it.
+Since data attributes are passed through to the generated HTML, you can enable the lightbox with the reveal.js `data-preview-image` and `data-preview-video` attributes:
+
+[source,asciidoc]
+----
+== Image lightbox
+
+image::cat.jpg[A cute cat,height=320px,data-preview-image=images/cat.jpg]
+
+== Video lightbox
+
+image::video-poster.jpg[Video poster,data-preview-video=videos/demo.mp4,data-preview-fit=cover]
+----
+
+Clicking on the image opens the URL given as the value of `data-preview-image` (an image) or `data-preview-video` (a video) in the lightbox.
+Press `Esc`, or click on the close button, to close it.
+
+The attribute is set on the element that wraps the image (`<div class="imageblock">`), not on the `<img>` element itself, so the URL is required: reveal.js can't fall back to the `src` of the image.
+The URL is used as is, which means that the `imagesdir` attribute isn't applied to it: specify the path relative to the generated HTML file (or an absolute URL).
+
+You can use the optional `data-preview-fit` attribute to control how the media is resized to fit the lightbox: `scale-down` (the default), `contain`, `cover` or `none`.
+These values have the same meaning as the CSS `object-fit` property.
+
+TIP: To open a web page in an iframe overlay instead, use the `preview=true` attribute on a link, or the `link_preview` attribute on an image (see `:revealjs_previewLinks:` in xref:revealjs-options.adoc[]).

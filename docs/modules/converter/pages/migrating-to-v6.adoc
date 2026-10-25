@@ -2,7 +2,29 @@
 :navtitle: Migrating to v6
 
 v6 carries a few breaking changes.
-None of them require touching your slide content — at most, renaming a docinfo file or two.
+Most of them affect how you set up and run the converter (the reveal.js version, the JavaScript API, the standalone executables) rather than your slides.
+As far as slide content goes, you may have to rename a docinfo file or two at most.
+
+[#revealjs-6]
+== reveal.js 6 is required
+
+The generated HTML now targets the reveal.js 6 distribution layout (for instance, the built-in plugins are loaded from [.path]_dist/plugin/zoom.js_ instead of [.path]_plugin/zoom/zoom.js_), so it no longer works with reveal.js 4 or 5.
+See the xref:setup:compatibility-matrix.adoc[] for details.
+
+If `revealjsdir` points at a local copy or a CDN URL of reveal.js 4 or 5, upgrade it to reveal.js 6, for instance:
+
+[source,asciidoc]
+----
+:revealjsdir: https://cdn.jsdelivr.net/npm/reveal.js@6.0.2
+----
+
+Or, for a local copy:
+
+ $ git clone -b 6.0.2 --depth 1 https://github.com/hakimel/reveal.js.git
+
+The npm package already depends on reveal.js 6, so if you use the default `revealjsdir` with Node.js (`node_modules/reveal.js`), reinstalling your dependencies is enough.
+
+If you use third-party reveal.js plugins, make sure the version you load supports reveal.js 6.
 
 [#docinfo]
 == Docinfo `header`/`footer` now match the html5 converter
@@ -37,7 +59,7 @@ xref:docinfo.adoc[] documents the full set of insertion locations, including two
 
 == Embedded conversion wraps the title in a proper title slide
 
-Converting with `header_footer: false` (or `--no-header-footer`) and `showtitle` used to render the document title as a bare `<h1>My Title</h1>`, outside of any `<section>`.
+Converting with `standalone: false` (or `--embedded`/`--no-header-footer`) and `showtitle` used to render the document title as a bare `<h1>My Title</h1>`, outside of any `<section>`.
 It's now wrapped the same way the standalone converter already wraps it:
 
 [source,html]
@@ -54,7 +76,8 @@ It now behaves consistently: setting `:notitle:` on a document with a title remo
 
 If you had `:notitle:` set on a presentation and still expected to see the title slide, remove the attribute.
 
-== JavaScript converter: Node.js 20+ and Asciidoctor.js 4.0
+[#javascript-api]
+== JavaScript converter: Node.js 20+, Asciidoctor.js 4.0 and an ESM, asynchronous API
 
 The JavaScript converter is now a native port targeting the Asciidoctor.js 4.0 API (async convert handlers), instead of running through the Slim-templates compiler on top of Asciidoctor.js 2.x/3.x.
 This raises two minimum versions:
@@ -62,4 +85,61 @@ This raises two minimum versions:
 * Node.js 20 or later
 * `asciidoctor` (the npm package) `>=4.0.0 <5.0.0`
 
+Asciidoctor.js 4.0 is published as the `asciidoctor` package instead of `@asciidoctor/core`.
+It's a peer dependency of `@asciidoctor/reveal.js`, so install it alongside the converter:
+
+ $ npm i --save asciidoctor @asciidoctor/reveal.js
+
+Both packages are now ES modules only, and the conversion functions (`convert`, `convertFile`) are asynchronous, so a script that uses the JavaScript API must be updated:
+
+.Before (v5)
+[source,javascript]
+----
+var asciidoctor = require('@asciidoctor/core')()
+var asciidoctorRevealjs = require('@asciidoctor/reveal.js')
+asciidoctorRevealjs.register()
+
+var options = { safe: 'safe', backend: 'revealjs' }
+asciidoctor.convertFile('presentation.adoc', options)
+----
+
+.After (v6)
+[source,javascript]
+----
+import { convertFile } from 'asciidoctor'
+import { register } from '@asciidoctor/reveal.js'
+
+register()
+
+const options = { safe: 'safe', backend: 'revealjs' }
+await convertFile('presentation.adoc', options)
+----
+
+Use the [.path]_.mjs_ file extension (or set `"type": "module"` in your [.path]_package.json_) so Node.js loads the script as an ES module.
+See xref:setup:node-js-setup.adoc[] for a complete example.
+
 The Ruby gem's `asciidoctor` dependency is unaffected (`>= 2.0.0, < 3.0.0`).
+
+[#standalone-executable]
+== Standalone executables: new platforms and file names
+
+The xref:setup:standalone-executable.adoc[standalone executables] are now built for the following platforms:
+
+* Linux: amd64 (x86-64) and arm64
+* macOS: arm64 (Apple Silicon)
+* Windows: amd64 (x86-64)
+
+v5 provided a single x86-64 executable per operating system, including macOS.
+There's no macOS Intel (x86-64) executable anymore: on an Intel Mac, use the xref:setup:node-js-setup.adoc[npm package] or the xref:setup:ruby-setup.adoc[Ruby gem] instead.
+
+The release assets are now named after the platform and the architecture: `asciidoctor-revealjs-linux-amd64`, `asciidoctor-revealjs-linux-arm64`, `asciidoctor-revealjs-macos-arm64` and `asciidoctor-revealjs-win-amd64.exe` (instead of `asciidoctor-revealjs-linux`, `asciidoctor-revealjs-macos` and `asciidoctor-revealjs-win.exe`).
+If a script downloads them, update the file names.
+
+[#highlightjs]
+== The highlight.js adapter only applies to the `revealjs` backend
+
+To support the reveal.js highlight plugin, this converter registers its own `highlightjs` (and `highlight.js`) syntax highlighter.
+Before v6, loading the converter replaced the built-in highlight.js syntax highlighter for *every* backend: for instance, an `html5` conversion with `:source-highlighter: highlightjs` running in the same process got the reveal.js-specific `data-noescape`/`data-line-numbers` attributes and the highlight plugin scripts.
+
+In v6, the adapter delegates to the built-in highlight.js syntax highlighter whenever the backend isn't `revealjs` (or `reveal.js`), so loading this converter no longer changes the output of the other backends.
+Presentations converted with the `revealjs` backend are not affected.

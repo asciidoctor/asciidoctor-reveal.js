@@ -1,1 +1,1 @@
-../../../../test/fixtures/standalone/title-slide-image.adoc
+../../../../test/converter-testkit/fixtures/standalone/title-slide-image.adoc

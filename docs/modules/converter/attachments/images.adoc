@@ -1,1 +1,1 @@
-../../../../test/fixtures/standalone/images.adoc
+../../../../test/converter-testkit/fixtures/standalone/images.adoc

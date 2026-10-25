@@ -64,7 +64,7 @@ This deck itself is themed with *Aurora* — a dark, gradient-accented custom th
 [.timeline]
 * `aurora.css` — the dark theme powering this deck
 * `aurora-light.css` — a light variant, same tokens, different values
-* Ships in `data/themes/`, part of the `@asciidoctor/reveal.js` npm package — no copying required
+* Ships in `data/themes/`, part of both the `@asciidoctor/reveal.js` npm package and the `asciidoctor-revealjs` gem — no copying required
 
 See the https://github.com/asciidoctor/asciidoctor-reveal.js/blob/main/examples/aurora-theme/README.adoc[Aurora README] for the full token reference and four example decks.
 
