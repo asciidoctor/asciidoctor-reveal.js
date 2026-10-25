@@ -218,12 +218,17 @@ export default class RevealJsConverter extends ConverterBase {
   }
 
   async convert_document (node) {
-    const slidesContent = await node.content()
+    Footnotes.startDocument(node)
+    // Footnotes outside of a slide are numbered in conversion order, like Ruby: the
+    // slides (or the content of a deck without sections) first, then the preamble.
+    const slidesContent = Footnotes.resolveDocumentFootnotes(node, await node.content())
+    // The document title is converted next, for the <title> element.
+    Footnotes.recordTitleFootnotes(node.getHeader())
     const slides = async () => {
       let buf = ''
       if (!node.isNoheader()) {
         buf += await docinfoContent(node, '-revealjs.html', 'slides-header')
-        if (node.hasHeader() && !node.isNotitle()) buf += await this.convert(node, 'title_slide')
+        if (node.hasHeader() && !node.isNotitle()) buf += Footnotes.resolveDocumentFootnotes(node, await this.convert(node, 'title_slide'))
       }
       buf += slidesContent ?? ''
       buf += await docinfoContent(node, '-revealjs.html', 'slides-footer')
@@ -307,7 +312,7 @@ export default class RevealJsConverter extends ConverterBase {
     }
     buf += await docinfoContent(node, '-revealjs.html', 'footer', 'body-footer')
     buf += '</body></html>'
-    return buf
+    return Footnotes.resolveGlobalFootnotes(node, buf)
   }
 
   async convert_title_slide (node) {
@@ -352,6 +357,7 @@ export default class RevealJsConverter extends ConverterBase {
     // OPTIONS PROCESSING
     // hide slides on %conceal, %notitle and named "!"
     const title = node.getTitle()
+    Footnotes.recordTitleFootnotes(node)
     const titleless = title === '!'
     const hideTitle = titleless || node.hasOption('notitle') || node.hasOption('conceal')
 
@@ -435,8 +441,8 @@ export default class RevealJsConverter extends ConverterBase {
       if (parentSectionWithVerticalSlides) {
         const blocks = node.getBlocks().filter((block) => !verticalSlides.includes(block))
         if (blocks.length > 0) {
-          // Convert sequentially: the per-slide footnote state is shared module-level
-          // state and must be mutated in document order (Ruby is fully synchronous).
+          // Convert sequentially: the footnote state is shared per document and must be
+          // mutated in document order (Ruby is fully synchronous).
           let converted = ''
           for (const block of blocks) converted += await block.convert()
           inner += `<div class="slide-content">${converted}</div>`
@@ -661,17 +667,26 @@ export default class RevealJsConverter extends ConverterBase {
   }
 
   async convert_embedded (node) {
+    // A nested document (AsciiDoc table cell) is converted before the root document:
+    // its footnotes are numbered with the slide (or the document) that contains it.
+    const nested = node.isNested()
+    if (!nested) Footnotes.startDocument(node)
+    const resolve = (html) => nested ? (html ?? '') : Footnotes.resolveDocumentFootnotes(node, html ?? '')
     let buf = ''
-    if (node.hasHeader() && !node.isNotitle()) buf += await this.convert(node, 'title_slide')
-    buf += (await node.content()) ?? ''
-    if (node.hasFootnotes() && !node.hasAttribute('nofootnotes')) {
+    if (node.hasHeader() && !node.isNotitle()) {
+      if (!nested) Footnotes.recordTitleFootnotes(node.getHeader())
+      buf += resolve(await this.convert(node, 'title_slide'))
+    }
+    buf += resolve(await node.content())
+    const footnotes = Footnotes.documentFootnotes(node, buf)
+    if (footnotes.length > 0 && !node.hasAttribute('nofootnotes')) {
       buf += '<div id="footnotes"><hr>'
-      for (const fn of node.getFootnotes()) {
-        buf += `<div class="footnote" id="_footnote_${fn.getIndex()}"><a href="#_footnoteref_${fn.getIndex()}">${fn.getIndex()}</a>. ${fn.getText()}</div>`
+      for (const fn of footnotes) {
+        buf += `<div class="footnote" id="_footnote_${fn.index}"><a href="#_footnoteref_${fn.index}">${fn.index}</a>. ${fn.text}</div>`
       }
       buf += '</div>'
     }
-    return buf
+    return nested ? buf : Footnotes.resolveGlobalFootnotes(node, buf)
   }
 
   async convert_example (node) {
