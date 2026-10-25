@@ -23,6 +23,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Merge `CHANGELOG.md` with Git's `union` merge driver (`.gitattributes`), so a local merge or rebase keeps the entries of both sides instead of stopping on a conflict
   * Publish a final release from `main` to npm under the `latest` dist-tag instead of `testing`, which is now only used for prereleases (e.g. `6.0.0-beta.2`)
   * Bump the Asciidoctor.js development dependency to 4.1.1 (`package-lock.json`); the supported range (`>=4.0.0 <5.0.0`) is unchanged
+  * Package `CHANGELOG.md` in the RubyGem (the gemspec looked for a nonexistent `CHANGELOG.adoc`) and remove the nonexistent `HACKING.adoc` from its `extra_rdoc_files`
 
 ## 6.0.0-beta.2 (2026-07-30)
 
