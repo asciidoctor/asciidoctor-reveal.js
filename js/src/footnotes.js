@@ -84,6 +84,10 @@ export function slideFootnote (footnote) {
   if (!existing) {
     bodyFn.push({ index, id, text: inlineFootnote.getText() })
     bodyFootnotes.set(bucketKey, bodyFn)
+  } else if (footnote.getId()) {
+    // A reference in a list item or table cell is substituted before the definition
+    // above it, so the entry was created with the fallback text; use the definition's.
+    existing.text = inlineFootnote.getText()
   }
   return inlineFootnote
 }

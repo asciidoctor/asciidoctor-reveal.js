@@ -202,10 +202,25 @@ Paragraph.footnote:[First]
 * Again.footnote:first[Third]
 * Reused.footnote:first[]`
 
-  const result = await convert(content, { safe: "safe", backend: "revealjs" })
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs' })
 
-  assert.ok(result.includes("<p>Paragraph.<sup class=\"footnote\">[<span class=\"footnote\" title=\"View footnote.\">1</span>]</sup></p>"))
-  assert.ok(result.includes("<li><p>Item.<sup class=\"footnote\">[<span class=\"footnote\" title=\"View footnote.\">2</span>]</sup></p></li>"))
-  assert.ok(result.includes("<li><p>Reused.<sup class=\"footnoteref\">[<span class=\"footnote\" title=\"View footnote.\">3</span>]</sup></p></li>"))
-  assert.ok(result.includes("<div class=\"footnotes\"><div class=\"footnote\">1. First</div><div class=\"footnote\">2. Second</div><div class=\"footnote\">3. Third</div></div>"))
+  assert.ok(result.includes('<p>Paragraph.<sup class="footnote">[<span class="footnote" title="View footnote.">1</span>]</sup></p>'))
+  assert.ok(result.includes('<li><p>Item.<sup class="footnote">[<span class="footnote" title="View footnote.">2</span>]</sup></p></li>'))
+  assert.ok(result.includes('<li><p>Reused.<sup class="footnoteref">[<span class="footnote" title="View footnote.">3</span>]</sup></p></li>'))
+  assert.ok(result.includes('<div class="footnotes"><div class="footnote">1. First</div><div class="footnote">2. Second</div><div class="footnote">3. Third</div></div>'))
+})
+
+test('lists the text of a footnote defined above a reference in a list item', async () => {
+  // The reference in the list item is substituted before the definition in the paragraph above it.
+  const content = `= Deck
+
+== Slide
+
+Paragraph.footnote:x[Definition]
+
+* Item.footnote:x[]`
+
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs' })
+
+  assert.ok(result.includes('<div class="footnotes"><div class="footnote">1. Definition</div></div>'))
 })
