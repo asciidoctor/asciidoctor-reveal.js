@@ -1,1 +1,1 @@
-../../../../test/fixtures/standalone/background-color.adoc
+../../../../test/converter-testkit/fixtures/standalone/background-color.adoc

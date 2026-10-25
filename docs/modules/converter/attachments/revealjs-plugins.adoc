@@ -1,1 +1,1 @@
-../../../../test/fixtures/standalone/revealjs-plugins.adoc
+../../../../test/converter-testkit/fixtures/standalone/revealjs-plugins.adoc

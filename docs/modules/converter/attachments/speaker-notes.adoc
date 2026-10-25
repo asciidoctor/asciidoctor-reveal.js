@@ -1,1 +1,1 @@
-../../../../test/fixtures/standalone/speaker-notes.adoc
+../../../../test/converter-testkit/fixtures/standalone/speaker-notes.adoc
