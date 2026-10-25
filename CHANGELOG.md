@@ -12,6 +12,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 ### Bug Fixes
 
   * Number the footnotes of a slide in document order in the JavaScript converter, like the Ruby converter; a footnote in a list item or table cell was numbered ahead of the footnotes in the paragraphs above it, and a footnote defined above a reference in a list item or table cell was listed with its id instead of its text
+  * Fix the Ruby converter failing with `undefined method 'nil_or_empty?' for :arabic:Symbol` on an ordered list whose style is derived from its marker (e.g., `1.`, `a.` or `i)`)
 
 ### Build
 

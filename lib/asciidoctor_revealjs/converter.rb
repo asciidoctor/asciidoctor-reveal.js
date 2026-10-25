@@ -1181,7 +1181,9 @@ module Asciidoctor
       #   nothing rather than id="");
       # - +true+ produces a boolean attribute (just the name, e.g. controls);
       # - Array values are compacted and joined with a space (and omitted if the
-      #   array collapses to nothing), just like Slim does for class lists.
+      #   array collapses to nothing), just like Slim does for class lists;
+      # - Symbol values, such as the style of an ordered list derived from its
+      #   marker (e.g., :loweralpha), are converted to a String.
       #
       # @param pairs [Hash]
       # @return [String] the attributes string with a leading space, or '' if none.
@@ -1189,6 +1191,7 @@ module Asciidoctor
       def attributes(pairs)
         pairs.inject(+'') do |str, (k, v)|
           v = v.compact.join(' ') if v.is_a? Array
+          v = v.to_s if v.is_a? Symbol
           next str unless v && (v == true || !v.nil_or_empty?)
 
           str << (v == true ? %( #{k}) : %( #{k}="#{v}"))
