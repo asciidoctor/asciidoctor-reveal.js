@@ -432,7 +432,9 @@ module Asciidoctor
       end
 
       def convert_olist(node, _opts = {})
-        attrs = attributes({ id: node.id, class: ['olist', node.style, node.role] }.merge(data_attrs(node.attributes)))
+        # The style is a Symbol (e.g., :loweralpha) when it's derived from the list marker
+        style = node.style&.to_s
+        attrs = attributes({ id: node.id, class: ['olist', style, node.role] }.merge(data_attrs(node.attributes)))
         buf = +''
         buf << %(<div class="title">#{node.title}</div>) if node.title?
         inner = +''
@@ -441,7 +443,7 @@ module Asciidoctor
           li << item.content.to_s if item.blocks?
           inner << %(<li#{attributes(class: ('fragment' if step_or_role?(node)))}>#{li}</li>)
         end
-        buf << %(<ol#{attributes(class: node.style, start: (node.attr :start), type: node.list_marker_keyword)}>#{inner}</ol>)
+        buf << %(<ol#{attributes(class: style, start: (node.attr :start), type: node.list_marker_keyword(style))}>#{inner}</ol>)
         %(<div#{attrs}>#{buf}</div>)
       end
 
@@ -1181,9 +1183,7 @@ module Asciidoctor
       #   nothing rather than id="");
       # - +true+ produces a boolean attribute (just the name, e.g. controls);
       # - Array values are compacted and joined with a space (and omitted if the
-      #   array collapses to nothing), just like Slim does for class lists;
-      # - Symbol values, such as the style of an ordered list derived from its
-      #   marker (e.g., :loweralpha), are converted to a String.
+      #   array collapses to nothing), just like Slim does for class lists.
       #
       # @param pairs [Hash]
       # @return [String] the attributes string with a leading space, or '' if none.
@@ -1191,7 +1191,6 @@ module Asciidoctor
       def attributes(pairs)
         pairs.inject(+'') do |str, (k, v)|
           v = v.compact.join(' ') if v.is_a? Array
-          v = v.to_s if v.is_a? Symbol
           next str unless v && (v == true || !v.nil_or_empty?)
 
           str << (v == true ? %( #{k}) : %( #{k}="#{v}"))
