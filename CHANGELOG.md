@@ -11,6 +11,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ### Bug Fixes
 
+  * Apply the background color set with `{set:cellbgcolor:...}` in the text of a table cell in the JavaScript converter, like the Ruby converter; the attribute is set when Asciidoctor.js parses the document, so the converter found it unset and the cells had no background color
   * Number the footnotes of a slide in document order in the JavaScript converter, like the Ruby converter; a footnote in a list item or table cell was numbered ahead of the footnotes in the paragraphs above it, and a footnote defined above a reference in a list item or table cell was listed with its id instead of its text
   * Fix the Ruby converter failing with `undefined method 'nil_or_empty?' for :arabic:Symbol` on an ordered list whose style is derived from its marker (e.g., `1.`, `a.` or `i)`), and emit the `type` attribute on these lists like the JS converter does
   * Number the footnotes outside of a slide (embedded document, deck without sections, preamble) and in AsciiDoc table cells in document order in the JavaScript converter, like the Ruby converter; the footnotes listed at the end of an embedded document no longer leak Asciidoctor.js core placeholders (e.g., `_footnote_\x01\x01fn:0\x01\x01`) or duplicate numbers, and a footnote in an AsciiDoc table cell is now listed on its slide
