@@ -14,6 +14,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Number the footnotes of a slide in document order in the JavaScript converter, like the Ruby converter; a footnote in a list item or table cell was numbered ahead of the footnotes in the paragraphs above it, and a footnote defined above a reference in a list item or table cell was listed with its id instead of its text
   * Fix the Ruby converter failing with `undefined method 'nil_or_empty?' for :arabic:Symbol` on an ordered list whose style is derived from its marker (e.g., `1.`, `a.` or `i)`), and emit the `type` attribute on these lists like the JS converter does
   * Number the footnotes outside of a slide (embedded document, deck without sections, preamble) and in AsciiDoc table cells in document order in the JavaScript converter, like the Ruby converter; the footnotes listed at the end of an embedded document no longer leak Asciidoctor.js core placeholders (e.g., `_footnote_\x01\x01fn:0\x01\x01`) or duplicate numbers, and a footnote in an AsciiDoc table cell is now listed on its slide
+  * Fix the order of the footnotes listed at the end of an embedded document in the JavaScript converter when footnotes precede the first slide; they were numbered after the footnotes of the slides, so the list didn't follow the document order
   * Fix a memory leak in the JavaScript converter: the footnote state was kept in module-level maps, so every converted document stayed in memory; it is now attached to the document and released with it
 
 ### Build
