@@ -296,3 +296,18 @@ One footnote:[one]
   assert.ok(result.includes('<div class="footnotes"><div class="footnote">1. two</div></div></section>'))
   assert.ok(result.includes('<div id="footnotes"><hr><div class="footnote" id="_footnote_1"><a href="#_footnoteref_1">1</a>. one</div><div class="footnote" id="_footnote_2"><a href="#_footnoteref_2">2</a>. two</div></div>'))
 })
+
+test('lists the footnotes of an embedded document in document order, before and in the slides', async () => {
+  // The slides are converted (and number their footnotes) before the content around them was resolved.
+  const content = `Para.footnote:[p]
+
+* Item.footnote:[li]
+
+== Slide
+
+Body.footnote:[b]`
+
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs', standalone: false })
+
+  assert.ok(result.includes('<div class="footnote" id="_footnote_1"><a href="#_footnoteref_1">1</a>. p</div><div class="footnote" id="_footnote_2"><a href="#_footnoteref_2">2</a>. li</div><div class="footnote" id="_footnote_3"><a href="#_footnoteref_3">3</a>. b</div>'))
+})

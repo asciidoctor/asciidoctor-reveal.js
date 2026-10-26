@@ -176,7 +176,8 @@ export function slideFootnotes (section) {
 }
 
 // Start the conversion of a root document: the numbering of the footnotes outside of a
-// slide starts at 1 (in case the document is converted more than once).
+// slide starts at 1. Like the core (and Ruby), converting the same document again keeps
+// numbering the footnotes document-wide from where the previous conversion stopped.
 export function startDocument (doc) {
   const state = stateOf(doc)
   state.docNumbers = new Map()
@@ -207,7 +208,7 @@ export function recordTitleFootnotes (section) {
 // in the order their placeholders appear in `html`, continuing the numbering of the
 // previous parts of the document converted outside of a slide.
 export function resolveDocumentFootnotes (doc, html) {
-  if (html == null) return html
+  if (html == null || !html.includes(PLACEHOLDER_MARK)) return html
   const state = stateOf(doc)
   return resolveLocal(state, html, state.docNumbers, state.docNumbers.size + 1).html
 }
@@ -221,11 +222,12 @@ export function documentFootnotes (doc, content = '') {
   const state = stateOf(doc)
   let entries
   if (doc.parentDocument) {
-    entries = []
+    const found = new Set()
     for (const [, key] of content.matchAll(LOCAL_PLACEHOLDER_RX)) {
       const entry = state.entries[Number(key)]
-      if (entry != null && entry.defined && entry.doc === doc && !entries.includes(entry)) entries.push(entry)
+      if (entry != null && entry.defined && entry.doc === doc) found.add(entry)
     }
+    entries = [...found]
   } else {
     entries = state.globalOrder.filter((entry) => entry.doc === doc)
   }
@@ -237,7 +239,7 @@ export function documentFootnotes (doc, content = '') {
 // output. A local placeholder left at this point is numbered like a footnote outside of
 // a slide.
 export function resolveGlobalFootnotes (doc, html) {
-  if (html == null) return html
+  if (html == null || !html.includes(PLACEHOLDER_MARK)) return html
   const state = stateOf(doc)
   return resolveDocumentFootnotes(doc, html).replace(GLOBAL_PLACEHOLDER_RX, (placeholder, key) => {
     const entry = state.entries[Number(key)]

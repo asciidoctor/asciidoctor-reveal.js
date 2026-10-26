@@ -191,6 +191,17 @@ function appendLinkConstraintAttrs (node, attrs = []) {
 
 // ── Converter ─────────────────────────────────────────────────────────────────
 
+// Convert the blocks of a root document in document order, like Document#content, and
+// number the footnotes outside of a slide as soon as each block is converted. A slide
+// numbers its own footnotes when it's converted, so the document-wide numbering (the
+// footnote list of an embedded document) follows the document order.
+async function documentContent (doc) {
+  doc.removeAttribute('title')
+  const parts = []
+  for (const block of doc.getBlocks()) parts.push(Footnotes.resolveDocumentFootnotes(doc, (await block.convert()) ?? ''))
+  return parts.join('\n')
+}
+
 export default class RevealJsConverter extends ConverterBase {
   static create (backend = 'revealjs', opts = {}) {
     return new this(backend, opts)
@@ -221,7 +232,7 @@ export default class RevealJsConverter extends ConverterBase {
     Footnotes.startDocument(node)
     // Footnotes outside of a slide are numbered in conversion order, like Ruby: the
     // slides (or the content of a deck without sections) first, then the preamble.
-    const slidesContent = Footnotes.resolveDocumentFootnotes(node, await node.content())
+    const slidesContent = await documentContent(node)
     // The document title is converted next, for the <title> element.
     Footnotes.recordTitleFootnotes(node.getHeader())
     const slides = async () => {
@@ -677,7 +688,7 @@ export default class RevealJsConverter extends ConverterBase {
       if (!nested) Footnotes.recordTitleFootnotes(node.getHeader())
       buf += resolve(await this.convert(node, 'title_slide'))
     }
-    buf += resolve(await node.content())
+    buf += nested ? ((await node.content()) ?? '') : await documentContent(node)
     const footnotes = Footnotes.documentFootnotes(node, buf)
     if (footnotes.length > 0 && !node.hasAttribute('nofootnotes')) {
       buf += '<div id="footnotes"><hr>'
