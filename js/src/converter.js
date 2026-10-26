@@ -1001,11 +1001,14 @@ export default class RevealJsConverter extends ConverterBase {
             if (tblsec === 'head') cellContent = cell.text
             else if (cell.style === 'literal') cellContent = cell.text
             else cellContent = await cell.content()
+            // The cell text is substituted when the document is parsed, so the value of cellbgcolor
+            // set by {set:cellbgcolor:...} in the cell text is captured on the cell (like the core HTML5 converter).
+            const cellbgcolor = '_cellbgcolor' in cell ? cell._cellbgcolor : node.getDocument().getAttribute('cellbgcolor')
             const cellAttrs = attributes({
               class: ['tableblock', `halign-${cell.getAttribute('halign')}`, `valign-${cell.getAttribute('valign')}`],
               colspan: cell.colspan,
               rowspan: cell.rowspan,
-              style: node.getDocument().hasAttribute('cellbgcolor') ? `background-color:${node.getDocument().getAttribute('cellbgcolor')};` : null
+              style: cellbgcolor ? `background-color:${cellbgcolor};` : null
             })
             let cellInner
             if (tblsec === 'head') cellInner = cellContent ?? ''

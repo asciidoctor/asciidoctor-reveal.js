@@ -311,3 +311,23 @@ Body.footnote:[b]`
 
   assert.ok(result.includes('<div class="footnote" id="_footnote_1"><a href="#_footnoteref_1">1</a>. p</div><div class="footnote" id="_footnote_2"><a href="#_footnoteref_2">2</a>. li</div><div class="footnote" id="_footnote_3"><a href="#_footnoteref_3">3</a>. b</div>'))
 })
+
+test('applies the cellbgcolor attribute set in the text of a table cell', async () => {
+  // {set:cellbgcolor:...} is evaluated when the document is parsed, not when the cell is converted.
+  const content = `= Deck
+
+== Slide
+
+|===
+|{set:cellbgcolor:#ff0000}Red |Still red
+|{set:cellbgcolor!}
+Default |{set:cellbgcolor:#00ff00}Green
+|===`
+
+  const result = await convert(content, { safe: 'safe', backend: 'revealjs' })
+
+  assert.ok(result.includes('<td class="tableblock halign-left valign-top" style="background-color:#ff0000;"><p class="tableblock">Red</p></td>'))
+  assert.ok(result.includes('<td class="tableblock halign-left valign-top" style="background-color:#ff0000;"><p class="tableblock">Still red</p></td>'))
+  assert.ok(result.includes('<td class="tableblock halign-left valign-top"><p class="tableblock">Default</p></td>'))
+  assert.ok(result.includes('<td class="tableblock halign-left valign-top" style="background-color:#00ff00;"><p class="tableblock">Green</p></td>'))
+})
