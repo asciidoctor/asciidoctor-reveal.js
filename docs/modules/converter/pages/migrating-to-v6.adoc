@@ -83,7 +83,7 @@ The JavaScript converter is now a native port targeting the Asciidoctor.js 4.0 A
 This raises two minimum versions:
 
 * Node.js 20 or later
-* `asciidoctor` (the npm package) `>=4.0.0 <5.0.0`
+* `asciidoctor` (the npm package) `>=4.2.1 <5.0.0`
 
 Asciidoctor.js 4.0 is published as the `asciidoctor` package instead of `@asciidoctor/core`.
 It's a peer dependency of `@asciidoctor/reveal.js`, so install it alongside the converter:

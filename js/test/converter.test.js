@@ -322,6 +322,7 @@ test('applies the cellbgcolor attribute set in the text of a table cell', async 
 |{set:cellbgcolor:#ff0000}Red |Still red
 |{set:cellbgcolor!}
 Default |{set:cellbgcolor:#00ff00}Green
+a|AsciiDoc |{set:cellbgcolor:}Empty
 |===`
 
   const result = await convert(content, { safe: 'safe', backend: 'revealjs' })
@@ -330,4 +331,6 @@ Default |{set:cellbgcolor:#00ff00}Green
   assert.ok(result.includes('<td class="tableblock halign-left valign-top" style="background-color:#ff0000;"><p class="tableblock">Still red</p></td>'))
   assert.ok(result.includes('<td class="tableblock halign-left valign-top"><p class="tableblock">Default</p></td>'))
   assert.ok(result.includes('<td class="tableblock halign-left valign-top" style="background-color:#00ff00;"><p class="tableblock">Green</p></td>'))
+  assert.ok(result.includes('<td class="tableblock halign-left valign-top" style="background-color:#00ff00;"><div><div class="paragraph"><p>AsciiDoc</p></div></div></td>'))
+  assert.ok(result.includes('<td class="tableblock halign-left valign-top" style="background-color:;"><p class="tableblock">Empty</p></td>'))
 })
