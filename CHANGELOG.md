@@ -5,6 +5,8 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## main (unreleased)
 
+## 6.0.0 (2026-11-02)
+
 First stable release of the 6.0 line. It also includes the changes listed under 6.0.0-beta.1 and 6.0.0-beta.2, including breaking changes: see the [changelog](https://github.com/asciidoctor/asciidoctor-reveal.js/blob/main/CHANGELOG.md) and the [migration guide](https://docs.asciidoctor.org/reveal.js-converter/latest/converter/migrating-to-v6/).
 
 ### Enhancements
