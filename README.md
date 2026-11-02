@@ -4,7 +4,7 @@ A reveal.js converter for [Asciidoctor.js](https://github.com/asciidoctor/asciid
 
 ## Install
 
-Requires **Node.js >= 20**. `asciidoctor` is a required peer dependency (any `>=4.0.0 <5.0.0` release), so install it alongside the converter:
+Requires **Node.js >= 20**. `asciidoctor` is a required peer dependency (any `>=4.2.1 <5.0.0` release), so install it alongside the converter:
 
 ```sh
 npm i --save asciidoctor @asciidoctor/reveal.js

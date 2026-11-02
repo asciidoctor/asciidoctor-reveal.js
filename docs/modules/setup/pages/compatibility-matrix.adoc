@@ -54,8 +54,8 @@ This table tracks this compatibility.
 |Asciidoctor reveal.js version |Compatible Asciidoctor.js versions |Package and range declared in `package.json`
 
 |6.x
-|>= 4.0, < 5.0
-|`asciidoctor` `>=4.0.0 <5.0.0` (peer dependency)
+|>= 4.2.1, < 5.0 (6.0.0-beta.1 and 6.0.0-beta.2: >= 4.0)
+|`asciidoctor` `>=4.2.1 <5.0.0` (peer dependency; 6.0.0-beta.1 and 6.0.0-beta.2: `>=4.0.0 <5.0.0`)
 
 |5.1.x, 5.2.x
 |3.0.x

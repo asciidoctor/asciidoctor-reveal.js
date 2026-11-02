@@ -20,7 +20,7 @@ You can now install the dependencies:
 [NOTE]
 ====
 `asciidoctor` is a required peer dependency of `@asciidoctor/reveal.js`: the converter registers itself into _your_ Asciidoctor instance, so both packages must resolve to the same copy.
-Install it yourself (as shown above) and pick any release in the `>=4.0.0 <5.0.0` range — you can upgrade Asciidoctor.js within that range without waiting for a new release of the converter.
+Install it yourself (as shown above) and pick any release in the `>=4.2.1 <5.0.0` range — you can upgrade Asciidoctor.js within that range without waiting for a new release of the converter.
 ====
 
 == Convert AsciiDoc into slides

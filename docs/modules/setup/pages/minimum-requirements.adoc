@@ -13,7 +13,7 @@ In each case, all you need is the matching runtime, its package manager, and a c
 
 |JavaScript (Node.js) / npm
 |{url-nodejs-download}[Node.js^] >= 20 and npm >= 8
-|{url-asciidoctorjs}[Asciidoctor.js^] >= 4.0, < 5.0
+|{url-asciidoctorjs}[Asciidoctor.js^] >= 4.2.1, < 5.0
 |===
 
 For the full mapping between Asciidoctor reveal.js, reveal.js, and Asciidoctor.js versions, see the xref:compatibility-matrix.adoc[].
