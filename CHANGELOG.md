@@ -5,6 +5,8 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## main (unreleased)
 
+First stable release of the 6.0 line. It also includes the changes listed under 6.0.0-beta.1 and 6.0.0-beta.2, including breaking changes: see the [changelog](https://github.com/asciidoctor/asciidoctor-reveal.js/blob/main/CHANGELOG.md) and the [migration guide](https://docs.asciidoctor.org/reveal.js-converter/latest/converter/migrating-to-v6/).
+
 ### Enhancements
 
   * Update to reveal.js 6.0.2
@@ -23,7 +25,7 @@ For a detailed view of what has changed, refer to the [commit history](https://g
   * Bump `actions/upload-artifact` to v7 and `actions/download-artifact` to v8
   * Merge `CHANGELOG.md` with Git's `union` merge driver (`.gitattributes`), so a local merge or rebase keeps the entries of both sides instead of stopping on a conflict
   * Publish a final release from `main` to npm under the `latest` dist-tag instead of `testing`, which is now only used for prereleases (e.g. `6.0.0-beta.2`)
-  * Bump the Asciidoctor.js development dependency to 4.1.1 (`package-lock.json`); the supported range (`>=4.0.0 <5.0.0`) is unchanged
+  * Bump the Asciidoctor.js development dependency to 4.2.0, which is also the version bundled in the standalone binaries; the supported peer dependency range (`>=4.0.0 <5.0.0`) is unchanged
   * Package `CHANGELOG.md` in the RubyGem (the gemspec looked for a nonexistent `CHANGELOG.adoc`) and remove the nonexistent `HACKING.adoc` from its `extra_rdoc_files`
 
 ## 6.0.0-beta.2 (2026-07-30)
