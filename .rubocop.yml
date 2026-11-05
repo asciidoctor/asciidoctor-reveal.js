@@ -37,3 +37,8 @@ Metrics/PerceivedComplexity:
 plugins:
   - rubocop-rake
   - rubocop-minitest
+
+# lib/asciidoctor-revealjs.rb matches the gem name so that `require 'asciidoctor-revealjs'` works.
+Naming/FileName:
+  Exclude:
+    - lib/asciidoctor-revealjs.rb
