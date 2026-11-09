@@ -5,6 +5,11 @@ For a detailed view of what has changed, refer to the [commit history](https://g
 
 ## main (unreleased)
 
+### Documentation
+
+  * Document the `background-gradient` section attribute (mapped to reveal.js' `data-background-gradient`); it was already supported (Ruby and JS converters) but missing from `background.adoc` (#623)
+  * Explain on `background.adoc` that a background set with a role only covers the slide's content, how to set a full-screen background from CSS with a slide state (`.reveal-viewport.<state>`), and that a CSS gradient must be set with `background-image` (or `background`), not `background-color` (#623)
+
 ## 6.0.1 (2026-11-05)
 
 ### Bug Fixes
