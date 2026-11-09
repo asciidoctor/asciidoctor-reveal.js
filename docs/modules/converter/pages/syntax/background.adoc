@@ -5,6 +5,7 @@
 Background colors for slides can be specified by two means: a classic one and one using AsciiDoc roles.
 See xref:attachment$background-color.adoc[background-color.adoc] for more examples.
 
+[#background-roles]
 === Using AsciiDoc roles
 
 Using roles respects the AsciiDoc philosophy of separation of content and presentation.
@@ -33,6 +34,28 @@ section.red.background {
 
 NOTE: The `canvas` keyword can be used instead of `background` for the same effect.
 
+The CSS rule styles the slide's `<section>` element, so the color only covers the area taken by the slide's content, not the whole screen.
+To set a full-screen background from CSS, use a xref:state.adoc[slide state] instead:
+
+[source, asciidoc]
+----
+[state=red]
+== Slide One
+
+Is very red, from edge to edge
+----
+
+.my-css.css
+[source, css]
+----
+.reveal-viewport.red {
+  background-color: red;
+}
+----
+
+reveal.js adds the state as a class on the viewport element while the slide is shown.
+Unlike the `background-color` attribute below, the background changes instantly, without reveal.js' background transition.
+
 === Classic
 
 [source, asciidoc]
@@ -45,6 +68,39 @@ Is very yellow
 
 Slide Three applies the link:{url-revealjs-doc}/backgrounds/[data-background-color] attribute to the reveal.js `<section>` tag.
 Anything accepted by CSS color formats works.
+
+
+== Background gradients
+
+[source, asciidoc]
+----
+[background-gradient="linear-gradient(to right, blue 50%, grey 50%)"]
+== Half and Half
+
+Left half blue, right half grey
+----
+
+This applies the link:{url-revealjs-doc}/backgrounds/#gradient-backgrounds[data-background-gradient] attribute to the reveal.js `<section>` tag.
+Anything accepted by the CSS `background` property works, such as `linear-gradient(...)` or `radial-gradient(...)`.
+
+To define the gradient in CSS instead, use a role or a state as described in <<background-roles>>.
+A gradient is an image in CSS, not a color, so set it with `background-image` (or the `background` shorthand); `background-color` ignores it:
+
+[source, asciidoc]
+----
+[state=half-and-half]
+== Half and Half
+
+Left half blue, right half grey
+----
+
+.my-css.css
+[source, css]
+----
+.reveal-viewport.half-and-half {
+  background-image: linear-gradient(to right, blue 50%, grey 50%);
+}
+----
 
 
 == Background images
