@@ -5,6 +5,7 @@
 Background colors for slides can be specified by two means: a classic one and one using AsciiDoc roles.
 See xref:attachment$background-color.adoc[background-color.adoc] for more examples.
 
+[#background-roles]
 === Using AsciiDoc roles
 
 Using roles respects the AsciiDoc philosophy of separation of content and presentation.
@@ -82,7 +83,7 @@ Left half blue, right half grey
 This applies the link:{url-revealjs-doc}/backgrounds/#gradient-backgrounds[data-background-gradient] attribute to the reveal.js `<section>` tag.
 Anything accepted by the CSS `background` property works, such as `linear-gradient(...)` or `radial-gradient(...)`.
 
-To define the gradient in CSS instead, use a role or a state as described in <<_using_asciidoc_roles>>.
+To define the gradient in CSS instead, use a role or a state as described in <<background-roles>>.
 A gradient is an image in CSS, not a color, so set it with `background-image` (or the `background` shorthand); `background-color` ignores it:
 
 [source, asciidoc]
